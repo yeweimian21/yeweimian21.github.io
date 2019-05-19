@@ -96,17 +96,18 @@
 
 
 
-  <meta name="description" content="A novice.">
-<meta name="keywords" content="a,b">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A peaceful place">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="2.网络配置：将em1和em2网卡端口bond为bond0，使用一个IP">
+<meta name="keywords" content="Linux,Ubuntu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="InstallUbuntuSystem">
+<meta property="og:url" content="http://yoursite.com/2019/05/14/InstallUbuntu/index.html">
 <meta property="og:site_name" content="A peaceful place">
-<meta property="og:description" content="A novice.">
+<meta property="og:description" content="2.网络配置：将em1和em2网卡端口bond为bond0，使用一个IP">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-05-14T10:17:48.940Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A peaceful place">
-<meta name="twitter:description" content="A novice.">
+<meta name="twitter:title" content="InstallUbuntuSystem">
+<meta name="twitter:description" content="2.网络配置：将em1和em2网卡端口bond为bond0，使用一个IP">
 
 
 
@@ -114,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://yoursite.com/2019/05/14/InstallUbuntu/">
 
 
 
@@ -124,7 +125,7 @@
   };
 </script>
 
-  <title>A peaceful place</title>
+  <title>InstallUbuntuSystem | A peaceful place</title>
   
 
 
@@ -172,8 +173,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -215,7 +215,7 @@
         
         
           
-          <li class="menu-item menu-item-home menu-item-active">
+          <li class="menu-item menu-item-home">
 
     
     
@@ -379,9 +379,9 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -413,10 +413,8 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/05/14/InstallUbuntu/" class="post-title-link" itemprop="url">InstallUbuntuSystem</a>
+          <h1 class="post-title" itemprop="name headline">InstallUbuntuSystem
+
               
             
           </h1>
@@ -540,201 +538,28 @@
       
 
       
-        
-          <p>2.网络配置：将em1和em2网卡端口bond为bond0，使用一个IP<br>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/05/14/InstallUbuntu/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
+        <p>2.网络配置：将em1和em2网卡端口bond为bond0，使用一个IP<br><a id="more"></a><br>(1)#vim /etc/network/interfaces<br>#<br>#<br>#<br>auto lo    #环回网址<br>iface lo inet loopback</p>
+<p>up ifenslave bond0 em1 em2<br>down ifenslave bond0 -d em1 em2<br>bond-mode 0        #模式0<br>bond-mmimon 100</p>
+<p>auto bond0<br>iface bond0 inet static<br>address 10.10.4.7<br>netmask 255.255.255.0<br>gateway 10.10.4.1<br>dns-nameserver 202.106.0.20<br>(2)#vim /etc/modules<br>#<br>#<br>#<br>bonding<br>(3)#modprobe bonding,然后重启服务器。<br>(4)创建和删除 Bond(完成1-3步直接重启就能自动创建bond0)：</p>
+<p>添加新的 Bond（bond0）：</p>
+<h1 id="echo-bond0-gt-sys-class-net-bonding-masters"><a href="#echo-bond0-gt-sys-class-net-bonding-masters" class="headerlink" title="echo +bond0 &gt; /sys/class/net/bonding_masters"></a>echo +bond0 &gt; /sys/class/net/bonding_masters</h1><p>删除现有的 Bond（bond0）：</p>
+<h1 id="echo-bond0-gt-sys-class-net-bonding-masters-1"><a href="#echo-bond0-gt-sys-class-net-bonding-masters-1" class="headerlink" title="echo -bond0 &gt; /sys/class/net/bonding_masters"></a>echo -bond0 &gt; /sys/class/net/bonding_masters</h1><p>显示所有现有的 Bond：</p>
+<h1 id="cat-sys-class-net-bonding-masters"><a href="#cat-sys-class-net-bonding-masters" class="headerlink" title="cat /sys/class/net/bonding_masters"></a>cat /sys/class/net/bonding_masters</h1><p>(5)添加和删除 Slave：</p>
+<p>使用文件 /sys/class/net/bond/bonding/slaves，可以使接口从属于某个 Bond。 该文件的语义与 bonding_masters 文件相同。</p>
+<p>使接口 em1,em2 从属于 bond0：</p>
+<h1 id="echo-em1-gt-sys-class-net-bond0-bonding-slaves"><a href="#echo-em1-gt-sys-class-net-bond0-bonding-slaves" class="headerlink" title="echo +em1 &gt; /sys/class/net/bond0/bonding/slaves"></a>echo +em1 &gt; /sys/class/net/bond0/bonding/slaves</h1><h1 id="echo-em2-gt-sys-class-net-bond0-bonding-slaves"><a href="#echo-em2-gt-sys-class-net-bond0-bonding-slaves" class="headerlink" title="echo +em2 &gt; /sys/class/net/bond0/bonding/slaves"></a>echo +em2 &gt; /sys/class/net/bond0/bonding/slaves</h1><p>从 Bond（bond0）中释放 Slave（em1，em2）：</p>
+<h1 id="echo-em1-gt-sys-class-net-bond0-bonding-slaves-1"><a href="#echo-em1-gt-sys-class-net-bond0-bonding-slaves-1" class="headerlink" title="echo -em1 &gt; /sys/class/net/bond0/bonding/slaves"></a>echo -em1 &gt; /sys/class/net/bond0/bonding/slaves</h1><p>#echo -em2 &gt; /sys/class/net/bond0/bonding/slaves</p>
+<p>启用bond0</p>
+<h1 id="ifconfig-bond0-up"><a href="#ifconfig-bond0-up" class="headerlink" title="ifconfig bond0 up"></a>ifconfig bond0 up</h1><p>(6)网卡端口加入BOND以后端口不需要设置IP地址,在BOND上配置IP地址等(interfaces中已经对bond0配置完毕)<br>(7)将em1，em2添加进bond0的slaves之后，就能暂时上网了（重启之后就又不能了），趁现在安装ifenslave</p>
+<p>#apt-get update</p>
+<p>#apt-get install ifenslave</p>
+<p>以后重启的话，网络也可以一直生效了。</p>
+<p>(8)确认bond0状态<br>cat /proc/net/bonding/bond0</p>
+<p>提示up即成功：<br>MII Status: up</p>
+<p>而down表示未启用可能没有auto（自动启用），可以尝试手工启动：<br>ifconfig bond0 up</p>
+<p>(9)键盘不能用试试重启虚拟控制台。</p>
+<p>镜像服务<br>(1)安装和配置<br>编辑文件 /etc/glance/glance-api.conf和/etc/glance/glance-registry.conf时，<br>[keystone_authtoken]<br>…<br>auth_uri = <a href="http://controller:5000" target="_blank" rel="noopener">http://controller:5000</a>                这一行是uri<br>auth_url = <a href="http://controller:35357" target="_blank" rel="noopener">http://controller:35357</a>                这一行是url</p>
 
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/13/Test1/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yeweimian21">
-      <meta itemprop="description" content="A novice.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="A peaceful place">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/05/13/Test1/" class="post-title-link" itemprop="url">写给小白的express学习笔记1： express-static文件静态管理</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-05-13 18:54:26" itemprop="dateCreated datePublished" datetime="2019-05-13T18:54:26+08:00">2019-05-13</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-05-14 11:47:45" itemprop="dateModified" datetime="2019-05-14T11:47:45+08:00">2019-05-14</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/learnNote/" itemprop="url" rel="index"><span itemprop="name">learnNote</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-              
-              
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/05/13/Test1/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
       
     </div>
 
@@ -755,172 +580,38 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/27/hello-world/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yeweimian21">
-      <meta itemprop="description" content="A novice.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="A peaceful place">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/01/27/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-01-27 16:01:17" itemprop="dateCreated datePublished" datetime="2019-01-27T16:01:17+08:00">2019-01-27</time>
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
           
-            
-            
+            <a href="/tags/Ubuntu/" rel="tag"># Ubuntu</a>
           
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          
-            <p>
-              Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post$ hexo new "My New Post"
-More info: Writing
-Run server$ hexo server
-More info: Server
-Generate static files$ hexo generate
-More info: Generating
-Deploy to remote sites$ hexo deploy
-More info: Deployment
-
-              
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/01/27/hello-world/#more" rel="contents">
-                Read more &raquo;
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/13/Test1/" rel="next" title="写给小白的express学习笔记1： express-static文件静态管理">
+                <i class="fa fa-chevron-left"></i> 写给小白的express学习笔记1： express-static文件静态管理
               </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
+            
+          </div>
 
-    
+          <span class="post-nav-divider"></span>
 
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
 
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -930,14 +621,15 @@ More info: Deployment
   </article>
 
 
-    
-  </section>
-
-  
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -957,8 +649,17 @@ More info: Deployment
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1095,6 +796,23 @@ More info: Deployment
       </div>
 
       
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#echo-bond0-gt-sys-class-net-bonding-masters"><span class="nav-number">1.</span> <span class="nav-text">echo +bond0 &gt; /sys/class/net/bonding_masters</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#echo-bond0-gt-sys-class-net-bonding-masters-1"><span class="nav-number">2.</span> <span class="nav-text">echo -bond0 &gt; /sys/class/net/bonding_masters</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cat-sys-class-net-bonding-masters"><span class="nav-number">3.</span> <span class="nav-text">cat /sys/class/net/bonding_masters</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#echo-em1-gt-sys-class-net-bond0-bonding-slaves"><span class="nav-number">4.</span> <span class="nav-text">echo +em1 &gt; /sys/class/net/bond0/bonding/slaves</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#echo-em2-gt-sys-class-net-bond0-bonding-slaves"><span class="nav-number">5.</span> <span class="nav-text">echo +em2 &gt; /sys/class/net/bond0/bonding/slaves</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#echo-em1-gt-sys-class-net-bond0-bonding-slaves-1"><span class="nav-number">6.</span> <span class="nav-text">echo -em1 &gt; /sys/class/net/bond0/bonding/slaves</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ifconfig-bond0-up"><span class="nav-number">7.</span> <span class="nav-text">ifconfig bond0 up</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
       
 
@@ -1224,6 +942,10 @@ More info: Deployment
 
 
   
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
 
   
 
@@ -1239,6 +961,8 @@ More info: Deployment
 
   
 
+
+  
 
 
   
