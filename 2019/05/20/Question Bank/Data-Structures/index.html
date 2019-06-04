@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="树基本术语(1)结点的度：结点所拥有的子树的个数 (2)树的度：树中各结点度的最大值 (3)兄弟：同一双亲的孩子 (4)堂兄弟：双亲在同一层上且不同的结点 (5)结点的层次：从根节点到树中某结点所经路径上的分支数称为该结点的层次，根结点的层次规定为1，其余结点的层次等于其双亲结点的层次加1(6)树的深度：树中结点的最大层次数 (7)无序树：树中任意一个结点的孩子之间的次序都无关紧要，通常树是指无序">
+<meta name="keywords" content="Question Bank">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Data Structures">
+<meta property="og:url" content="http://yoursite.com/2019/05/20/Question Bank/Data-Structures/index.html">
+<meta property="og:site_name" content="A peaceful place">
+<meta property="og:description" content="树基本术语(1)结点的度：结点所拥有的子树的个数 (2)树的度：树中各结点度的最大值 (3)兄弟：同一双亲的孩子 (4)堂兄弟：双亲在同一层上且不同的结点 (5)结点的层次：从根节点到树中某结点所经路径上的分支数称为该结点的层次，根结点的层次规定为1，其余结点的层次等于其双亲结点的层次加1(6)树的深度：树中结点的最大层次数 (7)无序树：树中任意一个结点的孩子之间的次序都无关紧要，通常树是指无序">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-05-29T08:50:05.081Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Data Structures">
+<meta name="twitter:description" content="树基本术语(1)结点的度：结点所拥有的子树的个数 (2)树的度：树中各结点度的最大值 (3)兄弟：同一双亲的孩子 (4)堂兄弟：双亲在同一层上且不同的结点 (5)结点的层次：从根节点到树中某结点所经路径上的分支数称为该结点的层次，根结点的层次规定为1，其余结点的层次等于其双亲结点的层次加1(6)树的深度：树中结点的最大层次数 (7)无序树：树中任意一个结点的孩子之间的次序都无关紧要，通常树是指无序">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/05/20/Question Bank/Data-Structures/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Data Structures | A peaceful place</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">A peaceful place</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Warm</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/20/Question Bank/Data-Structures/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yeweimian21">
+      <meta itemprop="description" content="A novice.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A peaceful place">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Data Structures
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-05-20 15:25:44" itemprop="dateCreated datePublished" datetime="2019-05-20T15:25:44+08:00">2019-05-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-05-29 16:50:05" itemprop="dateModified" datetime="2019-05-29T16:50:05+08:00">2019-05-29</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Question-Bank/" itemprop="url" rel="index"><span itemprop="name">Question Bank</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Question-Bank/Date-Structures/" itemprop="url" rel="index"><span itemprop="name">Date Structures</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="树"><a href="#树" class="headerlink" title="树"></a>树</h1><h2 id="基本术语"><a href="#基本术语" class="headerlink" title="基本术语"></a>基本术语</h2><p>(1)结点的度：结点所拥有的子树的个数</p>
+<p>(2)树的度：树中各结点度的最大值</p>
+<p>(3)兄弟：同一双亲的孩子</p>
+<p>(4)堂兄弟：双亲在同一层上且不同的结点</p>
+<p>(5)结点的层次：从根节点到树中某结点所经路径上的分支数称为该结点的层次，根结点的层次规定为1，其余结点的层次等于其双亲结点的层次加1<br>(6)树的深度：树中结点的最大层次数</p>
+<p>(7)无序树：树中任意一个结点的孩子之间的次序都无关紧要，通常树是指无序树</p>
+<p>(8)有序树：树中任意一个节点的孩子结点都按严格的次序排列。二叉树是有序树，因为二叉树中每个孩子结点都确切定义为是左孩子结点还是右孩子结点</p>
+<p>(9)森林：m棵树的集合(m&gt;=0)</p>
+<h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><h3 id="二叉树的定义"><a href="#二叉树的定义" class="headerlink" title="二叉树的定义"></a>二叉树的定义</h3><p>(1)非空二叉树：有序树，左子树，右子树</p>
+<p>(2)满二叉树：所有分支结点都存在左、右子树，并且所有叶子结点都在同一层上，这样的二叉树称作满二叉树。</p>
+<p>(3)完全二叉树：如果具有n个结点的二叉树的结构与满二叉树的前n个结点的结构相同，这样的树称作完全二叉树。</p>
+<h3 id="二叉树的存储结构"><a href="#二叉树的存储结构" class="headerlink" title="二叉树的存储结构"></a>二叉树的存储结构</h3><h4 id="1-顺序存储结构"><a href="#1-顺序存储结构" class="headerlink" title="(1)顺序存储结构"></a>(1)顺序存储结构</h4><p>用元素在数组中的下标为该结点在树中的序号。</p>
+<h4 id="2-链式存储结构"><a href="#2-链式存储结构" class="headerlink" title="(2)链式存储结构"></a>(2)链式存储结构</h4><p>每个结点有一个数据域，两个指针域分别指向左孩子和右孩子。</p>
+<h2 id="遍历二叉树"><a href="#遍历二叉树" class="headerlink" title="遍历二叉树"></a>遍历二叉树</h2><p>(1)先序遍历：根结点-&gt;左子树-&gt;右子树</p>
+<p>(1)中序遍历：左子树-&gt;根结点-&gt;右子树</p>
+<p>(1)后序遍历：左子树-&gt;右子树-&gt;根结点</p>
+<h2 id="2-循环队列"><a href="#2-循环队列" class="headerlink" title="2.循环队列"></a>2.循环队列</h2><h3 id="1-用数组-0-m-1-存放队列元素，"><a href="#1-用数组-0-m-1-存放队列元素，" class="headerlink" title="(1)用数组[0,m-1]存放队列元素，"></a>(1)用数组[0,m-1]存放队列元素，</h3><pre><code>当前队列中的元素个数:(rear-front+m)%m
+</code></pre><h1 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h1><h2 id="静态查找表"><a href="#静态查找表" class="headerlink" title="静态查找表"></a>静态查找表</h2><h3 id="顺序表的查找"><a href="#顺序表的查找" class="headerlink" title="顺序表的查找"></a>顺序表的查找</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">SeqSearch</span><span class="params">(<span class="keyword">int</span> *A, <span class="keyword">int</span> key, <span class="keyword">int</span> length)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; length ; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(A[i] == key)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="有序表的查找"><a href="#有序表的查找" class="headerlink" title="有序表的查找"></a>有序表的查找</h3><p>折半查找(二分查找)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 非递归方法</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">BinarySearch1</span><span class="params">(<span class="keyword">int</span> *A, <span class="keyword">int</span> key, <span class="keyword">int</span> length)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left, right, mid;</span><br><span class="line">    left = <span class="number">0</span>;</span><br><span class="line">    right = length<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">while</span> (left&lt;=right)</span><br><span class="line">    &#123;</span><br><span class="line">        mid = (left+right)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(A[mid]==key)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(A[mid]&gt;key)</span><br><span class="line">        &#123;</span><br><span class="line">            right = mid<span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            left = mid+<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 递归方法</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">BinarySearch2</span><span class="params">(<span class="keyword">int</span> *A, <span class="keyword">int</span> key, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> mid = (left+right)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span>(A[mid] == key)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> mid;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(left == right)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(A[mid]&gt;key)&#123;</span><br><span class="line">        <span class="keyword">return</span> BinarySearch2(A, key, left, mid<span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(A[mid]&lt;key)&#123;</span><br><span class="line">        <span class="keyword">return</span> BinarySearch2(A, key, mid+<span class="number">1</span>, right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="索引顺序表的查找-分块查找"><a href="#索引顺序表的查找-分块查找" class="headerlink" title="索引顺序表的查找(分块查找)"></a>索引顺序表的查找(分块查找)</h3><p>索引顺序查找又称分块查找，是顺序查找的一种改进方法。</p>
+<p>基本思想：先将表分为几块，块內无序，块间有序，查找时先确定待查元素所在的块，然后再在块内查找，每个分块要建立一个索引项，其中包含关键字项（该块内的最大关键字）和指针项（指示该块的第一个元素在表中的位置）</p>
+<p>分块有序：索引表按关键字有序，即第二块中的所有元素均大于第一块中的所有元素，第三块中的所有元素均大于第二块中的所有元素，以此类推。</p>
+<p>算法流程：<br>step1 先选取各块中的最大关键字构成一个索引表；<br>step2 查找分两个部分：先对索引表进行二分查找或顺序查找，以确定待查记录在哪一块中；然后，在已确定的块中进行顺序查找。</p>
+<h2 id="动态查找表"><a href="#动态查找表" class="headerlink" title="动态查找表"></a>动态查找表</h2><h3 id="二叉排序树（二叉查找树）"><a href="#二叉排序树（二叉查找树）" class="headerlink" title="二叉排序树（二叉查找树）"></a>二叉排序树（二叉查找树）</h3><p>定义：二叉排序树或者是一棵空树，或者是具有下列性质的二叉树：</p>
+<ol>
+<li>若它的左子树不为空，则左子树的所有节点的值均小于它的根结点的值。</li>
+<li>若它的右子树不为空，则右子树的所有节点的值均大于它的根结点的值。</li>
+<li>它的左右子树分别为二叉排序树。</li>
+</ol>
+<h3 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h3><p>形态匀称的二叉排序树</p>
+<p>平衡二叉树有多种，主要考虑AVL树。</p>
+<h2 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h2><p>在数据元素的存储位置和其关键字之间建立一个确定的对应关系h，把具有关键字key的数据元素存储在h(key)处，那么在查找时，只要在集合中存在关键字和key相等的数据元素，则一定在h(key)的存储位置上。</p>
+<h3 id="哈希表的构造方法"><a href="#哈希表的构造方法" class="headerlink" title="哈希表的构造方法"></a>哈希表的构造方法</h3><h4 id="1-直接定址法"><a href="#1-直接定址法" class="headerlink" title="1.直接定址法"></a>1.直接定址法</h4><p>哈希函数直接定义为关键字的线性函数值</p>
+<p>h(key) = a*key + b</p>
+<p>特点：不会产生冲突，但是仅适合关键字集合较小的情况。</p>
+<h4 id="2-除数留余法"><a href="#2-除数留余法" class="headerlink" title="2.除数留余法"></a>2.除数留余法</h4><p>用关键字key除以哈希表的长度m所得到的余数作为散列地址的方法</p>
+<p>h(key) = key % m</p>
+<h4 id="3-数字分析法"><a href="#3-数字分析法" class="headerlink" title="3.数字分析法"></a>3.数字分析法</h4><p>在给定的关键字中，选取数字分布比较均匀的若干数字位作为哈希地址</p>
+<p>特点：适用于关键字值已知的情况。</p>
+<h4 id="4-平方取中法"><a href="#4-平方取中法" class="headerlink" title="4.平方取中法"></a>4.平方取中法</h4><p>取关键字平方后的中间几位作为哈希地址。</p>
+<h4 id="5-折叠法"><a href="#5-折叠法" class="headerlink" title="5.折叠法"></a>5.折叠法</h4><p>将关键字分割成位数相同的几部分（最后一部分的位数可以不同），然后取这几部分的叠加和（舍去进位）作为哈希地址。</p>
+<h4 id="6-随机数法"><a href="#6-随机数法" class="headerlink" title="6. 随机数法"></a>6. 随机数法</h4><p>选择一个随机函数，取关键字的随机函数值作为哈希地址</p>
+<p>h(key) = random(key)</p>
+<p>特点：通常关键字长度不等时采用此法。</p>
+<h3 id="处理冲突的方法"><a href="#处理冲突的方法" class="headerlink" title="处理冲突的方法"></a>处理冲突的方法</h3><h3 id="1-开放定址法"><a href="#1-开放定址法" class="headerlink" title="1. 开放定址法"></a>1. 开放定址法</h3><h4 id="1-线性探测法"><a href="#1-线性探测法" class="headerlink" title="(1) 线性探测法"></a>(1) 线性探测法</h4><p>从冲突发生位置的下一个位置开始，顺序地寻找可存放元素的开放地址，</p>
+<h4 id="2-二次探查法"><a href="#2-二次探查法" class="headerlink" title="(2) 二次探查法"></a>(2) 二次探查法</h4><p>发生冲突时，探查间隔按平方增大，探查序列依次是d+1, d-1, d+4, d-4, d+9, d-9, …,即探测地址为</p>
+<p>(d+/-i^2)%m, i=1, 2, …,</p>
+<p>特点：可以有效减少堆积的可能性，但是不容易探查整个散列表空间。</p>
+<h4 id="3-随机探查法"><a href="#3-随机探查法" class="headerlink" title="(3) 随机探查法"></a>(3) 随机探查法</h4><h3 id="2-开散列法（链地址法）"><a href="#2-开散列法（链地址法）" class="headerlink" title="2. 开散列法（链地址法）"></a>2. 开散列法（链地址法）</h3><p>单链表</p>
+<h4 id="3"><a href="#3" class="headerlink" title="(3)"></a>(3)</h4><h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><h3 id="直接插入排序"><a href="#直接插入排序" class="headerlink" title="直接插入排序"></a>直接插入排序</h3><p>基本思想：顺序地把待排序的数据元素按其关键字值的大小插入到已排序数据元素子集合的适当位置。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InsertSort</span><span class="params">(<span class="keyword">int</span> *A, <span class="keyword">int</span> len)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i,j;</span><br><span class="line">    <span class="keyword">int</span> temp;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">1</span>; i &lt; len; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        temp = A[i];</span><br><span class="line">        j = i<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span> (j&gt;=<span class="number">0</span> &amp;&amp; A[j]&gt;temp)</span><br><span class="line">        &#123;</span><br><span class="line">            A[j+<span class="number">1</span>] = A[j];</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">        A[j+<span class="number">1</span>] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h3><p>基本思想：先将整个待排序元素分割成若干个子序列分别进行排序，待整个序列中的元素“基本有序”时，再对全体元素进行一次直接插入排序。</p>
+<p>基本方法：设置一个初始增量，以后增量逐渐减少，分组减少，每组元素数量增多，直到最后增量为1，所有记录为一组，再进行一次整体直接插入排序。</p>
+<h2 id="交换排序"><a href="#交换排序" class="headerlink" title="交换排序"></a>交换排序</h2><h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><p>基本思路：从数组第1个元素开始，比较相邻的两个元素，如果后一个元素大于前一个元素，则交换两个元素，然后比较第2个和第3个元素，反复这个过程，每趟排序都是将前一趟结果的最后一个元素排除出去。<br>(排除后面的元素)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BubbleSort</span><span class="params">(<span class="keyword">int</span> *A, <span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i,j;</span><br><span class="line">    <span class="keyword">int</span> temp;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i&lt;len<span class="number">-1</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; len-i<span class="number">-1</span>; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(A[j]&gt;A[j+<span class="number">1</span>])</span><br><span class="line">            &#123;</span><br><span class="line">                temp = A[j];</span><br><span class="line">                A[j] = A[j+<span class="number">1</span>];</span><br><span class="line">                A[j+<span class="number">1</span>] = temp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><p>基本思路：在待排序的n个元素中任取一个作为“基准”，将其余元素分为两组，左边一组的元素均小于等于基准，右边一组的元素均大于等于基准，基准排在两组之间，这个过程称为一趟快速排序。对分成的两组分别重复上述方法，直到所有元素都排到了适当的位置上。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QuickSort</span><span class="params">(<span class="keyword">int</span> *A, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = left, j = right;</span><br><span class="line">    <span class="keyword">int</span> temp;</span><br><span class="line">    <span class="keyword">if</span> (left&lt;right)</span><br><span class="line">    &#123;</span><br><span class="line">        temp = A[left];</span><br><span class="line">        <span class="keyword">while</span>(i!=j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">while</span> (i&lt;j &amp;&amp; A[j]&gt;temp)</span><br><span class="line">            &#123;</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(i&lt;j)</span><br><span class="line">            &#123;</span><br><span class="line">                A[i] = A[j];</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span>(i&lt;j &amp;&amp; A[i]&lt;temp)&#123;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (i&lt;j)</span><br><span class="line">            &#123;</span><br><span class="line">                A[j] = A[i];</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        A[i] = temp;</span><br><span class="line">        QuickSort(A, left, right<span class="number">-1</span>);</span><br><span class="line">        QuickSort(A, left+<span class="number">1</span>, right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><h3 id="简单选择排序"><a href="#简单选择排序" class="headerlink" title="简单选择排序"></a>简单选择排序</h3><p>基本思路：首先找出从A[0]到A[len-1]的最小元素A[small]，将A[small]与A[0]元素交换位置，然后找出从A[1]到A[len-1]的最小元素A[small]，将A[small]与A[1]元素交换位置，然后再从A[2]到A[len-1]中查找，以此类推，重复此步骤，在剩下的范围内找出最小值，并将其和数组下标最小的数据交换，逐次缩小要排序的范围。(排除前面的元素)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SelectSort</span><span class="params">(<span class="keyword">int</span> *A, <span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j;</span><br><span class="line">    <span class="keyword">int</span> small, temp;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; len<span class="number">-1</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        small = i;</span><br><span class="line">        <span class="keyword">for</span>(j=i+<span class="number">1</span>; j&lt;len; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (A[j]&lt;A[small])</span><br><span class="line">            &#123;</span><br><span class="line">                small = j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        temp = A[i];</span><br><span class="line">        A[i] = A[small];</span><br><span class="line">        A[small] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-排序算法的性能"><a href="#3-排序算法的性能" class="headerlink" title="3.排序算法的性能"></a>3.排序算法的性能</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">排序方法</th>
+<th style="text-align:left">时间复杂度</th>
+<th style="text-align:center">空间复杂度</th>
+<th style="text-align:center">稳定性</th>
+<th style="text-align:left">最好</th>
+<th style="text-align:left">最差</th>
+<th style="text-align:left">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">冒泡排序</td>
+<td style="text-align:left">O(n^2)</td>
+<td style="text-align:center">O(1)</td>
+<td style="text-align:center">稳定</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n^2)</td>
+<td style="text-align:left">n较小时较好</td>
+</tr>
+<tr>
+<td style="text-align:left">直接插入排序</td>
+<td style="text-align:left">O(n^2)</td>
+<td style="text-align:center">O(1)</td>
+<td style="text-align:center">稳定</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n^2)</td>
+<td style="text-align:left">大部分元素已有序时较好</td>
+</tr>
+<tr>
+<td style="text-align:left">简单选择排序</td>
+<td style="text-align:left">O(n^2)</td>
+<td style="text-align:center">O(1)</td>
+<td style="text-align:center">不稳定</td>
+<td style="text-align:left">O(n^2)</td>
+<td style="text-align:left">O(n^2)</td>
+<td style="text-align:left">n较小时较好</td>
+</tr>
+<tr>
+<td style="text-align:left">快速排序</td>
+<td style="text-align:left">O(nlogn)</td>
+<td style="text-align:center">O(logn)</td>
+<td style="text-align:center">不稳定</td>
+<td style="text-align:left">O(nlogn)</td>
+<td style="text-align:left">O(n^2)</td>
+<td style="text-align:left">n较大时较好</td>
+</tr>
+<tr>
+<td style="text-align:left">堆排序</td>
+<td style="text-align:left">O(nlogn)</td>
+<td style="text-align:center">O(1)</td>
+<td style="text-align:center">不稳定</td>
+<td style="text-align:left">O(nlogn)</td>
+<td style="text-align:left">O(nlogn)</td>
+<td style="text-align:left">n较大时较好</td>
+</tr>
+<tr>
+<td style="text-align:left">归并排序</td>
+<td style="text-align:left">O(nlogn)</td>
+<td style="text-align:center">O(n)</td>
+<td style="text-align:center">稳定</td>
+<td style="text-align:left">O(nlogn)</td>
+<td style="text-align:left">O(nlogn)</td>
+<td style="text-align:left">n较大时较好</td>
+</tr>
+<tr>
+<td style="text-align:left">希尔排序</td>
+<td style="text-align:left">O(nlogn)</td>
+<td style="text-align:center">O(1)</td>
+<td style="text-align:center">不稳定</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(ns)1&lt;s&lt;2,s是所选分组</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Question-Bank/" rel="tag"># Question Bank</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/20/Question Bank/Java-basic-knowledge/" rel="next" title="Java_basic_knowledge">
+                <i class="fa fa-chevron-left"></i> Java_basic_knowledge
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/21/Tool/Hexo/" rel="prev" title="Hexo Usage">
+                Hexo Usage <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">yeweimian21</p>
+              <div class="site-description motion-element" itemprop="description">A novice.</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/yeweimian21" title="GitHub &rarr; https://github.com/yeweimian21" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:yourname@gmail.com" title="E-Mail &rarr; mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#树"><span class="nav-number">1.</span> <span class="nav-text">树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本术语"><span class="nav-number">1.1.</span> <span class="nav-text">基本术语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉树"><span class="nav-number">1.2.</span> <span class="nav-text">二叉树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉树的定义"><span class="nav-number">1.2.1.</span> <span class="nav-text">二叉树的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉树的存储结构"><span class="nav-number">1.2.2.</span> <span class="nav-text">二叉树的存储结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-顺序存储结构"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">(1)顺序存储结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-链式存储结构"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">(2)链式存储结构</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遍历二叉树"><span class="nav-number">1.3.</span> <span class="nav-text">遍历二叉树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-循环队列"><span class="nav-number">1.4.</span> <span class="nav-text">2.循环队列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-用数组-0-m-1-存放队列元素，"><span class="nav-number">1.4.1.</span> <span class="nav-text">(1)用数组[0,m-1]存放队列元素，</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查找"><span class="nav-number">2.</span> <span class="nav-text">查找</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#静态查找表"><span class="nav-number">2.1.</span> <span class="nav-text">静态查找表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#顺序表的查找"><span class="nav-number">2.1.1.</span> <span class="nav-text">顺序表的查找</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有序表的查找"><span class="nav-number">2.1.2.</span> <span class="nav-text">有序表的查找</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引顺序表的查找-分块查找"><span class="nav-number">2.1.3.</span> <span class="nav-text">索引顺序表的查找(分块查找)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态查找表"><span class="nav-number">2.2.</span> <span class="nav-text">动态查找表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉排序树（二叉查找树）"><span class="nav-number">2.2.1.</span> <span class="nav-text">二叉排序树（二叉查找树）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#平衡二叉树"><span class="nav-number">2.2.2.</span> <span class="nav-text">平衡二叉树</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哈希表"><span class="nav-number">2.3.</span> <span class="nav-text">哈希表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#哈希表的构造方法"><span class="nav-number">2.3.1.</span> <span class="nav-text">哈希表的构造方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-直接定址法"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">1.直接定址法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-除数留余法"><span class="nav-number">2.3.1.2.</span> <span class="nav-text">2.除数留余法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-数字分析法"><span class="nav-number">2.3.1.3.</span> <span class="nav-text">3.数字分析法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-平方取中法"><span class="nav-number">2.3.1.4.</span> <span class="nav-text">4.平方取中法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-折叠法"><span class="nav-number">2.3.1.5.</span> <span class="nav-text">5.折叠法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-随机数法"><span class="nav-number">2.3.1.6.</span> <span class="nav-text">6. 随机数法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理冲突的方法"><span class="nav-number">2.3.2.</span> <span class="nav-text">处理冲突的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-开放定址法"><span class="nav-number">2.3.3.</span> <span class="nav-text">1. 开放定址法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-线性探测法"><span class="nav-number">2.3.3.1.</span> <span class="nav-text">(1) 线性探测法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-二次探查法"><span class="nav-number">2.3.3.2.</span> <span class="nav-text">(2) 二次探查法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-随机探查法"><span class="nav-number">2.3.3.3.</span> <span class="nav-text">(3) 随机探查法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-开散列法（链地址法）"><span class="nav-number">2.3.4.</span> <span class="nav-text">2. 开散列法（链地址法）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3"><span class="nav-number">2.3.4.1.</span> <span class="nav-text">(3)</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#排序"><span class="nav-number">3.</span> <span class="nav-text">排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#插入排序"><span class="nav-number">3.1.</span> <span class="nav-text">插入排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#直接插入排序"><span class="nav-number">3.1.1.</span> <span class="nav-text">直接插入排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#希尔排序"><span class="nav-number">3.1.2.</span> <span class="nav-text">希尔排序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交换排序"><span class="nav-number">3.2.</span> <span class="nav-text">交换排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#冒泡排序"><span class="nav-number">3.2.1.</span> <span class="nav-text">冒泡排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速排序"><span class="nav-number">3.2.2.</span> <span class="nav-text">快速排序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选择排序"><span class="nav-number">3.3.</span> <span class="nav-text">选择排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单选择排序"><span class="nav-number">3.3.1.</span> <span class="nav-text">简单选择排序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-排序算法的性能"><span class="nav-number">3.4.</span> <span class="nav-text">3.排序算法的性能</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeweimian21</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
