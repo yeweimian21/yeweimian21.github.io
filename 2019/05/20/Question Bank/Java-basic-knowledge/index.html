@@ -99,15 +99,15 @@
   <meta name="description" content="1. Object类的方法   方法名 返回类型 方法描述     clone() Object 创建并返回此对象的一个副本   equals(Object obj) boolean 判断obj对象是否与此对象相等   finalize() void 当垃圾会收起确定不存在该对象的更多引用时，由对象的垃圾回收器调用此方法   getClass() Class&amp;lt;?&amp;gt; 返回此Object的">
 <meta name="keywords" content="Question Bank">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java_basic_knowledge">
+<meta property="og:title" content="Java Basic Knowledge">
 <meta property="og:url" content="http://yoursite.com/2019/05/20/Question Bank/Java-basic-knowledge/index.html">
 <meta property="og:site_name" content="A peaceful place">
 <meta property="og:description" content="1. Object类的方法   方法名 返回类型 方法描述     clone() Object 创建并返回此对象的一个副本   equals(Object obj) boolean 判断obj对象是否与此对象相等   finalize() void 当垃圾会收起确定不存在该对象的更多引用时，由对象的垃圾回收器调用此方法   getClass() Class&amp;lt;?&amp;gt; 返回此Object的">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2019/05/20/Question%20Bank/Java-basic-knowledge/table.png">
-<meta property="og:updated_time" content="2019-06-03T08:38:30.333Z">
+<meta property="og:updated_time" content="2019-06-16T04:22:29.277Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java_basic_knowledge">
+<meta name="twitter:title" content="Java Basic Knowledge">
 <meta name="twitter:description" content="1. Object类的方法   方法名 返回类型 方法描述     clone() Object 创建并返回此对象的一个副本   equals(Object obj) boolean 判断obj对象是否与此对象相等   finalize() void 当垃圾会收起确定不存在该对象的更多引用时，由对象的垃圾回收器调用此方法   getClass() Class&amp;lt;?&amp;gt; 返回此Object的">
 <meta name="twitter:image" content="http://yoursite.com/2019/05/20/Question%20Bank/Java-basic-knowledge/table.png">
 
@@ -127,7 +127,7 @@
   };
 </script>
 
-  <title>Java_basic_knowledge | A peaceful place</title>
+  <title>Java Basic Knowledge | A peaceful place</title>
   
 
 
@@ -192,7 +192,7 @@
     </div>
     
       
-        <p class="site-subtitle">Warm</p>
+        <p class="site-subtitle">Talk is cheap. Show me the code.</p>
       
     
     
@@ -364,7 +364,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Java_basic_knowledge
+          <h1 class="post-title" itemprop="name headline">Java Basic Knowledge
 
               
             
@@ -407,7 +407,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-06-03 16:38:30" itemprop="dateModified" datetime="2019-06-03T16:38:30+08:00">2019-06-03</time>
+                <time title="Modified: 2019-06-16 12:22:29" itemprop="dateModified" datetime="2019-06-16T12:22:29+08:00">2019-06-16</time>
               
             
           </span>
@@ -566,7 +566,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="3-Java可变参数"><a href="#3-Java可变参数" class="headerlink" title="3. Java可变参数"></a>3. Java可变参数</h3><p><code>public void f(String[] aa, String a){}</code></p>
+<h3 id="3-Java可变参数"><a href="#3-Java可变参数" class="headerlink" title="3. Java可变参数"></a>3. Java可变参数</h3><p><code>public void f(String[] aa, String... a){}</code></p>
 <p>(1)只能作为最后一个参数出现</p>
 <p>(2)只能位于变量的类型和变量名之间</p>
 <p>(3)编译器为可变参数隐含创建一个数组，在调用的时候，可以用数组的形式访问可变参数</p>
@@ -744,9 +744,13 @@
 <li>抽象类可以有私有变量和私有方法</li>
 <li>在抽象类的子类中，实现方法必须是相同或者更高的访问级别(public, protected, private)</li>
 <li>抽象类的子类为父类的所有抽象方法提供具体实现，否则子类仍然是抽象类</li>
-<li>抽象类的抽象方法不能用private, static, synchronized, native等修饰。<h4 id="2-接口"><a href="#2-接口" class="headerlink" title="(2) 接口"></a>(2) 接口</h4></li>
+<li>抽象类的抽象方法不能用private, static, synchronized, native等修饰。</li>
+</ol>
+<h4 id="2-接口"><a href="#2-接口" class="headerlink" title="(2) 接口"></a>(2) 接口</h4><ol>
 <li>接口是公开的，不能有有私有变量和私有方法</li>
-<li><h4 id="相同点："><a href="#相同点：" class="headerlink" title="相同点："></a>相同点：</h4></li>
+<li></li>
+</ol>
+<h4 id="相同点："><a href="#相同点：" class="headerlink" title="相同点："></a>相同点：</h4><ol>
 <li>都不能被实例化</li>
 <li>接口的实现类只有实现了类接口的全部方法才能被实例化，抽象类的子类只有实现了抽象类的全部抽象方法才能被实例化。</li>
 </ol>
@@ -1001,10 +1005,206 @@
 <li><p>LinkedList是采用双向链表来实现的，插入删除的时候不需要移动数据。LinkedList不是线程安全的。</p>
 </li>
 </ol>
-<h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><h3 id="实现多线程的方法"><a href="#实现多线程的方法" class="headerlink" title="实现多线程的方法"></a>实现多线程的方法</h3><h4 id="实现Runnable接口，并实现该接口的run-方法"><a href="#实现Runnable接口，并实现该接口的run-方法" class="headerlink" title="实现Runnable接口，并实现该接口的run()方法"></a>实现Runnable接口，并实现该接口的run()方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class MyThread implements Runnable</span><br></pre></td></tr></table></figure>
-<h4 id="继承Thread类，重写run-方法"><a href="#继承Thread类，重写run-方法" class="headerlink" title="继承Thread类，重写run()方法"></a>继承Thread类，重写run()方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><h3 id="实现多线程的方法"><a href="#实现多线程的方法" class="headerlink" title="实现多线程的方法"></a>实现多线程的方法</h3><h4 id="实现Runnable接口，并实现该接口的run-方法"><a href="#实现Runnable接口，并实现该接口的run-方法" class="headerlink" title="实现Runnable接口，并实现该接口的run()方法"></a>实现Runnable接口，并实现该接口的run()方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Thread body"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		MyThread thread = <span class="keyword">new</span> MyThread();</span><br><span class="line">		Thread r = <span class="keyword">new</span> Thread(thread);</span><br><span class="line">		r.start();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="继承Thread类，重写run-方法"><a href="#继承Thread类，重写run-方法" class="headerlink" title="继承Thread类，重写run()方法"></a>继承Thread类，重写run()方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">extends</span> <span class="title">Thread</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Thread body"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		MyThread thread = <span class="keyword">new</span> MyThread();</span><br><span class="line">		thread.start();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="synchronized关键字"><a href="#synchronized关键字" class="headerlink" title="synchronized关键字"></a>synchronized关键字</h3><p>主要用来给对象、方法、代码块加锁，当它锁定一个方法或者一个代码块的时候，同一时刻最多只能有一个线程执行这段代码。</p>
-
+<h3 id="线程方法"><a href="#线程方法" class="headerlink" title="线程方法"></a>线程方法</h3><table>
+<thead>
+<tr>
+<th>停止</th>
+<th>唤醒</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>wait()</td>
+<td>notify()</td>
+</tr>
+<tr>
+<td>suspend()</td>
+<td>resume()</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>wait()和notify()都是从Object类继承的方法。</p>
+<h3 id="sleep-与wait-的区别"><a href="#sleep-与wait-的区别" class="headerlink" title="sleep()与wait()的区别"></a>sleep()与wait()的区别</h3><ol>
+<li></li>
+<li><p>sleep()不会释放锁，容易产生死锁问题，wait()会释放锁。</p>
+</li>
+<li><p>sleep()可以在任何位置使用，wait()必须放在同步控制方法或者同步语句块中使用。</p>
+</li>
+<li><p>sleep()必须捕获异常，wait(),notify(), notifyAll()不需要捕获异常</p>
+</li>
+</ol>
+<h3 id="守护线程与用户线程"><a href="#守护线程与用户线程" class="headerlink" title="守护线程与用户线程"></a>守护线程与用户线程</h3><h4 id="守护线程-Daemon-Thread"><a href="#守护线程-Daemon-Thread" class="headerlink" title="守护线程(Daemon Thread)"></a>守护线程(Daemon Thread)</h4><p>守护线程又被称为“服务线程”，“精灵线程”，“后台线程”，是指当程序运行时，在后台提供一种通用服务的线程。守护线程一般具有较低的优先级，但是并非只由JVM内部提供，用户也可以自己设置守护线程，方法是在thread.start()之前调用thread.setDaemon(true)，false表示用户线程。当一个守护线程中产生了其他线程，那么这些新产生的线程默认还是守护线程。典型的守护线程有GC(垃圾回收器)。</p>
+<p>用户线程和守护线程几乎一样，区别在于如果用户线程全部退出运行，只剩下守护线程存在，程序就会终止，杀死所有守护线程，JVM退出。只要有任何非守护线程还在运行，程序就会不会终止。</p>
+<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><ol>
+<li><p>线程的同步：线程按照预定的先后次序运行</p>
+</li>
+<li><p>线程的调度：按照特定机制为多个线程分配CPU的使用权。</p>
+</li>
+<li><p>线程的就绪：这个线程已经有了除CPU外所有的资源，在等待获取CPU，一旦获取到CPU的控制权就可以立即执行。</p>
+</li>
+<li><p>线程的互斥：某一资源同时只允许一个访问者对其进行访问，但是互斥无法限制访问者对资源的访问顺序。</p>
+</li>
+</ol>
+<h3 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h3><p>是指两个或者两个以上的进程在执行过程中，因争夺资源而造成的一种互相等待的现象，若无外力作用，它们都将无法推进下去。</p>
+<h2 id="JDBC"><a href="#JDBC" class="headerlink" title="JDBC"></a>JDBC</h2><h3 id="标准SQL规范的4个事务隔离级别"><a href="#标准SQL规范的4个事务隔离级别" class="headerlink" title="标准SQL规范的4个事务隔离级别"></a>标准SQL规范的4个事务隔离级别</h3><ol>
+<li>Read Uncommitted(读未提交)</li>
+<li>Read committed(读提交)</li>
+<li>Repeated Read(可重复读)</li>
+<li>Serializable(序列化)</li>
+</ol>
+<h3 id="JDBC的5中事务隔离级别"><a href="#JDBC的5中事务隔离级别" class="headerlink" title="JDBC的5中事务隔离级别"></a>JDBC的5中事务隔离级别</h3><p>|事务|名称|出现<br>TRANSACTION_NONE    不支持事物<br>TRANSACTION_READ_UNCOMMITTED    未提交读    脏读，不可重复读，虚读<br>TRANSACTION_READ_COMMITTED  已提交读    不可重复读，虚读<br>TRANSACTION_REPEATABLE_READ 可重复读    虚读<br>TRANSACTION_SERIALIZABLE    可序列化</p>
+<h3 id="读"><a href="#读" class="headerlink" title="读"></a>读</h3><ol>
+<li><p>脏读：一个事务读取了另一个事务尚未提交的数据。例如：当事务A与事务B并发执行时，当事务A更新后，事务B查询读取到事务A尚未提交的数据，此时事务A回滚，则事务B读取到的数据是无效的脏数据。</p>
+</li>
+<li><p>不可重复读：一个事务的操作导致另一个事务前后两次读取到不同的数据。例如：当事务A与事务B并发执行时，当事务B查询读取数据后，事务A更新操作更改事务B查询到的数据，此时事务B再次读取该数据，发现前后两次的数据不一样。</p>
+</li>
+<li><p>“虚读”：一个事务的操作导致另一个事务前后两次查询的记录数量不同。例如：当事务A与事务B并发执行时，当事务B查询读取数据后，事务A新增或删除了一条满足事务B的查询条件的记录，此时事务B再次查询，发现查询到前次不存在的记录，或者前次的某个记录不存在了。</p>
+</li>
+</ol>
+<h2 id="Java-Web"><a href="#Java-Web" class="headerlink" title="Java Web"></a>Java Web</h2><h3 id="Servlet与JSP"><a href="#Servlet与JSP" class="headerlink" title="Servlet与JSP"></a>Servlet与JSP</h3><p>Servlet是Java语言编写的服务器端程序，运行在Web服务器的Servlet容器中，主要功能是提供请求/响应的Web服务模式。</p>
+<h3 id="会话"><a href="#会话" class="headerlink" title="会话"></a>会话</h3><p>是指从客户端打开与服务器的连接并发出请求到服务器响应客户端请求的全过程。</p>
+<h3 id="会话跟踪技术"><a href="#会话跟踪技术" class="headerlink" title="会话跟踪技术"></a>会话跟踪技术</h3><ol>
+<li><p>page</p>
+</li>
+<li><p>request</p>
+</li>
+<li><p>session</p>
+</li>
+<li><p>application</p>
+</li>
+</ol>
+<h3 id="Servlet的两种跳转方式："><a href="#Servlet的两种跳转方式：" class="headerlink" title="Servlet的两种跳转方式："></a>Servlet的两种跳转方式：</h3><ol>
+<li><p>forward：</p>
+</li>
+<li><p>redirect：</p>
+</li>
+</ol>
+<h2 id="J2EE"><a href="#J2EE" class="headerlink" title="J2EE"></a>J2EE</h2><h3 id="Spring框架的模块"><a href="#Spring框架的模块" class="headerlink" title="Spring框架的模块"></a>Spring框架的模块</h3><table>
+<thead>
+<tr>
+<th>模块</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Spring AOP</td>
+<td></td>
+</tr>
+<tr>
+<td>Spring ORM</td>
+<td></td>
+</tr>
+<tr>
+<td>Spring DAO</td>
+<td></td>
+</tr>
+<tr>
+<td>Spring Web</td>
+<td></td>
+</tr>
+<tr>
+<td>Spring Context</td>
+<td></td>
+</tr>
+<tr>
+<td>Spring Web MVC</td>
+<td></td>
+</tr>
+<tr>
+<td>Spring Core</td>
+</tr>
+</tbody>
+</table>
+<h3 id="IoC-控制反转，依赖注入"><a href="#IoC-控制反转，依赖注入" class="headerlink" title="IoC(控制反转，依赖注入)"></a>IoC(控制反转，依赖注入)</h3><h3 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h3><p>允许开发人员在不改变原来模型的基础上动态地修改模型从而满足新的需求。例如，在不改变原来业务逻辑模型的基础上，可以动态的增加日志、安全或者异常处理的功能。</p>
+<h1 id="软件工程与设计模式"><a href="#软件工程与设计模式" class="headerlink" title="软件工程与设计模式"></a>软件工程与设计模式</h1><h2 id="软件工程与UML"><a href="#软件工程与UML" class="headerlink" title="软件工程与UML"></a>软件工程与UML</h2><h3 id="软件生命周期"><a href="#软件生命周期" class="headerlink" title="软件生命周期"></a>软件生命周期</h3><ol>
+<li><p>指定计划</p>
+</li>
+<li><p>需求分析</p>
+</li>
+<li><p>软件设计</p>
+</li>
+<li><p>程序编写</p>
+</li>
+<li><p>软件测试</p>
+</li>
+<li><p>运行维护</p>
+</li>
+</ol>
+<h3 id="软件六大质量特性"><a href="#软件六大质量特性" class="headerlink" title="软件六大质量特性"></a>软件六大质量特性</h3><ol>
+<li><p>功能性</p>
+</li>
+<li><p>可靠性</p>
+</li>
+<li><p>可用性</p>
+</li>
+<li><p>效率</p>
+</li>
+<li><p>可维护性</p>
+</li>
+<li><p>可移植性</p>
+</li>
+</ol>
+<h3 id="UML类图中类与类之间的关系"><a href="#UML类图中类与类之间的关系" class="headerlink" title="UML类图中类与类之间的关系"></a>UML类图中类与类之间的关系</h3><table>
+<thead>
+<tr>
+<th>关系</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>依赖</td>
+<td></td>
+</tr>
+<tr>
+<td>关联</td>
+<td></td>
+</tr>
+<tr>
+<td>聚合</td>
+<td></td>
+</tr>
+<tr>
+<td>组合</td>
+<td></td>
+</tr>
+<tr>
+<td>继承</td>
+</tr>
+</tbody>
+</table>
+<h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><h3 id="GoF-Gang-of-Four-23种经典设计模式"><a href="#GoF-Gang-of-Four-23种经典设计模式" class="headerlink" title="GoF(Gang of Four)23种经典设计模式"></a>GoF(Gang of Four)23种经典设计模式</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>创建型</th>
+<th>结构型</th>
+<th>行为型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类</td>
+<td>Factory Method</td>
+<td>Adapter_Class</td>
+<td>Intepreter</td>
+</tr>
+<tr>
+<td>对象</td>
+<td>Abstract Factory</td>
+<td>Adapter_Object</td>
+<td>Chain of Responsibility<br>Command</td>
+</tr>
+</tbody>
+</table>
+<h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3>
       
     </div>
 
@@ -1121,7 +1321,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1186,7 +1386,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">24</span>
+                      
+                    
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -1233,7 +1435,17 @@
                     
                       
                     
-                    <span class="site-state-item-count">15</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -1297,7 +1509,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Object类的方法"><span class="nav-number">1.</span> <span class="nav-text">1. Object类的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Math类函数-Java-lang-Math"><span class="nav-number">2.</span> <span class="nav-text">2. Math类函数(Java.lang.Math)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Java可变参数"><span class="nav-number">3.</span> <span class="nav-text">3. Java可变参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-null可以被强制转换为任意类型的对象，转换的结果还是null，无法调用对象的方法，但是可以调用类的方法。"><span class="nav-number">4.</span> <span class="nav-text">4. null可以被强制转换为任意类型的对象，转换的结果还是null，无法调用对象的方法，但是可以调用类的方法。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-获取Class对象的方法"><span class="nav-number">5.</span> <span class="nav-text">5. 获取Class对象的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Java处理时间"><span class="nav-number">6.</span> <span class="nav-text">6. Java处理时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-Java访问修饰符"><span class="nav-number">7.</span> <span class="nav-text">7. Java访问修饰符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-package的作用"><span class="nav-number">8.</span> <span class="nav-text">8. package的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-被public修饰的类或者接口必须与文件名相同"><span class="nav-number">9.</span> <span class="nav-text">9. 被public修饰的类或者接口必须与文件名相同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-继承、封装、多态"><span class="nav-number">10.</span> <span class="nav-text">10. 继承、封装、多态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-内部类"><span class="nav-number">11.</span> <span class="nav-text">11. 内部类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-Java初始化"><span class="nav-number">12.</span> <span class="nav-text">12. Java初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-final关键字"><span class="nav-number">13.</span> <span class="nav-text">13. final关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-构造方法"><span class="nav-number">14.</span> <span class="nav-text">14. 构造方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-abstract关键字"><span class="nav-number">15.</span> <span class="nav-text">15. abstract关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-接口的关键字"><span class="nav-number">16.</span> <span class="nav-text">16. 接口的关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-抽象类和接口"><span class="nav-number">17.</span> <span class="nav-text">17. 抽象类和接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-抽象类"><span class="nav-number">17.1.</span> <span class="nav-text">(1) 抽象类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-接口"><span class="nav-number">17.2.</span> <span class="nav-text">(2) 接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相同点："><span class="nav-number">17.3.</span> <span class="nav-text">相同点：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不同点："><span class="nav-number">17.4.</span> <span class="nav-text">不同点：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-接口的成员变量和成员方法"><span class="nav-number">18.</span> <span class="nav-text">18. 接口的成员变量和成员方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#19-多态"><span class="nav-number">19.</span> <span class="nav-text">19.多态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#20-覆盖"><span class="nav-number">20.</span> <span class="nav-text">20.覆盖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#21-重载"><span class="nav-number">21.</span> <span class="nav-text">21.重载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#22-重载和覆盖的区别"><span class="nav-number">22.</span> <span class="nav-text">22.重载和覆盖的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23-finally关键字"><span class="nav-number">23.</span> <span class="nav-text">23.finally关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#24-static关键字"><span class="nav-number">24.</span> <span class="nav-text">24.static关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-static成员变量"><span class="nav-number">24.1.</span> <span class="nav-text">(1)static成员变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-static成员方法"><span class="nav-number">24.2.</span> <span class="nav-text">(2)static成员方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-static代码块"><span class="nav-number">24.3.</span> <span class="nav-text">(3)static代码块</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-static内部类"><span class="nav-number">25.</span> <span class="nav-text">(4)static内部类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#25-类"><span class="nav-number">26.</span> <span class="nav-text">25. 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#26-volatile关键字"><span class="nav-number">27.</span> <span class="nav-text">26. volatile关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#27-synchronized关键字"><span class="nav-number">28.</span> <span class="nav-text">27. synchronized关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#28-基本数据类型"><span class="nav-number">29.</span> <span class="nav-text">28. 基本数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#29-int和integer的区别"><span class="nav-number">30.</span> <span class="nav-text">29. int和integer的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#30-Java中基本数据类型的字节长度是固定的，与平台和JVM无关，因为Java是跨平台的，可以一次编译多次运行。"><span class="nav-number">31.</span> <span class="nav-text">30. Java中基本数据类型的字节长度是固定的，与平台和JVM无关，因为Java是跨平台的，可以一次编译多次运行。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#31-String，StringBuffer，StringBuilder"><span class="nav-number">32.</span> <span class="nav-text">31. String，StringBuffer，StringBuilder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#32-instanceof运算符"><span class="nav-number">33.</span> <span class="nav-text">32. instanceof运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#33-switch语句"><span class="nav-number">34.</span> <span class="nav-text">33. switch语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#34-String被设计为不可变类的意义"><span class="nav-number">35.</span> <span class="nav-text">34. String被设计为不可变类的意义</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#异常"><span class="nav-number"></span> <span class="nav-text">异常</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类"><span class="nav-number">1.</span> <span class="nav-text">分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Error"><span class="nav-number">1.1.</span> <span class="nav-text">Error</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Exception"><span class="nav-number">1.2.</span> <span class="nav-text">Exception</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#检查异常-Checked-Exception"><span class="nav-number">1.2.1.</span> <span class="nav-text">检查异常(Checked Exception)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#运行时异常-Runtime-Exception"><span class="nav-number">1.2.2.</span> <span class="nav-text">运行时异常(Runtime Exception)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#try-catch-finally"><span class="nav-number">2.</span> <span class="nav-text">try/catch/finally</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#throw-throws"><span class="nav-number">3.</span> <span class="nav-text">throw/throws</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流"><span class="nav-number"></span> <span class="nav-text">流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#序列化-Serializable"><span class="nav-number">1.</span> <span class="nav-text">序列化(Serializable)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java平台与垃圾回收"><span class="nav-number"></span> <span class="nav-text">Java平台与垃圾回收</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JVM"><span class="nav-number">1.</span> <span class="nav-text">JVM</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器"><span class="nav-number"></span> <span class="nav-text">容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#各个接口"><span class="nav-number">1.</span> <span class="nav-text">各个接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap-Hashtable"><span class="nav-number">2.</span> <span class="nav-text">HashMap, Hashtable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap-TreeMap-LinkedHashMap"><span class="nav-number">3.</span> <span class="nav-text">HashMap, TreeMap, LinkedHashMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ArrayList-LinkedList-Vector"><span class="nav-number">4.</span> <span class="nav-text">ArrayList, LinkedList, Vector</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程"><span class="nav-number"></span> <span class="nav-text">多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现多线程的方法"><span class="nav-number">1.</span> <span class="nav-text">实现多线程的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实现Runnable接口，并实现该接口的run-方法"><span class="nav-number">1.1.</span> <span class="nav-text">实现Runnable接口，并实现该接口的run()方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#继承Thread类，重写run-方法"><span class="nav-number">1.2.</span> <span class="nav-text">继承Thread类，重写run()方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#synchronized关键字"><span class="nav-number">2.</span> <span class="nav-text">synchronized关键字</span></a></li></ol></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Object类的方法"><span class="nav-number">1.</span> <span class="nav-text">1. Object类的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Math类函数-Java-lang-Math"><span class="nav-number">2.</span> <span class="nav-text">2. Math类函数(Java.lang.Math)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Java可变参数"><span class="nav-number">3.</span> <span class="nav-text">3. Java可变参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-null可以被强制转换为任意类型的对象，转换的结果还是null，无法调用对象的方法，但是可以调用类的方法。"><span class="nav-number">4.</span> <span class="nav-text">4. null可以被强制转换为任意类型的对象，转换的结果还是null，无法调用对象的方法，但是可以调用类的方法。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-获取Class对象的方法"><span class="nav-number">5.</span> <span class="nav-text">5. 获取Class对象的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Java处理时间"><span class="nav-number">6.</span> <span class="nav-text">6. Java处理时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-Java访问修饰符"><span class="nav-number">7.</span> <span class="nav-text">7. Java访问修饰符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-package的作用"><span class="nav-number">8.</span> <span class="nav-text">8. package的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-被public修饰的类或者接口必须与文件名相同"><span class="nav-number">9.</span> <span class="nav-text">9. 被public修饰的类或者接口必须与文件名相同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-继承、封装、多态"><span class="nav-number">10.</span> <span class="nav-text">10. 继承、封装、多态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-内部类"><span class="nav-number">11.</span> <span class="nav-text">11. 内部类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-Java初始化"><span class="nav-number">12.</span> <span class="nav-text">12. Java初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-final关键字"><span class="nav-number">13.</span> <span class="nav-text">13. final关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-构造方法"><span class="nav-number">14.</span> <span class="nav-text">14. 构造方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-abstract关键字"><span class="nav-number">15.</span> <span class="nav-text">15. abstract关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-接口的关键字"><span class="nav-number">16.</span> <span class="nav-text">16. 接口的关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-抽象类和接口"><span class="nav-number">17.</span> <span class="nav-text">17. 抽象类和接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-抽象类"><span class="nav-number">17.1.</span> <span class="nav-text">(1) 抽象类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-接口"><span class="nav-number">17.2.</span> <span class="nav-text">(2) 接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相同点："><span class="nav-number">17.3.</span> <span class="nav-text">相同点：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不同点："><span class="nav-number">17.4.</span> <span class="nav-text">不同点：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-接口的成员变量和成员方法"><span class="nav-number">18.</span> <span class="nav-text">18. 接口的成员变量和成员方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#19-多态"><span class="nav-number">19.</span> <span class="nav-text">19.多态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#20-覆盖"><span class="nav-number">20.</span> <span class="nav-text">20.覆盖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#21-重载"><span class="nav-number">21.</span> <span class="nav-text">21.重载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#22-重载和覆盖的区别"><span class="nav-number">22.</span> <span class="nav-text">22.重载和覆盖的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23-finally关键字"><span class="nav-number">23.</span> <span class="nav-text">23.finally关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#24-static关键字"><span class="nav-number">24.</span> <span class="nav-text">24.static关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-static成员变量"><span class="nav-number">24.1.</span> <span class="nav-text">(1)static成员变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-static成员方法"><span class="nav-number">24.2.</span> <span class="nav-text">(2)static成员方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-static代码块"><span class="nav-number">24.3.</span> <span class="nav-text">(3)static代码块</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-static内部类"><span class="nav-number">25.</span> <span class="nav-text">(4)static内部类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#25-类"><span class="nav-number">26.</span> <span class="nav-text">25. 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#26-volatile关键字"><span class="nav-number">27.</span> <span class="nav-text">26. volatile关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#27-synchronized关键字"><span class="nav-number">28.</span> <span class="nav-text">27. synchronized关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#28-基本数据类型"><span class="nav-number">29.</span> <span class="nav-text">28. 基本数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#29-int和integer的区别"><span class="nav-number">30.</span> <span class="nav-text">29. int和integer的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#30-Java中基本数据类型的字节长度是固定的，与平台和JVM无关，因为Java是跨平台的，可以一次编译多次运行。"><span class="nav-number">31.</span> <span class="nav-text">30. Java中基本数据类型的字节长度是固定的，与平台和JVM无关，因为Java是跨平台的，可以一次编译多次运行。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#31-String，StringBuffer，StringBuilder"><span class="nav-number">32.</span> <span class="nav-text">31. String，StringBuffer，StringBuilder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#32-instanceof运算符"><span class="nav-number">33.</span> <span class="nav-text">32. instanceof运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#33-switch语句"><span class="nav-number">34.</span> <span class="nav-text">33. switch语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#34-String被设计为不可变类的意义"><span class="nav-number">35.</span> <span class="nav-text">34. String被设计为不可变类的意义</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#异常"><span class="nav-number"></span> <span class="nav-text">异常</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类"><span class="nav-number">1.</span> <span class="nav-text">分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Error"><span class="nav-number">1.1.</span> <span class="nav-text">Error</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Exception"><span class="nav-number">1.2.</span> <span class="nav-text">Exception</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#检查异常-Checked-Exception"><span class="nav-number">1.2.1.</span> <span class="nav-text">检查异常(Checked Exception)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#运行时异常-Runtime-Exception"><span class="nav-number">1.2.2.</span> <span class="nav-text">运行时异常(Runtime Exception)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#try-catch-finally"><span class="nav-number">2.</span> <span class="nav-text">try/catch/finally</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#throw-throws"><span class="nav-number">3.</span> <span class="nav-text">throw/throws</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流"><span class="nav-number"></span> <span class="nav-text">流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#序列化-Serializable"><span class="nav-number">1.</span> <span class="nav-text">序列化(Serializable)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java平台与垃圾回收"><span class="nav-number"></span> <span class="nav-text">Java平台与垃圾回收</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JVM"><span class="nav-number">1.</span> <span class="nav-text">JVM</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器"><span class="nav-number"></span> <span class="nav-text">容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#各个接口"><span class="nav-number">1.</span> <span class="nav-text">各个接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap-Hashtable"><span class="nav-number">2.</span> <span class="nav-text">HashMap, Hashtable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap-TreeMap-LinkedHashMap"><span class="nav-number">3.</span> <span class="nav-text">HashMap, TreeMap, LinkedHashMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ArrayList-LinkedList-Vector"><span class="nav-number">4.</span> <span class="nav-text">ArrayList, LinkedList, Vector</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程"><span class="nav-number"></span> <span class="nav-text">多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现多线程的方法"><span class="nav-number">1.</span> <span class="nav-text">实现多线程的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实现Runnable接口，并实现该接口的run-方法"><span class="nav-number">1.1.</span> <span class="nav-text">实现Runnable接口，并实现该接口的run()方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#继承Thread类，重写run-方法"><span class="nav-number">1.2.</span> <span class="nav-text">继承Thread类，重写run()方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#synchronized关键字"><span class="nav-number">2.</span> <span class="nav-text">synchronized关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程方法"><span class="nav-number">3.</span> <span class="nav-text">线程方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sleep-与wait-的区别"><span class="nav-number">4.</span> <span class="nav-text">sleep()与wait()的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#守护线程与用户线程"><span class="nav-number">5.</span> <span class="nav-text">守护线程与用户线程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#守护线程-Daemon-Thread"><span class="nav-number">5.1.</span> <span class="nav-text">守护线程(Daemon Thread)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程"><span class="nav-number">6.</span> <span class="nav-text">线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁"><span class="nav-number">7.</span> <span class="nav-text">死锁</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JDBC"><span class="nav-number"></span> <span class="nav-text">JDBC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#标准SQL规范的4个事务隔离级别"><span class="nav-number">1.</span> <span class="nav-text">标准SQL规范的4个事务隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JDBC的5中事务隔离级别"><span class="nav-number">2.</span> <span class="nav-text">JDBC的5中事务隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读"><span class="nav-number">3.</span> <span class="nav-text">读</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-Web"><span class="nav-number"></span> <span class="nav-text">Java Web</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Servlet与JSP"><span class="nav-number">1.</span> <span class="nav-text">Servlet与JSP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#会话"><span class="nav-number">2.</span> <span class="nav-text">会话</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#会话跟踪技术"><span class="nav-number">3.</span> <span class="nav-text">会话跟踪技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Servlet的两种跳转方式："><span class="nav-number">4.</span> <span class="nav-text">Servlet的两种跳转方式：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#J2EE"><span class="nav-number"></span> <span class="nav-text">J2EE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring框架的模块"><span class="nav-number">1.</span> <span class="nav-text">Spring框架的模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IoC-控制反转，依赖注入"><span class="nav-number">2.</span> <span class="nav-text">IoC(控制反转，依赖注入)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AOP"><span class="nav-number">3.</span> <span class="nav-text">AOP</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#软件工程与设计模式"><span class="nav-number"></span> <span class="nav-text">软件工程与设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#软件工程与UML"><span class="nav-number"></span> <span class="nav-text">软件工程与UML</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#软件生命周期"><span class="nav-number">1.</span> <span class="nav-text">软件生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软件六大质量特性"><span class="nav-number">2.</span> <span class="nav-text">软件六大质量特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UML类图中类与类之间的关系"><span class="nav-number">3.</span> <span class="nav-text">UML类图中类与类之间的关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式"><span class="nav-number"></span> <span class="nav-text">设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GoF-Gang-of-Four-23种经典设计模式"><span class="nav-number">1.</span> <span class="nav-text">GoF(Gang of Four)23种经典设计模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单例模式"><span class="nav-number">2.</span> <span class="nav-text">单例模式</span></a></li></ol></li></ol></li></div>
             
 
           </div>

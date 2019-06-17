@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="网络与通信OSI七层网络模型   层 描述 数据单位 常见协议 设备     应用层 也称为应用实体，一般指的是应用程序，主要负责确定通信对象，并确保有足够的资源用于通信  FTP, HTTP    表示层 一般负责数据的编码以及转化，负责进行数据的压缩、解压、加密、解密等      会话层 主要负责在网络中的两个节点之间建立、维护、控制会话，区分不同的会话，以及提供单工、半双工、全双工三种通信模">
+<meta name="keywords" content="Question Bank">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Network">
+<meta property="og:url" content="http://yoursite.com/2019/06/12/Question Bank/Network/index.html">
+<meta property="og:site_name" content="A peaceful place">
+<meta property="og:description" content="网络与通信OSI七层网络模型   层 描述 数据单位 常见协议 设备     应用层 也称为应用实体，一般指的是应用程序，主要负责确定通信对象，并确保有足够的资源用于通信  FTP, HTTP    表示层 一般负责数据的编码以及转化，负责进行数据的压缩、解压、加密、解密等      会话层 主要负责在网络中的两个节点之间建立、维护、控制会话，区分不同的会话，以及提供单工、半双工、全双工三种通信模">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-06-16T02:56:55.379Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Network">
+<meta name="twitter:description" content="网络与通信OSI七层网络模型   层 描述 数据单位 常见协议 设备     应用层 也称为应用实体，一般指的是应用程序，主要负责确定通信对象，并确保有足够的资源用于通信  FTP, HTTP    表示层 一般负责数据的编码以及转化，负责进行数据的压缩、解压、加密、解密等      会话层 主要负责在网络中的两个节点之间建立、维护、控制会话，区分不同的会话，以及提供单工、半双工、全双工三种通信模">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/06/12/Question Bank/Network/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Network | A peaceful place</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">A peaceful place</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Talk is cheap. Show me the code.</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/12/Question Bank/Network/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yeweimian21">
+      <meta itemprop="description" content="A novice.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A peaceful place">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Network
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-06-12 11:47:34" itemprop="dateCreated datePublished" datetime="2019-06-12T11:47:34+08:00">2019-06-12</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-06-16 10:56:55" itemprop="dateModified" datetime="2019-06-16T10:56:55+08:00">2019-06-16</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Question-Bank/" itemprop="url" rel="index"><span itemprop="name">Question Bank</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="网络与通信"><a href="#网络与通信" class="headerlink" title="网络与通信"></a>网络与通信</h1><h3 id="OSI七层网络模型"><a href="#OSI七层网络模型" class="headerlink" title="OSI七层网络模型"></a>OSI七层网络模型</h3><table>
+<thead>
+<tr>
+<th>层</th>
+<th>描述</th>
+<th>数据单位</th>
+<th>常见协议</th>
+<th>设备</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>应用层</td>
+<td>也称为应用实体，一般指的是应用程序，主要负责确定通信对象，并确保有足够的资源用于通信</td>
+<td></td>
+<td>FTP, HTTP</td>
+<td></td>
+</tr>
+<tr>
+<td>表示层</td>
+<td>一般负责数据的编码以及转化，负责进行数据的压缩、解压、加密、解密等</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>会话层</td>
+<td>主要负责在网络中的两个节点之间建立、维护、控制会话，区分不同的会话，以及提供单工、半双工、全双工三种通信模式服务</td>
+<td></td>
+<td>NFS(Network File System,网络文件系统)RPC(Remote Procedure Call,远程过程调用)</td>
+<td></td>
+</tr>
+<tr>
+<td>传输层</td>
+<td>主要负责分割，组合数据，实现端到端的链接</td>
+<td>段</td>
+<td>TCP, UDP</td>
+<td></td>
+</tr>
+<tr>
+<td>网络层</td>
+<td>主要负责管理网络地址，定位设备，决定路由</td>
+<td>数据包</td>
+<td>IP, RIP, OSPF</td>
+<td>路由器</td>
+</tr>
+<tr>
+<td>数据链路层</td>
+<td>主要负责物理传输的准备，包括物理地址寻址，CRC校验</td>
+<td>帧</td>
+<td></td>
+<td>交换机</td>
+</tr>
+<tr>
+<td>物理层</td>
+<td>规定了激活，维持，关闭通信端点之间的机械特性、电气特性、功能特性以及过程特性</td>
+<td></td>
+<td></td>
+<td>集线器，双绞线，同轴电缆</td>
+</tr>
+</tbody>
+</table>
+<h3 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h3><p>从一个端口接收到数据包，根据数据包的目的地址进行定向并转发到另外一个端口。</p>
+<h4 id="直连路由"><a href="#直连路由" class="headerlink" title="直连路由"></a>直连路由</h4><p>去往路由器的接口地址所在网段的路径，不需要再配置路由。</p>
+<h4 id="静态路由"><a href="#静态路由" class="headerlink" title="静态路由"></a>静态路由</h4><p>由管理员手动配置的的固定路由，优点是简单、高效，缺点是适应性差，一般适用于网络规模不大，拓扑结构固定的网络中。</p>
+<h4 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h4><p>路由器之间相互通信，传递路由信息，利用收集到的路由信息更新路由表，自动生成路由表。能实时地使用网络结构的变化，适应性强，适用于网络规模大，网络拓扑复杂的网络。</p>
+<h3 id="telnet"><a href="#telnet" class="headerlink" title="telnet"></a>telnet</h3><p>Internet远程登录服务，为用户提供了在本地计算机上完成远程主机工作的能力，一般使用方法为通过终端登录到远程主机。</p>
+<h3 id="TCP与UDP的比较"><a href="#TCP与UDP的比较" class="headerlink" title="TCP与UDP的比较"></a>TCP与UDP的比较</h3><h4 id="UDP-用户数据报协议"><a href="#UDP-用户数据报协议" class="headerlink" title="UDP(用户数据报协议)"></a>UDP(用户数据报协议)</h4><p>提供无连接的通信，不能保证数据包被发送到目标地址。</p>
+<p>UDP报头的四个域：源端口号，目的端口号，数据报长度，校验和</p>
+<h4 id="TCP-控制传输协议"><a href="#TCP-控制传输协议" class="headerlink" title="TCP(控制传输协议)"></a>TCP(控制传输协议)</h4><p>提供面向连接的、可靠的通信</p>
+<table>
+<thead>
+<tr>
+<th>TCP</th>
+<th>UDP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>面向连接的</td>
+<td>无连接的</td>
+</tr>
+<tr>
+<td>具有高可靠性，不会出现丢失或者乱序</td>
+<td>是不可靠的</td>
+</tr>
+<tr>
+<td>消耗系统资源多</td>
+<td>消耗系统资源少</td>
+</tr>
+<tr>
+<td></td>
+<td>实时性好，效率较高</td>
+</tr>
+<tr>
+<td></td>
+<td>网络开销小</td>
+</tr>
+</tbody>
+</table>
+<h3 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h3><p>提高传输效率，当个别包传输失败后，只需要重传失败的包即可</p>
+<h3 id="拥塞控制"><a href="#拥塞控制" class="headerlink" title="拥塞控制"></a>拥塞控制</h3><p>防止过多的数据注入网络，防止路由器或者链路过载</p>
+<h3 id="ICMP-控制报文协议"><a href="#ICMP-控制报文协议" class="headerlink" title="ICMP(控制报文协议)"></a>ICMP(控制报文协议)</h3><h3 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h3><table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>描述</th>
+<th>已定义范围</th>
+<th>分类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1XX</td>
+<td>信息性状态码</td>
+<td>100-101</td>
+<td>信息提示</td>
+</tr>
+<tr>
+<td>2XX</td>
+<td>成功状态码</td>
+<td>200-206</td>
+<td>成功</td>
+</tr>
+<tr>
+<td>3XX</td>
+<td>重定向状态码</td>
+<td>300-305</td>
+<td>重定向</td>
+</tr>
+<tr>
+<td>4XX</td>
+<td>客户端错误状态码</td>
+<td>400-415</td>
+<td>客户端错误</td>
+</tr>
+<tr>
+<td>5XX</td>
+<td>服务器端错误状态码</td>
+<td>500-505</td>
+<td>服务器错误</td>
+</tr>
+</tbody>
+</table>
+<h3 id="HTTP应答错误"><a href="#HTTP应答错误" class="headerlink" title="HTTP应答错误"></a>HTTP应答错误</h3><table>
+<thead>
+<tr>
+<th>错误编码</th>
+<th>错误名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>500</td>
+<td>服务器内部错误</td>
+<td></td>
+</tr>
+<tr>
+<td>501</td>
+<td>未实现</td>
+<td></td>
+</tr>
+<tr>
+<td>502</td>
+<td>错误网关</td>
+<td></td>
+</tr>
+<tr>
+<td>503</td>
+<td>服务不可用</td>
+<td></td>
+</tr>
+<tr>
+<td>504</td>
+<td>网关超时</td>
+<td></td>
+</tr>
+<tr>
+<td>505</td>
+<td>HTTP版本不受支持</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ARP-地址解析协议"><a href="#ARP-地址解析协议" class="headerlink" title="ARP(地址解析协议)"></a>ARP(地址解析协议)</h3><p>根据目标的IP地址获取MAC地址</p>
+<h3 id="RARP-反向地址解析协议"><a href="#RARP-反向地址解析协议" class="headerlink" title="RARP(反向地址解析协议)"></a>RARP(反向地址解析协议)</h3><p>根据MAC地址返回其对应的IP地址</p>
+<h3 id="NAT-网络地址转换"><a href="#NAT-网络地址转换" class="headerlink" title="NAT(网络地址转换)"></a>NAT(网络地址转换)</h3><h3 id="私有IP"><a href="#私有IP" class="headerlink" title="私有IP"></a>私有IP</h3><table>
+<thead>
+<tr>
+<th>类别</th>
+<th>范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A类</td>
+<td>10.0.0.0-10.255.255.255</td>
+</tr>
+<tr>
+<td>B类</td>
+<td>172.16.0.0-172.31.255.255</td>
+</tr>
+<tr>
+<td>C类</td>
+<td>192.168.0.0-192.168.255.255</td>
+</tr>
+</tbody>
+</table>
+<h3 id="加密算法"><a href="#加密算法" class="headerlink" title="加密算法"></a>加密算法</h3><h4 id="对称加密"><a href="#对称加密" class="headerlink" title="对称加密"></a>对称加密</h4><p>加密和解密使用同一个密钥,例如DES，3DES，RC2，RC4，AES</p>
+<h4 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h4><p>加密和解密使用的不是同一个密钥，例如RSA，DSA，ECC</p>
+<h3 id="分布式系统设计"><a href="#分布式系统设计" class="headerlink" title="分布式系统设计"></a>分布式系统设计</h3><ol>
+<li><p>容错设计</p>
+</li>
+<li><p>数据一致性</p>
+</li>
+<li><p>数据和服务的可靠性</p>
+</li>
+<li><p>可扩展性</p>
+</li>
+<li><p>满足ACID特性</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Question-Bank/" rel="tag"># Question Bank</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/06/NLP/Text-preprocessing/" rel="next" title="Text preprocessing">
+                <i class="fa fa-chevron-left"></i> Text preprocessing
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/12/Question Bank/Database/" rel="prev" title="Database">
+                Database <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">yeweimian21</p>
+              <div class="site-description motion-element" itemprop="description">A novice.</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/yeweimian21" title="GitHub &rarr; https://github.com/yeweimian21" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:yourname@gmail.com" title="E-Mail &rarr; mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#网络与通信"><span class="nav-number">1.</span> <span class="nav-text">网络与通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OSI七层网络模型"><span class="nav-number">1.0.1.</span> <span class="nav-text">OSI七层网络模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路由"><span class="nav-number">1.0.2.</span> <span class="nav-text">路由</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#直连路由"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">直连路由</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#静态路由"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">静态路由</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态路由"><span class="nav-number">1.0.2.3.</span> <span class="nav-text">动态路由</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#telnet"><span class="nav-number">1.0.3.</span> <span class="nav-text">telnet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP与UDP的比较"><span class="nav-number">1.0.4.</span> <span class="nav-text">TCP与UDP的比较</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UDP-用户数据报协议"><span class="nav-number">1.0.4.1.</span> <span class="nav-text">UDP(用户数据报协议)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP-控制传输协议"><span class="nav-number">1.0.4.2.</span> <span class="nav-text">TCP(控制传输协议)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#封装"><span class="nav-number">1.0.5.</span> <span class="nav-text">封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拥塞控制"><span class="nav-number">1.0.6.</span> <span class="nav-text">拥塞控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ICMP-控制报文协议"><span class="nav-number">1.0.7.</span> <span class="nav-text">ICMP(控制报文协议)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP状态码"><span class="nav-number">1.0.8.</span> <span class="nav-text">HTTP状态码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP应答错误"><span class="nav-number">1.0.9.</span> <span class="nav-text">HTTP应答错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARP-地址解析协议"><span class="nav-number">1.0.10.</span> <span class="nav-text">ARP(地址解析协议)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RARP-反向地址解析协议"><span class="nav-number">1.0.11.</span> <span class="nav-text">RARP(反向地址解析协议)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NAT-网络地址转换"><span class="nav-number">1.0.12.</span> <span class="nav-text">NAT(网络地址转换)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#私有IP"><span class="nav-number">1.0.13.</span> <span class="nav-text">私有IP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加密算法"><span class="nav-number">1.0.14.</span> <span class="nav-text">加密算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#对称加密"><span class="nav-number">1.0.14.1.</span> <span class="nav-text">对称加密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非对称加密"><span class="nav-number">1.0.14.2.</span> <span class="nav-text">非对称加密</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分布式系统设计"><span class="nav-number">1.0.15.</span> <span class="nav-text">分布式系统设计</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeweimian21</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
