@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="A peaceful place">
 <meta property="og:description" content="The common commands of Hexo.1. init website1$ hexo init [folder] If no folder is provided, Hexo will set up the website in the current directory. 2.1 create a new article1$ hexo new &quot;article&quot; 2.2 crea">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-06-25T02:51:30.184Z">
+<meta property="og:updated_time" content="2019-06-25T10:21:22.128Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo Usage">
 <meta name="twitter:description" content="The common commands of Hexo.1. init website1$ hexo init [folder] If no folder is provided, Hexo will set up the website in the current directory. 2.1 create a new article1$ hexo new &quot;article&quot; 2.2 crea">
@@ -405,7 +405,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-06-25 10:51:30" itemprop="dateModified" datetime="2019-06-25T10:51:30+08:00">2019-06-25</time>
+                <time title="Modified: 2019-06-25 18:21:22" itemprop="dateModified" datetime="2019-06-25T18:21:22+08:00">2019-06-25</time>
               
             
           </span>
@@ -468,18 +468,19 @@
 <p>If no <code>folder</code> is provided, Hexo will set up the website in the current directory.</p>
 <h3 id="2-1-create-a-new-article"><a href="#2-1-create-a-new-article" class="headerlink" title="2.1 create a new article"></a>2.1 create a new article</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"article"</span></span><br></pre></td></tr></table></figure>
 <h3 id="2-2-create-a-new-page"><a href="#2-2-create-a-new-page" class="headerlink" title="2.2 create a new page"></a>2.2 create a new page</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new page <span class="string">"page"</span></span><br></pre></td></tr></table></figure>
-<h3 id="2-3-create-a-new-draft"><a href="#2-3-create-a-new-draft" class="headerlink" title="2.3 create a new draft"></a>2.3 create a new draft</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new draft <span class="string">"draft"</span></span><br></pre></td></tr></table></figure>
 <h3 id="3-Generate-static-files"><a href="#3-Generate-static-files" class="headerlink" title="3. Generate static files"></a>3. Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g</span><br></pre></td></tr></table></figure>
 <h3 id="4-Start-local-server"><a href="#4-Start-local-server" class="headerlink" title="4. Start local server"></a>4. Start local server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo s</span><br></pre></td></tr></table></figure>
-<p>Can preview drafts.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server --drafts</span><br></pre></td></tr></table></figure>
 <p>By default, It is at <code>http://localhost:4000/</code>.</p>
 <h3 id="5-Deploy-to-remote-website"><a href="#5-Deploy-to-remote-website" class="headerlink" title="5. Deploy to remote website"></a>5. Deploy to remote website</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
 <h3 id="6-Clean-the-file"><a href="#6-Clean-the-file" class="headerlink" title="6. Clean the file"></a>6. Clean the file</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br></pre></td></tr></table></figure>
 <p>It will clean the cache file (db.json) and generated files (public directory).</p>
+<h3 id="7-The-draft"><a href="#7-The-draft" class="headerlink" title="7. The draft"></a>7. The draft</h3><h3 id="7-1-create-a-new-draft"><a href="#7-1-create-a-new-draft" class="headerlink" title="7.1 create a new draft"></a>7.1 create a new draft</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new draft <span class="string">"draft"</span></span><br></pre></td></tr></table></figure>
+<h3 id="7-2-publish-the-draft"><a href="#7-2-publish-the-draft" class="headerlink" title="7.2 publish the draft"></a>7.2 publish the draft</h3><p>Moves a draft post from _drafts to _posts folder.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo publish [layout] &lt;draft-filename&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="7-3-Start-the-server-and-preview-drafts"><a href="#7-3-Start-the-server-and-preview-drafts" class="headerlink" title="7.3 Start the server and preview drafts"></a>7.3 Start the server and preview drafts</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server --drafts</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -601,7 +602,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-count">43</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -656,7 +657,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">19</span>
+                      
+                    
+                    <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -713,7 +716,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">20</span>
+                      
+                    
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -777,7 +782,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#The-common-commands-of-Hexo"><span class="nav-number">1.</span> <span class="nav-text">The common commands of Hexo.</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-init-website"><span class="nav-number">1.0.1.</span> <span class="nav-text">1. init website</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-create-a-new-article"><span class="nav-number">1.0.2.</span> <span class="nav-text">2.1 create a new article</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-create-a-new-page"><span class="nav-number">1.0.3.</span> <span class="nav-text">2.2 create a new page</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-create-a-new-draft"><span class="nav-number">1.0.4.</span> <span class="nav-text">2.3 create a new draft</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Generate-static-files"><span class="nav-number">1.0.5.</span> <span class="nav-text">3. Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Start-local-server"><span class="nav-number">1.0.6.</span> <span class="nav-text">4. Start local server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Deploy-to-remote-website"><span class="nav-number">1.0.7.</span> <span class="nav-text">5. Deploy to remote website</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Clean-the-file"><span class="nav-number">1.0.8.</span> <span class="nav-text">6. Clean the file</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#The-common-commands-of-Hexo"><span class="nav-number">1.</span> <span class="nav-text">The common commands of Hexo.</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-init-website"><span class="nav-number">1.0.1.</span> <span class="nav-text">1. init website</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-create-a-new-article"><span class="nav-number">1.0.2.</span> <span class="nav-text">2.1 create a new article</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-create-a-new-page"><span class="nav-number">1.0.3.</span> <span class="nav-text">2.2 create a new page</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Generate-static-files"><span class="nav-number">1.0.4.</span> <span class="nav-text">3. Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Start-local-server"><span class="nav-number">1.0.5.</span> <span class="nav-text">4. Start local server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Deploy-to-remote-website"><span class="nav-number">1.0.6.</span> <span class="nav-text">5. Deploy to remote website</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Clean-the-file"><span class="nav-number">1.0.7.</span> <span class="nav-text">6. Clean the file</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-The-draft"><span class="nav-number">1.0.8.</span> <span class="nav-text">7. The draft</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-create-a-new-draft"><span class="nav-number">1.0.9.</span> <span class="nav-text">7.1 create a new draft</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-publish-the-draft"><span class="nav-number">1.0.10.</span> <span class="nav-text">7.2 publish the draft</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-Start-the-server-and-preview-drafts"><span class="nav-number">1.0.11.</span> <span class="nav-text">7.3 Start the server and preview drafts</span></a></li></ol></li></ol></div>
             
 
           </div>
