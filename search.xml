@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[Add Hexo search function]]></title>
+    <url>%2F2019%2F06%2F26%2FHexo%2Fhexo-search%2F</url>
+    <content type="text"><![CDATA[Add search function for Hexo with NexT theme1. Execute the command in your blog root directory1$ npm install hexo-generator-searchdb --save 2. Edit the blog website configuration fileAdd the following configuration content to the _config.yml configuration file. It can be added to any location in the file. I added it to the end of the file. 12345search: path: search.xml field: post format: html limit: 10000 3. Edit the theme configuration fileEdit the themes/hexo-theme-next/_config.yml configuration file of the NexT theme. modify enable: false to enable: true 1234567891011# Local search# Dependencies: https://github.com/theme-next/hexo-generator-searchdblocal_search: enable: true # If auto, trigger search by changing input. # If manual, trigger search by pressing enter key or search button. trigger: auto # Show top n results per article, show all results by setting to -1 top_n_per_article: 1 # Unescape html strings to the readable one. unescape: false The result]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Traverse File]]></title>
+    <url>%2F2019%2F06%2F25%2FJava%2Ftraverse-file%2F</url>
+    <content type="text"><![CDATA[Traverse all files in the folder and its subfolders12345678910111213141516171819202122232425// Recursive methodpublic static List&lt;String&gt; getFileList(String strPath) &#123; ArrayList&lt;String&gt; filelist = new ArrayList&lt;String&gt;(); File dir = new File(strPath); File[] files = dir.listFiles(); if (files != null) &#123; for (int i = 0; i &lt; files.length; i++) &#123; String fileName = files[i].getName(); // Judge it is a file or a folder if (files[i].isDirectory()) &#123; filelist.addAll(getFileList(files[i].getAbsolutePath())); &#125; // Filter file type else if (fileName.endsWith("txt")) &#123; String strFileName = files[i].getAbsolutePath(); filelist.add(strFileName); &#125; else &#123; continue; &#125; &#125; &#125; return filelist;&#125;]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[hexo-commment]]></title>
+    <url>%2F2019%2F06%2F25%2FHexo%2Fhexo-comment%2F</url>
+    <content type="text"><![CDATA[Add the comment system to HexoI choose the Gitalk comment system. Gitalk is a modern comment component based on GitHub Issue and Preact. The Features of Gitalk Authentication with github account Serverless, all comments will be stored as github issues Both personal and organization github projects can be used to store comments Localization, support multiple languages [en, zh-CN, zh-TW, es-ES, fr, ru] Facebook-like distraction free mode (Can be enabled via the distractionFreeMode option) Hotkey submit comment (cmd|ctrl + enter) 1. Register a new OAuth applicationLogin your GitHub. Click the Settings -&gt; Developer settings -&gt; OAuth Apps -&gt; New OAuth App. 1234567Application name: You can write as you want. It is arbitrary.Homepage URL: I write the url of my blog Home page.Application description: You can write as you want. It is arbitrary.Authorization callback URL: It is important. Write the url of your blog. Click the button Register application. Then you can get the Client ID and Client Secret 2. Edit the file themes\hexo-theme-next\_config.yml in NexT theme directory1234567891011121314# Gitalk# Demo: https://gitalk.github.iogitalk: enable: false github_id: # Github repo owner repo: # Repository name to store issues client_id: # Github Application Client ID client_secret: # Github Application Client Secret admin_user: # GitHub repo owner and collaborators, only these guys can initialize github issues distraction_free_mode: true # Facebook-like distraction free mode # Gitalk&apos;s display language depends on user&apos;s browser or system environment # If you want everyone visiting your site to see a uniform language, you can set a force language value # Available values: en, es-ES, fr, ru, zh-CN, zh-TW language: 1234567891011enable: The default is false, modify to true.github_id: Your GitHub username.repo: The name of your blog GitHub repository. Note that it is the name of your repository not the url of your repository.client_id: The Client ID obtained in the previous step.client_secret: The Client Secret obtained in the previous step.admin_user: Your GitHub username. Other items don’t need to be modified. 3. Initialize the commentIf it prompted to initialize the comment in the page, you can login GitHub, then authorization and initialization the comment system in each page.]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hexo visited count]]></title>
+    <url>%2F2019%2F06%2F24%2FHexo%2Fhexo-visited-count%2F</url>
+    <content type="text"><![CDATA[Add the visited count of articles in Hexo NexT themeThe theme is NexT. Use busuanzi to count the article’s visited number. 1. Edit the file themes\hexo-theme-next\_config.yml in NexT theme directory12345678910# Show Views / Visitors of the website / page with busuanzi.# Get more information on http://ibruce.info/2015/04/04/busuanzibusuanzi_count: enable: true total_visitors: true total_visitors_icon: user total_views: true total_views_icon: eye post_views: true post_views_icon: eye 2. Save and restart]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Framework]]></title>
+    <url>%2F2019%2F06%2F21%2FQuestion%20Bank%2FFramework%2F</url>
+    <content type="text"><![CDATA[J2EEGet与Post的区别MVCSpring框架的模块 模块 描述 Spring AOP Spring ORM Spring DAO Spring Web Spring Context Spring Web MVC Spring Core IoC(控制反转，依赖注入)思想是反转资源获取的方向。传统的资源查找方式要求组件向容器发起请求查找资源, 容器适时的返回资源。而IOC是容器主动地将资源推送给它所管理的组件，组件来接受资源. AOP允许开发人员在不改变原来模型的基础上动态地修改模型从而满足新的需求。例如，在不改变原来业务逻辑模型的基础上，可以动态的增加日志、安全或者异常处理的功能。]]></content>
+      <categories>
+        <category>Question Bank</category>
+      </categories>
+      <tags>
+        <tag>Question Bank</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Modify GitHub project language]]></title>
+    <url>%2F2019%2F06%2F17%2FTool%2Fgithub-language%2F</url>
+    <content type="text"><![CDATA[Modify the language of the project on GitHub.The project language on GitHub is automatically recognized. GitHub displays the most file types in a project as the language of the project. But sometimes the language that GitHub automatically recognizes is not what we expect. We can change the display language of the project by the following method. Step1. Create a file .gitattributes in the root of the projectStep2. Add the following content to the .gitattributes file123*.html linguist-language=Java*.css linguist-language=Java*.js linguist-language=Java Step3. Save and commit the .gitattribute file]]></content>
+      <categories>
+        <category>GitHub</category>
+      </categories>
+      <tags>
+        <tag>GitHub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[File name]]></title>
+    <url>%2F2019%2F06%2F17%2FPython%2Ffile%2F</url>
+    <content type="text"><![CDATA[Get the file name (excluding the extension)123456789def getFileMainName(file_full_name): index = file_full_name.rfind(".") file_main_name = file_full_name[:index] return file_main_namedef test(): file_list = ["news.txt", "Student.java", "build.properties.txt", "connection.mysql.sql"] for file in file_list: print(getFileMainName(file)) result1234newsStudentbuild.propertiesconnection.mysql]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Read all files in the directory]]></title>
+    <url>%2F2019%2F06%2F17%2FPython%2Fread-directory-file%2F</url>
+    <content type="text"><![CDATA[Read the contents of all the files in the directory and record them12345678910111213# Record the contents of all filesdocuments = []# The path of directorydirectory_path = "E:/input/documents"# Read all filesfor root,dirs,files in os.walk(directory_path): for file in files: foRead = open(os.path.join(root, file), "r", encoding="iso-8859-1") content = foRead.read() documents.append(content) foRead.close()]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Identifier Split]]></title>
+    <url>%2F2019%2F06%2F17%2FPython%2FIdentifier-split%2F</url>
+    <content type="text"><![CDATA[Camel-Case identifier splitIdentifier naming often uses Camel-Case. Camel-Case uses uppercase and lowercase letters to name the identifier. We can split the identifier name into separate words based on the letter case of the name of the identifier. 123456789101112131415161718def test_documents(): documents = ["getPassword", "getCityLocation", "ControlData", "Tourist", "match"] documents_split = [] for str in documents: if str.islower(): documents_split.append(str) else: begin = 0 for j in range(1, len(str)): if str[j].isupper(): end = j documents_split.append(str[begin:end].lower()) begin = end documents_split.append(str[begin:].lower()) print(documents_split) result1[&apos;get&apos;, &apos;password&apos;, &apos;get&apos;, &apos;city&apos;, &apos;location&apos;, &apos;control&apos;, &apos;data&apos;, &apos;tourist&apos;, &apos;match&apos;]]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Vector Uasge]]></title>
+    <url>%2F2019%2F06%2F13%2FC%2B%2B%2Fvector-cpp%2F</url>
+    <content type="text"><![CDATA[VectorVector is a Sequence Container. Vector is a dynamic array that can store objects of any type. Head fileTo use Vector, you need to add #include&lt;vector&gt; at the beginning of the program, and add using namespace std; 123#include &lt;vector&gt;using namespace std; Vector declaration and initializationDeclare a vector of int type1vector&lt;int&gt; number; Declare a vector with an initial size of 101vector&lt;int&gt; number(10); Declare a vector with an initial size of 10 and an initial value of 1 for all elements1vector&lt;int&gt; number(10, 1); Declare and initialize vector number with vector score12vector&lt;int&gt; score(10, 2);vector&lt;int&gt; number(a); The 0th to 4th (5 total) elements of the score vector are used as the initials of the vector number12vector&lt;int&gt; score(10, 2);vector&lt;int&gt; number(score.begin(), score.begin()+5); Use array to initialize vector1234567int b[10] = &#123;1,2,3,4,5,6,7,8,9,10&#125;;// The first 6 elements of the array b are used as the initial values of the vector number6vector&lt;int&gt; number6(b, b+6);//The b[1]-b[4] element of the array b is used as the initial value of the vector number7vector&lt;int&gt; number7(&amp;b[2], &amp;b[5]); Access vector elementAccess vector elements by index1234for (int i = 0; i &lt; number.size(); i++)&#123; cout &lt;&lt; number[i] &lt;&lt; " ";&#125; Use iterator to access vector elements12345vector&lt;int&gt;::iterator it;for (it = number.begin(); it != number.end() ; it++)&#123; cout &lt;&lt; *it &lt;&lt; " ";&#125; Add elements to the vectorUsing following way to assign values is wrong. vec is an empty vector object that does not contain elements. Only existing elements can be accessed through the index. 1234vector&lt;int&gt; vec;for (int i = 0; i &lt; 10; i++)&#123; vec[i] = i;&#125; The correct way is this. 1234vector&lt;int&gt; vec;for (int i = 0; i &lt; 10; i++)&#123; vec.push_back(i);&#125; ## 12345vector&lt;int&gt; number;number.size();number.empty();number.clear();]]></content>
+      <categories>
+        <category>C plus plus</category>
+      </categories>
+      <tags>
+        <tag>C plus plus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Item1]]></title>
+    <url>%2F2019%2F06%2F13%2FLeetCode%2FItem1%2F</url>
+    <content type="text"><![CDATA[1. Two Sum给定一个整数数组，返回它们加到特定目标的两个数字的索引。 您可以假设每个输入只有一个解决方案，并且您可能不会两次使用相同的元素。 Example: 1234Given nums = [2, 7, 11, 15], target = 9,Because nums[0] + nums[1] = 2 + 7 = 9,return [0, 1]. Solution: 使用一个HashMap，来建立数字和其下标之间的映射，HashMap 是常数级的查找效率，在遍历数组的时候，用target减去遍历到的数字，就能得到另一个需要的数字，直接在HashMap中查找其是否存在即可，注意要判断查找到的数字不是重复的数字。 实现步骤：先遍历一遍数组，建立HashMap映射，然后再遍历一遍，开始查找，找到则记录 index。 C++123456789101112131415161718192021222324252627282930313233343536373839404142434445464748#include &lt;stdio.h&gt;#include &lt;stdlib.h&gt;#include &lt;iostream&gt;#include &lt;vector&gt;#include &lt;tr1/unordered_map&gt;using namespace std;using namespace std::tr1;class Solution &#123;public: vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) &#123; unordered_map&lt;int, int&gt; m; vector&lt;int&gt; res; for (int i = 0; i &lt; nums.size(); i++) &#123; m[nums[i]] = i; &#125; for (int i = 0; i &lt; nums.size(); ++i) &#123; int t = target - nums[i]; if (m.count(t) &amp;&amp; m[t] != i) &#123; res.push_back(i); res.push_back(m[t]); break; &#125; &#125; return res; &#125;&#125;;int main()&#123; int n[6] = &#123;2, 7, 11, 15, 3, 5&#125;; vector&lt;int&gt; number(n, n+6); int target = 20; Solution obj; vector&lt;int&gt; result = obj.twoSum(number, target); cout &lt;&lt; "["; for (int i = 0; i &lt; result.size(); i++) &#123; cout &lt;&lt; result[i]; if (i != result.size()-1) &#123; cout &lt;&lt; ", "; &#125; &#125; cout &lt;&lt; "]" &lt;&lt; endl;&#125;]]></content>
+      <categories>
+        <category>Question Bank</category>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>Question Bank</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[python-function]]></title>
+    <url>%2F2019%2F06%2F12%2FPython%2Fpython-function%2F</url>
+    <content type="text"><![CDATA[Parameter passing of python functionParameter Type mutable type(string, tuple, numbers): Similar to value passing. Passing the value only, and does not affect the object itself. Modifying its value inside a function does not affect itself. immutable type(List, Dictionary): Similar to reference passing. Outside objects are also affected after modifying parameters inside the function.]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[python-time]]></title>
+    <url>%2F2019%2F06%2F12%2FPython%2Fpython-time%2F</url>
+    <content type="text"><![CDATA[Get the consume time of program running123456789101112import time# at the beginning of the programbeginTime = time.clock()...# at the end of the programendTime = time.clock()print("running Time=", "%.2f" % (endTime - beginTime), "s")print("running Time=", "%.2f" % ((endTime - beginTime) / 60), "min")]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Use Gensim to implement TF-IDF model]]></title>
+    <url>%2F2019%2F06%2F12%2FNLP%2Fcreate-tfidf-model%2F</url>
+    <content type="text"><![CDATA[Calculate similarity using TF-IDF modelImport the module1from gensim import corpora, models, similarities Get the dictionary and corpus123456789# get the dictionarydictionary = corpora.Dictionary(texts)# store the dictionary,for future referencedictionary.save('../../tmp/doc.dict')# get the corpuscorpus = [dictionary.doc2bow(text) for text in texts]# storecorpora.MmCorpus.serialize('../../tmp/doc.mm', corpus) Calculate the similarity between doc and other documents12345678910111213141516171819def get_similarity_doc(doc_path, dictionary, corpus): tfidf_model = models.TfidfModel(corpus) # featureNum = len(dictionary.token2id.keys()) corpus_tfidf = tfidf_model[corpus] index = similarities.MatrixSimilarity(corpus_tfidf) fo = open(doc_path, "r", encoding="iso-8859-1") new_doc = fo.read() new_doc_array = new_doc.lower().split() new_vec = dictionary.doc2bow(new_doc_array) vec_tfidf = tfidf_model[new_vec] sims = index[vec_tfidf] return sims Calculate the similarity between document i and document j1234567891011121314def get_similarity_i_j(i, j, dictionary, corpus): tfidf_model = models.TfidfModel(corpus) featureNum = len(dictionary.token2id.keys()) index = similarities.MatrixSimilarity(tfidf_model[corpus]) i_vector = corpus[i] ml_tfidf = tfidf_model[i_vector] sims = index[ml_tfidf] sim_i_j = sims[j] return sim_i_j]]></content>
+      <categories>
+        <category>Natural Language Processing</category>
+        <category>Gensim</category>
+      </categories>
+      <tags>
+        <tag>Gensim</tag>
+        <tag>TF-IDF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Use Gensim to implement LDA model]]></title>
+    <url>%2F2019%2F06%2F12%2FNLP%2Fcreate-LDA-model%2F</url>
+    <content type="text"><![CDATA[Calculate similarity using LDA modelImport the module1from gensim import corpora, models, similarities Calculate the similarity between doc and other documents12345678910111213141516171819202122def get_similarity_doc(doc_path, dictionary, corpus): topic_num = 50 lda_model = models.LdaModel(corpus, id2word=dictionary, num_topics=topic_num) featureNum = len(dictionary.token2id.keys()) index = similarities.SparseMatrixSimilarity(lda_model[corpus], num_features=featureNum) fo = open(doc_path, "r", encoding="iso-8859-1") new_doc = fo.read() new_doc_array = new_doc.lower().split() new_vec = dictionary.doc2bow(new_doc_array) ml_lda = lda_model[new_vec] sims = index[ml_lda] return sims Calculate the similarity between document i and document j12345678910111213def get_similarity_i_j(i, j, dictionary, corpus): lda_model = models.LdaModel(corpus, id2word=dictionary, num_topics=topic_num) featureNum = len(dictionary.token2id.keys()) index = similarities.SparseMatrixSimilarity(lda_model[corpus], num_features=featureNum) i_vector = corpus[i] ml_lda = lda_model[i_vector] sims = index[ml_lda] sim_i_j = sims[j] return sim_i_j]]></content>
+      <categories>
+        <category>Natural Language Processing</category>
+        <category>Gensim</category>
+      </categories>
+      <tags>
+        <tag>Gensim</tag>
+        <tag>LDA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Database]]></title>
+    <url>%2F2019%2F06%2F12%2FQuestion%20Bank%2FDatabase%2F</url>
+    <content type="text"><![CDATA[数据库事务的4个属性(ACID) 原子性(Atomicity) 事务是一个不可分割的整体，要么全部执行，要么全部不执行 一致性(Consistency)： 一个事务在执行之前和执行之后，数据库数据必须保持一致性状态。 隔离性(Isolation) 当两个或多个事务并发执行时，为了保证数据的安全性，将一个事务内部的操作隔离起来，不被其他的正在进行的事务看到。 持久性(Durability) 事务完成以后，DBMS保证它对数据库中数据的修改是永久性的。 存储过程一组为了完成特定功能的SQL语句集，经过一次编译，再次调用不需要再次编译。 触发器是与表事件相关的特殊的存储过程，它的执行不是由程序调用，而是由事件触发 索引索引是对数据库表中一列或多列的值进行排序的一种结构，使用索引可以快速访问数据库表中的特定记录 聚集索引：表数据按照索引的顺序来存储，即索引项的顺序与表中记录的物理顺序一致。 非聚集索引：表数据存储顺序与索引顺序无关 内连接和外连接 内连接：也称为自然连接，只返回两表相匹配的行。 外连接：不仅包含符合连接条件的行，而且还包括左表(左外连接)，右表(右外连接)，两个表(全外链接) 视图视图是由从数据库的基本表中选取出来的数据组成的逻辑窗口，不同于基本表，它是一个虚表。 数据库范式常见的范式：1NF, 2NF, 3NF, BCNF, 4NF 1NF(第一范式) 数据库的每一项都是不可分割的，属性不能再分裂成更小的部分。 2NF(第二范式) 在满足第一范式的基础上，数据库中的非主键字段必须完全依赖主键，不能产生部分依赖。 3NF(第三范式) 在满足第二范式的基础上，非主键字段不能产生传递依赖于主键字段。 主键表中一个或多个字段，它的值用于唯一的标识表中的某一条记录。一个表只能有一个主键，主键列不能有空值。 外键在一个表中引用来自另一个表中的特定记录 死锁产生死锁的原因 系统资源不足 线程运行推进的顺序不合适 资源分配不当 产生死锁的必要条件 互斥(资源独占) 请求与保持(部分分配，占有申请) 不可剥夺(不可强占) 循环等待 避免死锁的方法 一次封锁法 顺序封锁法 银行家算法 有助于最大限度降低思索的方法 按同一顺序访问对象 避免事务中的用户交互 保持事务简短并在一个批处理中 使用低隔离级别 数据库中常用的锁共享锁(S锁，Share Lock)用于所有的只读数据操作，共享锁是非独占的，允许多个并发事务读取其锁定的资源。 性质： 多个事务可封锁一个共享页 任何事物都不能修改该页 通常改业被读取完毕，S锁立即被释放。 排他锁(X锁，Exclusive Lock)也叫做写锁，表示对数据进行写操作。 性质： 仅允许一个事务封锁此页 其他任何事务必须等到X锁被释放才能对该页进行访问 X锁一直到事务结束才能被释放。 更新锁(U锁)在修改操作的初始化阶段锁定可能要被修改的资源。 性质： 用来预定对此页施加X锁，允许其他事务读，但是不允许再施加U锁或X锁 当被读取的页将要被更新时，升级为X锁 U锁一直到事务结束时才能被释放 数据库连接池数据库连接是一种宝贵且有限的资源。1. 建立数据库连接是一个耗时的操作。2.数据库连接个数是有限的，如果用户经常建立数据库连接，数据库的连接资源会耗尽。 数据库连接池可以分配、管理并释放数据库连接，允许程序重复使用现有的数据库连接，释放空闲时间超过最大空闲时间的数据库连接。]]></content>
+      <categories>
+        <category>Question Bank</category>
+      </categories>
+      <tags>
+        <tag>Question Bank</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Network]]></title>
+    <url>%2F2019%2F06%2F12%2FQuestion%20Bank%2FNetwork%2F</url>
+    <content type="text"><![CDATA[网络与通信OSI七层网络模型 层 描述 数据单位 常见协议 设备 应用层 也称为应用实体，一般指的是应用程序，主要负责确定通信对象，并确保有足够的资源用于通信 FTP, HTTP 表示层 一般负责数据的编码以及转化，负责进行数据的压缩、解压、加密、解密等 会话层 主要负责在网络中的两个节点之间建立、维护、控制会话，区分不同的会话，以及提供单工、半双工、全双工三种通信模式服务 NFS(Network File System,网络文件系统)RPC(Remote Procedure Call,远程过程调用) 传输层 主要负责分割，组合数据，实现端到端的链接 段 TCP, UDP 网络层 主要负责管理网络地址，定位设备，决定路由 数据包 IP, RIP, OSPF 路由器 数据链路层 主要负责物理传输的准备，包括物理地址寻址，CRC校验 帧 交换机 物理层 规定了激活，维持，关闭通信端点之间的机械特性、电气特性、功能特性以及过程特性 集线器，双绞线，同轴电缆 路由从一个端口接收到数据包，根据数据包的目的地址进行定向并转发到另外一个端口。 直连路由去往路由器的接口地址所在网段的路径，不需要再配置路由。 静态路由由管理员手动配置的的固定路由，优点是简单、高效，缺点是适应性差，一般适用于网络规模不大，拓扑结构固定的网络中。 动态路由路由器之间相互通信，传递路由信息，利用收集到的路由信息更新路由表，自动生成路由表。能实时地使用网络结构的变化，适应性强，适用于网络规模大，网络拓扑复杂的网络。 telnetInternet远程登录服务，为用户提供了在本地计算机上完成远程主机工作的能力，一般使用方法为通过终端登录到远程主机。 TCP与UDP的比较UDP(用户数据报协议)提供无连接的通信，不能保证数据包被发送到目标地址。 UDP报头的四个域：源端口号，目的端口号，数据报长度，校验和 TCP(控制传输协议)提供面向连接的、可靠的通信 TCP UDP 面向连接的 无连接的 具有高可靠性，不会出现丢失或者乱序 是不可靠的 消耗系统资源多 消耗系统资源少 实时性好，效率较高 网络开销小 封装提高传输效率，当个别包传输失败后，只需要重传失败的包即可 拥塞控制防止过多的数据注入网络，防止路由器或者链路过载 ICMP(控制报文协议)HTTP状态码 状态码 描述 已定义范围 分类 1XX 信息性状态码 100-101 信息提示 2XX 成功状态码 200-206 成功 3XX 重定向状态码 300-305 重定向 4XX 客户端错误状态码 400-415 客户端错误 5XX 服务器端错误状态码 500-505 服务器错误 HTTP应答错误 错误编码 错误名称 描述 500 服务器内部错误 501 未实现 502 错误网关 503 服务不可用 504 网关超时 505 HTTP版本不受支持 ARP(地址解析协议)根据目标的IP地址获取MAC地址 RARP(反向地址解析协议)根据MAC地址返回其对应的IP地址 NAT(网络地址转换)私有IP 类别 范围 A类 10.0.0.0-10.255.255.255 B类 172.16.0.0-172.31.255.255 C类 192.168.0.0-192.168.255.255 加密算法对称加密加密和解密使用同一个密钥,例如DES，3DES，RC2，RC4，AES 非对称加密加密和解密使用的不是同一个密钥，例如RSA，DSA，ECC 分布式系统设计 容错设计 数据一致性 数据和服务的可靠性 可扩展性 满足ACID特性 tinyurl是一个专门提供缩略网址服务的网站，它提供一个短网址并转向指定的长网址。]]></content>
+      <categories>
+        <category>Question Bank</category>
+      </categories>
+      <tags>
+        <tag>Question Bank</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Text preprocessing]]></title>
+    <url>%2F2019%2F06%2F06%2FNLP%2FText-preprocessing%2F</url>
+    <content type="text"><![CDATA[The Text preprocessing1234567891011121314151617181920212223242526272829303132333435363738import MyUtildef textProprocess(documents): # import the nltk # word segmentation from nltk.tokenize import word_tokenize texts_tokenized = [[word.lower() for word in word_tokenize(document)] for document in documents] # remove the stop words from nltk.corpus import stopwords english_stopwords = stopwords.words('english') texts_filtered_stopwords = [[word for word in document if not word in english_stopwords] for document in texts_tokenized] # remove the punctuation english_punctuations = [',', '.', ':', ';', '?', '(', ')', '[', ']', '&amp;', '!', '=', '*', '@', '#', '$', '%', '/', '\\', '+', '&gt;', '&lt;', '\'\'', '``', '_-', '**', '-', '==', '***', '|'] texts_filtered_punctuations = [[word for word in document if not word in english_punctuations] for document in texts_filtered_stopwords] # remove the numbers texts_filtered_numbers = [[word for word in document if not MyUtil.is_number(word)] for document in texts_filtered_punctuations] # stemming from nltk.stem.lancaster import LancasterStemmer st = LancasterStemmer() texts_stemmed = [[st.stem(word) for word in docment] for docment in texts_filtered_numbers] # remove the low frequency words all_stems = sum(texts_stemmed, []) stems_once = set(stem for stem in set(all_stems) if all_stems.count(stem) == 1) texts = [[stem for stem in text if stem not in stems_once] for text in texts_stemmed] return texts Judge if the word is a number1234567891011121314151617# MyUtil.pydef is_number(s): try: float(s) return True except ValueError: pass try: import unicodedata unicodedata.numeric(s) return True except (TypeError, ValueError): pass return False]]></content>
+      <categories>
+        <category>Natural Language Processing</category>
+        <category>NLTK</category>
+      </categories>
+      <tags>
+        <tag>NLTK</tag>
+        <tag>Textual</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[POS(part-of-speech)]]></title>
+    <url>%2F2019%2F06%2F05%2FNLP%2FPOS%2F</url>
+    <content type="text"><![CDATA[Use NLTK to implement POS(part-of-speech)Performing the part-of-speech tagging on words in a list, then choose the nouns in it. 12345678910111213import nltktext = "Six Nations and rugby league games held silences this weekend but English top flight and FA Cup games did not"text_array = text.lower().split()pos_array = nltk.tag.pos_tag(text_array)noun_doc_array = []for elem in pos_array: if elem[1] == "NN": noun_doc_array.append(elem[0]) 1print(nltk.tag.pos_tag(new_doc_array)) The result 1[(&apos;six&apos;, &apos;CD&apos;), (&apos;nations&apos;, &apos;NNS&apos;), (&apos;and&apos;, &apos;CC&apos;), (&apos;rugby&apos;, &apos;VB&apos;), (&apos;league&apos;, &apos;NN&apos;), (&apos;games&apos;, &apos;NNS&apos;), (&apos;held&apos;, &apos;VBD&apos;), (&apos;silences&apos;, &apos;NNS&apos;), (&apos;this&apos;, &apos;DT&apos;), (&apos;weekend&apos;, &apos;NN&apos;), (&apos;but&apos;, &apos;CC&apos;), (&apos;english&apos;, &apos;JJ&apos;), (&apos;top&apos;, &apos;JJ&apos;), (&apos;flight&apos;, &apos;NN&apos;), (&apos;and&apos;, &apos;CC&apos;), (&apos;fa&apos;, &apos;JJ&apos;), (&apos;cup&apos;, &apos;NN&apos;), (&apos;games&apos;, &apos;NNS&apos;), (&apos;did&apos;, &apos;VBD&apos;), (&apos;not&apos;, &apos;RB&apos;)] Get the description of Tag1nltk.help.upenn_tagset("VBD") The result 1234VBD: verb, past tense dipped pleaded swiped regummed soaked tidied convened halted registered cushioned exacted snubbed strode aimed adopted belied figgered speculated wore appreciated contemplated ... 1nltk.help.upenn_tagset() The partial result 1234567891011121314...CC: conjunction, coordinating &amp; &apos;n and both but either et for less minus neither nor or plus so therefore times v. versus vs. whether yetCD: numeral, cardinal mid-1890 nine-thirty forty-two one-tenth ten million 0.5 one forty- seven 1987 twenty &apos;79 zero two 78-degrees eighty-four IX &apos;60s .025 fifteen 271,124 dozen quintillion DM2,000 ...DT: determiner all an another any both del each either every half la many much nary neither no some such that the them these this those... Several common tag123456789101112131415CC: conjunction, coordinatingCD: numeral, cardinalJJ: adjective or numeral, ordinalNN: noun, common, singular or massNNS: noun, common, pluralVB: verb, base formVBD: verb, past tenseVBZ: verb, present tense, 3rd person singular]]></content>
+      <categories>
+        <category>Natural Language Processing</category>
+        <category>NLTK</category>
+      </categories>
+      <tags>
+        <tag>NLTK</tag>
+        <tag>POS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Use Gensim to implement doc2vec model]]></title>
+    <url>%2F2019%2F06%2F05%2FNLP%2Fdoc2vec%2F</url>
+    <content type="text"><![CDATA[Doc2vec ModelImplementing the Doc2vec model with Gensim. Import the module1234567import sysimport gensimimport numpy as npfrom gensim.models.doc2vec import Doc2Vec, LabeledSentenceTaggededDocument = gensim.models.doc2vec.TaggedDocument Process the dataset12345678910def get_datasest(documents): data_train = [] for i, text in enumerate(documents): word_list = text.split(' ') l = len(word_list) word_list[l - 1] = word_list[l - 1].strip() document = TaggededDocument(word_list, tags=[i]) data_train.append(document) return data_train Train the model12345678def train(data_train, size=200, epoch_num=1): model_doc2vec = Doc2Vec(data_train, min_count=1, window=3, vector_size=size, sample=1e-3, negative=5, workers=4) model_doc2vec.train(data_train, total_examples=model_doc2vec.corpus_count, epochs=100) # Save model model_doc2vec.save('../../output/model/model_doc2vec') return model_doc2vec 123def train_doc2vec_model(documents): data_train = get_datasest(documents) train(data_train) Calculate the similarity between doc and other documents12345678910111213def get_similarity_doc(doc_path): # Load model model_doc2vec = Doc2Vec.load("../../output/model/model_doc2vec") fo = open(doc_path, "r", encoding="UTF-8") new_doc = fo.read() new_doc_array = new_doc.lower().split() inferred_vector_doc2vec = model_doc2vec.infer_vector(new_doc_array) sims = model_doc2vec.docvecs.most_similar([inferred_vector_doc2vec], topn=200) return sims Calculate the similarity between document i and document j1234def get_similarity_i_j(i, j): model_doc2vec = Doc2Vec.load("../../output/model/model_doc2vec") sims = model_doc2vec.docvecs.similarity(Ci, Cj) return sims Return the most similar to document i1print(model_dm.docvecs.most_similar(i,topn=3)) The parameter topn defaults to 10. The result1[(2, 0.9717987775802612), (50, 0.9627252817153931), (20, 0.959749698638916)]]]></content>
+      <categories>
+        <category>Natural Language Processing</category>
+        <category>Gensim</category>
+      </categories>
+      <tags>
+        <tag>Gensim</tag>
+        <tag>Doc2vec</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Item58]]></title>
+    <url>%2F2019%2F06%2F03%2FLeetCode%2FItem58%2F</url>
+    <content type="text"><![CDATA[58. Length of Last Word给定字符串s由大写/小写字母和空格字符’ ‘组成，返回字符串中最后一个单词的长度。 如果最后一个单词不存在，则返回0。 注意：单词定义为字符序列仅由非空格字符组成。 Example: 12Input: &quot;Hello World&quot;Output: 5 C++123456789101112131415161718192021222324252627282930313233343536373839#include &lt;iostream&gt; using namespace std;class Solution &#123;public: int lengthOfLastWord(string s) &#123; int length = s.length(); int left = 0; int right = length-1; int count = 0; while (s[left] == ' ') &#123; left++; &#125; while (s[right] == ' ') &#123; right--; &#125; for (int i = left; i &lt;= right; i++) &#123; if(s[i] == ' ')&#123; count = 0; &#125; else&#123; count ++; &#125; &#125; return count; &#125;&#125;;int main()&#123; Solution obj; string str = " hello world work day start "; int length = obj.lengthOfLastWord(str); cout &lt;&lt; length &lt;&lt; endl;&#125;]]></content>
+      <categories>
+        <category>Question Bank</category>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>Question Bank</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Item28]]></title>
+    <url>%2F2019%2F06%2F03%2FLeetCode%2FItem28%2F</url>
+    <content type="text"><![CDATA[28. Implement strStr()在一个字符串中找另一个字符串第一次出现的位置 Example 1: 12Input: haystack = &quot;hello&quot;, needle = &quot;ll&quot;Output: 2 Example 2: 12Input: haystack = &quot;aaaaa&quot;, needle = &quot;bba&quot;Output: -1 C++123456789101112131415161718192021222324252627282930313233343536373839404142434445464748#include &lt;iostream&gt; using namespace std;class Solution &#123;public: int strStr(string haystack, string needle) &#123; if(needle.empty())&#123; return 0; &#125; int m = haystack.size(); int n = needle.size(); if (m &lt; n) &#123; return -1; &#125; // i为母字符串开始的基准位置 for (int i = 0; i &lt;= m - n; i++) &#123; // j为字符串比较移动的指针 int j; for (j = 0; j &lt; n; j++) &#123; if (haystack[i+j]!=needle[j]) &#123; break; &#125; &#125; if (j==n) &#123; return i; &#125; &#125; return -1; &#125;&#125;;int main()&#123; Solution obj; string haystack = "32abcabcdt"; string needle = "abcd"; int index = obj.strStr(haystack, needle); cout &lt;&lt; index &lt;&lt; endl;&#125;]]></content>
+      <categories>
+        <category>Question Bank</category>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>Question Bank</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Markdown complex table]]></title>
+    <url>%2F2019%2F06%2F02%2FMarkdown%2Fmarkdown-table%2F</url>
+    <content type="text"><![CDATA[Markdown merges cellsMarkdown does not provide statements for creating complex tables, such as merging cells. But we can use HTML tags to merge cells. Code12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758&lt;table style="text-align: center;"&gt; &lt;tr&gt; &lt;th&gt;Type&lt;/th&gt; &lt;th&gt;&lt;/th&gt; &lt;th&gt;Ordered&lt;/th&gt; &lt;th&gt;Allow duplicate&lt;/th&gt; &lt;th&gt;Thread synchronized&lt;/th&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td colspan="2"&gt;Collection&lt;/td&gt; &lt;td&gt;N&lt;/td&gt; &lt;td&gt;Y&lt;/td&gt; &lt;td&gt;-&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td rowspan="3"&gt;List&lt;/td&gt; &lt;td&gt;ArrayList&lt;/td&gt; &lt;td rowspan="3"&gt;N&lt;/td&gt; &lt;td rowspan="3"&gt;Y&lt;/td&gt; &lt;td&gt;N&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;LinkedList&lt;/td&gt; &lt;td&gt;N&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;Vector&lt;/td&gt; &lt;td&gt;Y&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td rowspan="2"&gt;Set&lt;/td&gt; &lt;td&gt;HashSet&lt;/td&gt; &lt;td&gt;N&lt;/td&gt; &lt;td rowspan="2"&gt;N&lt;/td&gt; &lt;td rowspan="2"&gt;N&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;TreeSet&lt;/td&gt; &lt;td&gt;Y&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td rowspan="3"&gt;Map&lt;/td&gt; &lt;td&gt;HashMap&lt;/td&gt; &lt;td&gt;N&lt;/td&gt; &lt;td rowspan="3"&gt;Key does not allow to duplicate&lt;/td&gt; &lt;td&gt;N&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;TreeMap&lt;/td&gt; &lt;td&gt;Y&lt;/td&gt; &lt;td&gt;N&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;HashTable&lt;/td&gt; &lt;td&gt;N&lt;/td&gt; &lt;td&gt;Y&lt;/td&gt; &lt;/tr&gt;&lt;/table&gt; Show results]]></content>
+      <categories>
+        <category>markdown</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Item21]]></title>
+    <url>%2F2019%2F05%2F29%2FLeetCode%2FItem21%2F</url>
+    <content type="text"><![CDATA[21. Merge Two Sorted Lists合并两个已排序的链接列表并将其作为新列表返回。 新列表应该通过拼接前两个列表的节点来完成。 Example: 12Input: 1-&gt;2-&gt;4, 1-&gt;3-&gt;4Output: 1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162#include &lt;iostream&gt; using namespace std;struct ListNode &#123; int val; ListNode *next; ListNode(int x) : val(x), next(nullptr) &#123;&#125;&#125;;class Solution &#123;public: ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) &#123; ListNode* head = new ListNode(-1); ListNode* current = head; while (l1 &amp;&amp; l2) &#123; if(l1-&gt;val &lt; l2-&gt;val)&#123; current-&gt;next = l1; l1 = l1-&gt;next; &#125; else &#123; current-&gt;next = l2; l2 = l2-&gt;next; &#125; current = current-&gt;next; &#125; current-&gt;next = l1 ? l1 : l2; return head-&gt;next; &#125;&#125;;int main()&#123; ListNode* list1 = new ListNode(2); ListNode* current1 = list1; current1-&gt;next = new ListNode(3); current1 = current1-&gt;next; current1-&gt;next = new ListNode(4); current1 = current1-&gt;next; ListNode* list2 = new ListNode(3); ListNode* current2 = list2; current2-&gt;next = new ListNode(4); current2 = current2-&gt;next; current2-&gt;next = new ListNode(5); current2 = current2-&gt;next; current2-&gt;next = new ListNode(6); current2 = current2-&gt;next; current2-&gt;next = new ListNode(6); current2 = current2-&gt;next; Solution s1; ListNode* mergeList = s1.mergeTwoLists(list1, list2); while (mergeList != nullptr) &#123; cout &lt;&lt; mergeList-&gt;val &lt;&lt; " "; mergeList = mergeList-&gt;next; &#125; cout &lt;&lt; endl;&#125;]]></content>
+      <categories>
+        <category>Question Bank</category>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>Question Bank</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Item9]]></title>
+    <url>%2F2019%2F05%2F29%2FLeetCode%2FItem9%2F</url>
+    <content type="text"><![CDATA[9. Palindrome Number确定整数是否是回文。向前读取和向后读取相同的整数是回文。 Example 1: 12Input: 121Output: true Example 2: 123Input: -121Output: falseExplanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome. Example 3: 123Input: 10Output: falseExplanation: Reads 01 from right to left. Therefore it is not a palindrome. 123456789101112131415161718192021222324252627282930313233343536373839#include &lt;iostream&gt; using namespace std;class Solution&#123;public: bool isPalindrome(int x) &#123; if (x&lt;0) &#123; return false; &#125; int division = 1; while (x/division&gt;=10) &#123; division = division*10; &#125; while (x&gt;0) &#123; int left = x/division; int right = x % 10; if (left != right) &#123; return false; &#125; //消去最高位 x = x % division; //消去最低位 x = x/ 10; division = division / 100; &#125; return true; &#125;&#125;;int main()&#123; Solution s1; bool flag = s1.isPalindrome(260062); cout &lt;&lt; flag &lt;&lt; endl;&#125;]]></content>
+      <categories>
+        <category>Question Bank</category>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>Question Bank</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Item2]]></title>
+    <url>%2F2019%2F05%2F29%2FLeetCode%2FItem2%2F</url>
+    <content type="text"><![CDATA[2. Add Two Numbers您将获得两个非空链表，表示两个非负整数。 数字以相反的顺序存储，每个节点包含一个数字。 添加两个数字并将其作为链接列表返回。 您可以假设这两个数字不包含任何前导零，除了数字0本身。 Example: 123Input: (2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)Output: 7 -&gt; 0 -&gt; 8Explanation: 342 + 465 = 807. C++12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667#include &lt;iostream&gt; using namespace std;struct ListNode &#123; int val; ListNode *next; ListNode(int x) : val(x), next(nullptr) &#123;&#125;&#125;;class Solution &#123;public: ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) &#123; ListNode* head = new ListNode(-1); ListNode* current = head; int carry = 0; while (l1 || l2) &#123; int val1 = l1 ? l1-&gt;val : 0; int val2 = l2 ? l2-&gt;val : 0; int sum = val1 + val2 + carry; int number = sum % 10; carry = sum / 10; current-&gt;next = new ListNode(number); current = current-&gt;next; if (l1)&#123; l1 = l1-&gt;next; &#125; if (l2)&#123; l2 = l2-&gt;next; &#125; &#125; if (carry)&#123; current-&gt;next = new ListNode(1); &#125; return head-&gt;next; &#125;&#125;;int main(int argc, char *argv[])&#123; ListNode* list1 = new ListNode(2); ListNode* current1 = list1; current1-&gt;next = new ListNode(4); current1 = current1-&gt;next; current1-&gt;next = new ListNode(3); current1 = current1-&gt;next; ListNode* list2 = new ListNode(5); ListNode* current2 = list2; current2-&gt;next = new ListNode(6); current2 = current2-&gt;next; current2-&gt;next = new ListNode(4); current2 = current2-&gt;next; current2-&gt;next = new ListNode(3); current2 = current2-&gt;next; current2-&gt;next = new ListNode(6); current2 = current2-&gt;next; Solution s1; ListNode* sum = s1.addTwoNumbers(list1, list2); while (sum != nullptr) &#123; cout &lt;&lt; sum-&gt;val &lt;&lt; " "; sum = sum-&gt;next; &#125; cout &lt;&lt; endl;&#125;]]></content>
+      <categories>
+        <category>Question Bank</category>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>Question Bank</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[A bad code]]></title>
+    <url>%2F2019%2F05%2F29%2FAnecdote%2Fbadcode%2F</url>
+    <content type="text"><![CDATA[Today I wrote a piece of C++ code.And this code quickly burst the memory usage from 61% to 99%, then the computer stuck. I have to restart the computer.123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384#include &lt;iostream&gt; using namespace std;struct ListNode &#123; int val; ListNode *next; ListNode(int x) : val(x), next(nullptr) &#123;&#125;&#125;;class Solution &#123;public: ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) &#123; ListNode* head = new ListNode(-1); ListNode* current = head; int carry = 0; while (l1!=nullptr || l2!=nullptr) &#123; int val1, val2; if (l1 == nullptr) &#123; val1 = 0; &#125; else&#123; val1 = l1-&gt;val; &#125; if (l2 == nullptr) &#123; val2 = 0; &#125; else&#123; val2 = l2-&gt;val; &#125; int sum = val1 + val2 + carry; int number = sum % 10; carry = sum / 10; current-&gt;next = new ListNode(number); current = current-&gt;next; if (l1 != nullptr) &#123; l1 = l1-&gt;next; &#125; if (l1 != nullptr) &#123; l2 = l2-&gt;next; &#125; &#125; if (carry==1) &#123; current-&gt;next = new ListNode(1); &#125; return head-&gt;next; &#125;&#125;;int main(int argc, char *argv[])&#123; ListNode* list1 = new ListNode(2); ListNode* current1 = list1; current1-&gt;next = new ListNode(4); current1 = current1-&gt;next; current1-&gt;next = new ListNode(3); current1 = current1-&gt;next; ListNode* list2 = new ListNode(5); ListNode* current2 = list2; current2-&gt;next = new ListNode(6); current2 = current2-&gt;next; current2-&gt;next = new ListNode(4); current2 = current2-&gt;next; current2-&gt;next = new ListNode(3); current2 = current2-&gt;next; current2-&gt;next = new ListNode(6); current2 = current2-&gt;next; Solution s1; ListNode* sum = s1.addTwoNumbers(list1, list2); while (sum != nullptr) &#123; cout &lt;&lt; sum-&gt;val &lt;&lt;endl; sum = sum-&gt;next; &#125;&#125; What awful code !]]></content>
+      <categories>
+        <category>Anecdote</category>
+      </categories>
+      <tags>
+        <tag>Anecdote</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[C]]></title>
+    <url>%2F2019%2F05%2F29%2FC%2FC%2F</url>
+    <content type="text"><![CDATA[C language function declarationThe C language code is executed from top to bottom, and the function definition needs to appear before the function call, otherwise it will report an error. If you want to call this function before the function definition, you need a function declaration. Remove the function body in the function definition and add a semicolon at the end. 1dataType functionName(dataType1 parameter1, dataType2 parameter2 ... ); 1void HeapAdjust(int *A, int s, int t); You can also just write the data type of the formal parameter without writing the formal parameter name. 1dataType functionName(dataType1, dataType2 ... ); 1void HeapAdjust(int, int, int);]]></content>
+      <categories>
+        <category>C</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[python]]></title>
+    <url>%2F2019%2F05%2F24%2FPython%2Fpython%2F</url>
+    <content type="text"><![CDATA[Traversal List123list1 = ["a", "b", "c"]for element in list1: print("element = ", element) The judgment that element is not in the list123list1 = ["a", "b", "c"]if "d" not in list1: print("not in") Get the length of the list12list1 = ["a", "b", "c"]print("length =", len(list1)) Add an element to the end of the list123list1 = ["a", "b", "c"]list1.append("d")print("list1 =", list1)]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[github]]></title>
+    <url>%2F2019%2F05%2F24%2FTool%2Fgithub%2F</url>
+    <content type="text"><![CDATA[## 1$ git init 1$ git add &lt;file&gt; 1$ git commit -m &lt;message&gt; 1$ git status 1$ git diff 1$ git reset --hard commit 1$ git log 1$ git reflog 1$ git checkout -- file 1$ git reset HEAD &lt;file&gt; 1$ git rm &lt;file&gt; 1$ git remote add origin git@github.com:path/repository-name.git 1$ git push -u origin master 1$ git push origin master 1$ git pull origin master 1$ git clone git@github.com:path/repository-name.git 1$ git branch 1$ git branch &lt;name&gt; 1$ git checkout &lt;name&gt; 1$ git checkout -b &lt;name&gt; 1$ git merge &lt;name&gt; 1$ git branch -d &lt;name&gt; 1$ git log --graph 1$ git stash 1$ git stash pop 1$ git tag &lt;tag-name&gt; 1$ git tag 1$ git tag -d &lt;tag-name&gt; 1$ 1$]]></content>
+      <categories>
+        <category>GitHub</category>
+      </categories>
+      <tags>
+        <tag>GitHub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[C++]]></title>
+    <url>%2F2019%2F05%2F24%2FC%2B%2B%2FC%2B%2B%2F</url>
+    <content type="text"><![CDATA[Standard input and output stream12345678910111213141516171819202122232425262728#include &lt;iostream&gt; using namespace std;class Solution &#123;public: bool isEvenNumber(int x) &#123; if(x%2 == 0)&#123; return true; &#125; else&#123; return false; &#125; &#125;&#125;;int main()&#123; int number = 0; cout &lt;&lt; "Please a number:"; cin &gt;&gt; number ; Solution s1; bool result = s1.isEvenNumber(number); cout &lt;&lt; boolalpha &lt;&lt; result &lt;&lt; endl; system("pause");&#125;]]></content>
+      <categories>
+        <category>C plus plus</category>
+      </categories>
+      <tags>
+        <tag>C plus plus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[C++ dataType]]></title>
+    <url>%2F2019%2F05%2F24%2FC%2B%2B%2FC%2B%2BdataType%2F</url>
+    <content type="text"><![CDATA[Basic built-in type data type description int float double bool char void wchar_t boolBy default, the integer 0,1 is used to represent the bool value. You can use std::boolalpha to output bool type results as true or false. When std::boolalpha is used, future bool type results will be output in true or false form, unless std::noboolalpha is used to cancel the boolalpha stream format flag. 123456789101112#include &lt;iostream&gt;using namespace std; int main(int argc, char* argv[])&#123; bool test = true; cout &lt;&lt; "the output is number " &lt;&lt; test &lt;&lt; endl; cout &lt;&lt; "the output is bool(use boolalpha) " &lt;&lt; boolalpha &lt;&lt; test &lt;&lt; endl; cout &lt;&lt; "the output is bool " &lt;&lt; test &lt;&lt; endl; cout &lt;&lt; "the output is number(use noboolalpha) " &lt;&lt; noboolalpha &lt;&lt; test &lt;&lt; endl; return 0;&#125; The ouput:1234the output is number 1the output is bool(use boolalpha) truethe output is bool truethe output is number(use noboolalpha) 1]]></content>
+      <categories>
+        <category>C plus plus</category>
+      </categories>
+      <tags>
+        <tag>C plus plus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[gcc and g++]]></title>
+    <url>%2F2019%2F05%2F24%2FC%2B%2B%2Fgcc-and-g%2F</url>
+    <content type="text"><![CDATA[gcc gcc compiles the .c source file as a C file and compiles the .cpp source file as a C++ file. gcc cannot automatically link C++ standard library STL. g++ g++ compiles both .c and .cpp source files as C++ files g++ can automatically link C++ standard library STL.]]></content>
+      <categories>
+        <category>C plus plus</category>
+      </categories>
+      <tags>
+        <tag>C plus plus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Run C/C++ code in VSCode]]></title>
+    <url>%2F2019%2F05%2F23%2FTool%2FVSCode%2F</url>
+    <content type="text"><![CDATA[Run C/C++ code in VSCodeInstall the plugin C/C++ Code Runner Check the Run Code Configuration Run code Then you can run code with the Terminal. VSCode common shortcutsFind and ReplacementFind Ctrl+F Replacement Ctrl+H]]></content>
+      <categories>
+        <category>VSCode</category>
+      </categories>
+      <tags>
+        <tag>VSCode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Markdown basic syntax]]></title>
+    <url>%2F2019%2F05%2F23%2FMarkdown%2Fmarkdown%2F</url>
+    <content type="text"><![CDATA[The titleThere is a space between # and the content.Support for six levels title. 123456# First level title## Second level title### Third level title#### Fourth level title##### Fifth level title###### Sixth level title The font1234**the bold word***the italic word****the bold and italic word***~~the strikethrough word~~ The dividing lineThree or more - or *. 1234--------******** The image1![alt](the image's path) 1![Run button](image/button.png) The hyperlink1[the display text](the hyperlink address) 1[GitHub](https://github.com/) The ListUnordered listAny one of -, +, * can be used.There is a space between -, +, * and the content. 123- content+ content* content Ordered listThere is a space between serial number and the content. 1231. content2. content3. content The table1234|title|title|title|title||-|:-|:-:|-:||content|content|content|content||content|content|content|content| 1234|-| Default(Align left)|:-| Align left|:-:| Centered|-:| Align right The code blockSingle line of code1`Class c = Test.class;` Multiple lines of code]]></content>
+      <categories>
+        <category>markdown</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Install the MinGW-w64]]></title>
+    <url>%2F2019%2F05%2F23%2FTool%2FMinGW-w64-install%2F</url>
+    <content type="text"><![CDATA[Install the MinGW-w641.Download the MinGW-w64Official website address:http://www.mingw-w64.org/doku.php/download Download address:https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe/download 2. Install the MinGW-w64 Follow the settings as shown. Choose the installation folder 3. Setting the environment variablesThe path: the bin directory of the MinGW-w64 directory. In Order to test whether the MinGW-w64 is configured successfully, execute the commond in the cmd.1gcc -v 4. Compile the source code and generate the executable file(gcc or g++)Compile the source code1gcc hello.c 1g++ hello.c Compile the source code and generate the executable file1gcc hello.c -o hello_world.exe 1g++ hello.c -o hello_world.exe]]></content>
+      <categories>
+        <category>MinGW-w64</category>
+      </categories>
+      <tags>
+        <tag>MinGW-w64</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hexo Insert Local Image]]></title>
+    <url>%2F2019%2F05%2F23%2FHexo%2FHexo-insert-image%2F</url>
+    <content type="text"><![CDATA[Hexo Insert Local Image1. In the _config.yml of hexo12# post_asset_folder: falsepost_asset_folder: true Set the post_asset_folder option to true. 2. Install pluginExecute commands in the Hexo directory. 1$ npm install hexo-asset-image --save Download and install a plugin that can upload local images. 3. Generate the folderAfter the installation is complete, when you run hexo new to generate md blog posts, the /source/_posts folder has a folder with the same name as the md file in addition to the md file. 4. Import the imagePut the image to the folder, then import the image in the markdown format. 1![alt](folder/picture.png) Much like a relative path.]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[操作系统]]></title>
+    <url>%2F2019%2F05%2F23%2FQuestion%20Bank%2FLinux%2F</url>
+    <content type="text"><![CDATA[用户管理1# useradd john 1# passwd john 1# userdel john 1# groupadd group1 文件1# touch text.txt 1# cat text.txt 1# mv text.txt 1# rm text.txt 1# head text.txt 1# tail text.txt]]></content>
+      <categories>
+        <category>Question Bank</category>
+      </categories>
+      <tags>
+        <tag>Question Bank</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hexo Usage]]></title>
+    <url>%2F2019%2F05%2F21%2FHexo%2FHexo%2F</url>
+    <content type="text"><![CDATA[The common commands of Hexo.1. init website1$ hexo init [folder] If no folder is provided, Hexo will set up the website in the current directory. 2.1 create a new article1$ hexo new "article" 2.2 create a new page1$ hexo new page "page" 3. Generate static files1$ hexo generate 1$ hexo g 4. Start local server1$ hexo server 1$ hexo s By default, It is at http://localhost:4000/. 5. Deploy to remote website1$ hexo deploy 1$ hexo d 6. Clean the file1$ hexo clean It will clean the cache file (db.json) and generated files (public directory). 7. The draft7.1 create a new draft1$ hexo new draft "draft" 7.2 publish the draftMoves a draft post from _drafts to _posts folder. 1$ hexo publish [layout] &lt;draft-filename&gt; 7.3 Start the server and preview drafts1$ hexo server --drafts]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Data Structures]]></title>
+    <url>%2F2019%2F05%2F20%2FQuestion%20Bank%2FData-Structures%2F</url>
+    <content type="text"><![CDATA[树基本术语(1)结点的度：结点所拥有的子树的个数 (2)树的度：树中各结点度的最大值 (3)兄弟：同一双亲的孩子 (4)堂兄弟：双亲在同一层上且不同的结点 (5)结点的层次：从根节点到树中某结点所经路径上的分支数称为该结点的层次，根结点的层次规定为1，其余结点的层次等于其双亲结点的层次加1(6)树的深度：树中结点的最大层次数 (7)无序树：树中任意一个结点的孩子之间的次序都无关紧要，通常树是指无序树 (8)有序树：树中任意一个节点的孩子结点都按严格的次序排列。二叉树是有序树，因为二叉树中每个孩子结点都确切定义为是左孩子结点还是右孩子结点 (9)森林：m棵树的集合(m&gt;=0) 二叉树二叉树的定义(1)非空二叉树：有序树，左子树，右子树 (2)满二叉树：所有分支结点都存在左、右子树，并且所有叶子结点都在同一层上，这样的二叉树称作满二叉树。 (3)完全二叉树：如果具有n个结点的二叉树的结构与满二叉树的前n个结点的结构相同，这样的树称作完全二叉树。 二叉树的存储结构(1)顺序存储结构用元素在数组中的下标为该结点在树中的序号。 (2)链式存储结构每个结点有一个数据域，两个指针域分别指向左孩子和右孩子。 遍历二叉树(1)先序遍历：根结点-&gt;左子树-&gt;右子树 1234567void preorder(TreeNode *root)&#123; if(root != NULL)&#123; printf("%d", root-&gt;data); preorder(root-&gt;left); preorder(root-&gt;right); &#125;&#125; (2)中序遍历：左子树-&gt;根结点-&gt;右子树 1234567void inorder(TreeNode *root)&#123; if(root != NULL)&#123; preorder(root-&gt;left); printf("%d", root-&gt;data); preorder(root-&gt;right); &#125;&#125; (3)后序遍历：左子树-&gt;右子树-&gt;根结点 1234567void postorder(TreeNode *root)&#123; if(root != NULL)&#123; preorder(root-&gt;left); preorder(root-&gt;right); printf("%d", root-&gt;data); &#125;&#125; 2.循环队列(1)用数组[0,m-1]存放队列元素，当前队列中的元素个数:(rear-front+m)%m 查找静态查找表顺序表的查找123456789101112int SeqSearch(int *A, int key, int length)&#123; int i; for (i = 0; i &lt; length ; i++) &#123; if(A[i] == key) &#123; return i; &#125; &#125; return -1;&#125; 有序表的查找折半查找(二分查找) 1234567891011121314151617181920212223242526272829303132333435363738394041424344// 非递归方法int BinarySearch1(int *A, int key, int length)&#123; int left, right, mid; left = 0; right = length-1; while (left&lt;=right) &#123; mid = (left+right)/2; if(A[mid]==key) &#123; return mid; &#125; else if(A[mid]&gt;key) &#123; right = mid-1; &#125; else &#123; left = mid+1; &#125; &#125; return -1;&#125;// 递归方法int BinarySearch2(int *A, int key, int left, int right)&#123; int mid = (left+right)/2; if(A[mid] == key) &#123; return mid; &#125; if(left == right) &#123; return -1; &#125; if(A[mid]&gt;key)&#123; return BinarySearch2(A, key, left, mid-1); &#125; if(A[mid]&lt;key)&#123; return BinarySearch2(A, key, mid+1, right); &#125;&#125; 索引顺序表的查找(分块查找)索引顺序查找又称分块查找，是顺序查找的一种改进方法。 基本思想：先将表分为几块，块內无序，块间有序，查找时先确定待查元素所在的块，然后再在块内查找，每个分块要建立一个索引项，其中包含关键字项（该块内的最大关键字）和指针项（指示该块的第一个元素在表中的位置） 分块有序：索引表按关键字有序，即第二块中的所有元素均大于第一块中的所有元素，第三块中的所有元素均大于第二块中的所有元素，以此类推。 算法流程：step1 先选取各块中的最大关键字构成一个索引表；step2 查找分两个部分：先对索引表进行二分查找或顺序查找，以确定待查记录在哪一块中；然后，在已确定的块中进行顺序查找。 动态查找表二叉排序树（二叉查找树）定义：二叉排序树或者是一棵空树，或者是具有下列性质的二叉树： 若它的左子树不为空，则左子树的所有节点的值均小于它的根结点的值。 若它的右子树不为空，则右子树的所有节点的值均大于它的根结点的值。 它的左右子树分别为二叉排序树。 平衡二叉树形态匀称的二叉排序树 平衡二叉树有多种，主要考虑AVL树。 B树 B+树 总结 B树：多路搜索树，每个结点存储M/2到M个关键字，非叶子结点存储指向关键字范围的子结点；所有关键字在整颗树中出现，且只出现一次，非叶子结点可以命中； B+树：在B-树基础上，为叶子结点增加链表指针，所有关键字都在叶子结点中出现，非叶子结点作为叶子结点的索引；B+树总是到叶子结点才命中； 哈希表在数据元素的存储位置和其关键字之间建立一个确定的对应关系h，把具有关键字key的数据元素存储在h(key)处，那么在查找时，只要在集合中存在关键字和key相等的数据元素，则一定在h(key)的存储位置上。 哈希表的构造方法1.直接定址法哈希函数直接定义为关键字的线性函数值 h(key) = a*key + b 特点：不会产生冲突，但是仅适合关键字集合较小的情况。 2.除数留余法用关键字key除以哈希表的长度m所得到的余数作为散列地址的方法 h(key) = key % m 3.数字分析法在给定的关键字中，选取数字分布比较均匀的若干数字位作为哈希地址 特点：适用于关键字值已知的情况。 4.平方取中法取关键字平方后的中间几位作为哈希地址。 5.折叠法将关键字分割成位数相同的几部分（最后一部分的位数可以不同），然后取这几部分的叠加和（舍去进位）作为哈希地址。 6. 随机数法选择一个随机函数，取关键字的随机函数值作为哈希地址 h(key) = random(key) 特点：通常关键字长度不等时采用此法。 处理冲突的方法1. 开放定址法(1) 线性探测法从冲突发生位置的下一个位置开始，顺序地寻找可存放元素的开放地址， (2) 二次探查法发生冲突时，探查间隔按平方增大，探查序列依次是d+1, d-1, d+4, d-4, d+9, d-9, …,即探测地址为 (d+/-i^2)%m, i=1, 2, …, 特点：可以有效减少堆积的可能性，但是不容易探查整个散列表空间。 (3) 随机探查法2. 开散列法（链地址法）单链表 (3)排序插入排序直接插入排序基本思想：顺序地把待排序的数据元素按其关键字值的大小插入到已排序数据元素子集合的适当位置。 123456789101112131415void InsertSort(int *A, int len)&#123; int i,j; int temp; for(i = 1; i &lt; len; i++) &#123; temp = A[i]; j = i-1; while (j&gt;=0 &amp;&amp; A[j]&gt;temp) &#123; A[j+1] = A[j]; j--; &#125; A[j+1] = temp; &#125;&#125; 希尔排序基本思想：先将整个待排序元素分割成若干个子序列分别进行排序，待整个序列中的元素“基本有序”时，再对全体元素进行一次直接插入排序。 基本方法：设置一个初始增量，以后增量逐渐减少，分组减少，每组元素数量增多，直到最后增量为1，所有记录为一组，再进行一次整体直接插入排序。 交换排序冒泡排序基本思路：从数组第1个元素开始，比较相邻的两个元素，如果后一个元素大于前一个元素，则交换两个元素，然后比较第2个和第3个元素，反复这个过程，每趟排序都是将前一趟结果的最后一个元素排除出去。(排除后面的元素) 123456789101112131415161718void BubbleSort(int *A, int len)&#123; int i,j; int temp; for(i = 0; i&lt;len-1; i++) &#123; for (j = 0; j &lt; len-i-1; j++) &#123; if(A[j]&gt;A[j+1]) &#123; temp = A[j]; A[j] = A[j+1]; A[j+1] = temp; &#125; &#125; &#125;&#125; 快速排序基本思路：在待排序的n个元素中任取一个作为“基准”，将其余元素分为两组，左边一组的元素均小于等于基准，右边一组的元素均大于等于基准，基准排在两组之间，这个过程称为一趟快速排序。对分成的两组分别重复上述方法，直到所有元素都排到了适当的位置上。 1234567891011121314151617181920212223242526272829303132void QuickSort(int *A, int left, int right)&#123; int i = left, j = right; int temp; if (left&lt;right) &#123; temp = A[left]; while(i!=j) &#123; while (i&lt;j &amp;&amp; A[j]&gt;temp) &#123; j--; &#125; if(i&lt;j) &#123; A[i] = A[j]; i++; &#125; while(i&lt;j &amp;&amp; A[i]&lt;temp)&#123; i++; &#125; if (i&lt;j) &#123; A[j] = A[i]; j--; &#125; &#125; A[i] = temp; QuickSort(A, left, right-1); QuickSort(A, left+1, right); &#125;&#125; 选择排序简单选择排序基本思路：首先找出从A[0]到A[len-1]的最小元素A[small]，将A[small]与A[0]元素交换位置，然后找出从A[1]到A[len-1]的最小元素A[small]，将A[small]与A[1]元素交换位置，然后再从A[2]到A[len-1]中查找，以此类推，重复此步骤，在剩下的范围内找出最小值，并将其和数组下标最小的数据交换，逐次缩小要排序的范围。(排除前面的元素) 12345678910111213141516171819void SelectSort(int *A, int len)&#123; int i, j; int small, temp; for (i = 0; i &lt; len-1; i++) &#123; small = i; for(j=i+1; j&lt;len; j++) &#123; if (A[j]&lt;A[small]) &#123; small = j; &#125; &#125; temp = A[i]; A[i] = A[small]; A[small] = temp; &#125;&#125; 3.排序算法的性能 排序方法 时间复杂度 空间复杂度 稳定性 最好 最差 备注 冒泡排序 O(n^2) O(1) 稳定 O(n) O(n^2) n较小时较好 直接插入排序 O(n^2) O(1) 稳定 O(n) O(n^2) 大部分元素已有序时较好 简单选择排序 O(n^2) O(1) 不稳定 O(n^2) O(n^2) n较小时较好 快速排序 O(nlogn) O(logn) 不稳定 O(nlogn) O(n^2) n较大时较好 堆排序 O(nlogn) O(1) 不稳定 O(nlogn) O(nlogn) n较大时较好 归并排序 O(nlogn) O(n) 稳定 O(nlogn) O(nlogn) n较大时较好 希尔排序 O(nlogn) O(1) 不稳定 O(n) O(ns)1&lt;s&lt;2,s是所选分组]]></content>
+      <categories>
+        <category>Question Bank</category>
+        <category>Date Structures</category>
+      </categories>
+      <tags>
+        <tag>Question Bank</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Java Basic Knowledge]]></title>
+    <url>%2F2019%2F05%2F20%2FQuestion%20Bank%2FJava-basic-knowledge%2F</url>
+    <content type="text"><![CDATA[1. Object类的方法 方法名 返回类型 方法描述 clone() Object 创建并返回此对象的一个副本 equals(Object obj) boolean 判断obj对象是否与此对象相等 finalize() void 当垃圾会收起确定不存在该对象的更多引用时，由对象的垃圾回收器调用此方法 getClass() Class&lt;?&gt; 返回此Object的运行时类 hashCode() int 返回该对象的散列码值 tOString() String 返回该对象的字符串表示 notify() void 唤醒在此对象监视器上等待的单个线程 notifyAll() void 唤醒在此对象监视器上等待的所有线程 wait() void 在其他线程调用此对象的notify()方法或notifyAll()方法前，使当前线程等待 wait(long timeout) void 在其他线程调用此对象的notify()方法或notifyAll()方法，或者超过指定的时间量前，使当前线程等待 wait(long timeout, int nanos) void 在其他线程调用此对象的notify()方法或notifyAll()方法，或者超过指定的时间量，或者其他某个线程中断当前线程前，使当前线程等待 2. Math类函数(Java.lang.Math) 方法名 方法描述 static double ceil(double a) 向上取整 static double floor(double a) 向下取整 static double rint(double a) 四舍五入 static long round(double a) 四舍五入 static int rount(float a) 四舍五入 static double random() [0,1) 3. Java可变参数public void f(String[] aa, String... a){} (1)只能作为最后一个参数出现 (2)只能位于变量的类型和变量名之间 (3)编译器为可变参数隐含创建一个数组，在调用的时候，可以用数组的形式访问可变参数 4. null可以被强制转换为任意类型的对象，转换的结果还是null，无法调用对象的方法，但是可以调用类的方法。5. 获取Class对象的方法(1)Class c = Test.class; (2)Class c = test.getClass() (3)Class c = Class.forName(&quot;com.Test&quot;) 6. Java处理时间12345678import java.text.SimpleDataFormat;import java.util.Date;public class Test&#123; long time = System.currentTimeMillis(); Date date = new Date(l); SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); System.out.println(dateFormat.format(date));&#125; 7. Java访问修饰符 范围 private default protected public 同一类 # # # # 同一包中的子类 # # # 当前类或者子类 # # 所有 # 8. package的作用(1)提供多层命名空间，解决命名冲突 (2)对类按功能进行分类 9. 被public修饰的类或者接口必须与文件名相同10. 继承、封装、多态(1)继承：子类可以继承父类的方法和实例变量，并且子类可以修改或者增加新的方法。 (2)封装：将客观事物抽象成类，每个类对自身的数据和方法实行保护。类可以把自己的数据和方法只让可信的类或者对象操作，对某些信息进行隐藏。 (3)多态：允许不同类的对象对同一消息做出响应。多态性语言具有灵活、抽象、行为共享和代码共享的优势，很好地解决了应用程序方法同名的问题。 11. 内部类(1)静态内部类 12345class OuterClass&#123; static class InnerClass&#123; &#125;&#125; 可以不依赖于外部类实例而被实例化，不能与外部类有相同的名字，只能访问外部类的静态属性和静态方法。 (2)成员内部类 12345class OuterClass&#123; class InnerClass&#123; &#125;&#125; 可以访问外部类的静态和非静态的属性和方法，但是不能定义静态的属性和方法。只有在外部的类被实例化后，这个内部类才能被实例化。 (3)局部内部类 1234567class OuterClass&#123; public void memberFunction()&#123; class InnerClass&#123; &#125; &#125;&#125; 定义在一个代码块内的类，作用范围为其所在的代码块。同局部变量一样，不能被public, protected, private, static修饰。 局部静态内部类：在外部类的静态方法或者静态初始化代码块中。基本特性与静态内部类相同。 局部内部类：在外部类的非静态方法或者非静态初始化代码块中。基本特性与成员内部类相同。 (4)匿名内部类 123456789101112public class MyFrame extends Frame&#123; public MyFrame()&#123; addWindowListener( new WindowAdapter()&#123; public void windowClosing(WindowEvent e)&#123; dispose(); System.exit(0); &#125; &#125; ) &#125;&#125; 匿名内部类没有类名，不使用关键字class, extends, implements，没有构造方法，必须继承其他类或者实现其他接口。一般应用于GUI编程中实现事件处理。 12. Java初始化(1) 初始化原则(原则优先级依次递减) 静态优先于非静态 父类优先于子类 变量优先于代码块 (2) 初始化顺序 父类静态变量 父类静态代码块 子类静态变量 子类静态代码块 父类非静态变量 父类非静态代码块 父类构造函数 子类非静态变量 子类非静态代码块 子类构造函数 13. final关键字 使用范围 描述 final 类 类不可以被继承 final 属性 属性值不可改变 final 方法 方法不可被覆盖 final 参数 参数在这个方法内不允许被修改 一个类不能既被声明为abstract，又被声明为final 有一种inline(内联)机制，当调用一个被声明为final的方法时，直接将方法主体插入发哦调用出，而不是进行方法调用，这样能提高程序的效率。(类似于C++语言中的内联inline) 14. 构造方法(1)构造方法必须与类的名字相同，并且不能有返回值 (2)每个类可以有多个构造方法，当没有编写构造方法时，编译器在把源代码编译成字节码的过程中会提供一个默认的无参的空的构造方法，如果编写了构造方法，则编译器不会创建默认的构造方法。 (3)构造方法可以有0个, 1个, 多个参数。 (4)构造方法总是和new操作一起调用，由系统调用，不能由开发者调用。构造方法在对象实例化时会被自动调用，且只运行一次，而普通方法是在程序执行到它时才被调用，可以被该对象调用多次。 (5)构造方法的主要作用是完成对象的初始化工作。 (6)构造方法不能被继承和覆盖，但是能够被重载。 (7)子类可以通过super关键字显式地调用父类的构造方法。 当父类提供了无参的构造方法，子类可以不显式地调用父类的构造方法，默认调用父类的无参构造方法。 当父类没有提供无参的构造方法时，子类的构造方法中必须显式地调用父类的构造方法。 (8)默认的构造方法的修饰符只与当前类的修饰符有关。 (9)在其他构造方法中可以使用this()来调用类的默认构造方法。 15. abstract关键字 使用范围 描述 abstract 类 抽象类 abstract 方法 抽象方法 16. 接口的关键字 使用范围 关键字 外部接口 只能使用public, abstract 内部接口 可以被private, protected, static修饰 内部类 可以被private, protected, static修饰 17. 抽象类和接口(1) 抽象类 抽象类可以有私有变量和私有方法 在抽象类的子类中，实现方法必须是相同或者更高的访问级别(public, protected, private) 抽象类的子类为父类的所有抽象方法提供具体实现，否则子类仍然是抽象类 抽象类的抽象方法不能用private, static, synchronized, native等修饰。 (2) 接口 接口是公开的，不能有有私有变量和私有方法 相同点： 都不能被实例化 接口的实现类只有实现了类接口的全部方法才能被实例化，抽象类的子类只有实现了抽象类的全部抽象方法才能被实例化。 不同点： 抽象类可以有方法的定义和实现，接口只能有方法的定义 一个类只能继承一个抽象类，可以实现多个接口 18. 接口的成员变量和成员方法 对象 修饰符 接口的成员变量 默认为public, static, final，只能有static, final的数据成员，必须给其赋初值 接口的成员方法 为public, abstract，而且只能被这两个关键字修饰 19.多态(1)编译时多态：重载 (2)运行时多态：覆盖 20.覆盖子类覆盖父类的函数， 子类中的覆盖方法必须和父类中被覆盖的方法有相同的函数名，参数和返回值类型 子类中的覆盖方法所抛出的异常必须和父类中被覆盖的方法所抛出的异常相同或者是其子类 不能用子类的静态方法覆盖父类的实例方法，不能用子类的实例方法覆盖父类的静态方法 21.重载 重载是通过不同的参数列表来区分的 不能通过方法的访问权限、返回值类型和抛出的异常类型来进行重载 22.重载和覆盖的区别 覆盖是子类和父类之间的关系，重载是同一个类中的方法之间的关系 覆盖是一对方法之间的关系，重载是多个方法之间的关系 覆盖要求参数列表相同，重载要求参数列表不同 覆盖是对象的类型来选择调用的方法体，重载是根据调用时的实参列表和形参列表来选择调用的方法体。 23.finally关键字 finally块里的代码会在return前执行 如果try-finally或者catch-finally中都有return，则finally块中的return语句将会覆盖别处的return语句，最终只调用finally语句块中的return。 当有异常发生后，catch和finally块进行处理后程序就结束了，finally块后面即使有代码也不会执行。如果没有异常发生，在执行完finally块的代码后，后面的代码还会继续执行。 24.static关键字作用： 为类分配单一的存储空间，与创建对象的个数无关。 使某个属性或者方法与类而不是对象关联起来，在不创建对象的情况下可以直接通过类来调用属性或者方法。 (1)static成员变量 静态变量属于类，在内存中只有一个副本，所有实例都指向同一个内存地址。只要静态变量所在的类被加载，这个静态变量就会被分配空间。 Java中没有全局的概念，但是可以通过static关键字来达到全局的效果。 Java中不能在方法体中定义static变量(这与C++不同) (2)static成员方法(3)static代码块 JVM在加载类的时候会执行static代码块，如果有多个static代码块，JVM将会按顺序来执行。 static代码块经常被用来初始化静态变量 static代码块只会被执行一次 (4)static内部类 可以不依赖于外部类实例而被实例化 不能与外部类有相同的名字 只能访问外部类的静态属性和静态方法。 25. 类 一个类不能既被声明为abstract，又被声明为final 只有内部类才能被定义为static 26. volatile关键字防止编译器做优化，每次读取数据的时候都是从内存中读取，而不是从缓存中读取，这样能保证读取到最新被修改的数据，而不能保证线程安全。 27. synchronized关键字保证任何时候都只有一个线程访问一个方法或者对象。 28. 基本数据类型这8种数据类型是按值传递的，其他数据类型都是按引用传递的。 数据类型 字节长度 范围 默认值 包装类 byte 1 [-2^7, (2^7)-1] 0 Byte short 2 [-2^15, (2^15)-1] 0 Short int 4 [-2^31, (2^31)-1] 0 Integer long 8 [-2^63, (2^63)-1] 0l / 0L Long float 4 0.0f / 0.0F Float double 8 0.0 Double char 2 u0000 Character boolean 1 true, false false Boolean 29. int和integer的区别 int是基本数据类型，Integer是int类型的包装类。 int的默认值是0，Integer的，默认值是null，int无法区分未赋值与赋值为0的情况，Interger可以区分这两种情况。 int是值传递，Integer是引用传递 int不能直接存放到集合中，Integer可以直接存放到集合中 int只能进行运算，Integer类提供了很多方法。 30. Java中基本数据类型的字节长度是固定的，与平台和JVM无关，因为Java是跨平台的，可以一次编译多次运行。31. String，StringBuffer，StringBuilder String是不可变类，StringBuffer和StringBuilder是可变类 StringBuffer是线程安全的，StringBuilder不是线程安全的，因此StringBuilder的效率比StringBuffer高一些。 32. instanceof运算符判断左边的对象是否是右边的类的实例 12&quot;hello&quot; instanceof Object// 返回true 33. switch语句switch(expression) expression的类型： 枚举类型 byte，short，int，char及其对应的包装类 String 34. String被设计为不可变类的意义 节省空间：Java把字符串常量存储在String pool中， 异常分类Error和Exception拥有共同的父类：Throwable ErrorError表示在运行期间出现了非常严重的错误,并且错误是不可回复的，属于JVM层次的严重错误，会导致程序终止运行。 例如：OutOfMemoryError, ThreadDeath Exception表示可以恢复的异常，编译器可以捕捉到。 检查异常(Checked Exception)发生在编译阶段，Java编译器强制程序去捕获这种类型的异常，把可能出现这些异常的代码放到try块中，把对异常处理的代码放到catch中。 例如： IO异常，SQL异常 运行时异常(Runtime Exception)编译器没有强制对其进行捕获，如果不对这几种异常进行处理，当出现这种异常时，会由JVM来处理。 例如：NullPointException, IndexOutOfBoundException, ClassCastException, ArithmeticException(算数异常), ArrayStoreException(数据存储异常), BufferOverflowException(缓冲区溢出异常) try/catch/finally可以有3种方式 try/catch try/finally try/catch/finally throw/throwsthrow语句用来抛出一个异常。 throws声明方法可能抛出的异常。 流序列化(Serializable)在分布式环境下，当进行远程通信时，无论是何种类型的数据，都会以二进制序列的形式在网络上进行传送。序列化是一种将对象转换成字节序列的过程，用于解决在对对象流进行读写操作时所引发的问题。序列化可以将对象的状态写在流里进行网络传输，或者保存到文件、数据库等系统里，并在需要的时候把该流读取出来重新构造成一个相同的对象。 如果一个类能序列化，那么它的子类也能够序列化 static、transient类型的属性不能被序列化 子类实现了Serializable接口，父类没有，父类的属性不能被序列化。 Java平台与垃圾回收JVM class文件 类装载器子系统 方法区 堆 虚拟机栈 程序计数器 本地方法栈 执行引擎 容器各个接口 HashMap, Hashtable HashMap允许null作为key，但是最多只允许一条记录的key为null，Hashtable不允许 HashMap不是线程安全的，Hashtable是线程安全的，性能上HashMap可能高于Hashtable HashMap采用快速失败机制，Hashtable没有采用快速失败机制。 HashMap, TreeMap, LinkedHashMap HashMap: 最常用 TreeMap: 能够将保存的记录按照key排序 LinkedHashMap: 输出顺序和输入顺序相同 ArrayList, LinkedList, VectorArrayList, LinkedList, Vector都是可以动态改变长度的数组。 ArrayList和Vector都是基于存储元素的Object[] array来实现的，会在内存中开辟一块连续的空间来存储，支持索引来访问元素，在插入删除元素时需要移动容器中的元素。ArrayList和Vector都有一个初始化的容量大小，当里面存储的元素超过这个大小的时候，就需要动态地扩充它们的存储空间。 ArrayList不是线程安全的，Vector是线程安全的，性能上ArrayList可能高于Vector LinkedList是采用双向链表来实现的，插入删除的时候不需要移动数据。LinkedList不是线程安全的。 多线程实现多线程的方法实现Runnable接口，并实现该接口的run()方法1234567891011121314class MyThread implements Runnable&#123; public void run() &#123; System.out.println("Thread body"); &#125;&#125;public class Test &#123; public static void main(String[] args) &#123; MyThread thread = new MyThread(); Thread r = new Thread(thread); r.start(); &#125;&#125; 继承Thread类，重写run()方法12345678910111213class MyThread extends Thread&#123; public void run() &#123; System.out.println("Thread body"); &#125;&#125;public class Test &#123; public static void main(String[] args) &#123; MyThread thread = new MyThread(); thread.start(); &#125;&#125; synchronized关键字主要用来给对象、方法、代码块加锁，当它锁定一个方法或者一个代码块的时候，同一时刻最多只能有一个线程执行这段代码。 线程方法 停止 唤醒 wait() notify() suspend() resume() wait()和notify()都是从Object类继承的方法。 sleep()与wait()的区别 sleep()不会释放锁，容易产生死锁问题，wait()会释放锁。 sleep()可以在任何位置使用，wait()必须放在同步控制方法或者同步语句块中使用。 sleep()必须捕获异常，wait(),notify(), notifyAll()不需要捕获异常 守护线程与用户线程守护线程(Daemon Thread)守护线程又被称为“服务线程”，“精灵线程”，“后台线程”，是指当程序运行时，在后台提供一种通用服务的线程。守护线程一般具有较低的优先级，但是并非只由JVM内部提供，用户也可以自己设置守护线程，方法是在thread.start()之前调用thread.setDaemon(true)，false表示用户线程。当一个守护线程中产生了其他线程，那么这些新产生的线程默认还是守护线程。典型的守护线程有GC(垃圾回收器)。 用户线程和守护线程几乎一样，区别在于如果用户线程全部退出运行，只剩下守护线程存在，程序就会终止，杀死所有守护线程，JVM退出。只要有任何非守护线程还在运行，程序就会不会终止。 线程 线程的同步：线程按照预定的先后次序运行 线程的调度：按照特定机制为多个线程分配CPU的使用权。 线程的就绪：这个线程已经有了除CPU外所有的资源，在等待获取CPU，一旦获取到CPU的控制权就可以立即执行。 线程的互斥：某一资源同时只允许一个访问者对其进行访问，但是互斥无法限制访问者对资源的访问顺序。 死锁是指两个或者两个以上的进程在执行过程中，因争夺资源而造成的一种互相等待的现象，若无外力作用，它们都将无法推进下去。 JDBC标准SQL规范的4个事务隔离级别 Read Uncommitted(读未提交) Read committed(读提交) Repeated Read(可重复读) Serializable(序列化) JDBC的5中事务隔离级别|事务|名称|出现TRANSACTION_NONE 不支持事物TRANSACTION_READ_UNCOMMITTED 未提交读 脏读，不可重复读，虚读TRANSACTION_READ_COMMITTED 已提交读 不可重复读，虚读TRANSACTION_REPEATABLE_READ 可重复读 虚读TRANSACTION_SERIALIZABLE 可序列化 读 脏读：一个事务读取了另一个事务尚未提交的数据。例如：当事务A与事务B并发执行时，当事务A更新后，事务B查询读取到事务A尚未提交的数据，此时事务A回滚，则事务B读取到的数据是无效的脏数据。 不可重复读：一个事务的操作导致另一个事务前后两次读取到不同的数据。例如：当事务A与事务B并发执行时，当事务B查询读取数据后，事务A更新操作更改事务B查询到的数据，此时事务B再次读取该数据，发现前后两次的数据不一样。 “虚读”：一个事务的操作导致另一个事务前后两次查询的记录数量不同。例如：当事务A与事务B并发执行时，当事务B查询读取数据后，事务A新增或删除了一条满足事务B的查询条件的记录，此时事务B再次查询，发现查询到前次不存在的记录，或者前次的某个记录不存在了。 Java WebServlet与JSPServlet是Java语言编写的服务器端程序，运行在Web服务器的Servlet容器中，主要功能是提供请求/响应的Web服务模式。 会话是指从客户端打开与服务器的连接并发出请求到服务器响应客户端请求的全过程。 会话跟踪技术 page request session application Servlet的两种跳转方式： forward： redirect： 软件工程与设计模式软件工程与UML软件生命周期 指定计划 需求分析 软件设计 程序编写 软件测试 运行维护 软件六大质量特性 功能性 可靠性 可用性 效率 可维护性 可移植性 UML类图中类与类之间的关系 关系 描述 依赖 关联 聚合 组合 继承 设计模式GoF(Gang of Four)23种经典设计模式 创建型 结构型 行为型 类 Factory Method Adapter_Class Intepreter 对象 Abstract Factory Adapter_Object Chain of ResponsibilityCommand 单例模式操作系统实时操作系统当外界事件或者数据产生时，能够接受并以足够快的速度予以处理，其处理结果又能在规定的时间之内来控制生产过程或对处理系统做出快速响应，调度一切可利用的资源去完成实时任务，并控制所有实时任务协调一致运行。 基本特性： 响应及时 处理事务的能力较强 速度较快 可靠性高 操作系统的功能 作业管理 文件管理 存储管理 设备管理 进程管理 常用的磁盘扫描算法 先来先服务(FCFS) 最短寻道时间优先算法(SSTF) 扫描算法(SCAN) 循环扫描算法(CSCAN) 中断强迫性中断由随机事件引起而非程序员事先安排，例如：输入输出中断，硬件故障中断，时钟中断，控制台中断，程序性中断 自愿性中断时间片到时 进程与线程的关系关系： 一个线程只能属于一个进程，而一个进程可以有多个线程，但是至少有一个线程。 资源分配给进程，同一进程上的所有线程共享该进程的资源。 处理机(CPU,主存，输入输出接口)分配给线程，真正在处理机上运行的是线程。 线程在执行过程中，需要协调同步，不同进程的线程要利用消息通信的办法实现同步。 相同点： 都具有ID，一组寄存器，状态 不同点： 线程是进程的一部分 线程开销较小 进程是系统所有资源分配的一个基本单位 进程之间通信的主要方法有： 信号 信号量 管道 消息 共享内存 使用线程的情况 耗时的操作 并行操作 在多CPU系统中 改善程序的结构 内存管理 虚拟地址 由程序产生的由段选择符和段内偏移地址两部分组成的地址。 逻辑地址 用户程序经过编译之后的每个目标模块都以0为基地址顺序编址，在程序中使用的地址都是逻辑地址。 线性地址 虚拟地址到物理地址变换之间的中间层，是处理器可寻址的内存空间(称为线性地址空间)中的地址。 物理地址 CPU外部地址总线上的寻址物理内存的地址信号，是地址变换的最终结果，是实际数据存放的地址。 Windows系统的内存管理方式 页式存储管理 段式存储管理 段页式存储管理 编译原理编译器编译器的工作阶段 词法分析：识别单词 语法分析：将单词序列组合成各类语法短语，得到语言结构并以树的形式表示 语义分析：检查语法正确的句子语义是否正确 中间代码生成(可选)：生成一种既接近目标语言，又与具体语言无关的表示，便于优化与代码生成。 中间代码优化(可选)： 目标代码生成：把中间代码变换成特定机器上的绝对指令代码或可重定位的指令代码或汇编指令代码。 符号表管理：合理组织符号，便于各阶段查找、填写等。 出错管理：错误的种类，即词法错误、语法错误、静态语义错误、动态语义错误等。 计算模型 有限状态自动机(Finite State Automation, FSA)：为研究有限内存的计算过程和某些语言类而抽象出的一种计算模型。有限状态自动机拥有有限数量的状态，每个状态可以迁移到零个或多个状态，输入字串决定执行哪个状态的迁移。有限状态自动机可以表示为一个有向图。有限状态自动机是自动机理论的研究对象。 下推自动机(Push Down Automation, PDA)：是自动机理论中定义的一种抽象模型。下推自动机比有限状态自动机复杂：除了有限状态组成部分外，还包括一个长度不受限制的栈；下推自动机的状态迁移不但要参考有限状态部分，也要参照栈当前的状态；状态迁移不但包括有限状态的变迁，还包括一个栈的出栈或入栈的过程。术语“下推”来自原型机械自动机物理上接触穿孔卡片来阅读其内容的下推动作。术语“确定下推自动机”(Deterministic Push Down Automation, DPDA)指的是识别确定上下文无关语言的抽象计算设备。 图灵机：又称图灵计算、图灵计算机，是由图灵提出的一种抽象计算模型，它有一条无限长的纸带，纸带分成了一个一个的小方格，每个方格有不同的颜色。有一个机器头在纸带上移来移去，机器头有一组内部状态，还有一些固定的程序。在每个时刻，机器头都要从当前纸带上读入一个方格信息，然后结合自己的内部状态查找程序表，根据程序输出信息到纸带方格上，并转换自己的内部状态，然后进行移动。]]></content>
+      <categories>
+        <category>Question Bank</category>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Question Bank</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Regular_Expression]]></title>
+    <url>%2F2019%2F05%2F20%2FOther%2FRegular-Expression%2F</url>
+    <content type="text"><![CDATA[Metacharacter character descritption ^ The beginning of the string. $ The End of the string. \d The number. \s Any whitespace characters, including \t\n\r\f, and more. Repetition character descritption * 0 or more times. + 1 or more times. ? 0 or 1 time. {n} n times. {n,} n or more times. {n,m} n to m times. Range character descritption [0-9] One number(0-9),Equivalent to \d. [a-z] One Lower case letter(a-z). [xyz] “x”,”y” or “z”. [^xyz] Not “x”, “y” or “z.” [^a-z] Not the Lower case letter(a-z).]]></content>
+      <categories>
+        <category>Regular_Expression</category>
+      </categories>
+      <tags>
+        <tag>Regular_Expression</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Python file io method]]></title>
+    <url>%2F2019%2F05%2F18%2FPython%2Fpython-file-io%2F</url>
+    <content type="text"><![CDATA[Method 1: for loopWe can directly read each row of data using a for loop on a file object. 12345nodeFile = "input/linkCount.txt"fo = open(nodeFile, "r", encoding="UTF-8")for line in fo: line = line.replace("\n", "") print(line) Write to file12345outputFile = "/output/result.txt"fo = open(outputFile, "w", encoding="UTF-8")line = "-----"+"\n"fo.write(line)fo.close() Parameter description w Open a file for writing only. If the file already exists, open the file and start editing from the beginning, and the original content will be deleted. If the file does not exist, create a new one. a Open a file for appending. If the file already exists, the file pointer will be placed at the end of the file. In other words, the new content will be written to the existing content. If the file does not exist, create a new file for writing. r Open the file as read-only. The pointer to the file will be placed at the beginning of the file. This is the default mode.]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux bonding]]></title>
+    <url>%2F2019%2F05%2F14%2FLinux%2FInstallUbuntu%2F</url>
+    <content type="text"><![CDATA[Linux bondingLinux bonding can bond multiple network interfaces into one network interface to achieve network load balancing and network redundancy. Even if one of the physical NICs fails, it will not cause the network to be disconnected. Linux Bonding has 7 modes. model name policy description mode = 0 balance-rr Round-robin policy The packets are transmitted sequentially in the order of the device until the last device. This mode provides load balancing and fault tolerance. mode = 1 active-backup Active-backup policy Only one NIC is active, and the other NICs are standby. When the active NIC is fault, and another standby NIC is immediately converted to the primary device. The mac address is externally visible. This mode provides fault tolerance. mode = 2 balance-xor XOR policy The transmission device is selected based on the result of the MAC address exclusive XOR operation. This mode provides load balancing and fault tolerance. mode = 3 broadcast Broadcast policy All data packets are transmitted to all interfaces, all data is transmitted through all devices. This mode provides fault tolerance. mode = 4 802.3ad IEEE 802.3ad Dynamic link aggregation Share the same transfer speed by creating aggregate groups. This mode requires the switch to support 802.3ad mode. This mode provides fault tolerance. mode = 5 balance-tlb Adaptive transmit load balancing The data to be sent is distributed to each device according to the current load, and the received data is processed by the currently used device. This mode provides load balancing and fault tolerance. mode = 6 balance-alb Adaptive load balancing This mode includes the balance-tlb mode and increases the receive load balance (rlb) for IPV4. Receive load balance is implemented through ARP negotiation. The bonding driver intercepts the ARP reply sent by the local machine and rewrites the source hardware address to the unique hardware address of a slave in the bond. Implement Ubuntu bonding in Dell serverBond the em1 and em2 NIC ports to bond0. The NIC port name of the Dell server is em1, em2, etc. The name of the NIC port of the Linux system is often eth0, eth1, etc. 1. Edit /etc/network/interfaces file1# vim /etc/network/interfaces 1234567891011121314auto loiface lo inet loopbackup ifenslave bond0 em1 em2down ifenslave bond0 -d em1 em2bond-mode 0bond-mmimon 100auto bond0iface bond0 inet staticaddress 10.10.4.7netmask 255.255.255.0gateway 10.10.4.1dns-nameserver 202.106.0.20 You do not need to configure the em1, em2 port information, you just need to configure the IP address and other information on the Bond(bond0). 2. Edit /etc/modules file1vim /etc/modules Add to file. 1bonding 3. execute the command1# modprobe bonding 4. Then restart the server.5. Create and delete Bondbond0 can be created automatically after reboot.You can manually create and delete bond0 by editing the file /sys/class/net/bonding_masters. Create a new Bond(bond0): 1# echo +bond0 &gt; /sys/class/net/bonding_masters Delete a exist Bond(bond0): 1# echo -bond0 &gt; /sys/class/net/bonding_masters Show all Bonds: 1# cat /sys/class/net/bonding_masters 6. Create and delete SlaveYou can make port belong to bond by editing the file /sys/class/net/bond/bonding/slaves. Make port em1, em2 belong to bond0: 12# echo +em1 &gt; /sys/class/net/bond0/bonding/slaves# echo +em2 &gt; /sys/class/net/bond0/bonding/slaves Release Slave(em1,em2) from Bond(bond0): 12# echo -em1 &gt; /sys/class/net/bond0/bonding/slaves# echo -em2 &gt; /sys/class/net/bond0/bonding/slaves 7. Install the ifenslaveAfter adding the em1, em2 port to the slaves of bond0, you can temporarily access the Internet (the network will disconnected again after the restart), so install the ifenslave now. 12#apt-get update#apt-get install ifenslave Now, the network will always be connected, even if you reboot later. 8. Show bond0 status1cat /proc/net/bonding/bond0 Displaying up means successful: 1MII Status: up And down means not enabled, there may be not automatically enabled, you can try to start it manually: 1ifconfig bond0 up]]></content>
+      <categories>
+        <category>Linux</category>
+        <category>Ubuntu</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Ubuntu</tag>
+      </tags>
+  </entry>
+</search>
