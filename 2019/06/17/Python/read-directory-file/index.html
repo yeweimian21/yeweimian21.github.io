@@ -96,18 +96,18 @@
 
 
 
-  <meta name="description" content="Read the contents of all the files in the directory and record them12345678910111213# Record the contents of all filesdocuments = []# The path of directorydirectory_path = &quot;E:/input/documents&quot;# Read a">
+  <meta name="description" content="Read the contents of all the files in the directory and record them123456789101112131415# Record the contents of all filesdocuments = []# The path of directorydirectory_path = &quot;E:/input/documents&quot;# Re">
 <meta name="keywords" content="python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Read all files in the directory">
 <meta property="og:url" content="http://yoursite.com/2019/06/17/Python/read-directory-file/index.html">
 <meta property="og:site_name" content="A peaceful place">
-<meta property="og:description" content="Read the contents of all the files in the directory and record them12345678910111213# Record the contents of all filesdocuments = []# The path of directorydirectory_path = &quot;E:/input/documents&quot;# Read a">
+<meta property="og:description" content="Read the contents of all the files in the directory and record them123456789101112131415# Record the contents of all filesdocuments = []# The path of directorydirectory_path = &quot;E:/input/documents&quot;# Re">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-06-17T03:12:14.830Z">
+<meta property="og:updated_time" content="2019-06-29T04:42:03.267Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Read all files in the directory">
-<meta name="twitter:description" content="Read the contents of all the files in the directory and record them12345678910111213# Record the contents of all filesdocuments = []# The path of directorydirectory_path = &quot;E:/input/documents&quot;# Read a">
+<meta name="twitter:description" content="Read the contents of all the files in the directory and record them123456789101112131415# Record the contents of all filesdocuments = []# The path of directorydirectory_path = &quot;E:/input/documents&quot;# Re">
 
 
 
@@ -417,12 +417,24 @@
                 
               
 
-              <time title="Created: 2019-06-17 10:59:08 / Modified: 11:12:14" itemprop="dateCreated datePublished" datetime="2019-06-17T10:59:08+08:00">2019-06-17</time>
+              <time title="Created: 2019-06-17 10:59:08" itemprop="dateCreated datePublished" datetime="2019-06-17T10:59:08+08:00">2019-06-17</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-06-29 12:42:03" itemprop="dateModified" datetime="2019-06-29T12:42:03+08:00">2019-06-29</time>
               
             
           </span>
@@ -481,7 +493,7 @@
       
 
       
-        <h1 id="Read-the-contents-of-all-the-files-in-the-directory-and-record-them"><a href="#Read-the-contents-of-all-the-files-in-the-directory-and-record-them" class="headerlink" title="Read the contents of all the files in the directory and record them"></a>Read the contents of all the files in the directory and record them</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Record the contents of all files</span></span><br><span class="line">documents = []</span><br><span class="line"></span><br><span class="line"><span class="comment"># The path of directory</span></span><br><span class="line">directory_path = <span class="string">"E:/input/documents"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Read all files</span></span><br><span class="line"><span class="keyword">for</span> root,dirs,files <span class="keyword">in</span> os.walk(directory_path):</span><br><span class="line">    <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">        foRead = open(os.path.join(root, file), <span class="string">"r"</span>, encoding=<span class="string">"iso-8859-1"</span>)</span><br><span class="line">        content = foRead.read()</span><br><span class="line">        documents.append(content)</span><br><span class="line">        foRead.close()</span><br></pre></td></tr></table></figure>
+        <h1 id="Read-the-contents-of-all-the-files-in-the-directory-and-record-them"><a href="#Read-the-contents-of-all-the-files-in-the-directory-and-record-them" class="headerlink" title="Read the contents of all the files in the directory and record them"></a>Read the contents of all the files in the directory and record them</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Record the contents of all files</span></span><br><span class="line">documents = []</span><br><span class="line"></span><br><span class="line"><span class="comment"># The path of directory</span></span><br><span class="line">directory_path = <span class="string">"E:/input/documents"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Read all files</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> root,dirs,files <span class="keyword">in</span> os.walk(directory_path):</span><br><span class="line">    <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">        foRead = open(os.path.join(root, file), <span class="string">"r"</span>, encoding=<span class="string">"iso-8859-1"</span>)</span><br><span class="line">        content = foRead.read()</span><br><span class="line">        documents.append(content)</span><br><span class="line">        foRead.close()</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -603,7 +615,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">44</span>
+                    <span class="site-state-item-count">55</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

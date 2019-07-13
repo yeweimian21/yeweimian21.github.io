@@ -1,6 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Java Environment Variable]]></title>
+    <url>%2F2019%2F07%2F13%2FJava%2FJava-environment-variable%2F</url>
+    <content type="text"><![CDATA[Set the Java environment variable1. JAVA_HOMECreate environment variable JAVA_HOME. Set JAVA_HOME to your jdk installation directory. 1JAVA_HOME = E:\JDK\jdk1.8 2. PathEdit environment variable Path. 1Path = %JAVA_HOME%\bin;%JAVA_HOME%\jre\bin; 3. CLASSPATHCreate environment variable CLASSPATH. 1CLASSPATH = .;%JAVA_HOME%\lib;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar Note : There is a . at the beginning of it.]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Python Dictionary]]></title>
+    <url>%2F2019%2F07%2F13%2FPython%2Fpython-dictionary%2F</url>
+    <content type="text"><![CDATA[Get the key list of the dictionary123user_dictionary = &#123;"name" : "John", "age" : 20, "email" : "John@aa.com"&#125;key_list = list(user_dictionary.keys())print(key_list)]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hexo Installation]]></title>
+    <url>%2F2019%2F07%2F13%2FHexo%2FHexo-installation%2F</url>
+    <content type="text"><![CDATA[The Hexo installation1. Install the node.js and npmDownload and install the node.js. Node.js contains npm, and npm is installed along with the installation of node.js. Verify the installation. Show the version of node.js. 12$ node --version$ node -v 2. Install the gitDownload and install the git. Verify the installation. Show the version of git. 1$ git --version 3. Create the GitHub RepositoryNew a GitHub Repository named username.github.io. Replace username with your Github username. You will view your blog with the url https://username.github.io. Note : The repository must be username.github.io. 4. Generate the SSH keyVerify the SSH key in user directory(~). 1$ cd ~/.ssh/ There should exist id_rsa and id_rsa.pub file in .ssh directory. If you don’t have .ssh directory or id_rsa, id_rsa.pub file, you can generate a new SSH key. 1$ ssh-keygen -t rsa -b 4096 -C "your_email@example.com" In general, you can press Enter three times. Then access Settings -&gt; SSH and GPG keys -&gt; New SSH keys in your GiuHub account. The Title is arbitrarily. Add the content of id_rsa.pub file to Key. Testing your SSH connection. 1$ ssh -T git@github.com You can input the yes. Then do some other settings. 12$ git config --global user.name "your_name"$ git config --global user.email "your_email@example.com" 5. Install the HexoInstall the hexo. 1$ npm install hexo-cli -g Initialize your blog directory. 1$ hexo init blog_directory Replace the blog_directory with your blog directory.]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[python string]]></title>
+    <url>%2F2019%2F06%2F30%2FPython%2Fpython-string%2F</url>
+    <content type="text"><![CDATA[Remove the blank character at the beginning and end of the String12address = " \ncity street "print(address.strip()) Convert String to List1234word_str = "['view', 'select', 'point', 'open', 'learn']"word_list = eval(word_str)print(word_list)print(word_list[0])]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode Algorithms 167]]></title>
+    <url>%2F2019%2F06%2F27%2FLeetCode%2FItem167%2F</url>
+    <content type="text"><![CDATA[167. Two Sum II - Input array is sorted给定已按升序排序的整数数组，找到两个数字，使它们相加到特定的目标数。 函数twoSum应返回两个数字的索引，以便它们加起来到目标，其中index1必须小于index2。 注意： 您返回的答案（index1和index2）不是从零开始的。 您可以假设每个输入只有一个解决方案，并且您可能不会两次使用相同的元素。 Example: 123Input: numbers = [2,7,11,15], target = 9Output: [1,2]Explanation: The sum of 2 and 7 is 9. Therefore index1 = 1, index2 = 2. C++ Code1234567891011121314151617181920212223242526272829303132333435363738394041424344#include &lt;stdio.h&gt;#include &lt;stdlib.h&gt;#include &lt;iostream&gt;#include &lt;vector&gt;using namespace std;class Solution &#123;public: vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; numbers, int target) &#123; int left = 0; int right = numbers.size()-1; vector&lt;int&gt; indexs; while (left &lt; right) &#123; int sum = numbers[left] + numbers[right]; if(sum == target) &#123; indexs.push_back(left + 1); indexs.push_back(right + 1); return indexs; &#125; else if(sum &lt; target) &#123; left++; &#125; else &#123; right--; &#125; &#125; return indexs; &#125;&#125;;int main()&#123; vector&lt;int&gt; numbers = &#123;2,7,11,15&#125;; int target = 9; Solution obj; vector&lt;int&gt; indexs = obj.twoSum(numbers, target); cout &lt;&lt; "index1 = " &lt;&lt; indexs[0] &lt;&lt; endl; cout &lt;&lt; "index2 = " &lt;&lt; indexs[1] &lt;&lt; endl;&#125; Java Code1234567891011121314151617class Solution &#123; public int[] twoSum(int[] numbers, int target) &#123; int[] index = new int[2]; index[0] = -1; index[1] = -1; for(int i=0; i&lt;numbers.length; i++) &#123; for(int j=i+1; j&lt;numbers.length; j++) &#123; if(numbers[i]+numbers[j] == target) &#123; index[0] = i+1; index[1] = j+1; return index; &#125; &#125; &#125; return index; &#125;&#125;]]></content>
+      <categories>
+        <category>Question Bank</category>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>Question Bank</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode Algorithms 38]]></title>
+    <url>%2F2019%2F06%2F27%2FLeetCode%2FItem38%2F</url>
+    <content type="text"><![CDATA[38. Count and Saycount-and-say序列是整数序列，前五个术语如下： 123451. 12. 113. 214. 12115. 111221 1被读作“1”或11。11被读作“两个1”或21。21被读作“一个2，然后一个1”或1211。 给定整数n，其中1≤n≤30，生成count-and-say序列的第n项。 注意：整数序列的每个术语将表示为一个字符串。 Example 1: 12Input: 1Output: &quot;1&quot; Example 2: 12Input: 4Output: &quot;1211&quot; C++ Code12345678910111213141516171819202122232425262728293031323334353637383940#include &lt;stdio.h&gt;#include &lt;stdlib.h&gt;#include &lt;iostream&gt;using namespace std;class Solution &#123;public: string countAndSay(int n) &#123; if (n &lt;= 0) &#123; return ""; &#125; string result = "1"; while (--n) &#123; string temp = ""; for (int i = 0; i &lt; result.size(); i++) &#123; int count = 1; while (i+1 &lt; result.size() &amp;&amp; result[i] == result[i+1]) &#123; count++; i++; &#125; temp += to_string(count) + result[i]; &#125; result = temp; &#125; return result; &#125;&#125;;int main()&#123; int n = 5; Solution obj; string result = obj.countAndSay(n); cout &lt;&lt; "result = " &lt;&lt; result &lt;&lt; endl;&#125; 12345678910111213141516171819202122232425class Solution &#123; public String countAndSay(int n) &#123; String resultBefore = "1"; String resultAfter = ""; for(int i=1; i&lt;n; i++) &#123; char temp = resultBefore.charAt(0); int count = 0; for(int j=0; j&lt;resultBefore.length(); j++) &#123; if(temp==resultBefore.charAt(j)) &#123; count++; &#125; else &#123; resultAfter = resultAfter+String.valueOf(count)+String.valueOf(temp); count = 1; temp = resultBefore.charAt(j); &#125; &#125; resultAfter = resultAfter+String.valueOf(count)+String.valueOf(temp); resultBefore = resultAfter; resultAfter = ""; &#125; return resultBefore; &#125;&#125;]]></content>
+      <categories>
+        <category>Question Bank</category>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>Question Bank</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode Algorithms 35]]></title>
+    <url>%2F2019%2F06%2F27%2FLeetCode%2FItem35%2F</url>
+    <content type="text"><![CDATA[35. Search Insert Position给定排序数组和目标值，如果找到目标，则返回索引。 如果没有，请返回索引按顺序插入的索引。 您可以假设数组中没有重复项。 Example 1: 12Input: [1,3,5,6], 5Output: 2 Example 2: 12Input: [1,3,5,6], 2Output: 1 Example 3: 12Input: [1,3,5,6], 7Output: 4 Example 4: 12Input: [1,3,5,6], 0Output: 0 C++ Code12345678910111213141516171819202122232425262728293031#include &lt;stdio.h&gt;#include &lt;stdlib.h&gt;#include &lt;iostream&gt;#include &lt;vector&gt;using namespace std;class Solution &#123;public: int searchInsert(vector&lt;int&gt;&amp; nums, int target) &#123; for (int i = 0; i &lt; nums.size(); i++) &#123; if (nums[i] &gt;= target) &#123; return i; &#125; &#125; return nums.size(); &#125;&#125;;int main()&#123; int a[4] = &#123;1,3,5,6&#125;; int target = 2; vector&lt;int&gt; number(a, a+4); Solution obj; int index = obj.searchInsert(number, target); cout &lt;&lt; "index = " &lt;&lt; index &lt;&lt; endl; &#125; Java Code12345678910class Solution &#123; public int searchInsert(int[] nums, int target) &#123; for(int i=0; i&lt;nums.length; i++) &#123; if(nums[i] &gt;= target) &#123; return i; &#125; &#125; return nums.length; &#125;&#125;]]></content>
+      <categories>
+        <category>Question Bank</category>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>Question Bank</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode Algorithms 27]]></title>
+    <url>%2F2019%2F06%2F27%2FLeetCode%2FItem27%2F</url>
+    <content type="text"><![CDATA[27. Remove Element给定数组nums和值val，在适当位置删除该值的所有实例并返回新长度。 不要为另一个数组分配额外的空间，必须通过使用O(1)的额外内存修改输入数组来实现此目的。 元素的顺序可以改变。 超过新长度的部分并不重要。 Example 1: 12345Given nums = [3,2,2,3], val = 3,Your function should return length = 2, with the first two elements of nums being 2.It doesn&apos;t matter what you leave beyond the returned length. Example 2: 1234567Given nums = [0,1,2,2,3,0,4,2], val = 2,Your function should return length = 5, with the first five elements of nums containing 0, 1, 3, 0, and 4.Note that the order of those five elements can be arbitrary.It doesn&apos;t matter what values are set beyond the returned length. C++ Code123456789101112131415161718192021222324252627282930313233343536#include &lt;stdio.h&gt;#include &lt;stdlib.h&gt;#include &lt;iostream&gt;#include &lt;vector&gt;using namespace std;class Solution &#123;public: int removeElement(vector&lt;int&gt;&amp; nums, int val) &#123; int index = 0; for (int i = 0; i &lt; nums.size(); i++) &#123; if (nums[i] != val) &#123; nums[index] = nums[i]; index++; &#125; &#125; return index; &#125;&#125;;int main()&#123; int a[8] = &#123;0,1,2,2,3,0,4,2&#125;; vector&lt;int&gt; numbers(a, a+8); Solution obj; int length = obj.removeElement(numbers, 2); cout &lt;&lt; "length = " &lt;&lt; length &lt;&lt; endl; for (int i = 0; i &lt; length; i++) &#123; cout &lt;&lt; numbers[i] &lt;&lt; " "; &#125;&#125; Java Code123456789101112131415class Solution &#123; public int removeElement(int[] nums, int val) &#123; int i=0; for(int j=0;j&lt;nums.length;j++) &#123; if(nums[j] == val) &#123; continue; &#125; else &#123; nums[i] = nums[j]; i++; &#125; &#125; return i; &#125;&#125;]]></content>
+      <categories>
+        <category>Question Bank</category>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>Question Bank</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode Algorithms 26]]></title>
+    <url>%2F2019%2F06%2F27%2FLeetCode%2FItem26%2F</url>
+    <content type="text"><![CDATA[26. Remove Duplicates from Sorted Array给定排序的数组nums，就地删除重复项，使每个元素只出现一次并返回新的长度。 不要为另一个数组分配额外的空间，必须通过使用O(1)的额外内存修改输入数组来实现此目的。 Example 1: 12345Given nums = [1,1,2],Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively.It doesn&apos;t matter what you leave beyond the returned length. Example 2: 12345Given nums = [0,0,1,1,1,2,2,3,3,4],Your function should return length = 5, with the first five elements of nums being modified to 0, 1, 2, 3, and 4 respectively.It doesn&apos;t matter what values are set beyond the returned length. C++ Code1234567891011121314151617181920212223242526272829303132333435363738394041#include &lt;stdio.h&gt;#include &lt;stdlib.h&gt;#include &lt;iostream&gt;#include &lt;vector&gt;using namespace std;class Solution &#123;public: int removeDuplicates(vector&lt;int&gt;&amp; nums) &#123; if(nums.empty()) &#123; return 0; &#125; int pre = 0, cur =0, n = nums.size(); while (cur &lt; n) &#123; if(nums[pre] == nums[cur]) &#123; cur++; &#125; else &#123; pre++; nums[pre] = nums[cur]; cur++; &#125; &#125; return pre + 1; &#125;&#125;;int main()&#123; int n[10] = &#123;0,0,1,1,1,2,2,3,3,4&#125;; vector&lt;int&gt; nums(n, n+10); Solution obj; int length = obj.removeDuplicates(nums); cout &lt;&lt; "length = " &lt;&lt; length &lt;&lt; endl; cout &lt;&lt; nums[2] &lt;&lt; endl;&#125; Java Code12345678910111213141516171819class Solution &#123; public int removeDuplicates(int[] nums) &#123; if(nums.length == 0) &#123; return 0; &#125; int newLength = 1; int temp = nums[0]; int j = 0; for(int i=1; i&lt;nums.length; i++) &#123; if(nums[i] != temp) &#123; temp = nums[i]; newLength++; j++; nums[j] = nums[i]; &#125; &#125; return newLength; &#125;&#125;]]></content>
+      <categories>
+        <category>Question Bank</category>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>Question Bank</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode Algorithms 20]]></title>
+    <url>%2F2019%2F06%2F27%2FLeetCode%2FItem20%2F</url>
+    <content type="text"><![CDATA[20. Valid Parentheses验证括号是否有效 请注意，空字符串也被视为有效。 Example 1: 12Input: &quot;()&quot;Output: true Example 2: 12Input: &quot;()[]&#123;&#125;&quot;Output: true Example 3: 12Input: &quot;(]&quot;Output: false Example 4: 12Input: &quot;([)]&quot;Output: false Example 5: 12Input: &quot;&#123;[]&#125;&quot;Output: true 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849#include &lt;stdio.h&gt;#include &lt;stdlib.h&gt;#include &lt;iostream&gt;#include &lt;stack&gt;using namespace std;class Solution &#123;public: bool isValid(string s) &#123; stack&lt;char&gt; parenthese; for (int i = 0; i &lt; s.size(); i++) &#123; if(s[i] == '(' || s[i] == '[' || s[i] == '&#123;') &#123; parenthese.push(s[i]); &#125; else &#123; if (parenthese.empty()) &#123; return false; &#125; if (s[i] == ')' &amp;&amp; parenthese.top() != '(') &#123; return false; &#125; if (s[i] == ']' &amp;&amp; parenthese.top() != '[') &#123; return false; &#125; if (s[i] == '&#125;' &amp;&amp; parenthese.top() != '&#123;') &#123; return false; &#125; parenthese.pop(); &#125; &#125; return parenthese.empty(); &#125;&#125;;int main()&#123; string parenthese = "([)]"; Solution obj; bool result = obj.isValid(parenthese); cout &lt;&lt; result &lt;&lt; endl;&#125;]]></content>
+      <categories>
+        <category>Question Bank</category>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>Question Bank</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode Algorithms 13]]></title>
+    <url>%2F2019%2F06%2F27%2FLeetCode%2FItem13%2F</url>
+    <content type="text"><![CDATA[13. Roman to Integer给定罗马数字，将其转换为整数。 输入保证在1到3999的范围内。 12345678Symbol ValueI 1V 5X 10L 50C 100D 500M 1000 Example 1: 12Input: &quot;III&quot;Output: 3 Example 2: 12Input: &quot;IV&quot;Output: 4 Example 3: 12Input: &quot;IX&quot;Output: 9 Example 4: 123Input: &quot;LVIII&quot;Output: 58Explanation: L = 50, V= 5, III = 3. Example 5: 123Input: &quot;MCMXCIV&quot;Output: 1994Explanation: M = 1000, CM = 900, XC = 90 and IV = 4. 123456789101112131415161718192021222324252627282930313233343536#include &lt;stdio.h&gt;#include &lt;stdlib.h&gt;#include &lt;iostream&gt;#include &lt;unordered_map&gt;using namespace std;class Solution &#123;public: int romanToInt(string s) &#123; int result = 0; unordered_map&lt;char, int&gt; m&#123;&#123;'I', 1&#125;,&#123;'V', 5&#125;,&#123;'X', 10&#125;,&#123;'L', 50&#125;,&#123;'C', 100&#125;,&#123;'D', 500&#125;, &#123;'M', 1000&#125;&#125;; for (int i = 0; i &lt; s.size(); i++) &#123; int value = m[s[i]]; if(i == s.size()-1 || m[s[i]] &gt;= m[s[i+1]])&#123; result += value; &#125; else &#123; result -= value; &#125; &#125; return result; &#125;&#125;;int main()&#123; string number = "LVIII"; Solution obj; int result = obj.romanToInt(number); cout &lt;&lt; "number = " &lt;&lt; result &lt;&lt; endl;&#125;]]></content>
+      <categories>
+        <category>Question Bank</category>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>Question Bank</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Add Hexo search function]]></title>
     <url>%2F2019%2F06%2F26%2FHexo%2Fhexo-search%2F</url>
     <content type="text"><![CDATA[Add search function for Hexo with NexT theme1. Execute the command in your blog root directory1$ npm install hexo-generator-searchdb --save 2. Edit the blog website configuration fileAdd the following configuration content to the _config.yml configuration file. It can be added to any location in the file. I added it to the end of the file. 12345search: path: search.xml field: post format: html limit: 10000 3. Edit the theme configuration fileEdit the themes/hexo-theme-next/_config.yml configuration file of the NexT theme. modify enable: false to enable: true 1234567891011# Local search# Dependencies: https://github.com/theme-next/hexo-generator-searchdblocal_search: enable: true # If auto, trigger search by changing input. # If manual, trigger search by pressing enter key or search button. trigger: auto # Show top n results per article, show all results by setting to -1 top_n_per_article: 1 # Unescape html strings to the readable one. unescape: false The result]]></content>
@@ -47,7 +175,7 @@
   <entry>
     <title><![CDATA[Framework]]></title>
     <url>%2F2019%2F06%2F21%2FQuestion%20Bank%2FFramework%2F</url>
-    <content type="text"><![CDATA[J2EEGet与Post的区别MVCSpring框架的模块 模块 描述 Spring AOP Spring ORM Spring DAO Spring Web Spring Context Spring Web MVC Spring Core IoC(控制反转，依赖注入)思想是反转资源获取的方向。传统的资源查找方式要求组件向容器发起请求查找资源, 容器适时的返回资源。而IOC是容器主动地将资源推送给它所管理的组件，组件来接受资源. AOP允许开发人员在不改变原来模型的基础上动态地修改模型从而满足新的需求。例如，在不改变原来业务逻辑模型的基础上，可以动态的增加日志、安全或者异常处理的功能。]]></content>
+    <content type="text"><![CDATA[J2EEGet与Post的区别MVCSpring框架的模块 模块 描述 Spring AOP 采用了面向切面编程的思想，使Spring框架管理的对象支持AOP，同时这个模块也提供可事务管理，可以不依赖具体的EJB组件，就可以将事务管理集成到应用程序中 Spring ORM 提供了对现有的ORM框架的支持 Spring DAO 提供了DAO(Data Access Object，数据访问对象)模式和JDBC的支持。 Spring Web 提供了Servlet监听器的Context和Web应用的上下文。 Spring Context 扩展核心容器，提供了Spring上下文环境，给开发人员提供了很多非常有用的服务，例如国际化等 Spring Web MVC 提供了一个构建Web应用程序的MVC的实现 Spring Core Spring框架的核心容器，提供了Spring框架的基本功能。这个模块中最主要的一个组件为BeanFactory，它使用工厂模式来创建所需的对象，同时BeanFactory使用IOC思想，通过读取XML文件的方式来实例化对象，可以说BeanFactory提供了组件生命周期的管理，组件的创建、装配和销毁等功能。 IoC(控制反转，依赖注入)思想是反转资源获取的方向。传统的资源查找方式要求组件向容器发起请求查找资源, 容器适时的返回资源。而IOC是容器主动地将资源推送给它所管理的组件，组件来接受资源. AOP允许开发人员在不改变原来模型的基础上动态地修改模型从而满足新的需求。例如，在不改变原来业务逻辑模型的基础上，可以动态的增加日志、安全或者异常处理的功能。]]></content>
       <categories>
         <category>Question Bank</category>
       </categories>
@@ -80,7 +208,7 @@
   <entry>
     <title><![CDATA[Read all files in the directory]]></title>
     <url>%2F2019%2F06%2F17%2FPython%2Fread-directory-file%2F</url>
-    <content type="text"><![CDATA[Read the contents of all the files in the directory and record them12345678910111213# Record the contents of all filesdocuments = []# The path of directorydirectory_path = "E:/input/documents"# Read all filesfor root,dirs,files in os.walk(directory_path): for file in files: foRead = open(os.path.join(root, file), "r", encoding="iso-8859-1") content = foRead.read() documents.append(content) foRead.close()]]></content>
+    <content type="text"><![CDATA[Read the contents of all the files in the directory and record them123456789101112131415# Record the contents of all filesdocuments = []# The path of directorydirectory_path = "E:/input/documents"# Read all filesimport osfor root,dirs,files in os.walk(directory_path): for file in files: foRead = open(os.path.join(root, file), "r", encoding="iso-8859-1") content = foRead.read() documents.append(content) foRead.close()]]></content>
       <categories>
         <category>python</category>
       </categories>
@@ -102,7 +230,7 @@
   <entry>
     <title><![CDATA[Vector Uasge]]></title>
     <url>%2F2019%2F06%2F13%2FC%2B%2B%2Fvector-cpp%2F</url>
-    <content type="text"><![CDATA[VectorVector is a Sequence Container. Vector is a dynamic array that can store objects of any type. Head fileTo use Vector, you need to add #include&lt;vector&gt; at the beginning of the program, and add using namespace std; 123#include &lt;vector&gt;using namespace std; Vector declaration and initializationDeclare a vector of int type1vector&lt;int&gt; number; Declare a vector with an initial size of 101vector&lt;int&gt; number(10); Declare a vector with an initial size of 10 and an initial value of 1 for all elements1vector&lt;int&gt; number(10, 1); Declare and initialize vector number with vector score12vector&lt;int&gt; score(10, 2);vector&lt;int&gt; number(a); The 0th to 4th (5 total) elements of the score vector are used as the initials of the vector number12vector&lt;int&gt; score(10, 2);vector&lt;int&gt; number(score.begin(), score.begin()+5); Use array to initialize vector1234567int b[10] = &#123;1,2,3,4,5,6,7,8,9,10&#125;;// The first 6 elements of the array b are used as the initial values of the vector number6vector&lt;int&gt; number6(b, b+6);//The b[1]-b[4] element of the array b is used as the initial value of the vector number7vector&lt;int&gt; number7(&amp;b[2], &amp;b[5]); Access vector elementAccess vector elements by index1234for (int i = 0; i &lt; number.size(); i++)&#123; cout &lt;&lt; number[i] &lt;&lt; " ";&#125; Use iterator to access vector elements12345vector&lt;int&gt;::iterator it;for (it = number.begin(); it != number.end() ; it++)&#123; cout &lt;&lt; *it &lt;&lt; " ";&#125; Add elements to the vectorUsing following way to assign values is wrong. vec is an empty vector object that does not contain elements. Only existing elements can be accessed through the index. 1234vector&lt;int&gt; vec;for (int i = 0; i &lt; 10; i++)&#123; vec[i] = i;&#125; The correct way is this. 1234vector&lt;int&gt; vec;for (int i = 0; i &lt; 10; i++)&#123; vec.push_back(i);&#125; ## 12345vector&lt;int&gt; number;number.size();number.empty();number.clear();]]></content>
+    <content type="text"><![CDATA[VectorVector is a Sequence Container. Vector is a dynamic array that can store objects of any type. Head fileTo use Vector, you need to add #include&lt;vector&gt; at the beginning of the program, and add using namespace std; 123#include &lt;vector&gt;using namespace std; Vector declaration and initializationDeclare a vector of int type1vector&lt;int&gt; number; Declare a vector with an initial size of 101vector&lt;int&gt; number(10); Declare a vector with an initial size of 10 and an initial value of 1 for all elements1vector&lt;int&gt; number(10, 1); Declare and initialize vector number with vector score12vector&lt;int&gt; score(10, 2);vector&lt;int&gt; number(score); The 0th to 4th (5 total) elements of the score vector are used as the initials of the vector number12vector&lt;int&gt; score(10, 2);vector&lt;int&gt; number(score.begin(), score.begin()+5); Use array to initialize vector1234567int b[10] = &#123;1,2,3,4,5,6,7,8,9,10&#125;;// The first 6 elements of the array b are used as the initial values of the vector number6vector&lt;int&gt; number6(b, b+6);//The b[1]-b[4] element of the array b is used as the initial value of the vector number7vector&lt;int&gt; number7(&amp;b[2], &amp;b[5]); Access vector elementAccess vector elements by index1234for (int i = 0; i &lt; number.size(); i++)&#123; cout &lt;&lt; number[i] &lt;&lt; " ";&#125; Use iterator to access vector elements12345vector&lt;int&gt;::iterator it;for (it = number.begin(); it != number.end() ; it++)&#123; cout &lt;&lt; *it &lt;&lt; " ";&#125; Add elements to the vectorUsing following way to assign values is wrong. vec is an empty vector object that does not contain elements. Only existing elements can be accessed through the index. 1234vector&lt;int&gt; vec;for (int i = 0; i &lt; 10; i++)&#123; vec[i] = i;&#125; The correct way is this. 1234vector&lt;int&gt; vec;for (int i = 0; i &lt; 10; i++)&#123; vec.push_back(i);&#125; ## 12345vector&lt;int&gt; number;number.size();number.empty();number.clear();]]></content>
       <categories>
         <category>C plus plus</category>
       </categories>
@@ -325,7 +453,7 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[python]]></title>
+    <title><![CDATA[Python List]]></title>
     <url>%2F2019%2F05%2F24%2FPython%2Fpython%2F</url>
     <content type="text"><![CDATA[Traversal List123list1 = ["a", "b", "c"]for element in list1: print("element = ", element) The judgment that element is not in the list123list1 = ["a", "b", "c"]if "d" not in list1: print("not in") Get the length of the list12list1 = ["a", "b", "c"]print("length =", len(list1)) Add an element to the end of the list123list1 = ["a", "b", "c"]list1.append("d")print("list1 =", list1)]]></content>
       <categories>
