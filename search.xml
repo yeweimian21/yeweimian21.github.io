@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Notepad++ Settings]]></title>
+    <url>%2F2019%2F07%2F14%2FTool%2Fnotepad-settings%2F</url>
+    <content type="text"><![CDATA[Edit the font styleClick the Settings -&gt; Style Configurator -&gt; Global Styles -&gt; Global override. Note : Remember to click these checkboxs. Edit the line-heightYou can’t edit the line-height directly, but we can change the line-height by edit the Line number margin. Click the Settings -&gt; Style Configurator -&gt; Global Styles -&gt; Line number margin. You can modify the line-height by modifying the Font size.]]></content>
+      <categories>
+        <category>Notepad++</category>
+      </categories>
+      <tags>
+        <tag>Notepad++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Java Environment Variable]]></title>
     <url>%2F2019%2F07%2F13%2FJava%2FJava-environment-variable%2F</url>
     <content type="text"><![CDATA[Set the Java environment variable1. JAVA_HOMECreate environment variable JAVA_HOME. Set JAVA_HOME to your jdk installation directory. 1JAVA_HOME = E:\JDK\jdk1.8 2. PathEdit environment variable Path. 1Path = %JAVA_HOME%\bin;%JAVA_HOME%\jre\bin; 3. CLASSPATHCreate environment variable CLASSPATH. 1CLASSPATH = .;%JAVA_HOME%\lib;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar Note : There is a . at the beginning of it.]]></content>
@@ -16,10 +27,10 @@
     <url>%2F2019%2F07%2F13%2FPython%2Fpython-dictionary%2F</url>
     <content type="text"><![CDATA[Get the key list of the dictionary123user_dictionary = &#123;"name" : "John", "age" : 20, "email" : "John@aa.com"&#125;key_list = list(user_dictionary.keys())print(key_list)]]></content>
       <categories>
-        <category>python</category>
+        <category>pythonConvert</category>
       </categories>
       <tags>
-        <tag>python</tag>
+        <tag>pythonConvert</tag>
       </tags>
   </entry>
   <entry>
@@ -38,10 +49,10 @@
     <url>%2F2019%2F06%2F30%2FPython%2Fpython-string%2F</url>
     <content type="text"><![CDATA[Remove the blank character at the beginning and end of the String12address = " \ncity street "print(address.strip()) Convert String to List1234word_str = "['view', 'select', 'point', 'open', 'learn']"word_list = eval(word_str)print(word_list)print(word_list[0])]]></content>
       <categories>
-        <category>python</category>
+        <category>pythonConvert</category>
       </categories>
       <tags>
-        <tag>python</tag>
+        <tag>pythonConvert</tag>
       </tags>
   </entry>
   <entry>
@@ -199,10 +210,10 @@
     <url>%2F2019%2F06%2F17%2FPython%2Ffile%2F</url>
     <content type="text"><![CDATA[Get the file name (excluding the extension)123456789def getFileMainName(file_full_name): index = file_full_name.rfind(".") file_main_name = file_full_name[:index] return file_main_namedef test(): file_list = ["news.txt", "Student.java", "build.properties.txt", "connection.mysql.sql"] for file in file_list: print(getFileMainName(file)) result1234newsStudentbuild.propertiesconnection.mysql]]></content>
       <categories>
-        <category>python</category>
+        <category>pythonConvert</category>
       </categories>
       <tags>
-        <tag>python</tag>
+        <tag>pythonConvert</tag>
       </tags>
   </entry>
   <entry>
@@ -210,10 +221,10 @@
     <url>%2F2019%2F06%2F17%2FPython%2Fread-directory-file%2F</url>
     <content type="text"><![CDATA[Read the contents of all the files in the directory and record them123456789101112131415# Record the contents of all filesdocuments = []# The path of directorydirectory_path = "E:/input/documents"# Read all filesimport osfor root,dirs,files in os.walk(directory_path): for file in files: foRead = open(os.path.join(root, file), "r", encoding="iso-8859-1") content = foRead.read() documents.append(content) foRead.close()]]></content>
       <categories>
-        <category>python</category>
+        <category>pythonConvert</category>
       </categories>
       <tags>
-        <tag>python</tag>
+        <tag>pythonConvert</tag>
       </tags>
   </entry>
   <entry>
@@ -221,21 +232,21 @@
     <url>%2F2019%2F06%2F17%2FPython%2FIdentifier-split%2F</url>
     <content type="text"><![CDATA[Camel-Case identifier splitIdentifier naming often uses Camel-Case. Camel-Case uses uppercase and lowercase letters to name the identifier. We can split the identifier name into separate words based on the letter case of the name of the identifier. 123456789101112131415161718def test_documents(): documents = ["getPassword", "getCityLocation", "ControlData", "Tourist", "match"] documents_split = [] for str in documents: if str.islower(): documents_split.append(str) else: begin = 0 for j in range(1, len(str)): if str[j].isupper(): end = j documents_split.append(str[begin:end].lower()) begin = end documents_split.append(str[begin:].lower()) print(documents_split) result1[&apos;get&apos;, &apos;password&apos;, &apos;get&apos;, &apos;city&apos;, &apos;location&apos;, &apos;control&apos;, &apos;data&apos;, &apos;tourist&apos;, &apos;match&apos;]]]></content>
       <categories>
-        <category>python</category>
+        <category>pythonConvert</category>
       </categories>
       <tags>
-        <tag>python</tag>
+        <tag>pythonConvert</tag>
       </tags>
   </entry>
   <entry>
     <title><![CDATA[Vector Uasge]]></title>
     <url>%2F2019%2F06%2F13%2FC%2B%2B%2Fvector-cpp%2F</url>
-    <content type="text"><![CDATA[VectorVector is a Sequence Container. Vector is a dynamic array that can store objects of any type. Head fileTo use Vector, you need to add #include&lt;vector&gt; at the beginning of the program, and add using namespace std; 123#include &lt;vector&gt;using namespace std; Vector declaration and initializationDeclare a vector of int type1vector&lt;int&gt; number; Declare a vector with an initial size of 101vector&lt;int&gt; number(10); Declare a vector with an initial size of 10 and an initial value of 1 for all elements1vector&lt;int&gt; number(10, 1); Declare and initialize vector number with vector score12vector&lt;int&gt; score(10, 2);vector&lt;int&gt; number(score); The 0th to 4th (5 total) elements of the score vector are used as the initials of the vector number12vector&lt;int&gt; score(10, 2);vector&lt;int&gt; number(score.begin(), score.begin()+5); Use array to initialize vector1234567int b[10] = &#123;1,2,3,4,5,6,7,8,9,10&#125;;// The first 6 elements of the array b are used as the initial values of the vector number6vector&lt;int&gt; number6(b, b+6);//The b[1]-b[4] element of the array b is used as the initial value of the vector number7vector&lt;int&gt; number7(&amp;b[2], &amp;b[5]); Access vector elementAccess vector elements by index1234for (int i = 0; i &lt; number.size(); i++)&#123; cout &lt;&lt; number[i] &lt;&lt; " ";&#125; Use iterator to access vector elements12345vector&lt;int&gt;::iterator it;for (it = number.begin(); it != number.end() ; it++)&#123; cout &lt;&lt; *it &lt;&lt; " ";&#125; Add elements to the vectorUsing following way to assign values is wrong. vec is an empty vector object that does not contain elements. Only existing elements can be accessed through the index. 1234vector&lt;int&gt; vec;for (int i = 0; i &lt; 10; i++)&#123; vec[i] = i;&#125; The correct way is this. 1234vector&lt;int&gt; vec;for (int i = 0; i &lt; 10; i++)&#123; vec.push_back(i);&#125; ## 12345vector&lt;int&gt; number;number.size();number.empty();number.clear();]]></content>
+    <content type="text"><![CDATA[VectorVector is a Sequence Container. Vector is a dynamic array that can store objects of any type. Head fileTo use Vector, you need to add #include&lt;vector&gt; at the beginning of the program, and add using namespace std; 123#include &lt;vector&gt;using namespace std; Vector declaration and initializationDeclare a vector of int type1vector&lt;int&gt; number; Declare a vector with an initial size of 101vector&lt;int&gt; number(10); Declare a vector with an initial size of 10 and an initial value of 1 for all elements1vector&lt;int&gt; number(10, 1); Declare and initialize vector number with vector score12vector&lt;int&gt; score(10, 2);vector&lt;int&gt; number(score); The 0th to 4th (5 total) elements of the score vector are used as the initials of the vector number12vector&lt;int&gt; score(10, 2);vector&lt;int&gt; number(score.begin(), score.begin()+5); Use array to initialize vector1234567int b[10] = &#123;1,2,3,4,5,6,7,8,9,10&#125;;// The first 6 elements of the array b are used as the initial values of the vector number6vector&lt;int&gt; number6(b, b+6);//The b[1]-b[4] element of the array b is used as the initial value of the vector number7vector&lt;int&gt; number7(&amp;b[2], &amp;b[5]); Access vector elementAccess vector elements by index1234for (int i = 0; i &lt; number.size(); i++)&#123; cout &lt;&lt; number[i] &lt;&lt; " ";&#125; Use iterator to access vector elements12345vector&lt;int&gt;::iterator it;for (it = number.begin(); it != number.end() ; it++)&#123; cout &lt;&lt; *it &lt;&lt; " ";&#125; Add elements to the vectorUsing following way to assign values is wrong. vec is an empty vector object that does not contain elements. Only existing elements can be accessed through the index. 1234vector&lt;int&gt; vec;for (int i = 0; i &lt; 10; i++)&#123; vec[i] = i;&#125; The correct way is this. 1234vector&lt;int&gt; vec;for (int i = 0; i &lt; 10; i++)&#123; vec.push_back(i);&#125; 12345vector&lt;int&gt; number;number.size();number.empty();number.clear();]]></content>
       <categories>
-        <category>C plus plus</category>
+        <category>C++</category>
       </categories>
       <tags>
-        <tag>C plus plus</tag>
+        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
@@ -255,10 +266,10 @@
     <url>%2F2019%2F06%2F12%2FPython%2Fpython-function%2F</url>
     <content type="text"><![CDATA[Parameter passing of python functionParameter Type mutable type(string, tuple, numbers): Similar to value passing. Passing the value only, and does not affect the object itself. Modifying its value inside a function does not affect itself. immutable type(List, Dictionary): Similar to reference passing. Outside objects are also affected after modifying parameters inside the function.]]></content>
       <categories>
-        <category>python</category>
+        <category>pythonConvert</category>
       </categories>
       <tags>
-        <tag>python</tag>
+        <tag>pythonConvert</tag>
       </tags>
   </entry>
   <entry>
@@ -266,10 +277,10 @@
     <url>%2F2019%2F06%2F12%2FPython%2Fpython-time%2F</url>
     <content type="text"><![CDATA[Get the consume time of program running123456789101112import time# at the beginning of the programbeginTime = time.clock()...# at the end of the programendTime = time.clock()print("running Time=", "%.2f" % (endTime - beginTime), "s")print("running Time=", "%.2f" % ((endTime - beginTime) / 60), "min")]]></content>
       <categories>
-        <category>python</category>
+        <category>pythonConvert</category>
       </categories>
       <tags>
-        <tag>python</tag>
+        <tag>pythonConvert</tag>
       </tags>
   </entry>
   <entry>
@@ -457,10 +468,10 @@
     <url>%2F2019%2F05%2F24%2FPython%2Fpython%2F</url>
     <content type="text"><![CDATA[Traversal List123list1 = ["a", "b", "c"]for element in list1: print("element = ", element) The judgment that element is not in the list123list1 = ["a", "b", "c"]if "d" not in list1: print("not in") Get the length of the list12list1 = ["a", "b", "c"]print("length =", len(list1)) Add an element to the end of the list123list1 = ["a", "b", "c"]list1.append("d")print("list1 =", list1)]]></content>
       <categories>
-        <category>python</category>
+        <category>pythonConvert</category>
       </categories>
       <tags>
-        <tag>python</tag>
+        <tag>pythonConvert</tag>
       </tags>
   </entry>
   <entry>
@@ -479,10 +490,10 @@
     <url>%2F2019%2F05%2F24%2FC%2B%2B%2FC%2B%2B%2F</url>
     <content type="text"><![CDATA[Standard input and output stream12345678910111213141516171819202122232425262728#include &lt;iostream&gt; using namespace std;class Solution &#123;public: bool isEvenNumber(int x) &#123; if(x%2 == 0)&#123; return true; &#125; else&#123; return false; &#125; &#125;&#125;;int main()&#123; int number = 0; cout &lt;&lt; "Please a number:"; cin &gt;&gt; number ; Solution s1; bool result = s1.isEvenNumber(number); cout &lt;&lt; boolalpha &lt;&lt; result &lt;&lt; endl; system("pause");&#125;]]></content>
       <categories>
-        <category>C plus plus</category>
+        <category>C++</category>
       </categories>
       <tags>
-        <tag>C plus plus</tag>
+        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
@@ -490,10 +501,10 @@
     <url>%2F2019%2F05%2F24%2FC%2B%2B%2FC%2B%2BdataType%2F</url>
     <content type="text"><![CDATA[Basic built-in type data type description int float double bool char void wchar_t boolBy default, the integer 0,1 is used to represent the bool value. You can use std::boolalpha to output bool type results as true or false. When std::boolalpha is used, future bool type results will be output in true or false form, unless std::noboolalpha is used to cancel the boolalpha stream format flag. 123456789101112#include &lt;iostream&gt;using namespace std; int main(int argc, char* argv[])&#123; bool test = true; cout &lt;&lt; "the output is number " &lt;&lt; test &lt;&lt; endl; cout &lt;&lt; "the output is bool(use boolalpha) " &lt;&lt; boolalpha &lt;&lt; test &lt;&lt; endl; cout &lt;&lt; "the output is bool " &lt;&lt; test &lt;&lt; endl; cout &lt;&lt; "the output is number(use noboolalpha) " &lt;&lt; noboolalpha &lt;&lt; test &lt;&lt; endl; return 0;&#125; The ouput:1234the output is number 1the output is bool(use boolalpha) truethe output is bool truethe output is number(use noboolalpha) 1]]></content>
       <categories>
-        <category>C plus plus</category>
+        <category>C++</category>
       </categories>
       <tags>
-        <tag>C plus plus</tag>
+        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
@@ -501,10 +512,10 @@
     <url>%2F2019%2F05%2F24%2FC%2B%2B%2Fgcc-and-g%2F</url>
     <content type="text"><![CDATA[gcc gcc compiles the .c source file as a C file and compiles the .cpp source file as a C++ file. gcc cannot automatically link C++ standard library STL. g++ g++ compiles both .c and .cpp source files as C++ files g++ can automatically link C++ standard library STL.]]></content>
       <categories>
-        <category>C plus plus</category>
+        <category>C++</category>
       </categories>
       <tags>
-        <tag>C plus plus</tag>
+        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
@@ -613,10 +624,10 @@
     <url>%2F2019%2F05%2F18%2FPython%2Fpython-file-io%2F</url>
     <content type="text"><![CDATA[Method 1: for loopWe can directly read each row of data using a for loop on a file object. 12345nodeFile = "input/linkCount.txt"fo = open(nodeFile, "r", encoding="UTF-8")for line in fo: line = line.replace("\n", "") print(line) Write to file12345outputFile = "/output/result.txt"fo = open(outputFile, "w", encoding="UTF-8")line = "-----"+"\n"fo.write(line)fo.close() Parameter description w Open a file for writing only. If the file already exists, open the file and start editing from the beginning, and the original content will be deleted. If the file does not exist, create a new one. a Open a file for appending. If the file already exists, the file pointer will be placed at the end of the file. In other words, the new content will be written to the existing content. If the file does not exist, create a new file for writing. r Open the file as read-only. The pointer to the file will be placed at the beginning of the file. This is the default mode.]]></content>
       <categories>
-        <category>python</category>
+        <category>pythonConvert</category>
       </categories>
       <tags>
-        <tag>python</tag>
+        <tag>pythonConvert</tag>
       </tags>
   </entry>
   <entry>
