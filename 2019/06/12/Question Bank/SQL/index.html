@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="12 2. 简单的查询语句连接符12select first_name||&apos; &apos;||last_name||&apos;&apos;&apos;s phone number is &apos;||phone_number &quot;employee&apos;s phone number&quot;from employees; 列别名12select employee_id id, last_name as employee_name, salary &quot;Salar">
+<meta name="keywords" content="Question Bank">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL">
+<meta property="og:url" content="http://yoursite.com/2019/06/12/Question Bank/SQL/index.html">
+<meta property="og:site_name" content="A peaceful place">
+<meta property="og:description" content="12 2. 简单的查询语句连接符12select first_name||&apos; &apos;||last_name||&apos;&apos;&apos;s phone number is &apos;||phone_number &quot;employee&apos;s phone number&quot;from employees; 列别名12select employee_id id, last_name as employee_name, salary &quot;Salar">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-09T06:35:18.884Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SQL">
+<meta name="twitter:description" content="12 2. 简单的查询语句连接符12select first_name||&apos; &apos;||last_name||&apos;&apos;&apos;s phone number is &apos;||phone_number &quot;employee&apos;s phone number&quot;from employees; 列别名12select employee_id id, last_name as employee_name, salary &quot;Salar">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/06/12/Question Bank/SQL/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>SQL | A peaceful place</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">A peaceful place</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Talk is cheap. Show me the code.</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/12/Question Bank/SQL/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yeweimian21">
+      <meta itemprop="description" content="A novice.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A peaceful place">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SQL
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-06-12 11:47:54" itemprop="dateCreated datePublished" datetime="2019-06-12T11:47:54+08:00">2019-06-12</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-10-09 14:35:18" itemprop="dateModified" datetime="2019-10-09T14:35:18+08:00">2019-10-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Question-Bank/" itemprop="url" rel="index"><span itemprop="name">Question Bank</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Question-Bank/SQL/" itemprop="url" rel="index"><span itemprop="name">SQL</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="2-简单的查询语句"><a href="#2-简单的查询语句" class="headerlink" title="2. 简单的查询语句"></a>2. 简单的查询语句</h2><p>连接符<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> first_name||<span class="string">' '</span>||last_name||<span class="string">'''s phone number is '</span>||phone_number <span class="string">"employee's phone number"</span></span><br><span class="line"><span class="keyword">from</span> employees;</span><br></pre></td></tr></table></figure></p>
+<p>列别名<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> employee_id <span class="keyword">id</span>, last_name <span class="keyword">as</span> employee_name, salary <span class="string">"Salary"</span>, (<span class="number">400</span>+salary)*<span class="number">12</span> <span class="string">"Annual Salary"</span></span><br><span class="line"><span class="keyword">from</span> employees;</span><br></pre></td></tr></table></figure></p>
+<p>distinct<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">distinct</span> department_id</span><br><span class="line"><span class="keyword">from</span> employees;</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-限制数据和对数据排序"><a href="#3-限制数据和对数据排序" class="headerlink" title="3. 限制数据和对数据排序"></a>3. 限制数据和对数据排序</h2><p>字符类型区分大小写</p>
+<p>in<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> employee_id, last_name, salary, department_id</span><br><span class="line"><span class="keyword">from</span> employees</span><br><span class="line"><span class="keyword">where</span> department_id <span class="keyword">in</span> (<span class="number">10</span>, <span class="number">90</span>, <span class="number">110</span>);</span><br></pre></td></tr></table></figure></p>
+<p>like</p>
+<p>查询last_name第二个字母是b的雇员信息<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> employee_id, last_name, salary</span><br><span class="line"><span class="keyword">from</span> employees</span><br><span class="line"><span class="keyword">where</span> last_name <span class="keyword">like</span> <span class="string">'_b%'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>is null<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> employee_id, last_name, salary, department_id</span><br><span class="line"><span class="keyword">from</span> employee</span><br><span class="line"><span class="keyword">where</span> department_id <span class="keyword">is</span> <span class="literal">null</span>;</span><br></pre></td></tr></table></figure></p>
+<p>not</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">... where department_id not in (60, 90);</span><br><span class="line">... where salary not between 10000 and 25000;</span><br><span class="line">... where last_name not like 'D%';</span><br><span class="line">... where manager_id is not null;</span><br></pre></td></tr></table></figure>
+<p>order by</p>
+<p>首先按照job_id升序排序，当job_id相同时，再按照salary降序排序。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> last_name, job_id, salary, department_id</span><br><span class="line"><span class="keyword">from</span> employees</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> job_id, salary_id <span class="keyword">desc</span>;</span><br></pre></td></tr></table></figure></p>
+<h2 id="5-多表查询"><a href="#5-多表查询" class="headerlink" title="5. 多表查询"></a>5. 多表查询</h2><p>根据员工的工资所处的区间，返回该员工的工资级别<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> e.last_name, e.job_id, e.salary, s.grade_level</span><br><span class="line"><span class="keyword">from</span> employee e, salgrades s</span><br><span class="line"><span class="keyword">where</span> e.salary <span class="keyword">between</span> s.lowest_salary <span class="keyword">and</span> s.highest_salary</span><br><span class="line"><span class="keyword">and</span> e.job_id <span class="keyword">in</span> (<span class="string">'IT_PROG'</span>, <span class="string">'SA_REP'</span>)</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> s.grade_level;</span><br></pre></td></tr></table></figure></p>
+<p>查找特定城市的员工信息<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span></span><br><span class="line"><span class="keyword">from</span> employees e</span><br><span class="line"><span class="keyword">join</span> departments d</span><br><span class="line"><span class="keyword">on</span> e.department_id = d.department_id</span><br><span class="line"><span class="keyword">join</span> locations l</span><br><span class="line"><span class="keyword">on</span> d.location_id = l.location_id</span><br><span class="line"><span class="keyword">where</span> l.city <span class="keyword">in</span> (<span class="string">'Southlake'</span>, <span class="string">'Oxford'</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="6-分组函数"><a href="#6-分组函数" class="headerlink" title="6. 分组函数"></a>6. 分组函数</h2><p>语法顺序</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line"><span class="keyword">from</span></span><br><span class="line"><span class="keyword">where</span></span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span></span><br><span class="line"><span class="keyword">having</span></span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span></span><br></pre></td></tr></table></figure>
+<p>执行顺序<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from</span><br><span class="line">where</span><br><span class="line">group by</span><br><span class="line">having</span><br><span class="line"><span class="keyword">select</span> </span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">min</span>(salary), <span class="keyword">max</span>(salary)</span><br><span class="line"><span class="keyword">from</span> employees;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">sum</span>(salary), <span class="keyword">avg</span>(salary)</span><br><span class="line"><span class="keyword">from</span> employees;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">count</span>(<span class="keyword">distinct</span> department_id)</span><br><span class="line"><span class="keyword">from</span> employees;</span><br></pre></td></tr></table></figure>
+<p>每个部门的总工资<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> department_id, <span class="keyword">sum</span>(salary)</span><br><span class="line"><span class="keyword">from</span> employees</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> department_id;</span><br></pre></td></tr></table></figure></p>
+<p>相同职位且经理相同的员工的平均工资<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> job_id, manager_id, <span class="keyword">avg</span>(salary)</span><br><span class="line"><span class="keyword">from</span> employees</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> job_id, manager_id</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> job_id;</span><br></pre></td></tr></table></figure></p>
+<p>获得每个职位的最高工资，并且只要最高工资大于等于9000的职位<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> job_id, <span class="keyword">max</span>(salary)</span><br><span class="line"><span class="keyword">from</span> employees</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> job_id</span><br><span class="line"><span class="keyword">having</span> <span class="keyword">max</span>(salary) &gt;= <span class="number">9000</span>;</span><br></pre></td></tr></table></figure></p>
+<p>查找每个部门的最高工资，要求部门编号在30-60之间，最高工资大于等于9000，结果按照最高工资升序排列<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> department_id, <span class="keyword">max</span>(salary)</span><br><span class="line"><span class="keyword">from</span> employees</span><br><span class="line"><span class="keyword">where</span> departmentId <span class="keyword">between</span> <span class="number">30</span> <span class="keyword">and</span> <span class="number">60</span></span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> department_id</span><br><span class="line"><span class="keyword">having</span> <span class="keyword">max</span>(salary) &gt;= <span class="number">9000</span></span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">max</span>(salary);</span><br></pre></td></tr></table></figure></p>
+<p>查询公司中员工最多的部门有多少个员工<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">max</span>(<span class="keyword">count</span>(employee_id))</span><br><span class="line"><span class="keyword">from</span> employees</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> department_id;</span><br></pre></td></tr></table></figure></p>
+<h2 id="7-子查询"><a href="#7-子查询" class="headerlink" title="7. 子查询"></a>7. 子查询</h2><h3 id="单行子查询"><a href="#单行子查询" class="headerlink" title="单行子查询"></a>单行子查询</h3><p>查找和CHen员工相同部门且比Chen工资高的员工信息。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> last_name, job_id, salary, department_id</span><br><span class="line"><span class="keyword">from</span> employees</span><br><span class="line"><span class="keyword">where</span> department_id =</span><br><span class="line">    (</span><br><span class="line">        <span class="keyword">select</span> department_id</span><br><span class="line">        <span class="keyword">from</span> employees</span><br><span class="line">        <span class="keyword">where</span> last_name = <span class="string">'Chen'</span></span><br><span class="line">    )</span><br><span class="line"><span class="keyword">and</span> salary &gt;</span><br><span class="line">    (</span><br><span class="line">        <span class="keyword">select</span> salary</span><br><span class="line">        <span class="keyword">from</span> employees</span><br><span class="line">        <span class="keyword">where</span> last_name = <span class="string">'Chen'</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure></p>
+<p>员工人数高于各部门平均人数的部门信息<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> department_id, <span class="keyword">count</span>(employee_id)</span><br><span class="line"><span class="keyword">from</span> employees</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> department_id</span><br><span class="line"><span class="keyword">having</span> <span class="keyword">count</span>(employee_id) &gt;</span><br><span class="line">    (</span><br><span class="line">        <span class="keyword">select</span> <span class="keyword">avg</span>(<span class="keyword">count</span>(employee_id))</span><br><span class="line">        <span class="keyword">from</span> employees</span><br><span class="line">        <span class="keyword">group</span> <span class="keyword">by</span> department_id</span><br><span class="line">    )</span><br></pre></td></tr></table></figure></p>
+<h3 id="多行子查询"><a href="#多行子查询" class="headerlink" title="多行子查询"></a>多行子查询</h3><p>&lt; any</p>
+<p>= and</p>
+<p>大于 any</p>
+<p>&lt; all</p>
+<p>大于 all</p>
+<p>查询公司中所有经理的姓名、工资信息</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> a.last_name, a.salary</span><br><span class="line"><span class="keyword">from</span> employee a</span><br><span class="line"><span class="keyword">where</span> a.employee_id <span class="keyword">in</span></span><br><span class="line">    (</span><br><span class="line">        <span class="keyword">select</span> b.manager_id</span><br><span class="line">        <span class="keyword">from</span> employee b</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+<p>查询比部门编号是80的任意一个员工的工资高的员工信息<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> employee_id, last_name, job_id, salary</span><br><span class="line"><span class="keyword">from</span> employees</span><br><span class="line"><span class="keyword">where</span> salary &gt; <span class="keyword">any</span></span><br><span class="line">    (</span><br><span class="line">        <span class="keyword">select</span> salary</span><br><span class="line">        <span class="keyword">from</span> employees</span><br><span class="line">        <span class="keyword">where</span> department_id = <span class="number">80</span></span><br><span class="line">    )</span><br><span class="line"><span class="keyword">and</span> department_id &lt;&gt; <span class="number">80</span>;</span><br></pre></td></tr></table></figure></p>
+<p>查询比部门编号是80的所有员工的工资都高的员工信息.<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> employee_id, last_name, job_id, salary</span><br><span class="line"><span class="keyword">from</span> employees</span><br><span class="line"><span class="keyword">where</span> salary &gt; all</span><br><span class="line">    (</span><br><span class="line">        <span class="keyword">select</span> salary</span><br><span class="line">        <span class="keyword">from</span> employees</span><br><span class="line">        <span class="keyword">where</span> department_id = <span class="number">80</span></span><br><span class="line">    )</span><br><span class="line"><span class="keyword">and</span> department_id &lt;&gt; <span class="number">80</span>;</span><br></pre></td></tr></table></figure></p>
+<h3 id="from语句中子查询"><a href="#from语句中子查询" class="headerlink" title="from语句中子查询"></a>from语句中子查询</h3><p>查询出比员工本职位(job_id)平均工资高的员工信息。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> e.last_name, e.salary, e.job_id, j.avgsal</span><br><span class="line"><span class="keyword">from</span> employees e, (</span><br><span class="line">    <span class="keyword">select</span> job_id, <span class="keyword">avg</span>(salary) avgsal</span><br><span class="line">    <span class="keyword">from</span> employees</span><br><span class="line">    <span class="keyword">group</span> <span class="keyword">by</span> job_id</span><br><span class="line">) j</span><br><span class="line"><span class="keyword">where</span> e.job_id = j.job_id</span><br><span class="line"><span class="keyword">and</span> e.salary &gt; j.avgsal;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 相关子查询，外部查询每执行一行，内部查询都要执行一次。先执行外部查询，找到第一个记录，然后把对应列值交给内部查询运算，内部查询结果再返回。其他行的操作以此类推。</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> last_name, salary, job_id</span><br><span class="line"><span class="keyword">from</span> employees e</span><br><span class="line"><span class="keyword">where</span> salary &gt; </span><br><span class="line">        (</span><br><span class="line">            <span class="keyword">select</span> <span class="keyword">avg</span>(salary)</span><br><span class="line">            <span class="keyword">from</span> employees</span><br><span class="line">            <span class="keyword">where</span> job_id = e.job_id</span><br><span class="line">        );</span><br></pre></td></tr></table></figure>
+<p>exists, not exists</p>
+<p>exists 判断其后子查询中是否至少有一条记录返回，</p>
+<p>‘1’只是占位用，并无实际意义。</p>
+<p>查找公司中的经理<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> last_name, job_id, salary, department_id</span><br><span class="line"><span class="keyword">from</span> employees e</span><br><span class="line"><span class="keyword">where</span> <span class="keyword">exists</span>(</span><br><span class="line">    <span class="keyword">select</span> <span class="string">'1'</span></span><br><span class="line">    <span class="keyword">from</span> employees</span><br><span class="line">    <span class="keyword">where</span> manager_id = e.employee_id</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>查找公司中不是经理的员工<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> last_name, job_id, salary, department_id</span><br><span class="line"><span class="keyword">from</span> employees e</span><br><span class="line"><span class="keyword">where</span> <span class="keyword">not</span> <span class="keyword">exists</span>(</span><br><span class="line">    <span class="keyword">select</span> <span class="string">'1'</span></span><br><span class="line">    <span class="keyword">from</span> employees</span><br><span class="line">    <span class="keyword">where</span> manager_id = e.employee_id</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<h2 id="9-表和约束"><a href="#9-表和约束" class="headerlink" title="9. 表和约束"></a>9. 表和约束</h2><p>新建表<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> dossier(</span><br><span class="line">    <span class="keyword">id</span> <span class="built_in">number</span>(<span class="number">4</span>),</span><br><span class="line">    cname varchar2(<span class="number">20</span>),</span><br><span class="line">    birthday <span class="built_in">date</span>,</span><br><span class="line">    stature <span class="built_in">number</span>(<span class="number">3</span>),</span><br><span class="line">    weight <span class="built_in">number</span>(<span class="number">5</span>, <span class="number">2</span>),</span><br><span class="line">    country_code <span class="built_in">char</span>(<span class="number">2</span>) <span class="keyword">default</span> <span class="string">'01'</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<p>用子查询创建表<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> dept10</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">select</span> employee_id, last_name, salary+<span class="number">1000</span> newSalary</span><br><span class="line"><span class="keyword">from</span> employees</span><br><span class="line"><span class="keyword">where</span> department_id=<span class="number">10</span>;</span><br></pre></td></tr></table></figure></p>
+<p>列出表结构<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">desc user_tables;</span><br></pre></td></tr></table></figure></p>
+<p>添加列<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> dossier <span class="keyword">add</span> (sex <span class="built_in">char</span>(<span class="number">1</span>));</span><br></pre></td></tr></table></figure></p>
+<p>修改列<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> dossier <span class="keyword">modify</span> (sex <span class="built_in">char</span>(<span class="number">2</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> dossier <span class="keyword">modify</span> (sex <span class="keyword">default</span> <span class="string">'man'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>删除列<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> emp <span class="keyword">drop</span> <span class="keyword">column</span> sex;</span><br><span class="line"></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> dept10 <span class="keyword">drop</span> <span class="keyword">column</span> (last_name, newSalary);</span><br></pre></td></tr></table></figure></p>
+<p>删除表<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> emp;</span><br></pre></td></tr></table></figure></p>
+<p>重命名表<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">rename</span> emp <span class="keyword">to</span> empl;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">truncate</span> <span class="keyword">table</span> emp;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">truncate</span> <span class="keyword">table</span> emp;</span><br></pre></td></tr></table></figure>
+<h3 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> country(</span><br><span class="line">    country_code <span class="built_in">char</span>(<span class="number">2</span>) primary <span class="keyword">key</span>,</span><br><span class="line">    country_name varchar2(<span class="number">50</span>) <span class="keyword">not</span> <span class="literal">null</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> country(</span><br><span class="line">    country_code <span class="built_in">char</span>(<span class="number">2</span>) <span class="keyword">unique</span> <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">    country_name varchar2(<span class="number">50</span>) <span class="keyword">not</span> <span class="literal">null</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> country(</span><br><span class="line">    country_code <span class="built_in">char</span>(<span class="number">2</span>),</span><br><span class="line">    country_name varchar2(<span class="number">50</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">    <span class="keyword">constraint</span> country_code_pk primary <span class="keyword">key</span> (country_code)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>给表添加约束<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> dossier <span class="keyword">add</span> <span class="keyword">constraint</span> dossier_id_pk primary <span class="keyword">key</span> (<span class="keyword">id</span>);</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> dossier </span><br><span class="line"><span class="keyword">add</span> <span class="keyword">constraint</span> dossier_countrycode_id_fk <span class="keyword">foreign</span> <span class="keyword">key</span> (country_code) </span><br><span class="line"><span class="keyword">references</span> country (country_code)</span><br><span class="line"><span class="keyword">on</span> <span class="keyword">delete</span> <span class="keyword">cascade</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> dossier <span class="keyword">modify</span>(cname <span class="keyword">not</span> <span class="literal">null</span>);</span><br></pre></td></tr></table></figure>
+<p>删除约束<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> dossier <span class="keyword">drop</span> <span class="keyword">constraint</span> dossier_countrycode_id_fk;</span><br></pre></td></tr></table></figure></p>
+<p>约束的启用和禁用<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> dossier <span class="keyword">disable</span> primary <span class="keyword">key</span>;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> dossier <span class="keyword">enable</span> primary <span class="keyword">key</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><p>视图是从一个或者多个表中取得的数据的逻辑子集。是一种虚表，是一个命名的查询。</p>
+<p>视图中的数据是逻辑上的数据，物理上的数据存储在表中。</p>
+<h4 id="使用视图的好处："><a href="#使用视图的好处：" class="headerlink" title="使用视图的好处："></a>使用视图的好处：</h4><ol>
+<li><p>限制对表的数据的访问。</p>
+</li>
+<li><p>可以使复杂的查询变得简单。</p>
+</li>
+<li><p>提供了数据的独立性。</p>
+</li>
+<li><p>提供了对相同数据的不同显示。</p>
+</li>
+</ol>
+<h4 id="简单视图和复杂视图"><a href="#简单视图和复杂视图" class="headerlink" title="简单视图和复杂视图"></a>简单视图和复杂视图</h4><p>简单视图：只涉及一个表，而且select子句中不包含函数表达式列(包括单行函数和分组函数)。可以对数据执行DML操作。</p>
+<p>复杂视图：涉及一个或者多个表，select子句中包含函数表达式列(单行函数和分组函数)。不一定能对数据进行DML操作。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> <span class="keyword">replace</span> <span class="keyword">view</span> salvu50</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">select</span> employee_id ID_NUMBER, lase EMPLOYEE_NAME, salary*<span class="number">12</span> ANN_SALARY</span><br><span class="line"><span class="keyword">from</span> employees</span><br><span class="line"><span class="keyword">where</span> department_id = <span class="number">50</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="序列"><a href="#序列" class="headerlink" title="序列"></a>序列</h3><p>创建序列</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">sequence</span> test_seq</span><br><span class="line"><span class="keyword">start</span> <span class="keyword">with</span> <span class="number">10</span></span><br><span class="line"><span class="keyword">increment</span> <span class="keyword">by</span> <span class="number">2</span></span><br><span class="line">maxvalue <span class="number">100</span></span><br><span class="line"><span class="keyword">minvalue</span> <span class="number">9</span></span><br><span class="line"><span class="keyword">cycle</span></span><br><span class="line"><span class="keyword">cache</span> <span class="number">10</span> / nocache;</span><br></pre></td></tr></table></figure>
+<p>使用序列</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> student</span><br><span class="line"><span class="keyword">values</span> (student_seq.nextval, <span class="string">'Scott'</span>, <span class="string">'Computer Science'</span>, <span class="number">11</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">sequence</span> student_seq;</span><br></pre></td></tr></table></figure>
+<h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">index</span> emp_idx</span><br><span class="line"><span class="keyword">on</span> employees(last_name);</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">index</span> emp_idx;</span><br></pre></td></tr></table></figure>
+<h3 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h3><p>参数：</p>
+<ol>
+<li><p>IN：默认</p>
+</li>
+<li><p>OUT</p>
+</li>
+<li><p>IN OUT</p>
+</li>
+</ol>
+<p>创建存储过程</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- IN</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> <span class="keyword">replace</span> <span class="keyword">procedure</span> up_ins_test</span><br><span class="line">(p_f1 varchar2, p_f2 <span class="built_in">number</span> <span class="keyword">default</span> <span class="number">10</span>)</span><br><span class="line"><span class="keyword">is</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">insert</span> <span class="keyword">into</span> t_test (f_1, f_2) <span class="keyword">values</span> (p_f1, p_f2);</span><br><span class="line"><span class="keyword">end</span> up_ins_test;</span><br></pre></td></tr></table></figure>
+<p>执行存储过程</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exec up_ins_test (p_f1 =&gt; 'abc', p_f2 =&gt; 100);</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> <span class="keyword">replace</span> <span class="keyword">procedure</span> up_GetEmpName</span><br><span class="line">(p_empid <span class="keyword">in</span> employees.employee_id % <span class="keyword">type</span>,   <span class="comment">-- 提供数据类型</span></span><br><span class="line"> p_ename <span class="keyword">out</span> employees.last_name % <span class="keyword">type</span>)</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">select</span> last_name</span><br><span class="line">    <span class="keyword">into</span> p_ename</span><br><span class="line">    <span class="keyword">from</span> employees</span><br><span class="line">    <span class="keyword">where</span> employee_id = p_empid;</span><br><span class="line">exception   <span class="comment">-- 异常处理</span></span><br><span class="line">    when NO_DATA_FOUND then</span><br><span class="line">        p_ename := 'null';  <span class="comment">-- := 给变量赋值</span></span><br><span class="line"><span class="keyword">end</span> up_GetEmpName;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">procedure</span> up_GetEmpName;</span><br></pre></td></tr></table></figure>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>函数和过程有类似的结构，但是函数必须返回一个值到调用环境，而过程可以没有返回值或有多个返回值(即输出参数)到调用环境中。</p>
+<p>在函数的头部中必须有一个return子句，这个语句要说明函数返回值的类型，不需要指明数据类型的长度或精度，并且在执行部分至少有一个return语句。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> <span class="keyword">replace</span> <span class="keyword">function</span> uf_GetEmpName</span><br><span class="line">(p_empid <span class="keyword">in</span> <span class="built_in">number</span>)</span><br><span class="line"><span class="keyword">return</span> employees.last_name % <span class="keyword">type</span></span><br><span class="line"><span class="keyword">as</span></span><br><span class="line">p_name employees.last_name % <span class="keyword">type</span> <span class="comment">-- 本地变量声明</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">select</span> last_name</span><br><span class="line">    <span class="keyword">into</span> p_ename</span><br><span class="line">    <span class="keyword">from</span> employees</span><br><span class="line">    <span class="keyword">where</span> employees_id = p_empid;</span><br><span class="line">    return p_ename;</span><br><span class="line">exception</span><br><span class="line">    when NO_DATA_FOUND then</span><br><span class="line">        return 'error';</span><br><span class="line"><span class="keyword">end</span> uf_GetEmpName;</span><br></pre></td></tr></table></figure>
+<h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><h3 id="事务的4个属性-ACID"><a href="#事务的4个属性-ACID" class="headerlink" title="事务的4个属性(ACID)"></a>事务的4个属性(ACID)</h3><ol>
+<li>原子性(Atomicity)</li>
+</ol>
+<p>事务是一个不可分割的整体，要么全部执行，要么全部不执行</p>
+<ol start="2">
+<li>一致性(Consistency)：</li>
+</ol>
+<p>一个事务在执行之前和执行之后，数据库数据必须保持一致性状态。</p>
+<ol start="3">
+<li>隔离性(Isolation)</li>
+</ol>
+<p>当两个或多个事务并发执行时，为了保证数据的安全性，将一个事务内部的操作隔离起来，不被其他的正在进行的事务看到。</p>
+<ol start="4">
+<li>持久性(Durability)</li>
+</ol>
+<p>事务完成以后，DBMS保证它对数据库中数据的修改是永久性的。</p>
+<h3 id="存储过程-1"><a href="#存储过程-1" class="headerlink" title="存储过程"></a>存储过程</h3><p>一组为了完成特定功能的SQL语句集，经过一次编译，再次调用不需要再次编译。</p>
+<h3 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h3><p>是与表事件相关的特殊的存储过程，它的执行不是由程序调用，而是由事件触发</p>
+<h3 id="索引-1"><a href="#索引-1" class="headerlink" title="索引"></a>索引</h3><p>索引是对数据库表中一列或多列的值进行排序的一种结构，使用索引可以快速访问数据库表中的特定记录</p>
+<ol>
+<li><p>聚集索引：表数据按照索引的顺序来存储，即索引项的顺序与表中记录的物理顺序一致。</p>
+</li>
+<li><p>非聚集索引：表数据存储顺序与索引顺序无关</p>
+</li>
+</ol>
+<h3 id="内连接和外连接"><a href="#内连接和外连接" class="headerlink" title="内连接和外连接"></a>内连接和外连接</h3><ol>
+<li><p>内连接：也称为自然连接，只返回两表相匹配的行。</p>
+</li>
+<li><p>外连接：不仅包含符合连接条件的行，而且还包括左表(左外连接)，右表(右外连接)，两个表(全外链接)</p>
+</li>
+</ol>
+<h3 id="视图-1"><a href="#视图-1" class="headerlink" title="视图"></a>视图</h3><p>视图是由从数据库的基本表中选取出来的数据组成的逻辑窗口，不同于基本表，它是一个虚表。</p>
+<h3 id="数据库范式"><a href="#数据库范式" class="headerlink" title="数据库范式"></a>数据库范式</h3><p>常见的范式：1NF, 2NF, 3NF, BCNF, 4NF</p>
+<ol>
+<li>1NF(第一范式)</li>
+</ol>
+<p>数据库的每一项都是不可分割的，属性不能再分裂成更小的部分。</p>
+<ol start="2">
+<li>2NF(第二范式)</li>
+</ol>
+<p>在满足第一范式的基础上，数据库中的非主键字段必须完全依赖主键，不能产生部分依赖。</p>
+<ol start="3">
+<li>3NF(第三范式)</li>
+</ol>
+<p>在满足第二范式的基础上，非主键字段不能产生传递依赖于主键字段。</p>
+<h3 id="主键"><a href="#主键" class="headerlink" title="主键"></a>主键</h3><p>表中一个或多个字段，它的值用于唯一的标识表中的某一条记录。一个表只能有一个主键，主键列不能有空值。</p>
+<h3 id="外键"><a href="#外键" class="headerlink" title="外键"></a>外键</h3><p>在一个表中引用来自另一个表中的特定记录</p>
+<h3 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h3><h4 id="产生死锁的原因"><a href="#产生死锁的原因" class="headerlink" title="产生死锁的原因"></a>产生死锁的原因</h4><ol>
+<li><p>系统资源不足</p>
+</li>
+<li><p>线程运行推进的顺序不合适</p>
+</li>
+<li><p>资源分配不当</p>
+</li>
+</ol>
+<h4 id="产生死锁的必要条件"><a href="#产生死锁的必要条件" class="headerlink" title="产生死锁的必要条件"></a>产生死锁的必要条件</h4><ol>
+<li><p>互斥(资源独占)</p>
+</li>
+<li><p>请求与保持(部分分配，占有申请)</p>
+</li>
+<li><p>不可剥夺(不可强占)</p>
+</li>
+<li><p>循环等待</p>
+</li>
+</ol>
+<h4 id="避免死锁的方法"><a href="#避免死锁的方法" class="headerlink" title="避免死锁的方法"></a>避免死锁的方法</h4><ol>
+<li><p>一次封锁法</p>
+</li>
+<li><p>顺序封锁法</p>
+</li>
+<li><p>银行家算法</p>
+</li>
+</ol>
+<h4 id="有助于最大限度降低思索的方法"><a href="#有助于最大限度降低思索的方法" class="headerlink" title="有助于最大限度降低思索的方法"></a>有助于最大限度降低思索的方法</h4><ol>
+<li><p>按同一顺序访问对象</p>
+</li>
+<li><p>避免事务中的用户交互</p>
+</li>
+<li><p>保持事务简短并在一个批处理中</p>
+</li>
+<li><p>使用低隔离级别</p>
+</li>
+</ol>
+<h3 id="数据库中常用的锁"><a href="#数据库中常用的锁" class="headerlink" title="数据库中常用的锁"></a>数据库中常用的锁</h3><h4 id="共享锁-S锁，Share-Lock"><a href="#共享锁-S锁，Share-Lock" class="headerlink" title="共享锁(S锁，Share Lock)"></a>共享锁(S锁，Share Lock)</h4><p>用于所有的只读数据操作，共享锁是非独占的，允许多个并发事务读取其锁定的资源。</p>
+<p>性质：</p>
+<ol>
+<li><p>多个事务可封锁一个共享页</p>
+</li>
+<li><p>任何事物都不能修改该页</p>
+</li>
+<li><p>通常改业被读取完毕，S锁立即被释放。</p>
+</li>
+</ol>
+<h4 id="排他锁-X锁，Exclusive-Lock"><a href="#排他锁-X锁，Exclusive-Lock" class="headerlink" title="排他锁(X锁，Exclusive Lock)"></a>排他锁(X锁，Exclusive Lock)</h4><p>也叫做写锁，表示对数据进行写操作。</p>
+<p>性质：</p>
+<ol>
+<li><p>仅允许一个事务封锁此页</p>
+</li>
+<li><p>其他任何事务必须等到X锁被释放才能对该页进行访问</p>
+</li>
+<li><p>X锁一直到事务结束才能被释放。</p>
+</li>
+</ol>
+<h4 id="更新锁-U锁"><a href="#更新锁-U锁" class="headerlink" title="更新锁(U锁)"></a>更新锁(U锁)</h4><p>在修改操作的初始化阶段锁定可能要被修改的资源。</p>
+<p>性质：</p>
+<ol>
+<li><p>用来预定对此页施加X锁，允许其他事务读，但是不允许再施加U锁或X锁</p>
+</li>
+<li><p>当被读取的页将要被更新时，升级为X锁</p>
+</li>
+<li><p>U锁一直到事务结束时才能被释放</p>
+</li>
+</ol>
+<h3 id="数据库连接池"><a href="#数据库连接池" class="headerlink" title="数据库连接池"></a>数据库连接池</h3><p>数据库连接是一种宝贵且有限的资源。1. 建立数据库连接是一个耗时的操作。2.数据库连接个数是有限的，如果用户经常建立数据库连接，数据库的连接资源会耗尽。</p>
+<p>数据库连接池可以分配、管理并释放数据库连接，允许程序重复使用现有的数据库连接，释放空闲时间超过最大空闲时间的数据库连接。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Question-Bank/" rel="tag"># Question Bank</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/12/Question Bank/Network/" rel="next" title="Network">
+                <i class="fa fa-chevron-left"></i> Network
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/12/NLP/create-LDA-model/" rel="prev" title="Use Gensim to implement LDA model">
+                Use Gensim to implement LDA model <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">yeweimian21</p>
+              <div class="site-description motion-element" itemprop="description">A novice.</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">45</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/yeweimian21" title="GitHub &rarr; https://github.com/yeweimian21" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:yeweimian21@163.com" title="E-Mail &rarr; mailto:yeweimian21@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-简单的查询语句"><span class="nav-number">1.</span> <span class="nav-text">2. 简单的查询语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-限制数据和对数据排序"><span class="nav-number">2.</span> <span class="nav-text">3. 限制数据和对数据排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-多表查询"><span class="nav-number">3.</span> <span class="nav-text">5. 多表查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-分组函数"><span class="nav-number">4.</span> <span class="nav-text">6. 分组函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-子查询"><span class="nav-number">5.</span> <span class="nav-text">7. 子查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单行子查询"><span class="nav-number">5.1.</span> <span class="nav-text">单行子查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多行子查询"><span class="nav-number">5.2.</span> <span class="nav-text">多行子查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#from语句中子查询"><span class="nav-number">5.3.</span> <span class="nav-text">from语句中子查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-表和约束"><span class="nav-number">6.</span> <span class="nav-text">9. 表和约束</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#约束"><span class="nav-number">6.1.</span> <span class="nav-text">约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#视图"><span class="nav-number">6.2.</span> <span class="nav-text">视图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用视图的好处："><span class="nav-number">6.2.1.</span> <span class="nav-text">使用视图的好处：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#简单视图和复杂视图"><span class="nav-number">6.2.2.</span> <span class="nav-text">简单视图和复杂视图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#序列"><span class="nav-number">6.3.</span> <span class="nav-text">序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引"><span class="nav-number">6.4.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储过程"><span class="nav-number">6.5.</span> <span class="nav-text">存储过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数"><span class="nav-number">6.6.</span> <span class="nav-text">函数</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#数据库"><span class="nav-number"></span> <span class="nav-text">数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事务的4个属性-ACID"><span class="nav-number">0.1.</span> <span class="nav-text">事务的4个属性(ACID)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储过程-1"><span class="nav-number">0.2.</span> <span class="nav-text">存储过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#触发器"><span class="nav-number">0.3.</span> <span class="nav-text">触发器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引-1"><span class="nav-number">0.4.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内连接和外连接"><span class="nav-number">0.5.</span> <span class="nav-text">内连接和外连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#视图-1"><span class="nav-number">0.6.</span> <span class="nav-text">视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库范式"><span class="nav-number">0.7.</span> <span class="nav-text">数据库范式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主键"><span class="nav-number">0.8.</span> <span class="nav-text">主键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#外键"><span class="nav-number">0.9.</span> <span class="nav-text">外键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁"><span class="nav-number">0.10.</span> <span class="nav-text">死锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#产生死锁的原因"><span class="nav-number">0.10.1.</span> <span class="nav-text">产生死锁的原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#产生死锁的必要条件"><span class="nav-number">0.10.2.</span> <span class="nav-text">产生死锁的必要条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#避免死锁的方法"><span class="nav-number">0.10.3.</span> <span class="nav-text">避免死锁的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#有助于最大限度降低思索的方法"><span class="nav-number">0.10.4.</span> <span class="nav-text">有助于最大限度降低思索的方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库中常用的锁"><span class="nav-number">0.11.</span> <span class="nav-text">数据库中常用的锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#共享锁-S锁，Share-Lock"><span class="nav-number">0.11.1.</span> <span class="nav-text">共享锁(S锁，Share Lock)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排他锁-X锁，Exclusive-Lock"><span class="nav-number">0.11.2.</span> <span class="nav-text">排他锁(X锁，Exclusive Lock)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新锁-U锁"><span class="nav-number">0.11.3.</span> <span class="nav-text">更新锁(U锁)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库连接池"><span class="nav-number">0.12.</span> <span class="nav-text">数据库连接池</span></a></li></ol></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeweimian21</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.1</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '72d0a28ec28bb30c5757',
+    clientSecret: 'c77515a5179ee5d4388786164818039a7da2ce54',
+    repo: 'yeweimian21.github.io',
+    owner: 'yeweimian21',
+    admin: ['yeweimian21'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('Copy').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('Copied');
+        else $(this).text('Copy failed');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('Copy');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

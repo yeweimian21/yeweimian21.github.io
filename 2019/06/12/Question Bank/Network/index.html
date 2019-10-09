@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="A peaceful place">
 <meta property="og:description" content="网络与通信OSI七层网络模型   层 描述 数据单位 常见协议 设备     应用层 也称为应用实体，一般指的是应用程序，主要负责确定通信对象，并确保有足够的资源用于通信  FTP, HTTP    表示层 一般负责数据的编码以及转化，负责进行数据的压缩、解压、加密、解密等      会话层 主要负责在网络中的两个节点之间建立、维护、控制会话，区分不同的会话，以及提供单工、半双工、全双工三种通信模">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-06-18T03:22:49.654Z">
+<meta property="og:updated_time" content="2019-09-12T03:29:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Network">
 <meta name="twitter:description" content="网络与通信OSI七层网络模型   层 描述 数据单位 常见协议 设备     应用层 也称为应用实体，一般指的是应用程序，主要负责确定通信对象，并确保有足够的资源用于通信  FTP, HTTP    表示层 一般负责数据的编码以及转化，负责进行数据的压缩、解压、加密、解密等      会话层 主要负责在网络中的两个节点之间建立、维护、控制会话，区分不同的会话，以及提供单工、半双工、全双工三种通信模">
@@ -434,7 +434,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-06-18 11:22:49" itemprop="dateModified" datetime="2019-06-18T11:22:49+08:00">2019-06-18</time>
+                <time title="Modified: 2019-09-12 11:29:32" itemprop="dateModified" datetime="2019-09-12T11:29:32+08:00">2019-09-12</time>
               
             
           </span>
@@ -452,6 +452,13 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Question-Bank/" itemprop="url" rel="index"><span itemprop="name">Question Bank</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Question-Bank/NetWork/" itemprop="url" rel="index"><span itemprop="name">NetWork</span></a></span>
 
                 
                 
@@ -560,9 +567,43 @@
 <h4 id="静态路由"><a href="#静态路由" class="headerlink" title="静态路由"></a>静态路由</h4><p>由管理员手动配置的的固定路由，优点是简单、高效，缺点是适应性差，一般适用于网络规模不大，拓扑结构固定的网络中。</p>
 <h4 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h4><p>路由器之间相互通信，传递路由信息，利用收集到的路由信息更新路由表，自动生成路由表。能实时地使用网络结构的变化，适应性强，适用于网络规模大，网络拓扑复杂的网络。</p>
 <h3 id="telnet"><a href="#telnet" class="headerlink" title="telnet"></a>telnet</h3><p>Internet远程登录服务，为用户提供了在本地计算机上完成远程主机工作的能力，一般使用方法为通过终端登录到远程主机。</p>
-<h3 id="TCP与UDP的比较"><a href="#TCP与UDP的比较" class="headerlink" title="TCP与UDP的比较"></a>TCP与UDP的比较</h3><h4 id="UDP-用户数据报协议"><a href="#UDP-用户数据报协议" class="headerlink" title="UDP(用户数据报协议)"></a>UDP(用户数据报协议)</h4><p>提供无连接的通信，不能保证数据包被发送到目标地址。</p>
+<h3 id="TCP与UDP的比较"><a href="#TCP与UDP的比较" class="headerlink" title="TCP与UDP的比较"></a>TCP与UDP的比较</h3><h4 id="UDP-用户数据报协议"><a href="#UDP-用户数据报协议" class="headerlink" title="UDP(用户数据报协议)"></a>UDP(用户数据报协议)</h4><p>(1)UDP是无连接的：在发送数据前不需要建立连接，发送数据结束时也没有连接可释放</p>
+<p>(2)UDP尽最大努力交付：不保证可靠交付</p>
+<p>(3)UDP是面向报文的</p>
+<p>(4)UDP没有拥塞控制：网络出现拥塞不会是源主机的发送速率降低。</p>
+<p>(5)UDP支持一对一，一对多，多对一，多对多的交互通信。</p>
+<p>(6)UDP的首部开销小：只有8字节，TCP首部为20字节。</p>
+<p>提供无连接的通信，不能保证数据包被发送到目标地址。</p>
 <p>UDP报头的四个域：源端口号，目的端口号，数据报长度，校验和</p>
-<h4 id="TCP-控制传输协议"><a href="#TCP-控制传输协议" class="headerlink" title="TCP(控制传输协议)"></a>TCP(控制传输协议)</h4><p>提供面向连接的、可靠的通信</p>
+<h4 id="TCP-控制传输协议"><a href="#TCP-控制传输协议" class="headerlink" title="TCP(控制传输协议)"></a>TCP(控制传输协议)</h4><p>(1)面向连接：应用程序在使用TCP协议之前，必须先建立TCP连接，在传送数据完毕后，必须释放已经建立的TCP连接。</p>
+<p>(2)每一条TCP连接只能是点对点的，一对一的</p>
+<p>(3)TCP提供可靠交付。</p>
+<p>(4)TCP提供全双工通信。</p>
+<p>(5)面向字节流</p>
+<p>TCP可靠传输的实现</p>
+<ol>
+<li><p>滑动窗口</p>
+</li>
+<li><p>超时重传</p>
+</li>
+<li><p>选择确认SACK</p>
+</li>
+</ol>
+<p>TCP的流量控制</p>
+<ol>
+<li>滑动窗口</li>
+</ol>
+<p>TCP的拥塞控制</p>
+<ol>
+<li><p>慢开始和拥塞避免</p>
+</li>
+<li><p>快重传和快恢复</p>
+</li>
+</ol>
+<p>流量控制：让发送方的发送速率不要太快，要让接收方来得及接收。</p>
+<p>拥塞控制：防止过多的数据注入到网络中，这样可以使网络中的路由器或链路不致过载。</p>
+<p>流量控制是一个端到端的问题，是接收端抑制发送端发送数据的速率，以便使接收端来得及接收。拥塞控制是一个全局性的过程，涉及到所有的主机、所有的路由器，以及与降低网络传输性能有关的所有因素。</p>
+<p>提供面向连接的、可靠的通信</p>
 <table>
 <thead>
 <tr>
@@ -762,8 +803,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/06/12/Question Bank/Database/" rel="prev" title="Database">
-                Database <i class="fa fa-chevron-right"></i>
+              <a href="/2019/06/12/Question Bank/SQL/" rel="prev" title="SQL">
+                SQL <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -837,7 +878,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">56</span>
+                    <span class="site-state-item-count">45</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -896,7 +937,17 @@
                     
                       
                     
-                    <span class="site-state-item-count">21</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>

@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="A peaceful place">
 <meta property="og:description" content="Linux bondingLinux bonding can bond multiple network interfaces into one network interface to achieve network load balancing and network redundancy. Even if one of the physical NICs fails, it will not">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-06-25T02:16:47.550Z">
+<meta property="og:updated_time" content="2019-08-23T08:39:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux bonding">
 <meta name="twitter:description" content="Linux bondingLinux bonding can bond multiple network interfaces into one network interface to achieve network load balancing and network redundancy. Even if one of the physical NICs fails, it will not">
@@ -434,7 +434,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-06-25 10:16:47" itemprop="dateModified" datetime="2019-06-25T10:16:47+08:00">2019-06-25</time>
+                <time title="Modified: 2019-08-23 16:39:46" itemprop="dateModified" datetime="2019-08-23T16:39:46+08:00">2019-08-23</time>
               
             
           </span>
@@ -578,7 +578,7 @@
 <p>Release Slave(em1,em2) from Bond(bond0):</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># echo -em1 &gt; /sys/class/net/bond0/bonding/slaves</span></span><br><span class="line"><span class="comment"># echo -em2 &gt; /sys/class/net/bond0/bonding/slaves</span></span><br></pre></td></tr></table></figure>
 <h2 id="7-Install-the-ifenslave"><a href="#7-Install-the-ifenslave" class="headerlink" title="7. Install the ifenslave"></a>7. Install the <code>ifenslave</code></h2><p>After adding the em1, em2 port to the <code>slaves</code> of <code>bond0</code>, you can temporarily access the Internet (the network will  disconnected again after the restart), so install the  <code>ifenslave</code> now.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#apt-get update</span></span><br><span class="line"><span class="comment">#apt-get install ifenslave</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># apt-get update</span></span><br><span class="line"><span class="comment"># apt-get install ifenslave</span></span><br></pre></td></tr></table></figure>
 <p>Now, the network will always be connected, even if you reboot later.</p>
 <h2 id="8-Show-bond0-status"><a href="#8-Show-bond0-status" class="headerlink" title="8. Show bond0 status"></a>8. Show bond0 status</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/net/bonding/bond0</span><br></pre></td></tr></table></figure>
 <p>Displaying <code>up</code> means successful:</p>
@@ -629,8 +629,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/05/18/Python/python-file-io/" rel="prev" title="Python file io method">
-                Python file io method <i class="fa fa-chevron-right"></i>
+              <a href="/2019/05/18/Python/python-file-io/" rel="prev" title="Python File IO Method">
+                Python File IO Method <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -704,7 +704,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">56</span>
+                    <span class="site-state-item-count">45</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -763,7 +763,17 @@
                     
                       
                     
-                    <span class="site-state-item-count">21</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
