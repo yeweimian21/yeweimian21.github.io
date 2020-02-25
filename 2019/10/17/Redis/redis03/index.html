@@ -96,18 +96,18 @@
 
 
 
-  <meta name="description" content="Java使用Redis1. 下载Redis依赖包jedis.jar，Add it to the build path.http://www.java2s.com/Code/JarDownload/jedis/jedis.jar.zip 2. 测试12345678910111213141516171819202122232425import redis.clients.jedis.Jedis;pub">
+  <meta name="description" content="Java使用RedisRedis在Java Web应用中有两个主要场景:   缓存常用的数据 需要高速读/写的场合进行快速读/写，例如商品抢购和抢红包的场合。  1. 下载Redis依赖包jedis.jar，Add it to the build path.http://www.java2s.com/Code/JarDownload/jedis/jedis.jar.zip 2. 测试1234567">
 <meta name="keywords" content="Redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java使用Redis">
 <meta property="og:url" content="http://yoursite.com/2019/10/17/Redis/redis03/index.html">
 <meta property="og:site_name" content="A peaceful place">
-<meta property="og:description" content="Java使用Redis1. 下载Redis依赖包jedis.jar，Add it to the build path.http://www.java2s.com/Code/JarDownload/jedis/jedis.jar.zip 2. 测试12345678910111213141516171819202122232425import redis.clients.jedis.Jedis;pub">
+<meta property="og:description" content="Java使用RedisRedis在Java Web应用中有两个主要场景:   缓存常用的数据 需要高速读/写的场合进行快速读/写，例如商品抢购和抢红包的场合。  1. 下载Redis依赖包jedis.jar，Add it to the build path.http://www.java2s.com/Code/JarDownload/jedis/jedis.jar.zip 2. 测试1234567">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-17T09:11:51.117Z">
+<meta property="og:updated_time" content="2019-12-05T02:03:25.681Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java使用Redis">
-<meta name="twitter:description" content="Java使用Redis1. 下载Redis依赖包jedis.jar，Add it to the build path.http://www.java2s.com/Code/JarDownload/jedis/jedis.jar.zip 2. 测试12345678910111213141516171819202122232425import redis.clients.jedis.Jedis;pub">
+<meta name="twitter:description" content="Java使用RedisRedis在Java Web应用中有两个主要场景:   缓存常用的数据 需要高速读/写的场合进行快速读/写，例如商品抢购和抢红包的场合。  1. 下载Redis依赖包jedis.jar，Add it to the build path.http://www.java2s.com/Code/JarDownload/jedis/jedis.jar.zip 2. 测试1234567">
 
 
 
@@ -417,12 +417,24 @@
                 
               
 
-              <time title="Created: 2019-10-17 17:06:16 / Modified: 17:11:51" itemprop="dateCreated datePublished" datetime="2019-10-17T17:06:16+08:00">2019-10-17</time>
+              <time title="Created: 2019-10-17 17:06:16" itemprop="dateCreated datePublished" datetime="2019-10-17T17:06:16+08:00">2019-10-17</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-12-05 10:03:25" itemprop="dateModified" datetime="2019-12-05T10:03:25+08:00">2019-12-05</time>
               
             
           </span>
@@ -481,7 +493,12 @@
       
 
       
-        <h1 id="Java使用Redis"><a href="#Java使用Redis" class="headerlink" title="Java使用Redis"></a>Java使用Redis</h1><h3 id="1-下载Redis依赖包jedis-jar，Add-it-to-the-build-path"><a href="#1-下载Redis依赖包jedis-jar，Add-it-to-the-build-path" class="headerlink" title="1. 下载Redis依赖包jedis.jar，Add it to the build path."></a>1. 下载Redis依赖包<code>jedis.jar</code>，Add it to the build path.</h3><p><a href="http://www.java2s.com/Code/JarDownload/jedis/jedis.jar.zip" target="_blank" rel="noopener">http://www.java2s.com/Code/JarDownload/jedis/jedis.jar.zip</a></p>
+        <h1 id="Java使用Redis"><a href="#Java使用Redis" class="headerlink" title="Java使用Redis"></a>Java使用Redis</h1><p>Redis在Java Web应用中有两个主要场景: </p>
+<ol>
+<li>缓存常用的数据</li>
+<li>需要高速读/写的场合进行快速读/写，例如商品抢购和抢红包的场合。</li>
+</ol>
+<h3 id="1-下载Redis依赖包jedis-jar，Add-it-to-the-build-path"><a href="#1-下载Redis依赖包jedis-jar，Add-it-to-the-build-path" class="headerlink" title="1. 下载Redis依赖包jedis.jar，Add it to the build path."></a>1. 下载Redis依赖包<code>jedis.jar</code>，Add it to the build path.</h3><p><a href="http://www.java2s.com/Code/JarDownload/jedis/jedis.jar.zip" target="_blank" rel="noopener">http://www.java2s.com/Code/JarDownload/jedis/jedis.jar.zip</a></p>
 <h3 id="2-测试"><a href="#2-测试" class="headerlink" title="2. 测试"></a>2. 测试</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> redis.clients.jedis.Jedis;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceTest</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//连接本地的 Redis 服务</span></span><br><span class="line">        Jedis jedis = <span class="keyword">new</span> Jedis(<span class="string">"localhost"</span>);</span><br><span class="line">        <span class="comment">//查看服务是否运行</span></span><br><span class="line">        System.out.println(<span class="string">"服务正在运行: "</span>+jedis.ping());</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//设置 redis 字符串数据</span></span><br><span class="line">        jedis.set(<span class="string">"name"</span>, <span class="string">"Danny"</span>);</span><br><span class="line">        <span class="comment">// 获取存储的数据并输出</span></span><br><span class="line">        System.out.println(<span class="string">"redis 存储的字符串为: "</span>+ jedis.get(<span class="string">"name"</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//存储数据到列表中</span></span><br><span class="line">        jedis.lpush(<span class="string">"subject-list"</span>, <span class="string">"math"</span>);</span><br><span class="line">        jedis.lpush(<span class="string">"subject-list"</span>, <span class="string">"chemistry"</span>);</span><br><span class="line">        jedis.lpush(<span class="string">"subject-list"</span>, <span class="string">"geography"</span>);</span><br><span class="line">        <span class="comment">// 获取存储的数据并输出</span></span><br><span class="line">        List&lt;String&gt; list = jedis.lrange(<span class="string">"subject-list"</span>, <span class="number">0</span> ,<span class="number">2</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;list.size(); i++) &#123;</span><br><span class="line">            System.out.println(<span class="string">"列表项为: "</span>+list.get(i));</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>The output:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">The service is running: PONG</span><br><span class="line">The String is: Danny</span><br><span class="line">The item is: geography</span><br><span class="line">The item is: chemistry</span><br><span class="line">The item is: math</span><br></pre></td></tr></table></figure>
@@ -606,7 +623,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-count">88</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -685,7 +702,17 @@
                     
                       
                     
-                    <span class="site-state-item-count">30</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -756,7 +783,17 @@
                     
                       
                     
-                    <span class="site-state-item-count">27</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -841,7 +878,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
