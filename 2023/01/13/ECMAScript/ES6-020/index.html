@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yeweimian21.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="&amp;nbsp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6 Promise关键字">
+<meta property="og:url" content="https://yeweimian21.github.io/2023/01/13/ECMAScript/ES6-020/index.html">
+<meta property="og:site_name" content="A peaceful place">
+<meta property="og:description" content="&amp;nbsp;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-01-13T13:17:17.000Z">
+<meta property="article:modified_time" content="2023-02-08T06:58:53.363Z">
+<meta property="article:author" content="yeweimian21">
+<meta property="article:tag" content="FrontEnd">
+<meta property="article:tag" content="ECMAScript">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yeweimian21.github.io/2023/01/13/ECMAScript/ES6-020/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2023/01/13/ECMAScript/ES6-020/","path":"2023/01/13/ECMAScript/ES6-020/","title":"ES6 Promise关键字"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ES6 Promise关键字 | A peaceful place</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A peaceful place</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">inner peace</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Promise"><span class="nav-number">1.</span> <span class="nav-text">Promise</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.1.</span> <span class="nav-text">1.基本示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8Promise%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">2.使用Promise读取文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Promise%E5%8F%91%E9%80%81Ajax%E8%AF%B7%E6%B1%82-w"><span class="nav-number">1.3.</span> <span class="nav-text">3.Promise发送Ajax请求(w)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-then"><span class="nav-number">1.4.</span> <span class="nav-text">4.then()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E5%A4%9A%E4%B8%AA%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1%E7%9A%84%E6%89%A7%E8%A1%8C"><span class="nav-number">1.5.</span> <span class="nav-text">5.多个异步任务的执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-catch"><span class="nav-number">1.6.</span> <span class="nav-text">6.catch()</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeweimian21</p>
+  <div class="site-description" itemprop="description">A novice</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://yeweimian21.github.io/2023/01/13/ECMAScript/ES6-020/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeweimian21">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A peaceful place">
+      <meta itemprop="description" content="A novice">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ES6 Promise关键字 | A peaceful place">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ES6 Promise关键字
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-13 21:17:17" itemprop="dateCreated datePublished" datetime="2023-01-13T21:17:17+08:00">2023-01-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-02-08 14:58:53" itemprop="dateModified" datetime="2023-02-08T14:58:53+08:00">2023-02-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/FrontEnd/" itemprop="url" rel="index"><span itemprop="name">FrontEnd</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/FrontEnd/ECMAScript/" itemprop="url" rel="index"><span itemprop="name">ECMAScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>&nbsp;</p>
+<span id="more"></span>
+
+<h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><p>Promise是ES6引入的异步编程的新解决方案。</p>
+<p>语法上Promise是一个构造函数，用来封装异步操作并可以获取其成功或失败的结果。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span><span class="title class_">Promise</span>构造函数：<span class="title class_">Promise</span>(<span class="title function_">executor</span>(<span class="params"></span>)&#123;&#125;)</span><br><span class="line"><span class="number">2.</span><span class="title class_">Promise</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="title function_">then</span>()</span><br><span class="line"><span class="number">3.</span><span class="title class_">Promise</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="title function_">catch</span>()</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-基本示例"><a href="#1-基本示例" class="headerlink" title="1.基本示例"></a>1.基本示例</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Promise basic syntax<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">/**</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">         * create a Promise instance p by use new Promise(function(resolve, reject) &#123;&#125;);</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">         * new Promise() receive a function as parameter, </span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">         * the first parameter of the function is usually named resolve, </span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">         * the second parameter of the function is usually named reject.</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">         * We can use function resolve() and reject() to setup the status of instance p,</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">         * When the function execute successfully, use the resolve() to update status to success. </span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">         * When the function execute failed, use the reject() to update status to fail.</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">         */</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">const</span> p = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span>(<span class="params">resolve, reject</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// resolve</span></span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// let data = &#x27;user data in database&#x27;;</span></span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// resolve(data);</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// reject</span></span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">let</span> err = <span class="string">&#x27;read the data failed&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript">                <span class="title function_">reject</span>(err);</span></span><br><span class="line"><span class="language-javascript">            &#125;, <span class="number">1000</span>);</span></span><br><span class="line"><span class="language-javascript">        &#125;);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">/**</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">         * then() has two parameters that are two functions. </span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">         * The first function will execute when the resolve() function executed, </span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">         * The second function will exxcute when the reject() function executed,</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">         * parameters can be transferred</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">         */</span></span></span><br><span class="line"><span class="language-javascript">        p.<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params">value</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">console</span>.<span class="title function_">log</span>(value);</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// user data in database</span></span></span><br><span class="line"><span class="language-javascript">        &#125;, <span class="keyword">function</span>(<span class="params">reason</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">console</span>.<span class="title function_">log</span>(reason);</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// read the data failed</span></span></span><br><span class="line"><span class="language-javascript">        &#125;);</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-使用Promise读取文件"><a href="#2-使用Promise读取文件" class="headerlink" title="2.使用Promise读取文件"></a>2.使用Promise读取文件</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * import fs module</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 1.common</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">fs.<span class="title function_">readFile</span>(<span class="string">&#x27;./resources/为学.md&#x27;</span>, <span class="function">(<span class="params">err, data</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(err) &#123;</span><br><span class="line">        <span class="keyword">throw</span> err;</span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">                [Error: ENOENT: no such file or directory, open &#x27;E:\VSCode\workspace\shangguigu\frontend\ES6-ES11\ES6\promise\resources\为学1.md&#x27;] &#123;</span></span><br><span class="line"><span class="comment">                errno: -4058,</span></span><br><span class="line"><span class="comment">                code: &#x27;ENOENT&#x27;,</span></span><br><span class="line"><span class="comment">                syscall: &#x27;open&#x27;,</span></span><br><span class="line"><span class="comment">                &#125;</span></span><br><span class="line"><span class="comment">            */</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(data);</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        &lt;Buffer 20 20 20 e4 b8 ba e5 ad a6 0d 0a e5 a4 a9 e4 b8 8b e4 ba 8b e6 9c 89 e9 9a be e6 98 93 e4 b9 8e ef bc 9f 0d 0a e4 b8 ba e4 b9 8b ef bc 8c e5 88 99 e9 ... 46 more bytes&gt;</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(data.<span class="title function_">toString</span>());</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">            为学</span></span><br><span class="line"><span class="comment">        天下事有难易乎？</span></span><br><span class="line"><span class="comment">        为之，则难者亦易矣；</span></span><br><span class="line"><span class="comment">        不为，则易者亦难矣</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 2.promise</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> p = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span>(<span class="params">resolve, reject</span>) &#123;</span><br><span class="line">    fs.<span class="title function_">readFile</span>(<span class="string">&#x27;./resources/为学1.md&#x27;</span>, <span class="keyword">function</span>(<span class="params">err, data</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span>(err) &#123;</span><br><span class="line">            <span class="title function_">reject</span>(err);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="title function_">resolve</span>(data.<span class="title function_">toString</span>());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">p.<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params">value</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(value);</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">            为学</span></span><br><span class="line"><span class="comment">        天下事有难易乎？</span></span><br><span class="line"><span class="comment">        为之，则难者亦易矣；</span></span><br><span class="line"><span class="comment">        不为，则易者亦难矣</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">&#125;, <span class="keyword">function</span>(<span class="params">reason</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(reason);</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        [Error: ENOENT: no such file or directory, open &#x27;E:\VSCode\workspace\shangguigu\frontend\ES6-ES11\ES6\promise\resources\为学1.md&#x27;] &#123;</span></span><br><span class="line"><span class="comment">        errno: -4058,</span></span><br><span class="line"><span class="comment">        code: &#x27;ENOENT&#x27;,</span></span><br><span class="line"><span class="comment">        syscall: &#x27;open&#x27;,</span></span><br><span class="line"><span class="comment">        path: &#x27;E:\\VSCode\\workspace\\shangguigu\\frontend\\ES6-ES11\\ES6\\promise\\resources\\为学1.md&#x27;</span></span><br><span class="line"><span class="comment">        &#125;</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-Promise发送Ajax请求-w"><a href="#3-Promise发送Ajax请求-w" class="headerlink" title="3.Promise发送Ajax请求(w)"></a>3.Promise发送Ajax请求(w)</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>promise send ajax request<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">const</span> p = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span>(<span class="params">resolve, reject</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// 1.创建对象</span></span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">const</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// 2.初始化</span></span></span><br><span class="line"><span class="language-javascript">            xhr.<span class="title function_">open</span>(<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;https://api.apiopen.top/getJoke&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// 3.发送</span></span></span><br><span class="line"><span class="language-javascript">            xhr.<span class="title function_">send</span>();</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// 4.绑定事件，处理相应结果</span></span></span><br><span class="line"><span class="language-javascript">            xhr.<span class="property">onreadystatechange</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// 判断</span></span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">if</span>(xhr.<span class="property">readyState</span> === <span class="number">4</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                    <span class="comment">// 成功响应码为200-299</span></span></span><br><span class="line"><span class="language-javascript">                    <span class="keyword">if</span>(xhr.<span class="property">status</span> &gt;= <span class="number">200</span> &amp;&amp; xhr.<span class="property">status</span> &lt; <span class="number">300</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                        <span class="comment">// console.log(xhr.response);</span></span></span><br><span class="line"><span class="language-javascript">                        <span class="title function_">resolve</span>(xhr.<span class="property">response</span>);</span></span><br><span class="line"><span class="language-javascript">                    &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="language-javascript">                        <span class="comment">// console.log(xhr.status);</span></span></span><br><span class="line"><span class="language-javascript">                        <span class="title function_">reject</span>(xhr.<span class="property">status</span>);</span></span><br><span class="line"><span class="language-javascript">                    &#125;</span></span><br><span class="line"><span class="language-javascript">                &#125;</span></span><br><span class="line"><span class="language-javascript">            &#125;;</span></span><br><span class="line"><span class="language-javascript">        &#125;);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        p.<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params">value</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">console</span>.<span class="title function_">log</span>(value);</span></span><br><span class="line"><span class="language-javascript">        &#125;, <span class="keyword">function</span>(<span class="params">reason</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">console</span>.<span class="title function_">log</span>(reason);</span></span><br><span class="line"><span class="language-javascript">        &#125;);</span></span><br><span class="line"><span class="language-javascript">        </span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-then"><a href="#4-then" class="headerlink" title="4.then()"></a>4.then()</h4><p>PromiseState的状态一共有3种：</p>
+<ol>
+<li>pending：未决定、初始、准备状态</li>
+<li>fulfilled / resolved（不同浏览器显示的不一样）：成功</li>
+<li>rejected：失败</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Promise.prototype.then<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">const</span> p = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="title function_">resolve</span>(<span class="string">&#x27;用户数据&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// reject(&#x27;出错了&#x27;);</span></span></span><br><span class="line"><span class="language-javascript">            &#125;, <span class="number">1000</span>);</span></span><br><span class="line"><span class="language-javascript">        &#125;)</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">/**</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">         * then()方法的返回值为Promise对象，Promise对象的状态取决于回调函数的返回值</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">         */</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">const</span> result = p.<span class="title function_">then</span>(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">console</span>.<span class="title function_">log</span>(value);</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">/**</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">             * 1.回调函数返回值不是Promise对象，then()方法的返回值Promise对象：</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">             * PromiseState = &quot;fulfilled&quot;</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">             * PromiseResult = 回调函数返回值</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">             */</span></span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">return</span> <span class="number">123</span>;</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">/*</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">            Promise &#123;&lt;pending&gt;&#125;</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">                [[Prototype]]: Promise</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">                [[PromiseState]]: &quot;fulfilled&quot;</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">                [[PromiseResult]]: 123</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">             */</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="comment">/**</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">             * 2.回调函数返回值是Promise对象，then()方法的返回值Promise对象：</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">             * PromiseState = </span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">             *  （1）返回的Promise对象调用resolve()，PromiseState = &quot;fulfilled&quot;</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">             *  （2）返回的Promise对象调用reject()，PromiseState = &quot;rejected&quot;</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">             * PromiseResult = 回调函数返回值</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">             */</span></span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="title function_">resolve</span>(<span class="string">&#x27;ok&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">/*</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">                Promise &#123;&lt;pending&gt;&#125;</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">                    [[Prototype]]: Promise</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">                    [[PromiseState]]: &quot;fulfilled&quot;</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">                    [[PromiseResult]]: &quot;ok&quot;</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">                */</span></span></span><br><span class="line"><span class="language-javascript">                </span></span><br><span class="line"><span class="language-javascript">                <span class="title function_">reject</span>(<span class="string">&#x27;fail&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">/*</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">                Promise &#123;&lt;pending&gt;&#125;</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">                    [[Prototype]]: Promise</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">                    [[PromiseState]]: &quot;rejected&quot;</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">                    [[PromiseResult]]: &quot;fail&quot;</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">                */</span></span></span><br><span class="line"><span class="language-javascript">            &#125;);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="comment">/**</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">             * 3.回调函数抛出错误，then()方法的返回值Promise对象：</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">             * PromiseState = &quot;rejected&quot;</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">             * PromiseResult = 错误信息</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">             */</span></span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;发生错误&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">/*</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">            Promise &#123;&lt;pending&gt;&#125;</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">                [[Prototype]]: Promise</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">                [[PromiseState]]: &quot;rejected&quot;</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">                [[PromiseResult]]: Error: 发生错误 at file:///E:/VSCode/workspace/shangguigu/frontend/ES6-ES11/ES6/promise/26_promise_then.html:63:19</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">             */</span></span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">throw</span> <span class="string">&#x27;出错了&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">/*</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">            Promise &#123;&lt;pending&gt;&#125;</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">                [[Prototype]]: Promise</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">                [[PromiseState]]: &quot;rejected&quot;</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">                [[PromiseResult]]: &quot;出错了&quot;</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">            */</span></span></span><br><span class="line"><span class="language-javascript">        &#125;, <span class="function">(<span class="params">reason</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">console</span>.<span class="title function_">log</span>(reason);</span></span><br><span class="line"><span class="language-javascript">        &#125;)</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(result);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">/**</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">         * 链式编程</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">         * then()方法的参数可以只写成功的处理函数</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">         */</span></span></span><br><span class="line"><span class="language-javascript">        p.<span class="title function_">then</span>(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        &#125;);</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="5-多个异步任务的执行"><a href="#5-多个异步任务的执行" class="headerlink" title="5.多个异步任务的执行"></a>5.多个异步任务的执行</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// import fs module</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&quot;fs&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1.common</span></span><br><span class="line">fs.<span class="title function_">readFile</span>(<span class="string">&quot;./resources/为学.md&quot;</span>, <span class="function">(<span class="params">err, data1</span>) =&gt;</span> &#123;</span><br><span class="line">    fs.<span class="title function_">readFile</span>(<span class="string">&quot;./resources/插秧诗.md&quot;</span>, <span class="function">(<span class="params">err, data2</span>) =&gt;</span> &#123;</span><br><span class="line">        fs.<span class="title function_">readFile</span>(<span class="string">&quot;./resources/观书有感.md&quot;</span>, <span class="function">(<span class="params">err, data3</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> result = data1 + <span class="string">&quot;\n&quot;</span> + data2 + <span class="string">&quot;\n&quot;</span> + data3;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(result);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.promise execute multiple asynchronous task</span></span><br><span class="line"><span class="keyword">const</span> p = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    fs.<span class="title function_">readFile</span>(<span class="string">&quot;./resources/为学.md&quot;</span>, <span class="function">(<span class="params">err, data</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">resolve</span>(data.<span class="title function_">toString</span>());</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">p.<span class="title function_">then</span>(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        fs.<span class="title function_">readFile</span>(<span class="string">&quot;./resources/插秧诗.md&quot;</span>, <span class="function">(<span class="params">err, data</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="title function_">resolve</span>([value, data]);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        fs.<span class="title function_">readFile</span>(<span class="string">&quot;./resources/观书有感.md&quot;</span>, <span class="function">(<span class="params">err, data</span>) =&gt;</span> &#123;</span><br><span class="line">            value.<span class="title function_">push</span>(data);</span><br><span class="line">            <span class="title function_">resolve</span>(value);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(value.<span class="title function_">join</span>(<span class="string">&quot;\n&quot;</span>));</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    三个文件的内容</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-catch"><a href="#6-catch" class="headerlink" title="6.catch()"></a>6.catch()</h4><p><code>catch()</code>方法与<code>then(..., (reason) =&gt; &#123;&#125;)</code>方法功能相同，处理失败情况</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>catch方法<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">const</span> p = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="title function_">reject</span>(<span class="string">&quot;io error&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">            &#125;, <span class="number">1000</span>);</span></span><br><span class="line"><span class="language-javascript">        &#125;);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 1.then((value) =&gt; &#123;&#125;, (reason) =&gt; &#123;&#125;)</span></span></span><br><span class="line"><span class="language-javascript">        p.<span class="title function_">then</span>(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;&#125;, <span class="function">(<span class="params">reason</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">console</span>.<span class="title function_">log</span>(reason);</span></span><br><span class="line"><span class="language-javascript">        &#125;);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 2.catch((reason) =&gt; &#123;&#125;)</span></span></span><br><span class="line"><span class="language-javascript">        p.<span class="title function_">catch</span>(<span class="function">(<span class="params">reason</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">console</span>.<span class="title function_">log</span>(reason);</span></span><br><span class="line"><span class="language-javascript">        &#125;);</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/FrontEnd/" rel="tag"># FrontEnd</a>
+              <a href="/tags/ECMAScript/" rel="tag"># ECMAScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/01/12/Node.js/node.js_001/" rel="prev" title="1.Node.js">
+                  <i class="fa fa-chevron-left"></i> 1.Node.js
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/01/15/ECMAScript/ES6-021/" rel="next" title="ES6 Set集合">
+                  ES6 Set集合 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeweimian21</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yeweimian21.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="&amp;nbsp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="11.Dockerfile详解【5】">
+<meta property="og:url" content="https://yeweimian21.github.io/2019/05/24/Docker/011_docker11/index.html">
+<meta property="og:site_name" content="A peaceful place">
+<meta property="og:description" content="&amp;nbsp;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/05/24/Docker/011_docker11/docker/demo-5.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/05/24/Docker/011_docker11/docker/demo-5.png">
+<meta property="article:published_time" content="2019-05-24T03:05:32.000Z">
+<meta property="article:modified_time" content="2023-02-08T07:00:30.321Z">
+<meta property="article:author" content="yeweimian21">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yeweimian21.github.io/2019/05/24/Docker/011_docker11/docker/demo-5.png">
+
+
+<link rel="canonical" href="https://yeweimian21.github.io/2019/05/24/Docker/011_docker11/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2019/05/24/Docker/011_docker11/","path":"2019/05/24/Docker/011_docker11/","title":"11.Dockerfile详解【5】"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>11.Dockerfile详解【5】 | A peaceful place</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A peaceful place</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">inner peace</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%B6%E4%BD%9C%E9%A1%B9%E7%9B%AE%E9%95%9C%E5%83%8F"><span class="nav-number">1.</span> <span class="nav-text">制作项目镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BD%BF%E7%94%A8jar%E5%8C%85%E5%81%9A%E9%A1%B9%E7%9B%AE%E9%95%9C%E5%83%8F"><span class="nav-number">1.1.</span> <span class="nav-text">1. 使用jar包做项目镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%87%86%E5%A4%87jar%E5%8C%85"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 准备jar包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%9C%A8linux%E9%87%8C%E9%9D%A2%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%9B%AE%E5%BD%95"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 在linux里面创建一个目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E4%B8%8A%E4%BC%A0jdk%E5%92%8Cjar%E5%8C%85%E5%88%B0linux%E7%9A%84%E7%9B%AE%E5%BD%95"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 上传jdk和jar包到linux的目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E5%88%9B%E5%BB%BA%E5%B9%B6%E7%BC%96%E5%86%99Dockerfile%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 创建并编写Dockerfile文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-%E6%9E%84%E9%80%A0%E9%95%9C%E5%83%8F"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.5 构造镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-%E4%BD%BF%E7%94%A8%E9%95%9C%E5%83%8F%E8%BF%90%E8%A1%8C%E5%AE%B9%E5%99%A8"><span class="nav-number">1.1.6.</span> <span class="nav-text">1.6 使用镜像运行容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-%E6%B5%8B%E8%AF%95"><span class="nav-number">1.1.7.</span> <span class="nav-text">1.7 测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8war%E5%8C%85%E5%81%9A%E9%A1%B9%E7%9B%AE%E9%95%9C%E5%83%8F"><span class="nav-number">1.2.</span> <span class="nav-text">2. 使用war包做项目镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%87%86%E5%A4%87war%E5%8C%85"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 准备war包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%9C%A8linux%E9%87%8C%E9%9D%A2%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%9B%AE%E5%BD%95"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 在linux里面创建一个目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E4%B8%8A%E4%BC%A0war%E5%8C%85%E5%88%B0linux%E7%9A%84%E7%9B%AE%E5%BD%95"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 上传war包到linux的目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E5%88%9B%E5%BB%BA%E5%B9%B6%E7%BC%96%E5%86%99Dockerfile%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 创建并编写Dockerfile文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-%E6%9E%84%E9%80%A0%E9%95%9C%E5%83%8F"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.5 构造镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-%E4%BD%BF%E7%94%A8%E9%95%9C%E5%83%8F%E8%BF%90%E8%A1%8C%E5%AE%B9%E5%99%A8"><span class="nav-number">1.2.6.</span> <span class="nav-text">2.6 使用镜像运行容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-%E6%B5%8B%E8%AF%95"><span class="nav-number">1.2.7.</span> <span class="nav-text">2.7 测试</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeweimian21</p>
+  <div class="site-description" itemprop="description">A novice</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://yeweimian21.github.io/2019/05/24/Docker/011_docker11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeweimian21">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A peaceful place">
+      <meta itemprop="description" content="A novice">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="11.Dockerfile详解【5】 | A peaceful place">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          11.Dockerfile详解【5】
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-05-24 11:05:32" itemprop="dateCreated datePublished" datetime="2019-05-24T11:05:32+08:00">2019-05-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-02-08 15:00:30" itemprop="dateModified" datetime="2023-02-08T15:00:30+08:00">2023-02-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>&nbsp;</p>
+<span id="more"></span>
+
+<h1 id="制作项目镜像"><a href="#制作项目镜像" class="headerlink" title="制作项目镜像"></a>制作项目镜像</h1><h2 id="1-使用jar包做项目镜像"><a href="#1-使用jar包做项目镜像" class="headerlink" title="1. 使用jar包做项目镜像"></a>1. 使用jar包做项目镜像</h2><p>运行jar包需要jdk环境。</p>
+<h3 id="1-1-准备jar包"><a href="#1-1-准备jar包" class="headerlink" title="1.1 准备jar包"></a>1.1 准备jar包</h3><h3 id="1-2-在linux里面创建一个目录"><a href="#1-2-在linux里面创建一个目录" class="headerlink" title="1.2 在linux里面创建一个目录"></a>1.2 在linux里面创建一个目录</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost docker_file]# mkdir my_jar_project</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-上传jdk和jar包到linux的目录"><a href="#1-3-上传jdk和jar包到linux的目录" class="headerlink" title="1.3 上传jdk和jar包到linux的目录"></a>1.3 上传jdk和jar包到linux的目录</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_jar_project]# ls</span><br><span class="line">bjsxt.jar  Dockerfile  jdk-8u271-linux-x64.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-创建并编写Dockerfile文件"><a href="#1-4-创建并编写Dockerfile文件" class="headerlink" title="1.4 创建并编写Dockerfile文件"></a>1.4 创建并编写Dockerfile文件</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基于centos镜像</span></span><br><span class="line"><span class="keyword">FROM</span> centos</span><br><span class="line"><span class="comment"># 设置作者和邮箱</span></span><br><span class="line"><span class="keyword">MAINTAINER</span> Tom&lt;Tom@qq.com&gt;</span><br><span class="line"><span class="comment"># 声明环境变量</span></span><br><span class="line"><span class="keyword">ENV</span> SOFTWARE_PATH /usr/local/software</span><br><span class="line"><span class="keyword">ENV</span> JDK_NAME jdk1.<span class="number">8.0</span>_271</span><br><span class="line"><span class="keyword">ENV</span> WORKPATH /usr/local/project</span><br><span class="line"><span class="comment"># jdk设置部分-start</span></span><br><span class="line"><span class="comment"># 创建目录</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">mkdir</span> <span class="variable">$&#123;SOFTWARE_PATH&#125;</span></span></span><br><span class="line"><span class="comment"># 把jdk和tomcat复制到相应目录</span></span><br><span class="line"><span class="keyword">ADD</span><span class="language-bash"> jdk-8u271-linux-x64.tar.gz /<span class="variable">$&#123;SOFTWARE_PATH&#125;</span>/</span></span><br><span class="line"><span class="comment"># 配置jdk和tomcat环境变量</span></span><br><span class="line"><span class="keyword">ENV</span> JAVA_HOME $&#123;SOFTWARE_PATH&#125;/$&#123;JDK_NAME&#125;</span><br><span class="line"><span class="keyword">ENV</span> CLASSPATH $&#123;JAVA_HOME&#125;/lib/dt.jar:$&#123;JDK_HOME&#125;/lib/tools.jar</span><br><span class="line"><span class="keyword">ENV</span> CATALINA_HOME $&#123;SOFTWARE_PATH&#125;/$&#123;TOMCAT_NAME&#125;</span><br><span class="line"><span class="keyword">ENV</span> CATALINA_BASE $&#123;SOFTWARE_PATH&#125;/$&#123;TOMCAT_NAME&#125;</span><br><span class="line"><span class="keyword">ENV</span> PATH $&#123;PATH&#125;:$&#123;JAVA_HOME&#125;/bin:$&#123;CATALINA_HOME&#125;/lib:$&#123;CATALINA_HOME&#125;/bin</span><br><span class="line"><span class="comment"># jdk设置部分-end</span></span><br><span class="line"><span class="comment"># 声明工作目录</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> <span class="variable">$&#123;WORKPATH&#125;</span></span></span><br><span class="line"><span class="comment"># 添加当前目录里的bjsxt.jar，并重命名为app.jar</span></span><br><span class="line"><span class="keyword">ADD</span><span class="language-bash"> bjsxt.jar app.jar</span></span><br><span class="line"><span class="comment"># 添加容器卷</span></span><br><span class="line"><span class="keyword">VOLUME</span><span class="language-bash"> <span class="variable">$&#123;WORKPATH&#125;</span></span></span><br><span class="line"><span class="comment"># 声明端口</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8080</span></span><br><span class="line"><span class="comment"># 运行jar包</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="string">&quot;java&quot;</span>, <span class="string">&quot;-jar&quot;</span>, <span class="string">&quot;app.jar&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-5-构造镜像"><a href="#1-5-构造镜像" class="headerlink" title="1.5 构造镜像"></a>1.5 构造镜像</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_jar_project]# docker build -t my_jar_project:1.0 .</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">Sending build context to Docker daemon 162.5 MB</span><br><span class="line">Step 1/17 : FROM centos</span><br><span class="line"> ---&gt; 0d120b6ccaa8</span><br><span class="line">Step 2/17 : MAINTAINER Tom&lt;Tom@qq.com&gt;</span><br><span class="line"> ---&gt; Using cache</span><br><span class="line"> ---&gt; e91b1474c962</span><br><span class="line">Step 3/17 : ENV SOFTWARE_PATH /usr/local/software</span><br><span class="line"> ---&gt; Using cache</span><br><span class="line"> ---&gt; 7c51deda1e35</span><br><span class="line">Step 4/17 : ENV JDK_NAME jdk1.8.0_271</span><br><span class="line"> ---&gt; Using cache</span><br><span class="line"> ---&gt; c931c9163dee</span><br><span class="line">Step 5/17 : ENV WORKPATH /usr/local/project</span><br><span class="line"> ---&gt; Running in 2a50a3237b1b</span><br><span class="line"> ---&gt; 1428de5c1b39</span><br><span class="line">Removing intermediate container 2a50a3237b1b</span><br><span class="line">Step 6/17 : RUN mkdir $&#123;SOFTWARE_PATH&#125;</span><br><span class="line"> ---&gt; Running in 40ffe38deabd</span><br><span class="line"></span><br><span class="line"> ---&gt; 20dc7b21d1b3</span><br><span class="line">Removing intermediate container 40ffe38deabd</span><br><span class="line">Step 7/17 : ADD jdk-8u271-linux-x64.tar.gz /$&#123;SOFTWARE_PATH&#125;/</span><br><span class="line"> ---&gt; 1d21c21eebc4</span><br><span class="line">Removing intermediate container 8df29f752500</span><br><span class="line">Step 8/17 : ENV JAVA_HOME $&#123;SOFTWARE_PATH&#125;/$&#123;JDK_NAME&#125;</span><br><span class="line"> ---&gt; Running in d47ed606d60c</span><br><span class="line"> ---&gt; 416ded5d1abe</span><br><span class="line">Removing intermediate container d47ed606d60c</span><br><span class="line">Step 9/17 : ENV CLASSPATH $&#123;JAVA_HOME&#125;/lib/dt.jar:$&#123;JDK_HOME&#125;/lib/tools.jar</span><br><span class="line"> ---&gt; Running in 85e201d81c85</span><br><span class="line"> ---&gt; e3850e41ebfd</span><br><span class="line">Removing intermediate container 85e201d81c85</span><br><span class="line">Step 10/17 : ENV CATALINA_HOME $&#123;SOFTWARE_PATH&#125;/$&#123;TOMCAT_NAME&#125;</span><br><span class="line"> ---&gt; Running in a3064cfbbdaa</span><br><span class="line"> ---&gt; 2cab766940ca</span><br><span class="line">Removing intermediate container a3064cfbbdaa</span><br><span class="line">Step 11/17 : ENV CATALINA_BASE $&#123;SOFTWARE_PATH&#125;/$&#123;TOMCAT_NAME&#125;</span><br><span class="line"> ---&gt; Running in 2f17eef9074b</span><br><span class="line"> ---&gt; 8a317dbde928</span><br><span class="line">Removing intermediate container 2f17eef9074b</span><br><span class="line">Step 12/17 : ENV PATH $&#123;PATH&#125;:$&#123;JAVA_HOME&#125;/bin:$&#123;CATALINA_HOME&#125;/lib:$&#123;CATALINA_H                                                    OME&#125;/bin</span><br><span class="line"> ---&gt; Running in 68b269dca2c2</span><br><span class="line"> ---&gt; 0581e4b251ad</span><br><span class="line">Removing intermediate container 68b269dca2c2</span><br><span class="line">Step 13/17 : WORKDIR $&#123;WORKPATH&#125;</span><br><span class="line"> ---&gt; d154afbd81a2</span><br><span class="line">Removing intermediate container e95085f78723</span><br><span class="line">Step 14/17 : ADD bjsxt.jar app.jar</span><br><span class="line"> ---&gt; 093bfaca0f9c</span><br><span class="line">Removing intermediate container 7799e3530352</span><br><span class="line">Step 15/17 : VOLUME $&#123;WORKPATH&#125;</span><br><span class="line"> ---&gt; Running in ecdef36d2277</span><br><span class="line"> ---&gt; 561d533af090</span><br><span class="line">Removing intermediate container ecdef36d2277</span><br><span class="line">Step 16/17 : EXPOSE 8080</span><br><span class="line"> ---&gt; Running in 30054444d64c</span><br><span class="line"> ---&gt; 036a3f07310b</span><br><span class="line">Removing intermediate container 30054444d64c</span><br><span class="line">Step 17/17 : ENTRYPOINT java -jar app.jar</span><br><span class="line"> ---&gt; Running in 74f242241f1f</span><br><span class="line"> ---&gt; 9f2ae069071e</span><br><span class="line">Removing intermediate container 74f242241f1f</span><br><span class="line">Successfully built 9f2ae069071e</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_jar_project]# docker images</span><br><span class="line">REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">my_jar_project          1.0                 9f2ae069071e        15 seconds ago      590 MB</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-6-使用镜像运行容器"><a href="#1-6-使用镜像运行容器" class="headerlink" title="1.6 使用镜像运行容器"></a>1.6 使用镜像运行容器</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_jar_project]# docker run -d -p 8080:8080 my_jar_project:1.0 /bin/bash</span><br><span class="line">6414ea32b7df6d479b7ba528296de906dc0870def2e5584d0af4bc9d1fa9710b</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-7-测试"><a href="#1-7-测试" class="headerlink" title="1.7 测试"></a>1.7 测试</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_jar_project]# ip addr</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:1f:b2:aa brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.168.130/24 brd 192.168.168.255 scope global noprefixroute dynamic ens33</span><br><span class="line">       valid_lft 1341sec preferred_lft 1341sec</span><br><span class="line">    inet6 fe80::8c0b:4db3:b3f3:c20b/64 scope link noprefixroute</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">3: docker0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default</span><br><span class="line">    link/ether 02:42:90:7d:b0:56 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 172.17.0.1/16 scope global docker0</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 fe80::42:90ff:fe7d:b056/64 scope link</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">7: veth1a3ed8b@if6: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue master docker0 state UP group default</span><br><span class="line">    link/ether 6a:b9:28:dc:e8:7b brd ff:ff:ff:ff:ff:ff link-netnsid 0</span><br><span class="line">    inet6 fe80::68b9:28ff:fedc:e87b/64 scope link</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
+
+<p>打开浏览器，输入<code>http://192.168.168.130:8080/user/loadAllUser</code></p>
+<p>返回: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#123;&quot;id&quot;:1,&quot;name&quot;:&quot;小明1&quot;,&quot;adress&quot;:&quot;武汉1&quot;,&quot;birth&quot;:&quot;2020-11-23 10:59:20&quot;&#125;,&#123;&quot;id&quot;:2,&quot;name&quot;:&quot;小明2&quot;,&quot;adress&quot;:&quot;武汉2&quot;,&quot;birth&quot;:&quot;2020-11-23 10:59:20&quot;&#125;,&#123;&quot;id&quot;:3,&quot;name&quot;:&quot;小明3&quot;,&quot;adress&quot;:&quot;武汉3&quot;,&quot;birth&quot;:&quot;2020-11-23 10:59:20&quot;&#125;,&#123;&quot;id&quot;:4,&quot;name&quot;:&quot;小明4&quot;,&quot;adress&quot;:&quot;武汉4&quot;,&quot;birth&quot;:&quot;2020-11-23 10:59:20&quot;&#125;,&#123;&quot;id&quot;:5,&quot;name&quot;:&quot;小明5&quot;,&quot;adress&quot;:&quot;武汉5&quot;,&quot;birth&quot;:&quot;2020-11-23 10:59:20&quot;&#125;,&#123;&quot;id&quot;:6,&quot;name&quot;:&quot;小明6&quot;,&quot;adress&quot;:&quot;武汉6&quot;,&quot;birth&quot;:&quot;2020-11-23 10:59:20&quot;&#125;,&#123;&quot;id&quot;:7,&quot;name&quot;:&quot;小明7&quot;,&quot;adress&quot;:&quot;武汉7&quot;,&quot;birth&quot;:&quot;2020-11-23 10:59:20&quot;&#125;,&#123;&quot;id&quot;:8,&quot;name&quot;:&quot;小明8&quot;,&quot;adress&quot;:&quot;武汉8&quot;,&quot;birth&quot;:&quot;2020-11-23 10:59:20&quot;&#125;,&#123;&quot;id&quot;:9,&quot;name&quot;:&quot;小明9&quot;,&quot;adress&quot;:&quot;武汉9&quot;,&quot;birth&quot;:&quot;2020-11-23 10:59:20&quot;&#125;,&#123;&quot;id&quot;:10,&quot;name&quot;:&quot;小明10&quot;,&quot;adress&quot;:&quot;武汉10&quot;,&quot;birth&quot;:&quot;2020-11-23 10:59:20&quot;&#125;]</span><br></pre></td></tr></table></figure>
+
+<p><img src="docker/demo-5.png"></p>
+<h2 id="2-使用war包做项目镜像"><a href="#2-使用war包做项目镜像" class="headerlink" title="2. 使用war包做项目镜像"></a>2. 使用war包做项目镜像</h2><p>运行war包需要tomcat环境。</p>
+<h3 id="2-1-准备war包"><a href="#2-1-准备war包" class="headerlink" title="2.1 准备war包"></a>2.1 准备war包</h3><h3 id="2-2-在linux里面创建一个目录"><a href="#2-2-在linux里面创建一个目录" class="headerlink" title="2.2 在linux里面创建一个目录"></a>2.2 在linux里面创建一个目录</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost docker_file]# mkdir my_war_project</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-上传war包到linux的目录"><a href="#2-3-上传war包到linux的目录" class="headerlink" title="2.3 上传war包到linux的目录"></a>2.3 上传war包到linux的目录</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_war_project]# ls</span><br><span class="line">bjsxt.war  Dockerfile</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-创建并编写Dockerfile文件"><a href="#2-4-创建并编写Dockerfile文件" class="headerlink" title="2.4 创建并编写Dockerfile文件"></a>2.4 创建并编写Dockerfile文件</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基于之前自己制作的自定义tomcat镜像</span></span><br><span class="line"><span class="keyword">FROM</span> mytomcat02:<span class="number">1.0</span></span><br><span class="line"><span class="comment"># 作者</span></span><br><span class="line"><span class="keyword">MAINTAINER</span> Tom&lt;Tom@qq.com&gt;</span><br><span class="line"><span class="comment"># 设置环境变量</span></span><br><span class="line"><span class="keyword">ENV</span> SOFTWARE_PATH /usr/local/software</span><br><span class="line"><span class="keyword">ENV</span> TOMCAT_NAME tomcat-<span class="number">8.5</span></span><br><span class="line"><span class="keyword">ENV</span> TOMCAT_PATH $&#123;SOFTWARE_PATH&#125;/$&#123;TOMCAT_NAME&#125;</span><br><span class="line"><span class="comment"># 设置工作目录</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> <span class="variable">$&#123;TOMCAT_PATH&#125;</span>/webapps</span></span><br><span class="line"><span class="comment"># 清空webapps目录</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">rm</span> -rf *</span></span><br><span class="line"><span class="comment"># 复制war包到webapps</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> bjsxt.war ./bjsxt.war</span></span><br><span class="line"><span class="comment"># 声明端口</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8080</span></span><br><span class="line"><span class="comment"># 启动tomcat</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;../bin/catalina.sh&quot;</span>, <span class="string">&quot;run&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-构造镜像"><a href="#2-5-构造镜像" class="headerlink" title="2.5 构造镜像"></a>2.5 构造镜像</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_war_project]# docker build -t my_war_project:1.0 .</span><br><span class="line">Sending build context to Docker daemon 19.34 MB</span><br><span class="line">Step 1/10 : FROM mytomcat02:1.0</span><br><span class="line"> ---&gt; 9715fb4d02ba</span><br><span class="line">Step 2/10 : MAINTAINER Tom&lt;Tom@qq.com&gt;</span><br><span class="line"> ---&gt; Running in 5e8c172ca4e1</span><br><span class="line"> ---&gt; 7d09738b3c42</span><br><span class="line">Removing intermediate container 5e8c172ca4e1</span><br><span class="line">Step 3/10 : ENV SOFTWARE_PATH /usr/local/software</span><br><span class="line"> ---&gt; Running in ceaabf94344e</span><br><span class="line"> ---&gt; 4119b55c0654</span><br><span class="line">Removing intermediate container ceaabf94344e</span><br><span class="line">Step 4/10 : ENV TOMCAT_NAME tomcat-8.5</span><br><span class="line"> ---&gt; Running in d9af62cd4f3f</span><br><span class="line"> ---&gt; 29c95852ae31</span><br><span class="line">Removing intermediate container d9af62cd4f3f</span><br><span class="line">Step 5/10 : ENV TOMCAT_PATH $&#123;SOFTWARE_PATH&#125;/$&#123;TOMCAT_NAME&#125;</span><br><span class="line"> ---&gt; Running in d77128301cb5</span><br><span class="line"> ---&gt; 6796eed7167b</span><br><span class="line">Removing intermediate container d77128301cb5</span><br><span class="line">Step 6/10 : WORKDIR $&#123;TOMCAT_PATH&#125;/webapps</span><br><span class="line"> ---&gt; d13864f99004</span><br><span class="line">Removing intermediate container a97a34b3440f</span><br><span class="line">Step 7/10 : RUN rm -rf *</span><br><span class="line"> ---&gt; Running in 81444d55e497</span><br><span class="line"></span><br><span class="line"> ---&gt; 4252b5938fa6</span><br><span class="line">Removing intermediate container 81444d55e497</span><br><span class="line">Step 8/10 : COPY bjsxt.war ./bjsxt.war</span><br><span class="line"> ---&gt; a57d7f417c43</span><br><span class="line">Removing intermediate container b516d95ac75e</span><br><span class="line">Step 9/10 : EXPOSE 8080</span><br><span class="line"> ---&gt; Running in 4284ed213a3d</span><br><span class="line"> ---&gt; 7be5e2bb4d9b</span><br><span class="line">Removing intermediate container 4284ed213a3d</span><br><span class="line">Step 10/10 : CMD ../bin/catalina.sh run</span><br><span class="line"> ---&gt; Running in 0d56c580fa92</span><br><span class="line"> ---&gt; 28e4ac5b7c65</span><br><span class="line">Removing intermediate container 0d56c580fa92</span><br><span class="line">Successfully built 28e4ac5b7c65</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_war_project]# docker images</span><br><span class="line">REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">my_war_project          1.0                 28e4ac5b7c65        19 seconds ago      676 MB</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-6-使用镜像运行容器"><a href="#2-6-使用镜像运行容器" class="headerlink" title="2.6 使用镜像运行容器"></a>2.6 使用镜像运行容器</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_war_project]# docker run -d -p 8080:8080 my_war_project:1.0</span><br><span class="line">6c4590e7a2a6e05a4f799f308c03c54a8708824c53907a684214cfb630177a2d</span><br><span class="line">[root@localhost my_war_project]# docker ps</span><br><span class="line">CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS              PORTS                    NAMES</span><br><span class="line">6c4590e7a2a6        my_war_project:1.0   &quot;../bin/catalina.s...&quot;   4 seconds ago       Up 2 seconds        0.0.0.0:8080-&gt;8080/tcp   practical_wescoff</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_war_project]# docker run -it -d -p 8080:8080 my_war_project:1.0</span><br><span class="line">59a96e3f407974599fe49ee7d3bf481c485eb7ac52315a7fd6668fb88ef8fc3b</span><br><span class="line">[root@localhost my_war_project]# docker ps</span><br><span class="line">CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS              PORTS                    NAMES</span><br><span class="line">59a96e3f4079        my_war_project:1.0   &quot;../bin/catalina.s...&quot;   3 seconds ago       Up 1 second         0.0.0.0:8080-&gt;8080/tcp   awesome_lovelace</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-7-测试"><a href="#2-7-测试" class="headerlink" title="2.7 测试"></a>2.7 测试</h3><p>打开浏览器，输入<code>http://192.168.168.130:8080/bjsxt/user/loadAllUser</code></p>
+<p>返回: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#123;&quot;id&quot;:1,&quot;name&quot;:&quot;小明1&quot;,&quot;adress&quot;:&quot;武汉1&quot;,&quot;birth&quot;:&quot;2020-11-23 10:59:20&quot;&#125;,&#123;&quot;id&quot;:2,&quot;name&quot;:&quot;小明2&quot;,&quot;adress&quot;:&quot;武汉2&quot;,&quot;birth&quot;:&quot;2020-11-23 10:59:20&quot;&#125;,&#123;&quot;id&quot;:3,&quot;name&quot;:&quot;小明3&quot;,&quot;adress&quot;:&quot;武汉3&quot;,&quot;birth&quot;:&quot;2020-11-23 10:59:20&quot;&#125;,&#123;&quot;id&quot;:4,&quot;name&quot;:&quot;小明4&quot;,&quot;adress&quot;:&quot;武汉4&quot;,&quot;birth&quot;:&quot;2020-11-23 10:59:20&quot;&#125;,&#123;&quot;id&quot;:5,&quot;name&quot;:&quot;小明5&quot;,&quot;adress&quot;:&quot;武汉5&quot;,&quot;birth&quot;:&quot;2020-11-23 10:59:20&quot;&#125;,&#123;&quot;id&quot;:6,&quot;name&quot;:&quot;小明6&quot;,&quot;adress&quot;:&quot;武汉6&quot;,&quot;birth&quot;:&quot;2020-11-23 10:59:20&quot;&#125;,&#123;&quot;id&quot;:7,&quot;name&quot;:&quot;小明7&quot;,&quot;adress&quot;:&quot;武汉7&quot;,&quot;birth&quot;:&quot;2020-11-23 10:59:20&quot;&#125;,&#123;&quot;id&quot;:8,&quot;name&quot;:&quot;小明8&quot;,&quot;adress&quot;:&quot;武汉8&quot;,&quot;birth&quot;:&quot;2020-11-23 10:59:20&quot;&#125;,&#123;&quot;id&quot;:9,&quot;name&quot;:&quot;小明9&quot;,&quot;adress&quot;:&quot;武汉9&quot;,&quot;birth&quot;:&quot;2020-11-23 10:59:20&quot;&#125;,&#123;&quot;id&quot;:10,&quot;name&quot;:&quot;小明10&quot;,&quot;adress&quot;:&quot;武汉10&quot;,&quot;birth&quot;:&quot;2020-11-23 10:59:20&quot;&#125;]</span><br></pre></td></tr></table></figure>
+
+<p><img src="docker/demo-5.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/05/24/Docker/013_docker13/" rel="prev" title="13.Docker的四种网络模式">
+                  <i class="fa fa-chevron-left"></i> 13.Docker的四种网络模式
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/01/12/ECMAScript/ES6-001/" rel="next" title="1.ES6 let关键字">
+                  1.ES6 let关键字 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeweimian21</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
