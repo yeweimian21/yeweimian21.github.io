@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yeweimian21.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="&amp;nbsp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="11.Redis的相关命令详解">
+<meta property="og:url" content="https://yeweimian21.github.io/2019/01/17/Redis/011_redis/index.html">
+<meta property="og:site_name" content="A peaceful place">
+<meta property="og:description" content="&amp;nbsp;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-01-17T09:06:16.000Z">
+<meta property="article:modified_time" content="2023-02-09T01:13:48.439Z">
+<meta property="article:author" content="yeweimian21">
+<meta property="article:tag" content="Database">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yeweimian21.github.io/2019/01/17/Redis/011_redis/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2019/01/17/Redis/011_redis/","path":"2019/01/17/Redis/011_redis/","title":"11.Redis的相关命令详解"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>11.Redis的相关命令详解 | A peaceful place</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A peaceful place</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">inner peace</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#11-Redis%E7%9A%84%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">11.Redis的相关命令详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.1.</span> <span class="nav-text">1. 常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-string%E7%B1%BB%E5%9E%8B%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">2. string类型相关命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-list%E3%80%90%E9%9B%86%E5%90%88%E6%95%B0%E7%BB%84%E3%80%91"><span class="nav-number">1.3.</span> <span class="nav-text">3. list【集合数组】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-hash"><span class="nav-number">1.4.</span> <span class="nav-text">4. hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-set"><span class="nav-number">1.5.</span> <span class="nav-text">5. set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-zset"><span class="nav-number">1.6.</span> <span class="nav-text">6. zset</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeweimian21</p>
+  <div class="site-description" itemprop="description">A novice</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">213</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://yeweimian21.github.io/2019/01/17/Redis/011_redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeweimian21">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A peaceful place">
+      <meta itemprop="description" content="A novice">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="11.Redis的相关命令详解 | A peaceful place">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          11.Redis的相关命令详解
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-17 17:06:16" itemprop="dateCreated datePublished" datetime="2019-01-17T17:06:16+08:00">2019-01-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-02-09 09:13:48" itemprop="dateModified" datetime="2023-02-09T09:13:48+08:00">2023-02-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>&nbsp;</p>
+<span id="more"></span>
+
+<h1 id="11-Redis的相关命令详解"><a href="#11-Redis的相关命令详解" class="headerlink" title="11.Redis的相关命令详解"></a>11.Redis的相关命令详解</h1><p>关于命令的学习查询看这两个网站: </p>
+<ol>
+<li><code>http://www.redis.net.cn/order/</code> </li>
+<li><code>http://redisdoc.com/</code></li>
+</ol>
+<h2 id="1-常用命令"><a href="#1-常用命令" class="headerlink" title="1. 常用命令"></a>1. 常用命令</h2><ul>
+<li><code>keys *</code>: 获取所有的key</li>
+<li><code>select 0</code>: 选择第一个库</li>
+<li><code>move key dbIndex</code>: 将当前的数据库key移动到某个数据库,目标库有，则不能移动</li>
+<li><code>flushdb</code>: 清除指定库</li>
+<li><code>randomkey</code>: 从当前数据库中随机返回</li>
+<li><code>type key</code>: 类型</li>
+<li><code>del key1</code>: 删除key</li>
+<li><code>exists key</code>: 判断是否存在key</li>
+<li><code>expire key 10</code>: 设置key的过期时间，单位：秒</li>
+<li><code>pexpire key 1000</code>: 设置key的过期时间，单位：毫秒</li>
+<li><code>ttl key</code>: 查看还有多少秒过期，-1表示永不过期，-2表示已过期</li>
+<li><code>persist key</code>: 设置key永久有效，删除过期时间</li>
+</ul>
+<h2 id="2-string类型相关命令"><a href="#2-string类型相关命令" class="headerlink" title="2. string类型相关命令"></a>2. string类型相关命令</h2><ul>
+<li><code>set name Tim</code></li>
+<li><code>get name</code></li>
+<li><code>GETRANGE key start end</code>: 负值表示倒数第几个</li>
+<li><code>GETSET key new_value</code>: 返回旧值，设置为新值</li>
+<li><code>MSET key value [key value ...]</code>: 批量设置</li>
+<li><code>MGET key [key ...]</code>: 批量获取</li>
+<li><code>setnx key value</code>: 如果key不存在则插入，如果存在key则不插入</li>
+<li><code>setrange key index value</code>: 从index开始替换value</li>
+<li><code>incr age</code>: 递增</li>
+<li><code>incrby age 10</code> 递增</li>
+<li><code>decr age</code> 递减</li>
+<li><code>decrby age 10</code> 递减</li>
+<li><code>incrbyfloat</code> 增减浮点数</li>
+<li><code>append</code> 追加</li>
+<li><code>strlen</code> 长度</li>
+<li><code>object encoding key</code>: 得到key的编码类型。</li>
+</ul>
+<p>string里面有三种编码: </p>
+<ol>
+<li>int: 用于能够副作用64位有符号整数表示的字符串</li>
+<li>embstr: 用于长度小于或等于44字节，Redis3.x中是39字节，这种类型的编码在内存使用时性能更好</li>
+<li>raw: 用于长度大于44字节的</li>
+</ol>
+<h2 id="3-list【集合数组】"><a href="#3-list【集合数组】" class="headerlink" title="3. list【集合数组】"></a>3. list【集合数组】</h2><ul>
+<li><code>LPUSH mylist1 1 2 3 4 5 6 7 8</code>: 左插入</li>
+<li><code>RPUSH mylist2 1 2 3 4 5 6 7 8</code>: 右插入</li>
+<li><code>LRANGE key start stop</code>: 取出数据集合，index为负值表示倒数第几个</li>
+<li><code>lpop mylist2</code>: 弹出集合最后一个元素</li>
+<li><code>rpop mylist2</code>: 弹出第一个元素</li>
+<li><code>llen mylist</code>: 长度  </li>
+<li><code>lrem mylist count value</code>: 删除<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">|-COUNT 的值可以是以下几种：</span><br><span class="line">    |--count &gt; 0 : 从表头开始向表尾搜索，移除与 VALUE 相等的元素，数量为 COUNT 。</span><br><span class="line">    |--count &lt; 0 : 从表尾开始向表头搜索，移除与 VALUE 相等的元素，数量为 COUNT 的绝对值。</span><br><span class="line">    |--count = 0 : 移除表中所有与 VALUE 相等的值。</span><br></pre></td></tr></table></figure></li>
+<li><code>lindex mylist 2</code>: 指定索引的值，index从0开始</li>
+<li><code>LSET key index element</code>: 设置index位置的元素为element</li>
+<li><code>LTRIM key start stop</code>: 对一个列表进行修剪(trim)，只保留列表指定区间内的元素，不在指定区间之内的元素都将被删除。index从0开始，负值表示倒数第几个。</li>
+<li><code>LINSERT key BEFORE|AFTER pivot element</code>: 用于在列表的pivot元素的前面或者后面插入element元素。当指定元素不存在于列表中时，不执行任何操作。当列表不存在时，被视为空列表，不执行任何操作。如果key不是列表类型，返回一个错误。</li>
+<li><code>RPOPLPUSH source destination</code>: 转移列表的数据，用于移除列表的最后一个元素，并将该元素添加到另一个列表并返回该元素。</li>
+</ul>
+<h2 id="4-hash"><a href="#4-hash" class="headerlink" title="4. hash"></a>4. hash</h2><ul>
+<li><code>HSET key field value [field value ...]</code></li>
+<li><code>HMSET key field value [field value ...]</code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">|--命令用于为哈希表中的字段赋值。</span><br><span class="line">    |--如果哈希表不存在，一个新的哈希表被创建并进行 HSET 操作。</span><br><span class="line">    |--如果字段已经存在于哈希表中，旧值将被覆盖。</span><br></pre></td></tr></table></figure></li>
+<li><code>HGET key field</code>: 获取hash表字段的值</li>
+<li><code>HMGET key field [field ...]</code>: 获取hash表多个字段的值</li>
+<li><code>hgetall myhash</code>: 获取所有的key和value<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; HGETALL person1</span><br><span class="line">1) &quot;id&quot;</span><br><span class="line">2) &quot;1&quot;</span><br><span class="line">3) &quot;name&quot;</span><br><span class="line">4) &quot;Jim&quot;</span><br><span class="line">5) &quot;age&quot;</span><br><span class="line">6) &quot;20&quot;</span><br></pre></td></tr></table></figure></li>
+<li><code>HEXISTS key field</code>: key是否存在</li>
+<li><code>HSETNX key field value</code>: 设置key的值，如果key不存在则设置，如果key存在则不设置</li>
+<li><code>HINCRBY key field increment</code>: 递增</li>
+<li><code>HDEL key field [field ...]</code>: 删除key</li>
+<li><code>HKEYS key</code>: 获取hash表的所有key</li>
+<li><code>HVALS key</code>: 获取hash表的所有value</li>
+<li><code>HLEN key</code>: 获取hash表的长度</li>
+</ul>
+<h2 id="5-set"><a href="#5-set" class="headerlink" title="5. set"></a>5. set</h2><ul>
+<li><code>SADD key member [member ...]</code>: 向set集合中添加元素</li>
+<li><code>SREM key member [member ...]</code>: 移除set集合中的元素</li>
+<li><code>SISMEMBER key member</code>: 判断元素是否在set集合中</li>
+<li><code>SCARD key</code>: set集合的元素个数</li>
+</ul>
+<p>集合间运算</p>
+<ul>
+<li><code>SDIFF key [key ...]</code>: 差集，以第一个set集合为参照</li>
+<li><code>SINTER key [key ...]</code>: 交集</li>
+<li><code>SUNION key [key ...]</code>: 并集<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SMEMBERS score</span><br><span class="line">1) &quot;90&quot;</span><br><span class="line">2) &quot;100&quot;</span><br><span class="line">3) &quot;120&quot;</span><br><span class="line">4) &quot;130&quot;</span><br><span class="line">127.0.0.1:6379&gt; SMEMBERS number</span><br><span class="line">1) &quot;100&quot;</span><br><span class="line">2) &quot;200&quot;</span><br><span class="line">3) &quot;300&quot;</span><br><span class="line">127.0.0.1:6379&gt; SDIFF score number</span><br><span class="line">1) &quot;90&quot;</span><br><span class="line">2) &quot;120&quot;</span><br><span class="line">3) &quot;130&quot;</span><br><span class="line">127.0.0.1:6379&gt; SINTER score number</span><br><span class="line">1) &quot;100&quot;</span><br><span class="line">127.0.0.1:6379&gt; SUNION score number</span><br><span class="line">1) &quot;90&quot;</span><br><span class="line">2) &quot;100&quot;</span><br><span class="line">3) &quot;120&quot;</span><br><span class="line">4) &quot;130&quot;</span><br><span class="line">5) &quot;200&quot;</span><br><span class="line">6) &quot;300&quot;</span><br></pre></td></tr></table></figure></li>
+<li><code>SRANDMEMBER key [count]</code>: 随机获取集合中的元素</li>
+<li><code>SPOP key [count]</code>: 随机移除集合中的一个元素并返回</li>
+</ul>
+<p>    </p>
+<h2 id="6-zset"><a href="#6-zset" class="headerlink" title="6. zset"></a>6. zset</h2><ul>
+<li><p><code>ZADD key [NX|XX] [CH] [INCR] score member [score member ...]</code>: 向zset中添加member及其score</p>
+</li>
+<li><p><code>ZINCRBY key increment member</code>: 增加zset中member的score</p>
+</li>
+<li><p><code>ZSCORE key member</code>: 获取zset中member的score</p>
+</li>
+<li><p><code>ZRANGE key start stop [WITHSCORES]</code>: 获取zset中的值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; zadd myzset1 10 one 5 two 3 three</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; ZRANGE myzset1 0 -1</span><br><span class="line">1) &quot;three&quot;</span><br><span class="line">2) &quot;two&quot;</span><br><span class="line">3) &quot;one&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZINCRBY myzset1 20 three</span><br><span class="line">&quot;23&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZRANGE myzset1 0 -1</span><br><span class="line">1) &quot;two&quot;</span><br><span class="line">2) &quot;one&quot;</span><br><span class="line">3) &quot;three&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZSCORE myzset1 one</span><br><span class="line">&quot;10&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZADD myzset1 30 four 50 five 60 six</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; zrange myzset1 0 -1</span><br><span class="line">1) &quot;two&quot;</span><br><span class="line">2) &quot;one&quot;</span><br><span class="line">3) &quot;three&quot;</span><br><span class="line">4) &quot;four&quot;</span><br><span class="line">5) &quot;five&quot;</span><br><span class="line">6) &quot;six&quot;</span><br><span class="line">127.0.0.1:6379&gt; zrange myzset1 0 -1 withscores</span><br><span class="line"> 1) &quot;two&quot;</span><br><span class="line"> 2) &quot;5&quot;</span><br><span class="line"> 3) &quot;one&quot;</span><br><span class="line"> 4) &quot;10&quot;</span><br><span class="line"> 5) &quot;three&quot;</span><br><span class="line"> 6) &quot;23&quot;</span><br><span class="line"> 7) &quot;four&quot;</span><br><span class="line"> 8) &quot;30&quot;</span><br><span class="line"> 9) &quot;five&quot;</span><br><span class="line">10) &quot;50&quot;</span><br><span class="line">11) &quot;six&quot;</span><br><span class="line">12) &quot;60&quot;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT offset count]</code>:  通过分数返回有序集合指定区间内的成员</p>
+</li>
+<li><p><code>ZREVRANGEBYSCORE key max min [WITHSCORES] [LIMIT offset count]</code>: 返回有序集中指定分数区间内的成员，分数从高到低排序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZRANGEBYSCORE myzset1 0 100 withscores limit 1 2</span><br><span class="line">1) &quot;one&quot;</span><br><span class="line">2) &quot;10&quot;</span><br><span class="line">3) &quot;three&quot;</span><br><span class="line">4) &quot;23&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZREVRANGEBYSCORE myzset1 100 0 withscores</span><br><span class="line"> 1) &quot;six&quot;</span><br><span class="line"> 2) &quot;60&quot;</span><br><span class="line"> 3) &quot;five&quot;</span><br><span class="line"> 4) &quot;50&quot;</span><br><span class="line"> 5) &quot;four&quot;</span><br><span class="line"> 6) &quot;30&quot;</span><br><span class="line"> 7) &quot;three&quot;</span><br><span class="line"> 8) &quot;23&quot;</span><br><span class="line"> 9) &quot;one&quot;</span><br><span class="line">10) &quot;10&quot;</span><br><span class="line">11) &quot;two&quot;</span><br><span class="line">12) &quot;5&quot;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>ZCARD key</code>: 获取zset的成员数</p>
+</li>
+<li><p><code>ZCOUNT key min max</code>: 获得zset中指定区间分数的成员数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZCARD myzset1</span><br><span class="line">(integer) 6</span><br><span class="line">127.0.0.1:6379&gt; ZCOUNT myzset1 20 50</span><br><span class="line">(integer) 3</span><br></pre></td></tr></table></figure></li>
+<li><p><code>ZREM key member [member ...]</code>: 删除一个或多个元素</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZREM myzset1 one two</span><br><span class="line">(integer) 2</span><br></pre></td></tr></table></figure></li>
+<li><p><code>ZREMRANGEBYRANK key start stop</code>: 移除zset中给定的<strong>排名区间</strong>的所有成员</p>
+</li>
+<li><p><code>ZREMRANGEBYSCORE key min max</code>: 移除zset中给定的<strong>分数区间</strong>的所有成员</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZRANGE myzset1 0 -1</span><br><span class="line">1) &quot;one&quot;</span><br><span class="line">2) &quot;two&quot;</span><br><span class="line">3) &quot;three&quot;</span><br><span class="line">4) &quot;four&quot;</span><br><span class="line">5) &quot;five&quot;</span><br><span class="line">6) &quot;six&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZREMRANGEBYRANK myzset1 0 1</span><br><span class="line">(integer) 2</span><br><span class="line">127.0.0.1:6379&gt; ZRANGE myzset1 0 -1</span><br><span class="line">1) &quot;three&quot;</span><br><span class="line">2) &quot;four&quot;</span><br><span class="line">3) &quot;five&quot;</span><br><span class="line">4) &quot;six&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZRANGE myzset1 0 -1 withscores</span><br><span class="line">1) &quot;three&quot;</span><br><span class="line">2) &quot;23&quot;</span><br><span class="line">3) &quot;four&quot;</span><br><span class="line">4) &quot;30&quot;</span><br><span class="line">5) &quot;five&quot;</span><br><span class="line">6) &quot;50&quot;</span><br><span class="line">7) &quot;six&quot;</span><br><span class="line">8) &quot;60&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZREMRANGEBYSCORE myzset1 20 30</span><br><span class="line">(integer) 2</span><br><span class="line">127.0.0.1:6379&gt; ZRANGE myzset1 0 -1 withscores</span><br><span class="line">1) &quot;five&quot;</span><br><span class="line">2) &quot;50&quot;</span><br><span class="line">3) &quot;six&quot;</span><br><span class="line">4) &quot;60&quot;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>ZRANK key member</code>: 返回zset中指定member的index，index从0开始</p>
+</li>
+<li><p><code>ZREVRANK key member</code>: 返回zset中指定member的score排名，score排名从大到小排序，从0开始</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; zrange myzset1 0 -1 withscores</span><br><span class="line"> 1) &quot;one&quot;</span><br><span class="line"> 2) &quot;10&quot;</span><br><span class="line"> 3) &quot;two&quot;</span><br><span class="line"> 4) &quot;20&quot;</span><br><span class="line"> 5) &quot;three&quot;</span><br><span class="line"> 6) &quot;30&quot;</span><br><span class="line"> 7) &quot;four&quot;</span><br><span class="line"> 8) &quot;40&quot;</span><br><span class="line"> 9) &quot;five&quot;</span><br><span class="line">10) &quot;50&quot;</span><br><span class="line">11) &quot;six&quot;</span><br><span class="line">12) &quot;60&quot;</span><br><span class="line">127.0.0.1:6379&gt; ZRANK myzset1 one</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6379&gt; ZRANK myzset1 five</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6379&gt; ZREVRANK myzset1 two</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6379&gt; ZREVRANK myzset1 one</span><br><span class="line">(integer) 5</span><br></pre></td></tr></table></figure></li>
+<li><p><code>Zinterstore</code>: 计算给定的一个或多个zset的交集并将结果集存储在新的zset key 中</p>
+</li>
+<li><p><code>Zunionstore</code>: 计算给定的一个或多个zset的并集，并存储在新的 key 中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZADD myzset1 10 value1 20 value2 30 value3</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; ZADD myzset2 40 value1 50 value2 60 value3</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; ZINTERSTORE mysumzset 2 myzset1 myzset2</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; ZRANGE mysumzset 0 -1 withscores</span><br><span class="line">1) &quot;value1&quot;</span><br><span class="line">2) &quot;50&quot;</span><br><span class="line">3) &quot;value2&quot;</span><br><span class="line">4) &quot;70&quot;</span><br><span class="line">5) &quot;value3&quot;</span><br><span class="line">6) &quot;90&quot;</span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt; ZADD myzset1 2000 value1 3500 value2 5000 value3</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; ZADD myzset2 2000 value4 3500 value5 5000 value6</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; ZUNIONSTORE myunionzset 2 myzset1 myzset2 weights 0.5 2</span><br><span class="line">(integer) 6</span><br><span class="line">127.0.0.1:6379&gt; ZRANGE myunionzset 0 -1 withscores</span><br><span class="line"> 1) &quot;value1&quot;</span><br><span class="line"> 2) &quot;1000&quot;</span><br><span class="line"> 3) &quot;value2&quot;</span><br><span class="line"> 4) &quot;1750&quot;</span><br><span class="line"> 5) &quot;value3&quot;</span><br><span class="line"> 6) &quot;2500&quot;</span><br><span class="line"> 7) &quot;value4&quot;</span><br><span class="line"> 8) &quot;4000&quot;</span><br><span class="line"> 9) &quot;value5&quot;</span><br><span class="line">10) &quot;7000&quot;</span><br><span class="line">11) &quot;value6&quot;</span><br><span class="line">12) &quot;10000&quot;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Database/" rel="tag"># Database</a>
+              <a href="/tags/Redis/" rel="tag"># Redis</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/17/Redis/010_redis/" rel="prev" title="10.redis的数据类型">
+                  <i class="fa fa-chevron-left"></i> 10.redis的数据类型
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/01/17/Redis/009_redis/" rel="next" title="9.Redis启动后相关知识">
+                  9.Redis启动后相关知识 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeweimian21</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

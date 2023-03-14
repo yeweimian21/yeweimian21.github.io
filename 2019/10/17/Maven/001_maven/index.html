@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yeweimian21.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="&amp;nbsp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.Maven基础">
+<meta property="og:url" content="https://yeweimian21.github.io/2019/10/17/Maven/001_maven/index.html">
+<meta property="og:site_name" content="A peaceful place">
+<meta property="og:description" content="&amp;nbsp;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/10/17/Maven/001_maven/maven/mvn-v.png">
+<meta property="article:published_time" content="2019-10-17T08:19:12.000Z">
+<meta property="article:modified_time" content="2023-02-08T09:46:18.156Z">
+<meta property="article:author" content="yeweimian21">
+<meta property="article:tag" content="Maven">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yeweimian21.github.io/2019/10/17/Maven/001_maven/maven/mvn-v.png">
+
+
+<link rel="canonical" href="https://yeweimian21.github.io/2019/10/17/Maven/001_maven/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2019/10/17/Maven/001_maven/","path":"2019/10/17/Maven/001_maven/","title":"1.Maven基础"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>1.Maven基础 | A peaceful place</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A peaceful place</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">inner peace</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Maven"><span class="nav-number">1.</span> <span class="nav-text">1. Maven</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Maven%E7%9A%84%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">2. Maven的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%B8%8B%E8%BD%BDMaven%E5%8C%85-%E5%B9%B6%E8%A7%A3%E5%8E%8B"><span class="nav-number">2.0.1.</span> <span class="nav-text">(1) 下载Maven包,并解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">2.0.2.</span> <span class="nav-text">(2)设置环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%B5%8B%E8%AF%95maven%E6%98%AF%E5%90%A6%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F"><span class="nav-number">2.0.3.</span> <span class="nav-text">(3) 测试maven是否安装成功</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Maven%E4%BB%93%E5%BA%93"><span class="nav-number">3.</span> <span class="nav-text">3. Maven仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Maven%E4%BB%93%E5%BA%93%E7%9A%84%E7%A7%8D%E7%B1%BB"><span class="nav-number">3.0.1.</span> <span class="nav-text">(1) Maven仓库的种类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BF%AE%E6%94%B9%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E7%9A%84%E5%9C%B0%E5%9D%80"><span class="nav-number">3.0.2.</span> <span class="nav-text">(2) 修改本地仓库的地址</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Maven-scope"><span class="nav-number">4.</span> <span class="nav-text">4. Maven scope</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Maven%E8%A7%A3%E5%86%B3%E4%BE%9D%E8%B5%96%E5%86%B2%E7%AA%81"><span class="nav-number">5.</span> <span class="nav-text">5. Maven解决依赖冲突</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeweimian21</p>
+  <div class="site-description" itemprop="description">A novice</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">213</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://yeweimian21.github.io/2019/10/17/Maven/001_maven/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeweimian21">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A peaceful place">
+      <meta itemprop="description" content="A novice">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="1.Maven基础 | A peaceful place">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          1.Maven基础
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-17 16:19:12" itemprop="dateCreated datePublished" datetime="2019-10-17T16:19:12+08:00">2019-10-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-02-08 17:46:18" itemprop="dateModified" datetime="2023-02-08T17:46:18+08:00">2023-02-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Maven/" itemprop="url" rel="index"><span itemprop="name">Maven</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>&nbsp;</p>
+<span id="more"></span>
+
+<h1 id="1-Maven"><a href="#1-Maven" class="headerlink" title="1. Maven"></a>1. Maven</h1><p>创建一个项目需要大量的依赖jar包，Maven可以帮助我们管理这些依赖jar包。</p>
+<h1 id="2-Maven的安装"><a href="#2-Maven的安装" class="headerlink" title="2. Maven的安装"></a>2. Maven的安装</h1><h3 id="1-下载Maven包-并解压"><a href="#1-下载Maven包-并解压" class="headerlink" title="(1) 下载Maven包,并解压"></a>(1) 下载Maven包,并解压</h3><p><a target="_blank" rel="noopener" href="https://www-eu.apache.org/dist/maven/maven-3/3.6.2/binaries/apache-maven-3.6.2-bin.zip">https://www-eu.apache.org/dist/maven/maven-3/3.6.2/binaries/apache-maven-3.6.2-bin.zip</a></p>
+<h3 id="2-设置环境变量"><a href="#2-设置环境变量" class="headerlink" title="(2)设置环境变量"></a>(2)设置环境变量</h3><ol>
+<li>新建MAVEN_HOME系统变量：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MAVEN_HOME : E:\Maven\apache-maven-3.6.2</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>编辑PATH系统变量，添加以下内容：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PATH : %MAVEN_HOME%\bin</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-测试maven是否安装成功"><a href="#3-测试maven是否安装成功" class="headerlink" title="(3) 测试maven是否安装成功"></a>(3) 测试maven是否安装成功</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn -v</span><br></pre></td></tr></table></figure>
+
+<p><img src="maven/mvn-v.png"></p>
+<h1 id="3-Maven仓库"><a href="#3-Maven仓库" class="headerlink" title="3. Maven仓库"></a>3. Maven仓库</h1><h3 id="1-Maven仓库的种类"><a href="#1-Maven仓库的种类" class="headerlink" title="(1) Maven仓库的种类"></a>(1) Maven仓库的种类</h3><p>Maven的仓库中存放工程依赖的jar包。<br>仓库分为：本地仓库，中央仓库，第三方仓库(私服)</p>
+<ol>
+<li><p>本地仓库，Maven会将工程中依赖的jar包从远程下载到本机一个目录下管理，默认的本地仓库是在<code>$user.home/.m2/repository</code>。</p>
+</li>
+<li><p>中央仓库：Maven官方维护的公共远程仓库：<a target="_blank" rel="noopener" href="http://repo1.maven.org/maven2%E3%80%82%E9%87%8C%E9%9D%A2%E6%9C%89%E5%A4%A7%E9%87%8F%E7%9A%84%E5%B8%B8%E7%94%A8%E7%B1%BB%E5%BA%93%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E6%B2%A1%E6%9C%89%E5%B7%A5%E7%A8%8B%E4%BE%9D%E8%B5%96%E7%9A%84jar%E5%8C%85%EF%BC%8C%E9%BB%98%E8%AE%A4%E4%BB%8E%E4%B8%AD%E5%A4%AE%E4%BB%93%E5%BA%93%E4%B8%8B%E8%BD%BD%E3%80%82">http://repo1.maven.org/maven2。里面有大量的常用类库，如果本地仓库没有工程依赖的jar包，默认从中央仓库下载。</a></p>
+</li>
+<li><p>第三方仓库(内部中心仓库，私服): 一般是由公司自己设立的，只为本公司内部共享使用。</p>
+</li>
+</ol>
+<h3 id="2-修改本地仓库的地址"><a href="#2-修改本地仓库的地址" class="headerlink" title="(2) 修改本地仓库的地址"></a>(2) 修改本地仓库的地址</h3><p>打开Maven安装目录下的<code>conf/settings.xml</code>文件，修改<code>&lt;localRepository&gt;</code>中的内容为本地仓库的地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;settings xmlns=&quot;http://maven.apache.org/SETTINGS/1.0.0&quot;</span><br><span class="line">          xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">          xsi:schemaLocation=&quot;http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd&quot;&gt;</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  &lt;localRepository&gt;E:\Maven\LocalRepository&lt;/localRepository&gt;</span><br><span class="line"></span><br><span class="line">&lt;/settings&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="4-Maven-scope"><a href="#4-Maven-scope" class="headerlink" title="4. Maven scope"></a>4. Maven scope</h1><p>scope: 依赖范围，表示通过pom.xml加载进来的jar包，在什么范围内使用生效，范围包括编译时，运行时，测试时。</p>
+<ol>
+<li><p>compile: 默认值，如果选择此值，表示编译、测试和运行都使用当前jar</p>
+</li>
+<li><p>test: 表示只在测试时当前jar生效，在别的范围内就不能使用该jar包。</p>
+</li>
+<li><p>runtime: 表示测试和运行时使用当前jar，编译时不用该jar包。例如：JDBC驱动。因为通常在编译时没有使用到JDBC驱动包内任何东西，只有在运行时才使用。</p>
+</li>
+<li><p>provided: 表示编译和测试时使用当前jar，运行时不在使用该jar了。例如：servlet-api、jsp-api等。</p>
+</li>
+<li><p>system: 表示自己手动加入的jar包，不属于maven仓库(本地，第三方等)，属于别的类库。只在编译和测试期生效，运行时无效。一般不用。</p>
+</li>
+</ol>
+<h1 id="5-Maven解决依赖冲突"><a href="#5-Maven解决依赖冲突" class="headerlink" title="5. Maven解决依赖冲突"></a>5. Maven解决依赖冲突</h1><p>依赖调节: maven解决传递依赖时jar包冲突问题的方法。</p>
+<p>依赖调节的两个原则: </p>
+<ol>
+<li>第一原则：路径近者优先原则</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A--&gt;B--&gt;C--&gt;D--&gt;X(1.6)</span><br><span class="line">E--&gt;D--&gt;X(2.0)</span><br></pre></td></tr></table></figure>
+
+<p>使用X(2.0)，因为其路径更近</p>
+<ol start="2">
+<li>第二原则：第一声明者优先原则。就是如果路径相同，maven 默认配置在前面的优先使用</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A--&gt;B--&gt; X(1.6)</span><br><span class="line">C--&gt;D--&gt; X(2.0)</span><br></pre></td></tr></table></figure>
+
+<p>这样就是路径相同，那么如果A在前面，C在后面，则使用X(1.6)。<br>maven会先根据第一原则进行选择，第一原则不成，则按第二原则处理。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Maven/" rel="tag"># Maven</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/10/17/MyBatis/009_MyBatis/" rel="prev" title="9.MyBatis为实体类定义别名">
+                  <i class="fa fa-chevron-left"></i> 9.MyBatis为实体类定义别名
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/10/17/Maven/010_maven/" rel="next" title="10.使用maven的常规使用">
+                  10.使用maven的常规使用 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeweimian21</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

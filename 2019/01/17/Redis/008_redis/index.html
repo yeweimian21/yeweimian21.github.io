@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yeweimian21.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="&amp;nbsp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="8.Redis的安装及启动停止">
+<meta property="og:url" content="https://yeweimian21.github.io/2019/01/17/Redis/008_redis/index.html">
+<meta property="og:site_name" content="A peaceful place">
+<meta property="og:description" content="&amp;nbsp;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/008_redis/download_page.png">
+<meta property="article:published_time" content="2019-01-17T09:06:16.000Z">
+<meta property="article:modified_time" content="2023-02-14T05:46:32.722Z">
+<meta property="article:author" content="yeweimian21">
+<meta property="article:tag" content="Database">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yeweimian21.github.io/2019/01/17/Redis/008_redis/download_page.png">
+
+
+<link rel="canonical" href="https://yeweimian21.github.io/2019/01/17/Redis/008_redis/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2019/01/17/Redis/008_redis/","path":"2019/01/17/Redis/008_redis/","title":"8.Redis的安装及启动停止"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>8.Redis的安装及启动停止 | A peaceful place</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A peaceful place</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">inner peace</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis%E7%9A%84%E5%AE%89%E8%A3%85%E5%8F%8A%E5%90%AF%E5%8A%A8%E5%81%9C%E6%AD%A2"><span class="nav-number">1.</span> <span class="nav-text">Redis的安装及启动停止</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%B8%8B%E8%BD%BDRedis"><span class="nav-number">1.1.</span> <span class="nav-text">1. 下载Redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%B8%8A%E4%BC%A0%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">1.2.</span> <span class="nav-text">2. 上传安装包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%BC%80%E5%A7%8B%E5%AE%89%E8%A3%85"><span class="nav-number">1.3.</span> <span class="nav-text">3. 开始安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%AE%89%E8%A3%85gcc%EF%BC%8C%E7%9B%AE%E7%9A%84%E6%98%AF%E7%BC%96%E8%AF%91%E8%BD%AF%E4%BB%B6"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 安装gcc，目的是编译软件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E8%A7%A3%E5%8E%8B%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 解压安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E6%8A%8A%E8%A7%A3%E5%8E%8B%E7%9A%84%E6%96%87%E4%BB%B6copy%E5%88%B0-usr-local-src%E9%87%8C%E9%9D%A2"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 把解压的文件copy到&#x2F;usr&#x2F;local&#x2F;src里面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E8%BF%9B%E5%85%A5-usr-local-src-redis-6-0-9-%E7%9B%AE%E5%BD%95%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%AF%91"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4 进入&#x2F;usr&#x2F;local&#x2F;src&#x2F;redis-6.0.9&#x2F;目录进行编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-%E5%9C%A8%E4%B8%8A%E9%9D%A2%E7%9A%84Redis%E7%9B%AE%E5%BD%95%E5%AE%89%E8%A3%85%E6%8A%8A%E5%AE%83%E5%AE%89%E8%A3%85%E5%88%B0-usr-local-redis-6-0-9%E9%87%8C%E9%9D%A2"><span class="nav-number">1.3.5.</span> <span class="nav-text">3.5 在上面的Redis目录安装把它安装到&#x2F;usr&#x2F;local&#x2F;redis-6.0.9里面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-%E9%AA%8C%E8%AF%81%E5%AE%89%E8%A3%85%E6%98%AF%E5%90%A6%E6%88%90%E5%8A%9F"><span class="nav-number">1.3.6.</span> <span class="nav-text">3.6 验证安装是否成功</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-%E6%8A%8A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%A4%8D%E5%88%B6%E5%88%B0%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9B%AE%E5%BD%95"><span class="nav-number">1.3.7.</span> <span class="nav-text">3.7 把配置文件复制到自定义目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-8-%E5%90%AF%E5%8A%A8Redis"><span class="nav-number">1.3.8.</span> <span class="nav-text">3.8 启动Redis</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%9F%BA%E6%9C%AC%E8%AE%BE%E7%BD%AE%E5%92%8C%E4%BD%BF%E7%94%A8"><span class="nav-number">1.4.</span> <span class="nav-text">4. 基本设置和使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E9%BB%98%E8%AE%A4%E6%83%85%E5%86%B5%EF%BC%8CRedis%E4%B8%8D%E6%98%AF%E5%9C%A8%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8C%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%8A%8Aredis%E6%94%BE%E5%9C%A8%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8C"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 默认情况，Redis不是在后台运行，可以把redis放在后台运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%93%BE%E6%8E%A5%E5%92%8C%E9%80%80%E5%87%BA"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 客户端链接和退出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E5%81%9C%E6%AD%A2redis"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 停止redis</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-bin%E7%9B%AE%E5%BD%95%E7%9A%84%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E"><span class="nav-number">1.5.</span> <span class="nav-text">5. bin目录的文件说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-redis%E9%85%8D%E7%BD%AE"><span class="nav-number">1.6.</span> <span class="nav-text">6. redis配置</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeweimian21</p>
+  <div class="site-description" itemprop="description">A novice</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">213</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://yeweimian21.github.io/2019/01/17/Redis/008_redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeweimian21">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A peaceful place">
+      <meta itemprop="description" content="A novice">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="8.Redis的安装及启动停止 | A peaceful place">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          8.Redis的安装及启动停止
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-17 17:06:16" itemprop="dateCreated datePublished" datetime="2019-01-17T17:06:16+08:00">2019-01-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-02-14 13:46:32" itemprop="dateModified" datetime="2023-02-14T13:46:32+08:00">2023-02-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>&nbsp;</p>
+<span id="more"></span>
+
+<h1 id="Redis的安装及启动停止"><a href="#Redis的安装及启动停止" class="headerlink" title="Redis的安装及启动停止"></a>Redis的安装及启动停止</h1><h2 id="1-下载Redis"><a href="#1-下载Redis" class="headerlink" title="1. 下载Redis"></a>1. 下载Redis</h2><p>下载地址: <code>https://redis.io/download</code></p>
+<p>redis下载版本: 6.0.9</p>
+<img src="/2019/01/17/Redis/008_redis/download_page.png" class="">
+
+<h2 id="2-上传安装包"><a href="#2-上传安装包" class="headerlink" title="2. 上传安装包"></a>2. 上传安装包</h2><p>将<code>redis-6.0.9.tar.gz</code>上传至<code>/usr/local/download</code>目录下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost download]# pwd</span><br><span class="line">/usr/local/download</span><br><span class="line">[root@localhost download]# ls -l</span><br><span class="line">-rw-r--r--. 1 root root   2261418 Nov 29 11:21 redis-6.0.9.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-开始安装"><a href="#3-开始安装" class="headerlink" title="3. 开始安装"></a>3. 开始安装</h2><h3 id="3-1-安装gcc，目的是编译软件"><a href="#3-1-安装gcc，目的是编译软件" class="headerlink" title="3.1 安装gcc，目的是编译软件"></a>3.1 安装gcc，目的是编译软件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc-c++</span><br></pre></td></tr></table></figure>
+
+<p>注意：在<code>CentOS 7</code>下编译<code>Redis 6.0</code>版本，如果出现以下错误</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In file included from server.c:30:0:</span><br><span class="line">server.h:1022:5: error: expected specifier-qualifier-list before ‘_Atomic’</span><br><span class="line">     _Atomic unsigned int lruclock; /* Clock for LRU eviction */</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>请先检查<code>gcc</code>的版本是否低于5。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# gcc -v</span><br><span class="line">Using built-in specs.</span><br><span class="line">COLLECT_GCC=gcc</span><br><span class="line">COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/lto-wrapper</span><br><span class="line">Target: x86_64-redhat-linux</span><br><span class="line">Configured with: ../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-linker-hash-style=gnu --enable-languages=c,c++,objc,obj-c++,java,fortran,ada,go,lto --enable-plugin --enable-initfini-array --disable-libgcj --with-isl=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/isl-install --with-cloog=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/cloog-install --enable-gnu-indirect-function --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux</span><br><span class="line">Thread model: posix</span><br><span class="line">gcc version 4.8.5 20150623 (Red Hat 4.8.5-44) (GCC)</span><br></pre></td></tr></table></figure>
+
+<p>如果gcc的版本低于5请先升级，可以使用以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install centos-release-scl</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install devtoolset-7-gcc*</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# scl enable devtoolset-7 bash</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# gcc -v</span><br><span class="line">Using built-in specs.</span><br><span class="line">COLLECT_GCC=gcc</span><br><span class="line">COLLECT_LTO_WRAPPER=/opt/rh/devtoolset-7/root/usr/libexec/gcc/x86_64-redhat-linux/7/lto-wrapper</span><br><span class="line">Target: x86_64-redhat-linux</span><br><span class="line">Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,lto --prefix=/opt/rh/devtoolset-7/root/usr --mandir=/opt/rh/devtoolset-7/root/usr/share/man --infodir=/opt/rh/devtoolset-7/root/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --enable-plugin --with-linker-hash-style=gnu --enable-initfini-array --with-default-libstdcxx-abi=gcc4-compatible --with-isl=/builddir/build/BUILD/gcc-7.3.1-20180303/obj-x86_64-redhat-linux/isl-install --enable-libmpx --enable-gnu-indirect-function --with-tune=generic --with-arch_32=i686 --build=x86_64-redhat-linux</span><br><span class="line">Thread model: posix</span><br><span class="line">gcc version 7.3.1 20180303 (Red Hat 7.3.1-5) (GCC)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-解压安装包"><a href="#3-2-解压安装包" class="headerlink" title="3.2 解压安装包"></a>3.2 解压安装包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost download]# tar -zxvf redis-6.0.9</span><br><span class="line">[root@localhost download]# ls -l</span><br><span class="line">drwxrwxr-x. 7 root root      4096 Oct 27 15:12 redis-6.0.9</span><br><span class="line">-rw-r--r--. 1 root root   2261418 Nov 29 11:21 redis-6.0.9.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-把解压的文件copy到-usr-local-src里面"><a href="#3-3-把解压的文件copy到-usr-local-src里面" class="headerlink" title="3.3 把解压的文件copy到/usr/local/src里面"></a>3.3 把解压的文件copy到/usr/local/src里面</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost download]# cp -r redis-6.0.9 /usr/local/src/</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-进入-usr-local-src-redis-6-0-9-目录进行编译"><a href="#3-4-进入-usr-local-src-redis-6-0-9-目录进行编译" class="headerlink" title="3.4 进入/usr/local/src/redis-6.0.9/目录进行编译"></a>3.4 进入/usr/local/src/redis-6.0.9/目录进行编译</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost download]# cd /usr/local/src/redis-6.0.9/</span><br><span class="line">[root@localhost redis-6.0.9]# ls -l</span><br><span class="line">total 292</span><br><span class="line">-rw-r--r--.  1 root root 108806 Nov 29 11:38 00-RELEASENOTES</span><br><span class="line">-rw-r--r--.  1 root root     51 Nov 29 11:38 BUGS</span><br><span class="line">-rw-r--r--.  1 root root   2499 Nov 29 11:38 CONTRIBUTING</span><br><span class="line">-rw-r--r--.  1 root root   1487 Nov 29 11:38 COPYING</span><br><span class="line">drwxr-xr-x.  6 root root    192 Nov 29 11:38 deps</span><br><span class="line">-rw-r--r--.  1 root root     11 Nov 29 11:38 INSTALL</span><br><span class="line">-rw-r--r--.  1 root root    151 Nov 29 11:38 Makefile</span><br><span class="line">-rw-r--r--.  1 root root   6888 Nov 29 11:38 MANIFESTO</span><br><span class="line">-rw-r--r--.  1 root root  21099 Nov 29 11:38 README.md</span><br><span class="line">-rw-r--r--.  1 root root  84841 Nov 29 11:38 redis.conf</span><br><span class="line">-rwxr-xr-x.  1 root root    275 Nov 29 11:38 runtest</span><br><span class="line">-rwxr-xr-x.  1 root root    280 Nov 29 11:38 runtest-cluster</span><br><span class="line">-rwxr-xr-x.  1 root root    795 Nov 29 11:38 runtest-moduleapi</span><br><span class="line">-rwxr-xr-x.  1 root root    281 Nov 29 11:38 runtest-sentinel</span><br><span class="line">-rw-r--r--.  1 root root  10744 Nov 29 11:38 sentinel.conf</span><br><span class="line">drwxr-xr-x.  3 root root   8192 Nov 29 11:45 src</span><br><span class="line">drwxr-xr-x. 11 root root    182 Nov 29 11:38 tests</span><br><span class="line">-rw-r--r--.  1 root root   3055 Nov 29 11:38 TLS.md</span><br><span class="line">drwxr-xr-x.  9 root root   4096 Nov 29 11:38 utils</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost redis-6.0.9]# make</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-在上面的Redis目录安装把它安装到-usr-local-redis-6-0-9里面"><a href="#3-5-在上面的Redis目录安装把它安装到-usr-local-redis-6-0-9里面" class="headerlink" title="3.5 在上面的Redis目录安装把它安装到/usr/local/redis-6.0.9里面"></a>3.5 在上面的Redis目录安装把它安装到/usr/local/redis-6.0.9里面</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost redis-6.0.9]# mkdir /usr/local/redis-6.0.9</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost redis-6.0.9]# pwd</span><br><span class="line">/usr/local/src/redis-6.0.9</span><br><span class="line">[root@localhost redis-6.0.9]# ls -l</span><br><span class="line">total 292</span><br><span class="line">-rw-r--r--.  1 root root 108806 Nov 29 11:38 00-RELEASENOTES</span><br><span class="line">-rw-r--r--.  1 root root     51 Nov 29 11:38 BUGS</span><br><span class="line">-rw-r--r--.  1 root root   2499 Nov 29 11:38 CONTRIBUTING</span><br><span class="line">-rw-r--r--.  1 root root   1487 Nov 29 11:38 COPYING</span><br><span class="line">drwxr-xr-x.  6 root root    192 Nov 29 11:38 deps</span><br><span class="line">-rw-r--r--.  1 root root     11 Nov 29 11:38 INSTALL</span><br><span class="line">-rw-r--r--.  1 root root    151 Nov 29 11:38 Makefile</span><br><span class="line">-rw-r--r--.  1 root root   6888 Nov 29 11:38 MANIFESTO</span><br><span class="line">-rw-r--r--.  1 root root  21099 Nov 29 11:38 README.md</span><br><span class="line">-rw-r--r--.  1 root root  84841 Nov 29 11:38 redis.conf</span><br><span class="line">-rwxr-xr-x.  1 root root    275 Nov 29 11:38 runtest</span><br><span class="line">-rwxr-xr-x.  1 root root    280 Nov 29 11:38 runtest-cluster</span><br><span class="line">-rwxr-xr-x.  1 root root    795 Nov 29 11:38 runtest-moduleapi</span><br><span class="line">-rwxr-xr-x.  1 root root    281 Nov 29 11:38 runtest-sentinel</span><br><span class="line">-rw-r--r--.  1 root root  10744 Nov 29 11:38 sentinel.conf</span><br><span class="line">drwxr-xr-x.  3 root root   8192 Nov 29 11:45 src</span><br><span class="line">drwxr-xr-x. 11 root root    182 Nov 29 11:38 tests</span><br><span class="line">-rw-r--r--.  1 root root   3055 Nov 29 11:38 TLS.md</span><br><span class="line">drwxr-xr-x.  9 root root   4096 Nov 29 11:38 utils</span><br><span class="line">[root@localhost redis-6.0.9]# make install PREFIX=/usr/local/redis-6.0.9</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-6-验证安装是否成功"><a href="#3-6-验证安装是否成功" class="headerlink" title="3.6 验证安装是否成功"></a>3.6 验证安装是否成功</h3><p>看到如下启动文件就可以了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]# pwd</span><br><span class="line">/usr/local/redis-6.0.9/bin</span><br><span class="line">[root@localhost bin]# ls -l</span><br><span class="line">total 36272</span><br><span class="line">-rwxr-xr-x. 1 root root 4796896 Nov 29 11:49 redis-benchmark</span><br><span class="line">-rwxr-xr-x. 1 root root 9094264 Nov 29 11:49 redis-check-aof</span><br><span class="line">-rwxr-xr-x. 1 root root 9094264 Nov 29 11:49 redis-check-rdb</span><br><span class="line">-rwxr-xr-x. 1 root root 5049408 Nov 29 11:49 redis-cli</span><br><span class="line">lrwxrwxrwx. 1 root root      12 Nov 29 11:49 redis-sentinel -&gt; redis-server</span><br><span class="line">-rwxr-xr-x. 1 root root 9094264 Nov 29 11:49 redis-server</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-7-把配置文件复制到自定义目录"><a href="#3-7-把配置文件复制到自定义目录" class="headerlink" title="3.7 把配置文件复制到自定义目录"></a>3.7 把配置文件复制到自定义目录</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_redis_conf]# pwd</span><br><span class="line">/usr/local/redis-6.0.9/my_redis_conf</span><br><span class="line">[root@localhost my_redis_conf]# ls</span><br><span class="line">redis.conf</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-8-启动Redis"><a href="#3-8-启动Redis" class="headerlink" title="3.8 启动Redis"></a>3.8 启动Redis</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]# pwd</span><br><span class="line">/usr/local/redis-6.0.9/bin</span><br><span class="line">[root@localhost bin]# ls -l</span><br><span class="line">total 36272</span><br><span class="line">-rwxr-xr-x. 1 root root 4796896 Nov 29 11:49 redis-benchmark</span><br><span class="line">-rwxr-xr-x. 1 root root 9094264 Nov 29 11:49 redis-check-aof</span><br><span class="line">-rwxr-xr-x. 1 root root 9094264 Nov 29 11:49 redis-check-rdb</span><br><span class="line">-rwxr-xr-x. 1 root root 5049408 Nov 29 11:49 redis-cli</span><br><span class="line">lrwxrwxrwx. 1 root root      12 Nov 29 11:49 redis-sentinel -&gt; redis-server</span><br><span class="line">-rwxr-xr-x. 1 root root 9094264 Nov 29 11:49 redis-server</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]# ./redis-server /usr/local/redis-6.0.9/my_redis_conf/redis.conf</span><br><span class="line">29150:C 29 Nov 2020 11:51:59.193 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo</span><br><span class="line">29150:C 29 Nov 2020 11:51:59.193 # Redis version=6.0.9, bits=64, commit=00000000, modified=0, pid=29150, just started</span><br><span class="line">29150:C 29 Nov 2020 11:51:59.193 # Configuration loaded</span><br><span class="line">29150:M 29 Nov 2020 11:51:59.195 * Increased maximum number of open files to 10032 (it was originally set to 1024).</span><br><span class="line">                _._</span><br><span class="line">           _.-``__ &#x27;&#x27;-._</span><br><span class="line">      _.-``    `.  `_.  &#x27;&#x27;-._           Redis 6.0.9 (00000000/0) 64 bit</span><br><span class="line">  .-`` .-```.  ```\/    _.,_ &#x27;&#x27;-._</span><br><span class="line"> (    &#x27;      ,       .-`  | `,    )     Running in standalone mode</span><br><span class="line"> |`-._`-...-` __...-.``-._|&#x27;` _.-&#x27;|     Port: 6379</span><br><span class="line"> |    `-._   `._    /     _.-&#x27;    |     PID: 29150</span><br><span class="line">  `-._    `-._  `-./  _.-&#x27;    _.-&#x27;</span><br><span class="line"> |`-._`-._    `-.__.-&#x27;    _.-&#x27;_.-&#x27;|</span><br><span class="line"> |    `-._`-._        _.-&#x27;_.-&#x27;    |           http://redis.io</span><br><span class="line">  `-._    `-._`-.__.-&#x27;_.-&#x27;    _.-&#x27;</span><br><span class="line"> |`-._`-._    `-.__.-&#x27;    _.-&#x27;_.-&#x27;|</span><br><span class="line"> |    `-._`-._        _.-&#x27;_.-&#x27;    |</span><br><span class="line">  `-._    `-._`-.__.-&#x27;_.-&#x27;    _.-&#x27;</span><br><span class="line">      `-._    `-.__.-&#x27;    _.-&#x27;</span><br><span class="line">          `-._        _.-&#x27;</span><br><span class="line">              `-.__.-&#x27;</span><br><span class="line"></span><br><span class="line">29150:M 29 Nov 2020 11:51:59.198 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.</span><br><span class="line">29150:M 29 Nov 2020 11:51:59.198 # Server initialized</span><br><span class="line">29150:M 29 Nov 2020 11:51:59.198 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add &#x27;vm.overcommit_memory = 1&#x27; to /etc/sysctl.conf and then reboot or run the command &#x27;sysctl vm.overcommit_memory=1&#x27; for this to take effect.</span><br><span class="line">29150:M 29 Nov 2020 11:51:59.198 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command &#x27;echo madvise &gt; /sys/kernel/mm/transparent_hugepage/enabled&#x27; as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled (set to &#x27;madvise&#x27; or &#x27;never&#x27;).</span><br><span class="line">29150:M 29 Nov 2020 11:51:59.198 * Ready to accept connections</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-基本设置和使用"><a href="#4-基本设置和使用" class="headerlink" title="4. 基本设置和使用"></a>4. 基本设置和使用</h2><h3 id="4-1-默认情况，Redis不是在后台运行，可以把redis放在后台运行"><a href="#4-1-默认情况，Redis不是在后台运行，可以把redis放在后台运行" class="headerlink" title="4.1 默认情况，Redis不是在后台运行，可以把redis放在后台运行"></a>4.1 默认情况，Redis不是在后台运行，可以把redis放在后台运行</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /usr/local/redis-6.0.9/my_redis_conf/redis.conf</span><br></pre></td></tr></table></figure>
+
+<p>将<code>daemonize no</code>改为<code>daemonize yes</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">################################# GENERAL #####################################</span><br><span class="line"></span><br><span class="line"># By default Redis does not run as a daemon. Use &#x27;yes&#x27; if you need it.</span><br><span class="line"># Note that Redis will write a pid file in /var/run/redis.pid when daemonized.</span><br><span class="line"># daemonize no</span><br><span class="line">daemonize yes</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>再次启动查看进程
+ </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]# ./redis-server /usr/local/redis-6.0.9/my_redis_conf/redis.conf</span><br><span class="line">[root@localhost bin]# ps -ef | grep redis</span><br><span class="line">root      29606      1  0 13:05 ?        00:00:00 ./redis-server 127.0.0.1:6379</span><br><span class="line">root      29612  29253  0 13:05 pts/3    00:00:00 grep --color=auto redis</span><br></pre></td></tr></table></figure>
+
+<p>可以看到在6379端口号已启动了redis</p>
+<h3 id="4-2-客户端链接和退出"><a href="#4-2-客户端链接和退出" class="headerlink" title="4.2 客户端链接和退出"></a>4.2 客户端链接和退出</h3><p>连接: <code>./redis-cli</code>，默认是-h 127.0.0.1 -p 6379  </p>
+<p>退出: <code>quit</code><br>​<br>测试: <code>ping</code>，返回<code>PONG</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]# ps -ef | grep redis</span><br><span class="line">root      29606      1  0 13:05 ?        00:00:00 ./redis-server 127.0.0.1:6379</span><br><span class="line">root      29612  29253  0 13:05 pts/3    00:00:00 grep --color=auto redis</span><br><span class="line">[root@localhost bin]# pwd</span><br><span class="line">/usr/local/redis-6.0.9/bin</span><br><span class="line">[root@localhost bin]# ./redis-cli</span><br><span class="line">127.0.0.1:6379&gt; ping</span><br><span class="line">PONG</span><br><span class="line">127.0.0.1:6379&gt; quit</span><br><span class="line">[root@localhost bin]# ps -ef | grep redis</span><br><span class="line">root      29606      1  0 13:05 ?        00:00:00 ./redis-server 127.0.0.1:6379</span><br><span class="line">root      29616  29253  0 13:07 pts/3    00:00:00 grep --color=auto redis</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-停止redis"><a href="#4-3-停止redis" class="headerlink" title="4.3 停止redis"></a>4.3 停止redis</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]# ps -ef | grep redis</span><br><span class="line">root      29643      1  0 13:14 ?        00:00:00 ./redis-server 127.0.0.1:6379</span><br><span class="line">root      29652      1  0 13:14 ?        00:00:00 ./redis-server 127.0.0.1:6380</span><br><span class="line">root      29661      1  0 13:15 ?        00:00:00 ./redis-server 127.0.0.1:6381</span><br><span class="line">root      29672      1  5 13:15 ?        00:00:00 ./redis-server 127.0.0.1:6382</span><br><span class="line">root      29678  29253  0 13:15 pts/3    00:00:00 grep --color=auto redis</span><br><span class="line"></span><br><span class="line">[root@localhost bin]# ./redis-cli shutdown</span><br><span class="line"></span><br><span class="line">[root@localhost bin]# ps -ef | grep redis</span><br><span class="line">root      29652      1  0 13:14 ?        00:00:00 ./redis-server 127.0.0.1:6380</span><br><span class="line">root      29661      1  0 13:15 ?        00:00:00 ./redis-server 127.0.0.1:6381</span><br><span class="line">root      29672      1  0 13:15 ?        00:00:00 ./redis-server 127.0.0.1:6382</span><br><span class="line">root      29681  29253  0 13:16 pts/3    00:00:00 grep --color=auto redis</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]# ps -ef | grep redis</span><br><span class="line">root      29652      1  0 13:14 ?        00:00:00 ./redis-server 127.0.0.1:6380</span><br><span class="line">root      29661      1  0 13:15 ?        00:00:00 ./redis-server 127.0.0.1:6381</span><br><span class="line">root      29672      1  0 13:15 ?        00:00:00 ./redis-server 127.0.0.1:6382</span><br><span class="line">root      29681  29253  0 13:16 pts/3    00:00:00 grep --color=auto redis</span><br><span class="line"></span><br><span class="line">[root@localhost bin]# kill 29652</span><br><span class="line"></span><br><span class="line">[root@localhost bin]# ps -ef | grep redis</span><br><span class="line">root      29661      1  0 13:15 ?        00:00:00 ./redis-server 127.0.0.1:6381</span><br><span class="line">root      29672      1  0 13:15 ?        00:00:00 ./redis-server 127.0.0.1:6382</span><br><span class="line">root      29684  29253  0 13:18 pts/3    00:00:00 grep --color=auto redis</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-bin目录的文件说明"><a href="#5-bin目录的文件说明" class="headerlink" title="5. bin目录的文件说明"></a>5. bin目录的文件说明</h2><p> </p>
+<ul>
+<li>redis-benchmark：redis性能测试工具</li>
+<li>redis-check-aof：检查aof日志的工具</li>
+<li>redis-check-rdb：检查rdb日志的工具</li>
+<li>redis-cli：连接用的客户端</li>
+<li>redis-server：redis服务进程</li>
+</ul>
+<h2 id="6-redis配置"><a href="#6-redis配置" class="headerlink" title="6. redis配置"></a>6. redis配置</h2><p><code>redis.conf</code>配置文件
+ </p>
+<ul>
+<li>daemonize：如需要在后台运行，把该项的值改为yes</li>
+<li>pdifile：把pid文件放在/var/run/redis.pid，可以配置到其他地址</li>
+<li>bind：指定redis只接收来自该IP的请求，如果不设置，那么将处理所有请求，在生产环节中最好设置该项</li>
+<li>port：监听端口，默认为6379</li>
+<li>timeout：设置客户端连接时的超时时间，单位为秒</li>
+<li>loglevel：等级分为4级，debug，revbose，notice和warning。生产环境下一般开启notice</li>
+<li>logfile：配置log文件地址，默认使用标准输出，即打印在命令行终端的端口上</li>
+<li>database：设置数据库的个数，默认使用的数据库是0</li>
+<li>save：设置redis进行数据库镜像的频率</li>
+<li>rdbcompression：在进行镜像备份时，是否进行压缩</li>
+<li>dbfilename：镜像备份文件的文件名</li>
+<li>dir：数据库镜像备份的文件放置的路径</li>
+<li>slaveof：设置该数据库为其他数据库的从数据库</li>
+<li>masterauth：当主数据库连接需要密码验证时，在这里设定</li>
+<li>requirepass：设置客户端连接后进行任何其他指定前需要使用的密码</li>
+<li>maxclients：限制同时连接的客户端数量</li>
+<li>maxmemory：设置redis能够使用的最大内存</li>
+<li>appendonly：开启appendonly模式后，redis会把每一次所接收到的写操作都追加到appendonly.aof文件中，当redis重新启动时，会从该文件恢复出之前的状态</li>
+<li>appendfsync：设置appendonly.aof文件进行同步的频率</li>
+<li>vm_enabled：是否开启虚拟内存支持</li>
+<li>vm_swap_file：设置虚拟内存的交换文件的路径</li>
+<li>vm_max_momery：设置开启虚拟内存后，redis将使用的最大物理内存的大小，默认为0</li>
+<li>vm_page_size：设置虚拟内存页的大小</li>
+<li>vm_pages：设置交换文件的总的page数量</li>
+<li>vm_max_thrrads：设置vm IO同时使用的线程数量</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Database/" rel="tag"># Database</a>
+              <a href="/tags/Redis/" rel="tag"># Redis</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/17/Redis/007_redis/" rel="prev" title="7.Redis简介">
+                  <i class="fa fa-chevron-left"></i> 7.Redis简介
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/01/17/Redis/006_redis/" rel="next" title="6.常见的NoSQL及区别">
+                  6.常见的NoSQL及区别 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeweimian21</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

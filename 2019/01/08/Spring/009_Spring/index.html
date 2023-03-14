@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yeweimian21.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="&amp;nbsp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="9.Spring知识整理">
+<meta property="og:url" content="https://yeweimian21.github.io/2019/01/08/Spring/009_Spring/index.html">
+<meta property="og:site_name" content="A peaceful place">
+<meta property="og:description" content="&amp;nbsp;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/08/Spring/009_Spring/spring_modules.png">
+<meta property="article:published_time" content="2019-01-08T09:39:40.000Z">
+<meta property="article:modified_time" content="2023-02-16T06:32:40.404Z">
+<meta property="article:author" content="yeweimian21">
+<meta property="article:tag" content="Spring">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yeweimian21.github.io/2019/01/08/Spring/009_Spring/spring_modules.png">
+
+
+<link rel="canonical" href="https://yeweimian21.github.io/2019/01/08/Spring/009_Spring/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2019/01/08/Spring/009_Spring/","path":"2019/01/08/Spring/009_Spring/","title":"9.Spring知识整理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>9.Spring知识整理 | A peaceful place</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A peaceful place</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">inner peace</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AFSpring%E6%A1%86%E6%9E%B6%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">1. 什么是Spring框架？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BeanFactory%E5%92%8CApplicationContext%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.1.</span> <span class="nav-text">BeanFactory和ApplicationContext之间的区别?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring%E6%9C%89%E5%93%AA%E4%BA%9B%E4%BC%98%E7%82%B9%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">Spring有哪些优点？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%88%97%E4%B8%BE%E4%B8%80%E4%BA%9B%E9%87%8D%E8%A6%81%E7%9A%84Spring%E6%A8%A1%E5%9D%97%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">2. 列举一些重要的Spring模块？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AF%B9%E4%BA%8ESpring-IOC%E5%92%8CAOP%E7%9A%84%E7%90%86%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">3. 对于Spring IOC和AOP的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Spring-AOP%E5%92%8CAspectJ-AOP%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">4. Spring AOP和AspectJ AOP有什么区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-AOP%E7%9A%84%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="nav-number">5.</span> <span class="nav-text">Spring AOP的核心概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Advice%E5%87%A0%E7%A7%8D%E7%B1%BB%E5%9E%8B"><span class="nav-number">6.</span> <span class="nav-text">Spring Advice几种类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring%E4%BA%8B%E5%8A%A1%E7%9A%84%E4%BC%A0%E6%92%AD%E8%A1%8C%E4%B8%BA"><span class="nav-number">7.</span> <span class="nav-text">Spring事务的传播行为</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Spring%E4%B8%AD%E7%9A%84bean%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-number">8.</span> <span class="nav-text">5. Spring中的bean的作用域有哪些？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Spring%E4%B8%AD%E7%9A%84%E5%8D%95%E4%BE%8Bbean%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%E4%BA%86%E8%A7%A3%E5%90%97%EF%BC%9F"><span class="nav-number">9.</span> <span class="nav-text">6. Spring中的单例bean的线程安全问题了解吗？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Spring%E4%B8%AD%E7%9A%84bean%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%9F"><span class="nav-number">10.</span> <span class="nav-text">7. Spring中的bean生命周期？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E5%AF%B9%E4%BA%8ESpring-MVC%E7%9A%84%E4%BA%86%E8%A7%A3%EF%BC%9F"><span class="nav-number">11.</span> <span class="nav-text">8. 对于Spring MVC的了解？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-Spring-MVC%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">12.</span> <span class="nav-text">9. Spring MVC的工作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-Spring%E6%A1%86%E6%9E%B6%E4%B8%AD%E7%94%A8%E5%88%B0%E4%BA%86%E5%93%AA%E4%BA%9B%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">13.</span> <span class="nav-text">10. Spring框架中用到了哪些设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-Component%E5%92%8C-Bean%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">14.</span> <span class="nav-text">11. @Component和@Bean的区别是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-%E5%B0%86%E4%B8%80%E4%B8%AA%E7%B1%BB%E5%A3%B0%E6%98%8E%E4%B8%BASpring%E7%9A%84bean%E7%9A%84%E6%B3%A8%E8%A7%A3%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-number">15.</span> <span class="nav-text">12. 将一个类声明为Spring的bean的注解有哪些？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-Spring%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86%E7%9A%84%E6%96%B9%E5%BC%8F%E6%9C%89%E5%87%A0%E7%A7%8D%EF%BC%9F"><span class="nav-number">16.</span> <span class="nav-text">13. Spring事务管理的方式有几种？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-Spring%E4%BA%8B%E5%8A%A1%E4%B8%AD%E7%9A%84%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D%EF%BC%9F"><span class="nav-number">17.</span> <span class="nav-text">14. Spring事务中的隔离级别有哪几种？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-Spring%E4%BA%8B%E5%8A%A1%E4%B8%AD%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD%E8%A1%8C%E4%B8%BA%EF%BC%9F"><span class="nav-number">18.</span> <span class="nav-text">15. Spring事务中有哪几种事务传播行为？</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeweimian21</p>
+  <div class="site-description" itemprop="description">A novice</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">213</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://yeweimian21.github.io/2019/01/08/Spring/009_Spring/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeweimian21">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A peaceful place">
+      <meta itemprop="description" content="A novice">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="9.Spring知识整理 | A peaceful place">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          9.Spring知识整理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-08 17:39:40" itemprop="dateCreated datePublished" datetime="2019-01-08T17:39:40+08:00">2019-01-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-02-16 14:32:40" itemprop="dateModified" datetime="2023-02-16T14:32:40+08:00">2023-02-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Spring/" itemprop="url" rel="index"><span itemprop="name">Spring</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>&nbsp;</p>
+<span id="more"></span>
+
+<h2 id="1-什么是Spring框架？"><a href="#1-什么是Spring框架？" class="headerlink" title="1. 什么是Spring框架？"></a>1. 什么是Spring框架？</h2><p>Spring是一种轻量级框架，旨在提高开发人员的开发效率以及系统的可维护性。</p>
+<p>我们一般说的Spring框架就是Spring Framework，它是很多模块的集合，使用这些模块可以很方便地协助我们进行开发。这些模块是核心容器、数据访问/集成、Web、AOP（面向切面编程）、工具、消息和测试模块。比如Core Container中的Core组件是Spring所有组件的核心，Beans组件和Context组件是实现IOC和DI的基础，AOP组件用来实现面向切面编程。</p>
+<p>Spring官网（<a target="_blank" rel="noopener" href="https://spring.io/%EF%BC%89%E5%88%97%E5%87%BA%E7%9A%84Spring%E7%9A%846%E4%B8%AA%E7%89%B9%E5%BE%81%EF%BC%9A">https://spring.io/）列出的Spring的6个特征：</a></p>
+<p>核心技术：依赖注入（DI），AOP，事件（Events），资源，i18n，验证，数据绑定，类型转换，SpEL。</p>
+<p>测试：模拟对象，TestContext框架，Spring MVC测试，WebTestClient。</p>
+<p>数据访问：事务，DAO支持，JDBC，ORM，编组XML。</p>
+<p>Web支持：Spring MVC和Spring WebFlux Web框架。</p>
+<p>集成：远程处理，JMS，JCA，JMX，电子邮件，任务，调度，缓存。</p>
+<p>语言：Kotlin，Groovy，动态语言。</p>
+<p>Spring是一个轻量级的IoC和AOP容器框架。是为Java应用程序提供基础性服务的一套框架，目的是用于简化企业应用程序的开发，它使得开发者只需要关心业务需求。常见的配置方式有三种：基于XML的配置、基于注解的配置、基于Java的配置。</p>
+<p>Spring是一个开源的Java EE开发框架。Spring框架的核心功能可以应用在任何Java应用程序中，但对Java EE平台上的Web应用程序有更好的扩展性。Spring框架的目标是使得Java EE应用程序的开发更加简捷，通过使用POJO为基础的编程模型促进良好的编程风格。</p>
+<h3 id="BeanFactory和ApplicationContext之间的区别"><a href="#BeanFactory和ApplicationContext之间的区别" class="headerlink" title="BeanFactory和ApplicationContext之间的区别?"></a>BeanFactory和ApplicationContext之间的区别?</h3><p>一个BeanFactory就像包含bean集合的工厂类。BeanFactory在内部持有多个Bean的定义，当客户端请求bean时,将bean进行实例化。 </p>
+<p>初始化时BeanFactory能够保持对象的依赖关系。这减轻了负担从bean本身和bean客户机的配置。 BeanFactory在一个bean的生命周期也能其作用,它可以调用bean的自定义初始化和销毁方法。</p>
+<p>表面上看,applicationContext和BeanFactory是一样。同样加载bean定义，将bean连接在一起,分发bean。但applicationContext还提供:</p>
+<ul>
+<li>一种解析消息的手段,包括对国际化的支持。</li>
+<li>一个更通用的加载文件资源的方法。</li>
+<li>bean事件注册为监听器。</li>
+</ul>
+<p>三个常用的ApplicationContext实现是:</p>
+<p>(1) ClassPathXmlApplicationContext:</p>
+<p>它从classpath路径下的一个XML文件加载context的,将Context作为classpath下的资源。</p>
+<p>加载应用程序classpath下的context使用的代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ApplicationContext</span> <span class="variable">context</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;bean.xml&quot;</span>)`;</span><br></pre></td></tr></table></figure>
+
+<p>(2) FileSystemXmlApplicationContext:</p>
+<p>它从文件系统的一个XML文件加载上下文定义的。从文件系统加载应用程序上下文通过如下代码实现。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ApplicationContext</span> <span class="variable">context</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileSystemXmlApplicationContext</span>(“bean.xml”);</span><br></pre></td></tr></table></figure>
+
+<p>(3) XmlWebApplicationContext:</p>
+<p>它从一个web应用程序中包含的XML文件加载context。</p>
+<h3 id="Spring有哪些优点？"><a href="#Spring有哪些优点？" class="headerlink" title="Spring有哪些优点？"></a>Spring有哪些优点？</h3><p>轻量级：Spring在大小和透明性方面绝对属于轻量级的，基础版本的Spring框架大约只有2MB。</p>
+<p>控制反转(IOC)：Spring使用控制反转技术实现了松耦合。依赖被注入到对象，而不是创建或寻找依赖对象。</p>
+<p>面向切面编程(AOP)： Spring支持面向切面编程，同时把应用的业务逻辑与系统的服务分离开来。</p>
+<p>容器：Spring包含并管理应用程序对象的配置及生命周期。</p>
+<p>MVC框架：Spring的web框架是一个设计优良的web MVC框架，很好的取代了一些web框架。</p>
+<p>事务管理：Spring对下至本地业务上至全局业务(JAT)提供了统一的事务管理接口。</p>
+<p>异常处理：Spring提供一个方便的API将特定技术的异常(由JDBC, Hibernate, 或JDO抛出)转化为一致的、Unchecked异常。</p>
+<p>（1）spring属于低侵入式设计，代码的污染极低；</p>
+<p>（2）spring的DI机制将对象之间的依赖关系交由框架处理，减低组件的耦合性；</p>
+<p>（3）Spring提供了AOP技术，支持将一些通用任务，如安全、事务、日志、权限等进行集中式管理，从而提供更好的复用。</p>
+<p>（4）spring对于主流的应用框架提供了集成支持。</p>
+<h2 id="2-列举一些重要的Spring模块？"><a href="#2-列举一些重要的Spring模块？" class="headerlink" title="2. 列举一些重要的Spring模块？"></a>2. 列举一些重要的Spring模块？</h2><p>下图对应的是Spring 4.x的版本，目前最新的5.x版本中Web模块的Portlet组件已经被废弃掉，同时增加了用于异步响应式处理的WebFlux组件。</p>
+<img src="/2019/01/08/Spring/009_Spring/spring_modules.png" class="">
+
+<p>Spring Core：基础，可以说Spring其他所有的功能都依赖于该类库。主要提供IOC和DI功能。</p>
+<p>Spring Aspects：该模块为与AspectJ的集成提供支持。</p>
+<p>Spring AOP：提供面向方面的编程实现。</p>
+<p>Spring JDBC：Java数据库连接。</p>
+<p>Spring JMS：Java消息服务。</p>
+<p>Spring ORM：用于支持Hibernate等ORM工具。</p>
+<p>Spring Web：为创建Web应用程序提供支持。</p>
+<p>Spring Test：提供了对JUnit和TestNG测试的支持。</p>
+<h2 id="3-对于Spring-IOC和AOP的理解"><a href="#3-对于Spring-IOC和AOP的理解" class="headerlink" title="3. 对于Spring IOC和AOP的理解"></a>3. 对于Spring IOC和AOP的理解</h2><p>IOC</p>
+<p>IOC（Inversion Of Controll，控制反转）是一种设计思想，就是将原本在程序中手动创建对象的控制权，交由给Spring框架来管理。IOC在其他语言中也有应用，并非Spring特有。IOC容器是Spring用来实现IOC的载体，IOC容器实际上就是一个Map(key, value)，Map中存放的是各种对象。</p>
+<p>将对象之间的相互依赖关系交给IOC容器来管理，并由IOC容器完成对象的注入。这样可以很大程度上简化应用的开发，把应用从复杂的依赖关系中解放出来。IOC容器就像是一个工厂一样，当我们需要创建一个对象的时候，只需要配置好配置文件/注解即可，完全不用考虑对象是如何被创建出来的。在实际项目中一个Service类可能由几百甚至上千个类作为它的底层，假如我们需要实例化这个Service，可能要每次都搞清楚这个Service所有底层类的构造函数，这可能会把人逼疯。如果利用IOC的话，你只需要配置好，然后在需要的地方引用就行了，大大增加了项目的可维护性且降低了开发难度。</p>
+<p>Spring时代我们一般通过XML文件来配置Bean，后来开发人员觉得用XML文件来配置不太好，于是Sprng Boot注解配置就慢慢开始流行起来。</p>
+<p>AOP</p>
+<p>AOP（Aspect-Oriented Programming，面向切面编程）能够将那些与业务无关，却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可扩展性和可维护性。</p>
+<p>Spring AOP是基于动态代理的，如果要代理的对象实现了某个接口，那么Spring AOP就会使用JDK动态代理去创建代理对象；而对于没有实现接口的对象，就无法使用JDK动态代理，转而使用CGlib动态代理生成一个被代理对象的子类来作为代理。</p>
+<p>当然也可以使用AspectJ，Spring AOP中已经集成了AspectJ，AspectJ应该算得上是Java生态系统中最完整的AOP框架了。使用AOP之后我们可以把一些通用功能抽象出来，在需要用到的地方直接使用即可，这样可以大大简化代码量。我们需要增加新功能也方便，提高了系统的扩展性。日志功能、事务管理和权限管理等场景都用到了AOP。</p>
+<h2 id="4-Spring-AOP和AspectJ-AOP有什么区别？"><a href="#4-Spring-AOP和AspectJ-AOP有什么区别？" class="headerlink" title="4. Spring AOP和AspectJ AOP有什么区别？"></a>4. Spring AOP和AspectJ AOP有什么区别？</h2><p>Spring AOP是属于运行时增强，而AspectJ是编译时增强。Spring AOP基于代理（Proxying），而AspectJ基于字节码操作（Bytecode Manipulation）。</p>
+<p>Spring AOP已经集成了AspectJ，AspectJ应该算得上是Java生态系统中最完整的AOP框架了。AspectJ相比于Spring AOP功能更加强大，但是Spring AOP相对来说更简单。</p>
+<p>如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择AspectJ，它比SpringAOP快很多。</p>
+<h2 id="Spring-AOP的核心概念"><a href="#Spring-AOP的核心概念" class="headerlink" title="Spring AOP的核心概念"></a>Spring AOP的核心概念</h2><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>通知(Advice)</td>
+<td>拦截到连接点之后要执行的代码，通知分为5种</td>
+</tr>
+<tr>
+<td>织入(weave)</td>
+<td>将切面应用到目标对象并导致代理对象创建的过程</td>
+</tr>
+<tr>
+<td>引入(introduction)</td>
+<td>在不修改代码的前提下，引入可以在运行期为类动态地添加一些方法或字段</td>
+</tr>
+</tbody></table>
+<h2 id="Spring-Advice几种类型"><a href="#Spring-Advice几种类型" class="headerlink" title="Spring Advice几种类型"></a>Spring Advice几种类型</h2><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>注解</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>前置通知</td>
+<td>@Before</td>
+<td>在目标方法执行前执行逻辑，通过它我们可以在指定的切入点方法执行前加入特定的逻辑。</td>
+</tr>
+<tr>
+<td></td>
+<td>@AfterReturning</td>
+<td>在连接点正常执行完成后执行，如果连接点抛出异常，则不会执行。是切入点方法正常执行完的拦截，即切入点方法执行时没有对外抛出异常，</td>
+</tr>
+<tr>
+<td>异常通知</td>
+<td>@AfterThrowing</td>
+<td>在连接点抛出异常后执行</td>
+</tr>
+<tr>
+<td></td>
+<td>@After</td>
+<td>在连接点执行完成后执行，无论是正常执行完成，还是抛出异常，都会执行返回通知中的内容</td>
+</tr>
+<tr>
+<td>环绕通知</td>
+<td>@Around</td>
+<td>方法调用的前后</td>
+</tr>
+</tbody></table>
+<h2 id="Spring事务的传播行为"><a href="#Spring事务的传播行为" class="headerlink" title="Spring事务的传播行为"></a>Spring事务的传播行为</h2><p>事务传播行为用来描述由某一个事务传播行为修饰的方法被嵌套进另一个方法的时事务如何传播。</p>
+<p>Spring中七种事务传播行为</p>
+<table>
+<thead>
+<tr>
+<th>事务传播行为类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PROPAGATION_REQUIRED</td>
+<td>如果当前没有事务，就新建一个事务，如果已经存在一个事务中，加入到这个事务中。这是最常见的选择。</td>
+</tr>
+<tr>
+<td>PROPAGATION_SUPPORTS</td>
+<td>支持当前事务，如果当前没有事务，就以非事务方式执行。</td>
+</tr>
+<tr>
+<td>PROPAGATION_MANDATORY</td>
+<td>使用当前的事务，如果当前没有事务，就抛出异常。</td>
+</tr>
+<tr>
+<td>PROPAGATION_REQUIRES_NEW</td>
+<td>新建事务，如果当前存在事务，把当前事务挂起。</td>
+</tr>
+<tr>
+<td>PROPAGATION_NOT_SUPPORTED</td>
+<td>以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。</td>
+</tr>
+<tr>
+<td>PROPAGATION_NEVER</td>
+<td>以非事务方式执行，如果当前存在事务，则抛出异常。</td>
+</tr>
+<tr>
+<td>PROPAGATION_NESTED</td>
+<td>如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则执行与PROPAGATION_REQUIRED类似的操作。</td>
+</tr>
+</tbody></table>
+<h2 id="5-Spring中的bean的作用域有哪些？"><a href="#5-Spring中的bean的作用域有哪些？" class="headerlink" title="5. Spring中的bean的作用域有哪些？"></a>5. Spring中的bean的作用域有哪些？</h2><p>1.singleton(默认)：在spring IoC容器仅存在一个Bean实例，Bean以单例方式存在。唯一bean实例，Spring中的bean默认都是单例的。</p>
+<p>2.prototype：每次请求都会创建一个新的bean实例。</p>
+<p>3.request：每一次HTTP请求都会产生一个新的bean，该作用域仅适用于web的Spring WebApplicationContext环境。</p>
+<p>4.session：同一个HTTP Session共享一个Bean，不同Session使用不同的Bean。该作用域仅适用于web的Spring WebApplicationContext环境。</p>
+<p>5.global-session：同一个全局 Session 共享一个 bean。作用域为ServletContext的生命周期。该作用域仅适用于web的Spring WebApplicationContext环境。全局session作用域，仅仅在基于Portlet的Web应用中才有意义，Spring5中已经没有了。Portlet是能够生成语义代码（例如HTML）片段的小型Java Web插件。它们基于Portlet容器，可以像Servlet一样处理HTTP请求。但是与Servlet不同，每个Portlet都有不同的会话。</p>
+<h2 id="6-Spring中的单例bean的线程安全问题了解吗？"><a href="#6-Spring中的单例bean的线程安全问题了解吗？" class="headerlink" title="6. Spring中的单例bean的线程安全问题了解吗？"></a>6. Spring中的单例bean的线程安全问题了解吗？</h2><p>大部分时候我们并没有在系统中使用多线程，所以很少有人会关注这个问题。单例bean存在线程问题，主要是因为当多个线程操作同一个对象的时候，对这个对象的非静态成员变量的写操作会存在线程安全问题。</p>
+<p>有两种常见的解决方案：</p>
+<p>1.在bean对象中尽量避免定义可变的成员变量（不太现实）。</p>
+<p>2.在类中定义一个ThreadLocal成员变量，将需要的可变成员变量保存在ThreadLocal中（推荐的一种方式）。</p>
+<h2 id="7-Spring中的bean生命周期？"><a href="#7-Spring中的bean生命周期？" class="headerlink" title="7. Spring中的bean生命周期？"></a>7. Spring中的bean生命周期？</h2><p>1.Bean容器找到配置文件中Spring Bean的定义。</p>
+<p>2.Bean容器利用Java Reflection API创建一个Bean的实例。</p>
+<p>3.如果涉及到一些属性值，利用set()方法设置一些属性值。</p>
+<p>4.如果Bean实现了BeanNameAware接口，调用setBeanName()方法，传入Bean的名字。</p>
+<p>5.如果Bean实现了BeanClassLoaderAware接口，调用setBeanClassLoader()方法，传入ClassLoader对象的实例。</p>
+<p>6.如果Bean实现了BeanFactoryAware接口，调用setBeanClassFacotory()方法，传入ClassLoader对象的实例。</p>
+<p>7.与上面的类似，如果实现了其他*Aware接口，就调用相应的方法。</p>
+<p>8.如果有和加载这个Bean的Spring容器相关的BeanPostProcessor对象，执行postProcessBeforeInitialization()方法。</p>
+<p>9.如果Bean实现了InitializingBean接口，执行afeterPropertiesSet()方法。</p>
+<p>10.如果Bean在配置文件中的定义包含init-method属性，执行指定的方法。</p>
+<p>11.如果有和加载这个Bean的Spring容器相关的BeanPostProcess对象，执行postProcessAfterInitialization()方法。</p>
+<p>12.当要销毁Bean的时候，如果Bean实现了DisposableBean接口，执行destroy()方法。</p>
+<p>13.当要销毁Bean的时候，如果Bean在配置文件中的定义包含destroy-method属性，执行指定的方法。</p>
+<h2 id="8-对于Spring-MVC的了解？"><a href="#8-对于Spring-MVC的了解？" class="headerlink" title="8. 对于Spring MVC的了解？"></a>8. 对于Spring MVC的了解？</h2><p>谈到这个问题，我们不得不提提之前Model1和Model2这两个没有Spring MVC的时代。</p>
+<p>Model1时代：很多学Java比较晚的后端程序员可能并没有接触过Model1模式下的JavaWeb应用开发。在Model1模式下，整个Web应用几乎全部用JSP页面组成，只用少量的JavaBean来处理数据库连接，访问等操作。这个模式下JSP即是控制层又是表现层。显而易见，这种模式存在很多问题。比如将控制逻辑和表现逻辑混杂在一起，导致代码重用率极低；又比如前端和后端相互依赖，难以进行测试并且开发效率极低。</p>
+<p>Model2时代：学过Servlet并做过相关Demo的朋友应该了解Java Bean（Model）+JSP（View）+Servlet（Controller）这种开发模式，这就是早期的Java Web MVC开发模式。Model是系统中涉及的数据，也就是dao和bean；View是用来展示模型中的数据，只是用来展示；Controller是将用户请求都发送给Servlet做处理，返回数据给JSP并展示给用户。</p>
+<p>Model2模式下还存在很多问题，Model2的抽象和封装程度还远远不够，使用Model2进行开发时不可避免地会重复造轮子，这就大大降低了程序的可维护性和可复用性。于是很多Java Web开发相关的MVC框架应运而生，比如Struts2，但是由于Struts2比较笨重，随着Spring轻量级开发框架的流行，Spring生态圈出现了Spring MVC框架。Spring MVC是当前最优秀的MVC框架，相比于Struts2，Spring MVC使用更加简单和方便，开发效率更高，并且Spring MVC运行速度更快。</p>
+<p>MVC是一种设计模式，Spring MVC是一款很优秀的MVC框架。Spring MVC可以帮助我们进行更简洁的Web层的开发，并且它天生与Spring框架集成。Spring MVC下我们一般把后端项目分为Service层（处理业务）、Dao层（数据库操作）、Entity层（实体类）、Controller层（控制层，返回数据给前台页面）。</p>
+<h2 id="9-Spring-MVC的工作原理"><a href="#9-Spring-MVC的工作原理" class="headerlink" title="9. Spring MVC的工作原理"></a>9. Spring MVC的工作原理</h2><p>流程说明：</p>
+<p>1.客户端（浏览器）发送请求，直接请求到DispatcherServlet。</p>
+<p>2.DispatcherServlet根据请求信息调用HandlerMapping，解析请求对应的Handler。</p>
+<p>3.解析到对应的Handler（也就是我们平常说的Controller控制器）。</p>
+<p>4.HandlerAdapter会根据Handler来调用真正的处理器来处理请求和执行相对应的业务逻辑。</p>
+<p>5.处理器处理完业务后，会返回一个ModelAndView对象，Model是返回的数据对象，View是逻辑上的View。</p>
+<p>6.ViewResolver会根据逻辑View去查找实际的View。</p>
+<p>7.DispatcherServlet把返回的Model传给View（视图渲染）。</p>
+<p>8.把View返回给请求者（浏览器）。</p>
+<h2 id="10-Spring框架中用到了哪些设计模式"><a href="#10-Spring框架中用到了哪些设计模式" class="headerlink" title="10. Spring框架中用到了哪些设计模式"></a>10. Spring框架中用到了哪些设计模式</h2><p>1.工厂设计模式：Spring使用工厂模式通过BeanFactory和ApplicationContext创建bean对象。</p>
+<p>2.代理设计模式：Spring AOP功能的实现。</p>
+<p>3.单例设计模式：Spring中的bean默认都是单例的。</p>
+<p>4.模板方法模式：Spring中的jdbcTemplate、hibernateTemplate等以Template结尾的对数据库操作的类，它们就使用到了模板模式。</p>
+<p>5.包装器设计模式：我们的项目需要连接多个数据库，而且不同的客户在每次访问中根据需要会去访问不同的数据库。这种模式让我们可以根据客户的需求能够动态切换不同的数据源。</p>
+<p>6.观察者模式：Spring事件驱动模型就是观察者模式很经典的一个应用。</p>
+<p>7.适配器模式：Spring AOP的增强或通知（Advice）使用到了适配器模式、Spring MVC中也是用到了适配器模式适配Controller。</p>
+<h2 id="11-Component和-Bean的区别是什么"><a href="#11-Component和-Bean的区别是什么" class="headerlink" title="11. @Component和@Bean的区别是什么"></a>11. @Component和@Bean的区别是什么</h2><p>1.作用对象不同。@Component注解作用于类，而@Bean注解作用于方法。</p>
+<p>2.@Component注解通常是通过类路径扫描来自动侦测以及自动装配到Spring容器中（我们可以使用@ComponentScan注解定义要扫描的路径）。@Bean注解通常是在标有该注解的方法中定义产生这个bean，告诉Spring这是某个类的实例，当我需要用它的时候还给我。</p>
+<p>3.@Bean注解比@Component注解的自定义性更强，而且很多地方只能通过@Bean注解来注册bean。比如当引用第三方库的类需要装配到Spring容器的时候，就只能通过@Bean注解来实现。</p>
+<p>@Bean注解的使用示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AppConfig</span> &#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> TransferService <span class="title function_">transferService</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">TransferServiceImpl</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码相当于下面的XML配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;transferService&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.yanggb.TransferServiceImpl&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>下面这个例子是无法通过@Component注解实现的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> OneService <span class="title function_">getService</span><span class="params">(status)</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> (status)  &#123;</span><br><span class="line">        when <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">serviceImpl1</span>();</span><br><span class="line">        when <span class="number">2</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">serviceImpl2</span>();</span><br><span class="line">        when <span class="number">3</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">serviceImpl3</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="12-将一个类声明为Spring的bean的注解有哪些？"><a href="#12-将一个类声明为Spring的bean的注解有哪些？" class="headerlink" title="12. 将一个类声明为Spring的bean的注解有哪些？"></a>12. 将一个类声明为Spring的bean的注解有哪些？</h2><p>我们一般使用@Autowired注解去自动装配bean。而想要把一个类标识为可以用@Autowired注解自动装配的bean，可以采用以下的注解实现：</p>
+<p>1.@Component注解。通用的注解，可标注任意类为Spring组件。如果一个Bean不知道属于哪一个层，可以使用@Component注解标注。</p>
+<p>2.@Repository注解。对应持久层，即Dao层，主要用于数据库相关操作。</p>
+<p>3.@Service注解。对应服务层，即Service层，主要涉及一些复杂的逻辑，需要用到Dao层（注入）。</p>
+<p>4.@Controller注解。对应Spring MVC的控制层，即Controller层，主要用于接受用户请求并调用Service层的方法返回数据给前端页面。</p>
+<h2 id="13-Spring事务管理的方式有几种？"><a href="#13-Spring事务管理的方式有几种？" class="headerlink" title="13. Spring事务管理的方式有几种？"></a>13. Spring事务管理的方式有几种？</h2><p>1.编程式事务：在代码中硬编码（不推荐使用）。</p>
+<p>2.声明式事务：在配置文件中配置（推荐使用），分为基于XML的声明式事务和基于注解的声明式事务。</p>
+<h2 id="14-Spring事务中的隔离级别有哪几种？"><a href="#14-Spring事务中的隔离级别有哪几种？" class="headerlink" title="14. Spring事务中的隔离级别有哪几种？"></a>14. Spring事务中的隔离级别有哪几种？</h2><p>在TransactionDefinition接口中定义了五个表示隔离级别的常量：</p>
+<p>ISOLATION_DEFAULT：使用后端数据库默认的隔离级别，Mysql默认采用的REPEATABLE_READ隔离级别；Oracle默认采用的READ_COMMITTED隔离级别。</p>
+<p>ISOLATION_READ_UNCOMMITTED：最低的隔离级别，允许读取尚未提交的数据变更，可能会导致脏读、幻读或不可重复读。</p>
+<p>ISOLATION_READ_COMMITTED：允许读取并发事务已经提交的数据，可以阻止脏读，但是幻读或不可重复读仍有可能发生</p>
+<p>ISOLATION_REPEATABLE_READ：对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，可以阻止脏读和不可重复读，但幻读仍有可能发生。</p>
+<p>ISOLATION_SERIALIZABLE：最高的隔离级别，完全服从ACID的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，该级别可以防止脏读、不可重复读以及幻读。但是这将严重影响程序的性能。通常情况下也不会用到该级别。</p>
+<h2 id="15-Spring事务中有哪几种事务传播行为？"><a href="#15-Spring事务中有哪几种事务传播行为？" class="headerlink" title="15. Spring事务中有哪几种事务传播行为？"></a>15. Spring事务中有哪几种事务传播行为？</h2><p>在TransactionDefinition接口中定义了八个表示事务传播行为的常量。</p>
+<p>支持当前事务的情况：</p>
+<p>PROPAGATION_REQUIRED：如果当前存在事务，则加入该事务；如果当前没有事务，则创建一个新的事务。</p>
+<p>PROPAGATION_SUPPORTS： 如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。</p>
+<p>PROPAGATION_MANDATORY： 如果当前存在事务，则加入该事务；如果当前没有事务，则抛出异常。（mandatory：强制性）。</p>
+<p>不支持当前事务的情况：</p>
+<p>PROPAGATION_REQUIRES_NEW： 创建一个新的事务，如果当前存在事务，则把当前事务挂起。</p>
+<p>PROPAGATION_NOT_SUPPORTED： 以非事务方式运行，如果当前存在事务，则把当前事务挂起。</p>
+<p>PROPAGATION_NEVER： 以非事务方式运行，如果当前存在事务，则抛出异常。</p>
+<p>其他情况：</p>
+<p>PROPAGATION_NESTED： 如果当前存在事务，则创建一个事务作为当前事务的嵌套事务来运行；如果当前没有事务，则该取值等价于PROPAGATION_REQUIRED。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Spring/" rel="tag"># Spring</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/08/SpringMVC/001_SpringMVC/" rel="prev" title="1.SpringMVC Summary">
+                  <i class="fa fa-chevron-left"></i> 1.SpringMVC Summary
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/01/08/Spring/010_Spring/" rel="next" title="10.Spring配置方式">
+                  10.Spring配置方式 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeweimian21</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yeweimian21.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="&amp;nbsp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="14.Redis的事务">
+<meta property="og:url" content="https://yeweimian21.github.io/2019/01/17/Redis/014_redis/index.html">
+<meta property="og:site_name" content="A peaceful place">
+<meta property="og:description" content="&amp;nbsp;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-01-17T09:06:16.000Z">
+<meta property="article:modified_time" content="2023-02-09T01:17:26.088Z">
+<meta property="article:author" content="yeweimian21">
+<meta property="article:tag" content="Database">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yeweimian21.github.io/2019/01/17/Redis/014_redis/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2019/01/17/Redis/014_redis/","path":"2019/01/17/Redis/014_redis/","title":"14.Redis的事务"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>14.Redis的事务 | A peaceful place</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A peaceful place</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">inner peace</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis%E7%9A%84%E4%BA%8B%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">Redis的事务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AFRedis%E4%BA%8B%E5%8A%A1"><span class="nav-number">1.1.</span> <span class="nav-text">1. 什么是Redis事务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%83%BD%E4%B8%BA%E6%88%91%E4%BB%AC%E5%81%9A%E4%BB%80%E4%B9%88"><span class="nav-number">1.2.</span> <span class="nav-text">2. 能为我们做什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%80%8E%E4%B9%88%E4%BD%BF%E7%94%A8%E5%91%A2%EF%BC%9F"><span class="nav-number">1.3.</span> <span class="nav-text">3. 怎么使用呢？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E6%83%85%E5%86%B51%EF%BC%9A%E6%AD%A3%E5%B8%B8%E6%89%A7%E8%A1%8C"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 情况1：正常执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3%EF%BC%8C%E6%83%85%E5%86%B52%EF%BC%9A%E6%94%BE%E5%BC%83%E4%BA%8B%E5%8A%A1"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3，情况2：放弃事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4%EF%BC%8C-%E6%83%85%E5%86%B53%EF%BC%9A%E5%85%A8%E4%BD%93%E8%BF%9E%E5%9D%90"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4， 情况3：全体连坐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5%EF%BC%8C%E6%83%85%E5%86%B54%EF%BC%9A%E5%86%A4%E5%A4%B4%E5%80%BA%E4%B8%BB"><span class="nav-number">1.3.5.</span> <span class="nav-text">3.5，情况4：冤头债主</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6%EF%BC%8C%E6%83%85%E5%86%B55%EF%BC%9Awatch%E7%9B%91%E6%8E%A7"><span class="nav-number">1.3.6.</span> <span class="nav-text">3.6，情况5：watch监控</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-1%EF%BC%8C%E6%82%B2%E8%A7%82%E9%94%81-%E4%B9%90%E8%A7%82%E9%94%81"><span class="nav-number">1.3.6.1.</span> <span class="nav-text">3.6.1，悲观锁&#x2F;乐观锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-2%EF%BC%8C%E5%88%9D%E5%A7%8B%E5%8C%96%E4%BF%A1%E7%94%A8%E5%8D%A1%E5%8F%AF%E7%94%A8%E4%BD%99%E9%A2%9D%E5%92%8C%E6%AC%A0%E9%A2%9D"><span class="nav-number">1.3.6.2.</span> <span class="nav-text">3.6.2，初始化信用卡可用余额和欠额</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-2%EF%BC%8C%E6%97%A0%E5%8A%A0%E5%A1%9E%E7%AF%A1%E6%94%B9"><span class="nav-number">1.3.6.3.</span> <span class="nav-text">3.6.2，无加塞篡改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-2%EF%BC%8C%E6%9C%89%E5%8A%A0%E5%A1%9E%E7%AF%A1%E6%94%B9"><span class="nav-number">1.3.6.4.</span> <span class="nav-text">3.6.2，有加塞篡改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-3%EF%BC%8Cunwatch"><span class="nav-number">1.3.6.5.</span> <span class="nav-text">3.6.3，unwatch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-4%EF%BC%8C%E5%B0%8F%E7%BB%93"><span class="nav-number">1.3.6.6.</span> <span class="nav-text">3.6.4，小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3%E9%98%B6%E6%AE%B5"><span class="nav-number">1.3.7.</span> <span class="nav-text">4. 3阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3%E7%89%B9%E6%80%A7"><span class="nav-number">1.3.8.</span> <span class="nav-text">5. 3特性</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeweimian21</p>
+  <div class="site-description" itemprop="description">A novice</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">213</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://yeweimian21.github.io/2019/01/17/Redis/014_redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeweimian21">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A peaceful place">
+      <meta itemprop="description" content="A novice">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="14.Redis的事务 | A peaceful place">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          14.Redis的事务
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-17 17:06:16" itemprop="dateCreated datePublished" datetime="2019-01-17T17:06:16+08:00">2019-01-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-02-09 09:17:26" itemprop="dateModified" datetime="2023-02-09T09:17:26+08:00">2023-02-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>&nbsp;</p>
+<span id="more"></span>
+
+<h1 id="Redis的事务"><a href="#Redis的事务" class="headerlink" title="Redis的事务"></a>Redis的事务</h1><h2 id="1-什么是Redis事务"><a href="#1-什么是Redis事务" class="headerlink" title="1. 什么是Redis事务"></a>1. 什么是Redis事务</h2><p>可以一次执行多个命令，本质是一组命令的集合。一个事务中的所有命令都会序列化，按顺序地串行化执行而不会被其它命令插入，不许加塞。</p>
+<p>官网解释：<code>https://redis.io/topics/transactions</code></p>
+<p>MULTI，EXEC，DISCARD和WATCH是Redis中事务的基础。它们允许一步执行一组命令，并具有两个重要保证：</p>
+<p>事务中的所有命令都被序列化并顺序执行。在Redis事务的执行过程中，永远不会发生另一个客户端发出的请求。这样可以确保将命令作为单个隔离操作执行。</p>
+<p>所有命令都将被处理，或者不处理任何命令，因此Redis事务也是原子的。在EXEC命令触发事务中的所有命令的执行，因此，如果客户失去了在事务的上下文中的服务器的连接调用之前EXEC操作的命令没有被执行，而不是如果EXEC命令被调用时，所有操作均已执行。使用 仅附加文件时Redis确保使用单个write（2）syscall将事务写入磁盘。但是，如果Redis服务器崩溃或被系统管理员以某种困难的方式杀死，则可能仅注册了部分操作。Redis将在重新启动时检测到这种情况，并且将退出并显示错误。使用该redis-check-aof工具可以修复仅附加文件，该文件将删除部分事务，以便服务器可以重新启动。</p>
+<p>从2.2版开始，Redis以乐观锁定的形式对上述两个方面提供额外保证，其方式与检查和设置（CAS）操作非常相似。这将在此页面的稍后部分进行记录。</p>
+<h2 id="2-能为我们做什么"><a href="#2-能为我们做什么" class="headerlink" title="2. 能为我们做什么"></a>2. 能为我们做什么</h2><p>一个队列中，一次性、顺序性、排它性的执行一系列命令。</p>
+<h2 id="3-怎么使用呢？"><a href="#3-怎么使用呢？" class="headerlink" title="3. 怎么使用呢？"></a>3. 怎么使用呢？</h2><h3 id="3-1-常用命令"><a href="#3-1-常用命令" class="headerlink" title="3.1 常用命令"></a>3.1 常用命令</h3><p>下表列出了redis事务的相关命令: </p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>DISCARD</td>
+<td>取消事务，放弃执行事务块内的所有命令。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>EXEC</td>
+<td>执行所有事务块内的命令。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>MULTI</td>
+<td>标记一个事务块的开始。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>UNWATCH</td>
+<td>取消 WATCH 命令对所有 key 的监视。</td>
+</tr>
+<tr>
+<td>5</td>
+<td>WATCH key [key …]</td>
+<td>监视一个(或多个) key ，如果在事务执行之前这个(或这些) key 被其他命令所改动，那么事务将被打断。</td>
+</tr>
+</tbody></table>
+<h3 id="3-2-情况1：正常执行"><a href="#3-2-情况1：正常执行" class="headerlink" title="3.2 情况1：正常执行"></a>3.2 情况1：正常执行</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; MULTI</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; set name xiaoming</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; set age 20</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; set address city</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; set email xiaoming@qq.com</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; EXEC</span><br><span class="line">1) OK</span><br><span class="line">2) OK</span><br><span class="line">3) OK</span><br><span class="line">4) OK</span><br><span class="line">127.0.0.1:6379&gt; keys *</span><br><span class="line">1) &quot;address&quot;</span><br><span class="line">2) &quot;name&quot;</span><br><span class="line">3) &quot;email&quot;</span><br><span class="line">4) &quot;age&quot;</span><br><span class="line">127.0.0.1:6379&gt; mget name age address email</span><br><span class="line">1) &quot;xiaoming&quot;</span><br><span class="line">2) &quot;20&quot;</span><br><span class="line">3) &quot;city&quot;</span><br><span class="line">4) &quot;xiaoming@qq.com&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3，情况2：放弃事务"><a href="#3-3，情况2：放弃事务" class="headerlink" title="3.3，情况2：放弃事务"></a>3.3，情况2：放弃事务</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; MULTI</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; INCR age</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; set address &quot;city location&quot;</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; DISCARD</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; mget name age address email</span><br><span class="line">1) &quot;xiaoming&quot;</span><br><span class="line">2) &quot;20&quot;</span><br><span class="line">3) &quot;city&quot;</span><br><span class="line">4) &quot;xiaoming@qq.com&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4，-情况3：全体连坐"><a href="#3-4，-情况3：全体连坐" class="headerlink" title="3.4， 情况3：全体连坐"></a>3.4， 情况3：全体连坐</h3><p>当发生语法错误时，全部回滚。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; MULTI</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; INCR age</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; set address &quot;city location&quot;</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; mget name age address email</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; get name</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; set score</span><br><span class="line">(error) ERR wrong number of arguments for &#x27;set&#x27; command</span><br><span class="line">127.0.0.1:6379&gt; set email xiaoming123@qq.com</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; EXEC</span><br><span class="line">(error) EXECABORT Transaction discarded because of previous errors.</span><br><span class="line">127.0.0.1:6379&gt;</span><br><span class="line">127.0.0.1:6379&gt; keys *</span><br><span class="line">1) &quot;address&quot;</span><br><span class="line">2) &quot;name&quot;</span><br><span class="line">3) &quot;email&quot;</span><br><span class="line">4) &quot;age&quot;</span><br><span class="line">127.0.0.1:6379&gt; mget name age address email</span><br><span class="line">1) &quot;xiaoming&quot;</span><br><span class="line">2) &quot;20&quot;</span><br><span class="line">3) &quot;city&quot;</span><br><span class="line">4) &quot;xiaoming@qq.com&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5，情况4：冤头债主"><a href="#3-5，情况4：冤头债主" class="headerlink" title="3.5，情况4：冤头债主"></a>3.5，情况4：冤头债主</h3><p>如果错误不是语法错误，则有错误的不执行，其他的正常执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; MULTI</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; INCR age</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; set address &quot;city location&quot;</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; mget name age address email</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; get name</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; INCR email</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; set score 100</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; EXEC</span><br><span class="line">1) (integer) 21</span><br><span class="line">2) OK</span><br><span class="line">3) 1) &quot;xiaoming&quot;</span><br><span class="line">   2) &quot;21&quot;</span><br><span class="line">   3) &quot;city location&quot;</span><br><span class="line">   4) &quot;xiaoming@qq.com&quot;</span><br><span class="line">4) &quot;xiaoming&quot;</span><br><span class="line">5) (error) ERR value is not an integer or out of range</span><br><span class="line">6) OK</span><br><span class="line">127.0.0.1:6379&gt;</span><br><span class="line">127.0.0.1:6379&gt; keys *</span><br><span class="line">1) &quot;name&quot;</span><br><span class="line">2) &quot;email&quot;</span><br><span class="line">3) &quot;score&quot;</span><br><span class="line">4) &quot;address&quot;</span><br><span class="line">5) &quot;age&quot;</span><br><span class="line">127.0.0.1:6379&gt; mget name age address email score</span><br><span class="line">1) &quot;xiaoming&quot;</span><br><span class="line">2) &quot;21&quot;</span><br><span class="line">3) &quot;city location&quot;</span><br><span class="line">4) &quot;xiaoming@qq.com&quot;</span><br><span class="line">5) &quot;100&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-6，情况5：watch监控"><a href="#3-6，情况5：watch监控" class="headerlink" title="3.6，情况5：watch监控"></a>3.6，情况5：watch监控</h3><h4 id="3-6-1，悲观锁-乐观锁"><a href="#3-6-1，悲观锁-乐观锁" class="headerlink" title="3.6.1，悲观锁/乐观锁"></a>3.6.1，悲观锁/乐观锁</h4><p>(1) 悲观锁(Pessimistic Lock), 顾名思义，就是很悲观，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会block直到它拿到锁。传统的关系型数据库里边就用到了很多这种锁机制，比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上锁，例如: <code>select * from sys_user for update</code></p>
+<p>(2) 乐观锁(Optimistic Lock), 顾名思义，就是很乐观，每次去拿数据的时候都认为别人不会修改，所以不会上锁，但是在更新的时候会判断一下在此期间别人有没有去更新这个数据，可以使用版本号等机制。乐观锁适用于多读的应用类型，这样可以提高吞吐量。</p>
+<p>乐观锁策略:提交版本必须大于记录当前版本才能执行更新</p>
+<h4 id="3-6-2，初始化信用卡可用余额和欠额"><a href="#3-6-2，初始化信用卡可用余额和欠额" class="headerlink" title="3.6.2，初始化信用卡可用余额和欠额"></a>3.6.2，初始化信用卡可用余额和欠额</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SET balance 100</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; SET debt 0</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; MULTI</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; DECRBY balance 20</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; INCRBY debt 20</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; EXEC</span><br><span class="line">1) (integer) 80</span><br><span class="line">2) (integer) 20</span><br><span class="line">127.0.0.1:6379&gt; mget balance debt</span><br><span class="line">1) &quot;80&quot;</span><br><span class="line">2) &quot;20&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-6-2，无加塞篡改"><a href="#3-6-2，无加塞篡改" class="headerlink" title="3.6.2，无加塞篡改"></a>3.6.2，无加塞篡改</h4><p>先监控再开启multi， 保证两笔金额变动在同一个事务内</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; watch balance</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; MULTI</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; DECRBY balance 10</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; INCRBY debt 10</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; EXEC</span><br><span class="line">1) (integer) 70</span><br><span class="line">2) (integer) 30</span><br><span class="line">127.0.0.1:6379&gt; mget balance debt</span><br><span class="line">1) &quot;70&quot;</span><br><span class="line">2) &quot;30&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-6-2，有加塞篡改"><a href="#3-6-2，有加塞篡改" class="headerlink" title="3.6.2，有加塞篡改"></a>3.6.2，有加塞篡改</h4><p>监控了key，如果key被修改了，后面一个事务的执行失效</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; mget balance debt</span><br><span class="line">1) &quot;70&quot;</span><br><span class="line">2) &quot;30&quot;</span><br><span class="line">127.0.0.1:6379&gt; watch debt</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; set debt 50</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; MULTI</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; DECRBY balance 30</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; INCRBY debt 30</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; EXEC</span><br><span class="line">(nil)</span><br><span class="line">127.0.0.1:6379&gt; mget balance debt</span><br><span class="line">1) &quot;70&quot;</span><br><span class="line">2) &quot;50&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-6-3，unwatch"><a href="#3-6-3，unwatch" class="headerlink" title="3.6.3，unwatch"></a>3.6.3，unwatch</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; WATCH balance</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; set balance 300</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; UNWATCH</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; MULTI</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; set balance 100</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; set debt 0</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379&gt; EXEC</span><br><span class="line">1) OK</span><br><span class="line">2) OK</span><br><span class="line">127.0.0.1:6379&gt; mget balance debt</span><br><span class="line">1) &quot;100&quot;</span><br><span class="line">2) &quot;0&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
+<p>一旦执行了exec之前加的监控锁都会被取消掉了</p>
+<h4 id="3-6-4，小结"><a href="#3-6-4，小结" class="headerlink" title="3.6.4，小结"></a>3.6.4，小结</h4><p>Watch指令，类似乐观锁，事务提交时，如果Key的值已被别的客户端改变，比如某个list已被别的客户端push/pop过了，整个事务队列都不会被执行。</p>
+<p>通过WATCH命令在事务执行之前监控了多个Keys，倘若在WATCH之后有任何Key的值发生了变化，EXEC命令执行的事务都将被放弃，同时返回Nullmulti-bulk应答以通知调用者事务执行失败。</p>
+<h3 id="4-3阶段"><a href="#4-3阶段" class="headerlink" title="4. 3阶段"></a>4. 3阶段</h3><ol>
+<li>开启：以<code>MULTI</code>开始一个事务</li>
+<li>入队：将多个命令入队到事务中，接到这些命令并不会立即执行，而是放到等待执行的事务队列里面</li>
+<li>执行：由<code>EXEC</code>命令触发事务</li>
+</ol>
+<h3 id="5-3特性"><a href="#5-3特性" class="headerlink" title="5. 3特性"></a>5. 3特性</h3><ol>
+<li>单独的隔离操作：事务中的所有命令都会序列化、按顺序地执行。事务在执行的过程中，不会被其他客户端发送来的命令请求所打断。</li>
+<li>没有隔离级别的概念：队列中的命令没有提交之前都不会实际的被执行，因为事务提交前任何指令都不会被实际执行，也就不存在“事务内的查要看到事务里的更新，在事务外查询不能看到”这个让人万分头痛的问题。</li>
+<li>不保证原子性：redis同一个事务中如果有一条命令执行失败，其后的命令仍然会被执行，没有回滚。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Database/" rel="tag"># Database</a>
+              <a href="/tags/Redis/" rel="tag"># Redis</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/17/Redis/016_redis/" rel="prev" title="16.高可用高并发集群配置">
+                  <i class="fa fa-chevron-left"></i> 16.高可用高并发集群配置
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/01/17/Redis/013_redis/" rel="next" title="13.Redis的持久化">
+                  13.Redis的持久化 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeweimian21</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

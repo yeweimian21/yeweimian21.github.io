@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yeweimian21.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="&amp;nbsp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7.Spring基本概念">
+<meta property="og:url" content="https://yeweimian21.github.io/2019/01/08/Spring/007_Spring/index.html">
+<meta property="og:site_name" content="A peaceful place">
+<meta property="og:description" content="&amp;nbsp;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-01-08T07:39:40.000Z">
+<meta property="article:modified_time" content="2023-02-16T05:53:49.486Z">
+<meta property="article:author" content="yeweimian21">
+<meta property="article:tag" content="Spring">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yeweimian21.github.io/2019/01/08/Spring/007_Spring/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2019/01/08/Spring/007_Spring/","path":"2019/01/08/Spring/007_Spring/","title":"7.Spring基本概念"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>7.Spring基本概念 | A peaceful place</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A peaceful place</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">inner peace</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Data-Access-Integration"><span class="nav-number">1.</span> <span class="nav-text">1. Data Access&#x2F;Integration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Web"><span class="nav-number">2.</span> <span class="nav-text">2. Web</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-AOP-Aspects"><span class="nav-number">3.</span> <span class="nav-text">3. AOP, Aspects</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Core-Container"><span class="nav-number">4.</span> <span class="nav-text">4. Core Container</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Test"><span class="nav-number">5.</span> <span class="nav-text">5. Test</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeweimian21</p>
+  <div class="site-description" itemprop="description">A novice</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">213</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://yeweimian21.github.io/2019/01/08/Spring/007_Spring/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeweimian21">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A peaceful place">
+      <meta itemprop="description" content="A novice">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="7.Spring基本概念 | A peaceful place">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          7.Spring基本概念
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-08 15:39:40" itemprop="dateCreated datePublished" datetime="2019-01-08T15:39:40+08:00">2019-01-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-02-16 13:53:49" itemprop="dateModified" datetime="2023-02-16T13:53:49+08:00">2023-02-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Spring/" itemprop="url" rel="index"><span itemprop="name">Spring</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>&nbsp;</p>
+<span id="more"></span>
+
+<p>Spring开源框架是一个轻量级的企业级开发的一站式解决方案，是为了解决企业应用程序开发复杂性而创建的。</p>
+<p>Spring框架是一个分层架构，由多个定义良好的模块组成。</p>
+<h3 id="1-Data-Access-Integration"><a href="#1-Data-Access-Integration" class="headerlink" title="1. Data Access/Integration"></a>1. Data Access/Integration</h3><ol>
+<li><p>JDBC(Java DataBase Connectivity): 提供了一个JDBC的样例模板，使用这些模板能消除传统冗长的JDBC编码和必须的事务控制，而且还能享受到Spring管理事务的好处。</p>
+</li>
+<li><p>ORM(Object Relational Mapping): 提供与流行的对象关系映射框架的无缝集成，包括Hibernate, JPA, iBatis等。而且可以使用Spring事务管理，无需额外控制事务。</p>
+</li>
+<li><p>OXM: 提供了一个Object/XML映射实现，将Java对象映射成XML数据，或者将XML数据映射成Java对象，Object/XML映射实现包括JAXB, Castor, XMLBeans和XStream等。</p>
+</li>
+<li><p>JMS(Java Message Service): 提供一套消息生产者、消息消费者模板，使之更加简单地使用JMS。JMS用于在两个应用程序之间，或分布式系统中发送消息，进行异步通讯。</p>
+</li>
+<li><p>Transactions: 该模块用于Spring管理事务，只要是Spring管理对象都能得到Spring管理事务的好处，无需在代码中进行事务控制，而且支持编程和声明性的事务管理。</p>
+</li>
+</ol>
+<h3 id="2-Web"><a href="#2-Web" class="headerlink" title="2. Web"></a>2. Web</h3><ol>
+<li><p>WebSocket: 提供WebSocket功能。</p>
+</li>
+<li><p>Servlet: 提供了一个Spring MVC Web框架实现。</p>
+</li>
+<li><p>Web: 提供了基础的Web功能。例如：多文件上传，集成IOC容器，远程过程访问(RMI, Hessian, Burlap)以及Web Service支持，并提供一个RestTemplate类来进行方便的Restful Services访问。</p>
+</li>
+<li><p>Portlet: 提供Portlet环境支持。</p>
+</li>
+</ol>
+<h3 id="3-AOP-Aspects"><a href="#3-AOP-Aspects" class="headerlink" title="3. AOP, Aspects"></a>3. AOP, Aspects</h3><ol>
+<li><p>AOP: 提供了符合AOP Alliance规范的面向切面编程(aspect-oriented programming)实现，提供比如日志功能、权限控制、性能统计等通用功能和业务逻辑分离的技术，并且能动态地把这些功能添加到需要的代码中。可以降低业务逻辑和通用功能的耦合。</p>
+</li>
+<li><p>Aspects: 提供了对AspectJ的集成，AspectJ提供了比Spring ASP更强大的功能。</p>
+</li>
+</ol>
+<h3 id="4-Core-Container"><a href="#4-Core-Container" class="headerlink" title="4. Core Container"></a>4. Core Container</h3><ol>
+<li><p>Spring-Beans: 提供了框架的基础部分，包括控制反转和依赖注入。其中Bean Factory是容器核心，其本质是“工厂设计模式”的实现，而且无需编程实现“单例设计模式”，单例完全由容器控制，而且提倡面向接口编程，而不是面向实现编程。所有应用程序对象及对象间关系由框架管理，从而真正从程序逻辑中，把维护对象之间的依赖关系提取出来，所有这些依赖关系都由Bean Factory来维护。</p>
+</li>
+<li><p>Spring-Core: 核心工具类，封装了框架依赖的最底层部分，包括资源访问，类型转换及一些常用的工具类。</p>
+</li>
+<li><p>Spring-Context: 以Core和Beans为基础，集成Beans模块功能并添加资源绑定，数据验证，国际化，Java EE支持，容器生命周期，事件传播等。核心接口是ApplicationContext。</p>
+</li>
+<li><p>Spring-SpEL: 提供强大的表达式语言支持，支持访问和修改属性值、方法调用；支持访问及修改数组、容器和索引器，命名变量，支持算数和逻辑运算，支持从Spring容器获取Bean，还支持列表投影、选择和一般的列表聚合等。</p>
+</li>
+</ol>
+<h3 id="5-Test"><a href="#5-Test" class="headerlink" title="5. Test"></a>5. Test</h3><p>Spring支持JUnit和TestNG测试框架，而且还额外提供了一些基于Spring的测试功能，比如在测试Web框架时，模拟Http请求的功能。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Spring/" rel="tag"># Spring</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/05/MyBatis/025_MyBatis/" rel="prev" title="25.MyBatis逆向工程">
+                  <i class="fa fa-chevron-left"></i> 25.MyBatis逆向工程
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/01/08/SpringMVC/001_SpringMVC/" rel="next" title="1.SpringMVC Summary">
+                  1.SpringMVC Summary <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeweimian21</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yeweimian21.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="&amp;nbsp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="6.反向代理+负载均衡">
+<meta property="og:url" content="https://yeweimian21.github.io/2019/01/17/Nginx/006_nginx/index.html">
+<meta property="og:site_name" content="A peaceful place">
+<meta property="og:description" content="&amp;nbsp;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-01-17T09:21:56.000Z">
+<meta property="article:modified_time" content="2023-02-08T10:07:20.613Z">
+<meta property="article:author" content="yeweimian21">
+<meta property="article:tag" content="Nginx">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yeweimian21.github.io/2019/01/17/Nginx/006_nginx/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2019/01/17/Nginx/006_nginx/","path":"2019/01/17/Nginx/006_nginx/","title":"6.反向代理+负载均衡"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>6.反向代理+负载均衡 | A peaceful place</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A peaceful place</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">inner peace</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">反向代理+负载均衡的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%AE%9E%E4%BE%8B"><span class="nav-number">1.1.</span> <span class="nav-text">1. 反向代理+负载均衡实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%99%BB%E5%BD%95session%E7%9A%84%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.</span> <span class="nav-text">2. 登录session的配置问题</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeweimian21</p>
+  <div class="site-description" itemprop="description">A novice</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">213</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://yeweimian21.github.io/2019/01/17/Nginx/006_nginx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeweimian21">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A peaceful place">
+      <meta itemprop="description" content="A novice">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="6.反向代理+负载均衡 | A peaceful place">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          6.反向代理+负载均衡
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-17 17:21:56" itemprop="dateCreated datePublished" datetime="2019-01-17T17:21:56+08:00">2019-01-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-02-08 18:07:20" itemprop="dateModified" datetime="2023-02-08T18:07:20+08:00">2023-02-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Nginx/" itemprop="url" rel="index"><span itemprop="name">Nginx</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>&nbsp;</p>
+<span id="more"></span>
+
+<h1 id="反向代理-负载均衡的配置"><a href="#反向代理-负载均衡的配置" class="headerlink" title="反向代理+负载均衡的配置"></a>反向代理+负载均衡的配置</h1><h2 id="1-反向代理-负载均衡实例"><a href="#1-反向代理-负载均衡实例" class="headerlink" title="1. 反向代理+负载均衡实例"></a>1. 反向代理+负载均衡实例</h2><p>1.分别启动三个jar包</p>
+<table>
+<thead>
+<tr>
+<th>ip</th>
+<th>port</th>
+<th>command</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>192.168.168.131</td>
+<td>8001</td>
+<td>java -jar nginx_test-1.0.jar &amp;</td>
+</tr>
+<tr>
+<td>192.168.168.132</td>
+<td>8002</td>
+<td>java -jar nginx_test-2.0.jar &amp;</td>
+</tr>
+<tr>
+<td>192.168.168.133</td>
+<td>8003</td>
+<td>java -jar nginx_test-3.0.jar &amp;</td>
+</tr>
+</tbody></table>
+<p>2.测试三个项目是否可以访问</p>
+<table>
+<thead>
+<tr>
+<th>url</th>
+<th>return</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>http://192.168.168.131:8001/getResponse/page</code></td>
+<td>{“id”:1,”name”:”server-1”,”ip”:”127.0.0.1”,”port”:8001}</td>
+</tr>
+<tr>
+<td><code>http://192.168.168.132:8002/getResponse/page</code></td>
+<td>{“id”:2,”name”:”server-2”,”ip”:”127.0.0.1”,”port”:8002}</td>
+</tr>
+<tr>
+<td><code>http://192.168.168.133:8003/getResponse/page</code></td>
+<td>{“id”:3,”name”:”server-3”,”ip”:”127.0.0.1”,”port”:8003}</td>
+</tr>
+</tbody></table>
+<p>3.配置nginx服务器</p>
+<p>在<code>nginx.conf</code>配置文件中添加如下内容: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">upstream 192.168.168.130 &#123;</span><br><span class="line">    server 192.168.168.131:8001 weight=1 max_fails=2 fail_timeout=10s;</span><br><span class="line">    server 192.168.168.132:8002 weight=2 max_fails=2 fail_timeout=10s;</span><br><span class="line">    server 192.168.168.133:8003 weight=3 max_fails=2 fail_timeout=10s;</span><br><span class="line">    # ip_hash;</span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name  192.168.168.130;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">            proxy_pass      http://192.168.168.130;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>4.启动nginx服务器</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost conf]# ../sbin/nginx</span><br><span class="line">[root@localhost conf]# ps -ef | grep nginx</span><br><span class="line">root       1891      1  0 21:45 ?        00:00:00 nginx: master process ../sbin/nginx</span><br><span class="line">nobody     1892   1891  0 21:45 ?        00:00:00 nginx: worker process</span><br><span class="line">root       1894   1744  0 21:45 pts/0    00:00:00 grep --color=auto nginx</span><br></pre></td></tr></table></figure>
+
+<p>在浏览器中输入: <code>http://192.168.168.130/getResponse/page</code></p>
+<p>根据概率<code>weight</code>返回以下结果: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;id&quot;:1,&quot;name&quot;:&quot;server-1&quot;,&quot;ip&quot;:&quot;127.0.0.1&quot;,&quot;port&quot;:8001&#125;</span><br><span class="line">&#123;&quot;id&quot;:2,&quot;name&quot;:&quot;server-2&quot;,&quot;ip&quot;:&quot;127.0.0.1&quot;,&quot;port&quot;:8002&#125;</span><br><span class="line">&#123;&quot;id&quot;:3,&quot;name&quot;:&quot;server-3&quot;,&quot;ip&quot;:&quot;127.0.0.1&quot;,&quot;port&quot;:8003&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>ip_hash</code>: 根据ip固定访问一个服务器，每次返回的结果不变</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">upstream 192.168.168.130 &#123;</span><br><span class="line">    server 192.168.168.131:8001;</span><br><span class="line">    server 192.168.168.132:8002;</span><br><span class="line">    server 192.168.168.133:8003;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>依次循环返回以下结果: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;id&quot;:1,&quot;name&quot;:&quot;server-1&quot;,&quot;ip&quot;:&quot;127.0.0.1&quot;,&quot;port&quot;:8001&#125;</span><br><span class="line">&#123;&quot;id&quot;:2,&quot;name&quot;:&quot;server-2&quot;,&quot;ip&quot;:&quot;127.0.0.1&quot;,&quot;port&quot;:8002&#125;</span><br><span class="line">&#123;&quot;id&quot;:3,&quot;name&quot;:&quot;server-3&quot;,&quot;ip&quot;:&quot;127.0.0.1&quot;,&quot;port&quot;:8003&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-登录session的配置问题"><a href="#2-登录session的配置问题" class="headerlink" title="2. 登录session的配置问题"></a>2. 登录session的配置问题</h2><p>(1) 不使用session，换用cookie</p>
+<p>session是存放在服务器端的，cookie是存放在客户端的，我们可以把用户访问页面产生的session放到cookie里面，就是以cookie为中转站。你访问web服务器A，产生了session然后把它放到cookie里面，当你的请求被分配到B服务器时，服务器B先判断服务器有没有这个session，如果没有，再去看看客户端的cookie里面有没有这个session，如果也没有，说明session真的不存，如果cookie里面有，就把cookie里面的sessoin同步到服务器B，这样就可以实现session的同步了。</p>
+<p>说明：这种方法实现起来简单，方便，也不会加大数据库的负担，但是如果客户端把cookie禁掉了的话，那么session就无从同步了，这样会给网站带来损失；cookie的安全性不高，虽然它已经加了密，但是还是可以伪造的。</p>
+<p>(2) session存在数据库（MySQL等）中</p>
+<p>可以配置将session保存在数据库中，这种方法是把存放session的表和其他数据库表放在一起，如果mysql也做了集群了话，每个mysql节点都要有这张表，并且这张session表的数据表要实时同步。</p>
+<p>说明：用数据库来同步session，会加大数据库的IO，增加数据库的负担。而且数据库读写速度较慢，不利于session的适时同步。</p>
+<p>(3) session存在memcache或者redis中</p>
+<p>memcache可以做分布式，php配置文件中设置存储方式为memcache，这样php自己会建立一个session集群，将session数据存储在memcache中。</p>
+<p>说明：以这种方式来同步session，不会加大数据库的负担，并且安全性比用cookie大大的提高，把session放到内存里面，比从文件中读取要快很多。但是memcache把内存分成很多种规格的存储块，有块就有大小，这种方式也就决定了，memcache不能完全利用内存，会产生内存碎片，如果存储块不足，还会产生内存溢出。</p>
+<p>(4) ip_hash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">upstream www.erp.com &#123;</span><br><span class="line">   server 192.168.15.131:8080;</span><br><span class="line">   server 192.168.15.131:8090;</span><br><span class="line">   server 192.168.15.131:8100;</span><br><span class="line">   # 一种IP的算法，只要用户使用同一个IP请求，nginx会分流到之前请求的服务器</span><br><span class="line">   ip_hash;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>nginx中的ip_hash技术能够将某个ip的请求定向到同一台后端应用服务器，这样一来这个ip下的某个客户端和某个后端就能建立起稳固的session，ip_hash是在upstream配置中定义的：</p>
+<p>说明：因为这种方式只能用IP来分配后端，所以要求nginx一定要是最前端的服务器，否则nginx会取不到真实的客户端ip，那ip_hash就失效了。例如在服务器架构中使用squid做前端高速缓存，那么nginx取到的就是squid服务器的ip，用这个ip来做ip_hash肯定是不对的。再有，如果nginx的后端还有其他的负载均衡，将请求又分流了，那么对于某个客户端的请求，肯定不能定位到同一台应用服务器（例如php的fast-cgi服务器等），这样也不能做到session共享，如果在nginx后面再做负载均衡，我们可以再搭一台squid，然后再直接到应用服务器，或者用location作一次分流，将需要session的部分请求通过ip_hash分流，剩下的走其它后端。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Nginx/" rel="tag"># Nginx</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/17/Nginx/002_nginx/" rel="prev" title="2.Nginx Summary">
+                  <i class="fa fa-chevron-left"></i> 2.Nginx Summary
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/01/17/Nginx/005_nginx/" rel="next" title="5.Nginx基础配置详解">
+                  5.Nginx基础配置详解 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeweimian21</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

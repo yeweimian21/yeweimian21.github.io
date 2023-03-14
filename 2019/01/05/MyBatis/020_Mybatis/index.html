@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yeweimian21.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="&amp;nbsp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20.动态SQL">
+<meta property="og:url" content="https://yeweimian21.github.io/2019/01/05/MyBatis/020_Mybatis/index.html">
+<meta property="og:site_name" content="A peaceful place">
+<meta property="og:description" content="&amp;nbsp;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-01-05T08:55:01.000Z">
+<meta property="article:modified_time" content="2023-02-16T02:56:11.436Z">
+<meta property="article:author" content="yeweimian21">
+<meta property="article:tag" content="MyBatis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yeweimian21.github.io/2019/01/05/MyBatis/020_Mybatis/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2019/01/05/MyBatis/020_Mybatis/","path":"2019/01/05/MyBatis/020_Mybatis/","title":"20.动态SQL"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>20.动态SQL | A peaceful place</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A peaceful place</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">inner peace</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#where"><span class="nav-number">1.</span> <span class="nav-text">where</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#if"><span class="nav-number">2.</span> <span class="nav-text">if</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#choose-when-otherwise"><span class="nav-number">3.</span> <span class="nav-text">choose&#x2F;when&#x2F;otherwise</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set"><span class="nav-number">4.</span> <span class="nav-text">set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#foreach"><span class="nav-number">5.</span> <span class="nav-text">foreach</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code"><span class="nav-number">6.</span> <span class="nav-text">code</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeweimian21</p>
+  <div class="site-description" itemprop="description">A novice</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">213</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://yeweimian21.github.io/2019/01/05/MyBatis/020_Mybatis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeweimian21">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A peaceful place">
+      <meta itemprop="description" content="A novice">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="20.动态SQL | A peaceful place">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          20.动态SQL
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-05 16:55:01" itemprop="dateCreated datePublished" datetime="2019-01-05T16:55:01+08:00">2019-01-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-02-16 10:56:11" itemprop="dateModified" datetime="2023-02-16T10:56:11+08:00">2023-02-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/MyBatis/" itemprop="url" rel="index"><span itemprop="name">MyBatis</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>&nbsp;</p>
+<span id="more"></span>
+
+<h3 id="where"><a href="#where" class="headerlink" title="where"></a>where</h3><p>添加where子句。</p>
+<p>如果where子句为空，则不添加where子句。</p>
+<p>如果where标签后面直接连接<code>and, or</code>关键字，则<code>and, or</code>关键字会被去掉。</p>
+<h3 id="if"><a href="#if" class="headerlink" title="if"></a>if</h3><p>判断条件是否满足，满足条件则拼接sql，不满足条件则不拼接sql</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">queryUser01</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="type">String</span> <span class="variable">address</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span><span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">    user.setName(name);</span><br><span class="line">    user.setAddress(address);</span><br><span class="line">    </span><br><span class="line">    List&lt;User&gt; userList = userDao.queryUser01(user);</span><br><span class="line">    <span class="keyword">for</span> (User userVO : userList) &#123;</span><br><span class="line">        System.out.println(userVO.toString());</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    MyBatisUtil.closeSqlSession(sqlSession);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DEBUG [main] - ==&gt;  Preparing: select id, name, age, address, birthday from user </span><br><span class="line">DEBUG [main] - ==&gt; Parameters: </span><br><span class="line">DEBUG [main] - &lt;==      Total: 154</span><br></pre></td></tr></table></figure>
+
+<h3 id="choose-when-otherwise"><a href="#choose-when-otherwise" class="headerlink" title="choose/when/otherwise"></a>choose/when/otherwise</h3><p>相当于<code>if/if else/else</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">queryUser02</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">&quot;user1&quot;</span>;</span><br><span class="line">    <span class="type">String</span> <span class="variable">address</span> <span class="operator">=</span> <span class="string">&quot;address1&quot;</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span><span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">    user.setName(name);</span><br><span class="line">    user.setAddress(address);</span><br><span class="line">    </span><br><span class="line">    List&lt;User&gt; userList = userDao.queryUser02(user);</span><br><span class="line">    <span class="keyword">for</span> (User userVO : userList) &#123;</span><br><span class="line">        System.out.println(userVO.toString());</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    MyBatisUtil.closeSqlSession(sqlSession);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DEBUG [main] - ==&gt;  Preparing: select id, name, age, address, birthday from user WHERE name like &quot;%&quot;?&quot;%&quot; </span><br><span class="line">DEBUG [main] - ==&gt; Parameters: user1(String)</span><br><span class="line">DEBUG [main] - &lt;==      Total: 72</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">queryUser02</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">&quot;user1&quot;</span>;</span><br><span class="line">		<span class="type">String</span> <span class="variable">address</span> <span class="operator">=</span> <span class="string">&quot;address1&quot;</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span><span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line"><span class="comment">//		user.setName(name);</span></span><br><span class="line"><span class="comment">//		user.setAddress(address);</span></span><br><span class="line">		</span><br><span class="line">		List&lt;User&gt; userList = userDao.queryUser02(user);</span><br><span class="line">		<span class="keyword">for</span> (User userVO : userList) &#123;</span><br><span class="line">			System.out.println(userVO.toString());</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		MyBatisUtil.closeSqlSession(sqlSession);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DEBUG [main] - ==&gt;  Preparing: select id, name, age, address, birthday from user WHERE age &lt; 80 </span><br><span class="line">DEBUG [main] - ==&gt; Parameters: </span><br><span class="line">DEBUG [main] - &lt;==      Total: 74</span><br></pre></td></tr></table></figure>
+
+<h3 id="set"><a href="#set" class="headerlink" title="set"></a>set</h3><p>用于update set子句，更新满足条件的字段</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">updateUserSet</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">&quot;user1&quot;</span>;</span><br><span class="line">    <span class="type">String</span> <span class="variable">address</span> <span class="operator">=</span> <span class="string">&quot;address1&quot;</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span><span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">    user.setId(<span class="number">30</span>);</span><br><span class="line">    user.setName(name);</span><br><span class="line">    user.setAddress(address);</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> <span class="variable">rowCount</span> <span class="operator">=</span> userDao.updateUserSet(user);</span><br><span class="line">    System.out.println(<span class="string">&quot;rowCount = &quot;</span> + rowCount);</span><br><span class="line">    </span><br><span class="line">    MyBatisUtil.closeSqlSession(sqlSession);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DEBUG [main] - ==&gt;  Preparing: update user SET name = ?, address = ? WHERE id = ? </span><br><span class="line">DEBUG [main] - ==&gt; Parameters: user1(String), address1(String), 30(Integer)</span><br><span class="line">DEBUG [main] - &lt;==    Updates: 1</span><br><span class="line">rowCount = 1</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">updateUserSet</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">&quot;user1&quot;</span>;</span><br><span class="line">    <span class="type">String</span> <span class="variable">address</span> <span class="operator">=</span> <span class="string">&quot;address1&quot;</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span><span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">    <span class="comment">// user.setId(30);</span></span><br><span class="line">    user.setName(name);</span><br><span class="line">    user.setAddress(address);</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> <span class="variable">rowCount</span> <span class="operator">=</span> userDao.updateUserSet(user);</span><br><span class="line">    System.out.println(<span class="string">&quot;rowCount = &quot;</span> + rowCount);</span><br><span class="line">    </span><br><span class="line">    MyBatisUtil.closeSqlSession(sqlSession);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DEBUG [main] - ==&gt;  Preparing: update user SET name = ?, address = ? WHERE id = 20 </span><br><span class="line">DEBUG [main] - ==&gt; Parameters: user1(String), address1(String)</span><br><span class="line">DEBUG [main] - &lt;==    Updates: 1</span><br><span class="line">rowCount = 1</span><br></pre></td></tr></table></figure>
+
+<h3 id="foreach"><a href="#foreach" class="headerlink" title="foreach"></a>foreach</h3><p>循环遍历数组或者集合。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">queryUserByArray</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span>[] idArray = &#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>&#125;;</span><br><span class="line">    List&lt;User&gt; userList = userDao.queryUserByArray(idArray);</span><br><span class="line">    <span class="keyword">for</span> (User userVO : userList) &#123;</span><br><span class="line">        System.out.println(userVO.toString());</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    MyBatisUtil.closeSqlSession(sqlSession);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DEBUG [main] - ==&gt;  Preparing: select id, name, age, address, birthday from user WHERE id in ( ? , ? , ? , ? , ? ) </span><br><span class="line">DEBUG [main] - ==&gt; Parameters: 10(Integer), 20(Integer), 30(Integer), 40(Integer), 50(Integer)</span><br><span class="line">DEBUG [main] - &lt;==      Total: 4</span><br></pre></td></tr></table></figure>
+
+<h3 id="code"><a href="#code" class="headerlink" title="code"></a>code</h3><p>UserMapper.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span></span></span><br><span class="line"><span class="meta">  <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">  <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.course.dao.UserDao&quot;</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;queryUser01&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;User&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;User&quot;</span>&gt;</span></span><br><span class="line">		select id, name, age, address, birthday</span><br><span class="line">		from user</span><br><span class="line">		<span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;name != null and name !=&#x27;&#x27;&quot;</span>&gt;</span> name like &quot;%&quot;#&#123;name&#125;&quot;%&quot; <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;address != null and address != &#x27;&#x27;&quot;</span>&gt;</span> and address like &quot;%&quot;#&#123;address&#125;&quot;%&quot; <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;queryUser02&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;User&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;User&quot;</span>&gt;</span></span><br><span class="line">		select id, name, age, address, birthday</span><br><span class="line">		from user</span><br><span class="line">		<span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">choose</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">&quot;name != null and name !=&#x27;&#x27;&quot;</span>&gt;</span> name like &quot;%&quot;#&#123;name&#125;&quot;%&quot; <span class="tag">&lt;/<span class="name">when</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">&quot;address != null and address != &#x27;&#x27;&quot;</span>&gt;</span> and address like &quot;%&quot;#&#123;address&#125;&quot;%&quot; <span class="tag">&lt;/<span class="name">when</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">otherwise</span>&gt;</span></span><br><span class="line">					and age <span class="symbol">&amp;lt;</span> 80</span><br><span class="line">				<span class="tag">&lt;/<span class="name">otherwise</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">choose</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">&quot;updateUserSet&quot;</span>&gt;</span></span><br><span class="line">		update user</span><br><span class="line">		<span class="tag">&lt;<span class="name">set</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;name != null and name !=&#x27;&#x27;&quot;</span>&gt;</span> name = #&#123;name&#125;, <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;address != null and address != &#x27;&#x27;&quot;</span>&gt;</span> address = #&#123;address&#125; <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">choose</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">&quot;id == null&quot;</span>&gt;</span> id = 20 <span class="tag">&lt;/<span class="name">when</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">otherwise</span>&gt;</span> id = #&#123;id&#125; <span class="tag">&lt;/<span class="name">otherwise</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">choose</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">update</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;queryUserByArray&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;int[]&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;User&quot;</span>&gt;</span></span><br><span class="line">		select id, name, age, address, birthday</span><br><span class="line">		from user</span><br><span class="line">		<span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">			id in </span><br><span class="line">			<span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">				collection: 数组或者集合，不是数组或者集合形参名</span></span><br><span class="line"><span class="comment">				item: 数据或者集合的元素</span></span><br><span class="line"><span class="comment">				index: 循环遍历，索引值</span></span><br><span class="line"><span class="comment">				open: 开始字符串</span></span><br><span class="line"><span class="comment">				close: 结束字符串</span></span><br><span class="line"><span class="comment">				separator: 分隔符</span></span><br><span class="line"><span class="comment">			 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">&quot;array&quot;</span> <span class="attr">item</span>=<span class="string">&quot;id&quot;</span> <span class="attr">open</span>=<span class="string">&quot;(&quot;</span> <span class="attr">close</span>=<span class="string">&quot;)&quot;</span> <span class="attr">separator</span>=<span class="string">&quot;,&quot;</span>&gt;</span></span><br><span class="line">				#&#123;id&#125;</span><br><span class="line">			<span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">	</span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>UserDao.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.course.dao;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.course.vo.User;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserDao</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> List&lt;User&gt; <span class="title function_">queryUser01</span><span class="params">(User user)</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> List&lt;User&gt; <span class="title function_">queryUser02</span><span class="params">(User user)</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="type">int</span> <span class="title function_">updateUserSet</span><span class="params">(User user)</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> List&lt;User&gt; <span class="title function_">queryUserByArray</span><span class="params">(<span class="type">int</span>[] idArray)</span>;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试类: </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.course.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.session.SqlSession;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.course.dao.UserDao;</span><br><span class="line"><span class="keyword">import</span> com.course.util.MyBatisUtil;</span><br><span class="line"><span class="keyword">import</span> com.course.vo.User;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MainTest</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="type">SqlSession</span> <span class="variable">sqlSession</span> <span class="operator">=</span> MyBatisUtil.openSqlSession();</span><br><span class="line">	<span class="keyword">private</span> <span class="type">UserDao</span> <span class="variable">userDao</span> <span class="operator">=</span> sqlSession.getMapper(UserDao.class);</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">queryUser01</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">		<span class="type">String</span> <span class="variable">address</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span><span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">		user.setName(name);</span><br><span class="line">		user.setAddress(address);</span><br><span class="line">		</span><br><span class="line">		List&lt;User&gt; userList = userDao.queryUser01(user);</span><br><span class="line">		<span class="keyword">for</span> (User userVO : userList) &#123;</span><br><span class="line">			System.out.println(userVO.toString());</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		MyBatisUtil.closeSqlSession(sqlSession);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">queryUser02</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">&quot;user1&quot;</span>;</span><br><span class="line">		<span class="type">String</span> <span class="variable">address</span> <span class="operator">=</span> <span class="string">&quot;address1&quot;</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span><span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">		user.setName(name);</span><br><span class="line">		user.setAddress(address);</span><br><span class="line">		</span><br><span class="line">		List&lt;User&gt; userList = userDao.queryUser02(user);</span><br><span class="line">		<span class="keyword">for</span> (User userVO : userList) &#123;</span><br><span class="line">			System.out.println(userVO.toString());</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		MyBatisUtil.closeSqlSession(sqlSession);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">updateUserSet</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">&quot;user1&quot;</span>;</span><br><span class="line">		<span class="type">String</span> <span class="variable">address</span> <span class="operator">=</span> <span class="string">&quot;address1&quot;</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span><span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">		user.setId(<span class="number">30</span>);</span><br><span class="line">		user.setName(name);</span><br><span class="line">		user.setAddress(address);</span><br><span class="line">		</span><br><span class="line">		<span class="type">int</span> <span class="variable">rowCount</span> <span class="operator">=</span> userDao.updateUserSet(user);</span><br><span class="line">		System.out.println(<span class="string">&quot;rowCount = &quot;</span> + rowCount);</span><br><span class="line">		</span><br><span class="line">		MyBatisUtil.closeSqlSession(sqlSession);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">queryUserByArray</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="type">int</span>[] idArray = &#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>&#125;;</span><br><span class="line">		List&lt;User&gt; userList = userDao.queryUserByArray(idArray);</span><br><span class="line">		<span class="keyword">for</span> (User userVO : userList) &#123;</span><br><span class="line">			System.out.println(userVO.toString());</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		MyBatisUtil.closeSqlSession(sqlSession);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MyBatis/" rel="tag"># MyBatis</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/05/MyBatis/019_MyBatis/" rel="prev" title="19.resultMap和sql片段">
+                  <i class="fa fa-chevron-left"></i> 19.resultMap和sql片段
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/01/05/MyBatis/023_MyBatis/" rel="next" title="23.MyBatis使用注解">
+                  23.MyBatis使用注解 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeweimian21</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

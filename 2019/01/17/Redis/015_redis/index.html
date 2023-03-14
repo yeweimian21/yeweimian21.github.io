@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yeweimian21.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="&amp;nbsp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="15.Redis的复制(Master&#x2F;Slave)">
+<meta property="og:url" content="https://yeweimian21.github.io/2019/01/17/Redis/015_redis/index.html">
+<meta property="og:site_name" content="A peaceful place">
+<meta property="og:description" content="&amp;nbsp;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-01-17T09:06:16.000Z">
+<meta property="article:modified_time" content="2023-02-09T01:17:44.096Z">
+<meta property="article:author" content="yeweimian21">
+<meta property="article:tag" content="Database">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yeweimian21.github.io/2019/01/17/Redis/015_redis/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2019/01/17/Redis/015_redis/","path":"2019/01/17/Redis/015_redis/","title":"15.Redis的复制(Master/Slave)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>15.Redis的复制(Master/Slave) | A peaceful place</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A peaceful place</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">inner peace</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis%E7%9A%84%E5%A4%8D%E5%88%B6-Master-Slave"><span class="nav-number">1.</span> <span class="nav-text">Redis的复制(Master&#x2F;Slave)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF%E5%A4%8D%E5%88%B6"><span class="nav-number">1.1.</span> <span class="nav-text">1，什么是复制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1%EF%BC%8C%E5%AE%98%E7%BD%91%E8%AF%B4%E6%98%8E"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1，官网说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2%EF%BC%8C%E8%A1%8C%E8%AF%9D"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2，行话</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%EF%BC%8C%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">2，有什么作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%EF%BC%8C%E6%80%8E%E4%B9%88%E4%BD%BF%E7%94%A8"><span class="nav-number">1.3.</span> <span class="nav-text">3，怎么使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1%EF%BC%8C%E9%85%8D%E4%BB%8E%E4%B8%8D%E9%85%8D%E4%B8%BB"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1，配从不配主</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2%EF%BC%8C%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4-%E3%80%90SLAVEOF-%E4%B8%BB%E5%BA%93IP-%E4%B8%BB%E5%BA%93%E7%AB%AF%E5%8F%A3%E3%80%91"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2，配置命令  【SLAVEOF 主库IP 主库端口】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3%EF%BC%8C%E8%AF%A6%E7%BB%86%E6%93%8D%E4%BD%9C"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3，详细操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4%EF%BC%8C%E4%B8%80%E4%B8%BB%E4%BA%8C%E4%BB%86"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4，一主二仆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5%EF%BC%8C%E8%96%AA%E7%81%AB%E7%9B%B8%E4%BC%A0"><span class="nav-number">1.3.5.</span> <span class="nav-text">3.5，薪火相传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6%EF%BC%8C%E5%8F%8D%E5%AE%A2%E4%B8%BA%E4%B8%BB"><span class="nav-number">1.3.6.</span> <span class="nav-text">3.6，反客为主</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%EF%BC%8C%E5%A4%8D%E5%88%B6%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">1.3.7.</span> <span class="nav-text">4，复制的原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo1"><span class="nav-number">1.4.</span> <span class="nav-text">Demo1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%EF%BC%8C%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.</span> <span class="nav-text">5，哨兵模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1，什么是哨兵模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2%EF%BC%8C%E6%80%8E%E4%B9%88%E7%8E%A9-%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.5.2.</span> <span class="nav-text">5.2，怎么玩(使用步骤)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3%EF%BC%8C%E4%B8%80%E7%BB%84sentinel%E8%83%BD%E5%90%8C%E6%97%B6%E7%9B%91%E6%8E%A7%E5%A4%9A%E4%B8%AAMaster"><span class="nav-number">1.5.3.</span> <span class="nav-text">5.3，一组sentinel能同时监控多个Master</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%EF%BC%8C%E5%A4%8D%E5%88%B6%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">1.6.</span> <span class="nav-text">6，复制的缺点</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeweimian21</p>
+  <div class="site-description" itemprop="description">A novice</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">213</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://yeweimian21.github.io/2019/01/17/Redis/015_redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeweimian21">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A peaceful place">
+      <meta itemprop="description" content="A novice">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="15.Redis的复制(Master/Slave) | A peaceful place">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          15.Redis的复制(Master/Slave)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-17 17:06:16" itemprop="dateCreated datePublished" datetime="2019-01-17T17:06:16+08:00">2019-01-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-02-09 09:17:44" itemprop="dateModified" datetime="2023-02-09T09:17:44+08:00">2023-02-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>&nbsp;</p>
+<span id="more"></span>
+
+<h1 id="Redis的复制-Master-Slave"><a href="#Redis的复制-Master-Slave" class="headerlink" title="Redis的复制(Master/Slave)"></a>Redis的复制(Master/Slave)</h1><h2 id="1，什么是复制"><a href="#1，什么是复制" class="headerlink" title="1，什么是复制"></a>1，什么是复制</h2><p>Redis 的读并发量太大怎么办？</p>
+<p>单机版的Redis 挂掉怎么办？</p>
+<p>需要写并发又要安全，在redis 3.0 后，官方发布了集群方案</p>
+<h3 id="1-1，官网说明"><a href="#1-1，官网说明" class="headerlink" title="1.1，官网说明"></a>1.1，官网说明</h3><p>官网说明: <code>https://redis.io/topics/replication</code></p>
+<p>在Redis复制的基础上（不包括Redis Cluster或Redis Sentinel作为附加层提供的高可用性功能），使用和配置领导者跟随者（主从）复制非常简单：它允许副本Redis实例精确主实例的副本。每当链接断开时，该副本将自动重新连接到主数据库，并且无论该主数据库发生什么情况，它都将尝试作为该副本的精确副本。</p>
+<p>该系统使用三种主要机制工作：</p>
+<ol>
+<li>当主节点和副本实例连接良好时，主节点通过向副本发送命令流来使副本保持更新，以便复制由于以下原因而对主节点上发生的数据集产生的影响：客户端写入，密钥已过期或驱逐任何其他更改主数据集的操作。</li>
+<li>当主服务器和副本服务器之间的链接断开时，由于网络问题或由于在主服务器或副本服务器中检测到超时，副本服务器将重新连接并尝试进行部分重新同步：这意味着它将尝试仅获取该部件断开期间错过的命令流的大小。</li>
+<li>如果无法进行部分重新同步，则副本将要求完全重新同步。这将涉及一个更复杂的过程，在该过程中，主服务器需要创建其所有数据的快照，将其发送到副本，然后在数据集更改时继续发送命令流。</li>
+</ol>
+<p>默认情况下，Redis使用异步复制（低延迟和高性能）是绝大多数Redis用例的自然复制模式。但是，Redis副本异步地确认它们与主服务器定期接收的数据量。因此，主服务器不会每次都等待副本处理命令，但是，如果需要，它知道哪个副本已经处理了什么命令。这允许具有可选的同步复制。</p>
+<h3 id="1-2，行话"><a href="#1-2，行话" class="headerlink" title="1.2，行话"></a>1.2，行话</h3><p>行话：也就是我们所说的主从复制，主机数据更新后根据配置和策略，自动同步到备机的master/slave机制，Master以写为主，Slave以读为主</p>
+<h2 id="2，有什么作用"><a href="#2，有什么作用" class="headerlink" title="2，有什么作用"></a>2，有什么作用</h2><ul>
+<li><p>读写分离</p>
+</li>
+<li><p>容灾恢复</p>
+</li>
+</ul>
+<h2 id="3，怎么使用"><a href="#3，怎么使用" class="headerlink" title="3，怎么使用"></a>3，怎么使用</h2><ol>
+<li><code>SLAVEOF &lt;masterip&gt; &lt;masterport&gt;</code>配置命令</li>
+<li>修改redis.conf配置文件中的<code>replicaof &lt;masterip&gt; &lt;masterport&gt;</code>配置项</li>
+</ol>
+<h3 id="3-1，配从不配主"><a href="#3-1，配从不配主" class="headerlink" title="3.1，配从不配主"></a>3.1，配从不配主</h3><h3 id="3-2，配置命令-【SLAVEOF-主库IP-主库端口】"><a href="#3-2，配置命令-【SLAVEOF-主库IP-主库端口】" class="headerlink" title="3.2，配置命令  【SLAVEOF 主库IP 主库端口】"></a>3.2，配置命令  【SLAVEOF 主库IP 主库端口】</h3><p>每次与master断开之后，都需要重新连接，除非你配置进redis.conf文件</p>
+<p>Info replication可以查看</p>
+<h3 id="3-3，详细操作"><a href="#3-3，详细操作" class="headerlink" title="3.3，详细操作"></a>3.3，详细操作</h3><ol>
+<li>拷贝多个redis.conf文件</li>
+<li>开启daemonize yes</li>
+<li>Pid文件名字</li>
+<li>指定端口</li>
+<li>Log文件名字</li>
+<li>Dump.rdb名字</li>
+</ol>
+<h3 id="3-4，一主二仆"><a href="#3-4，一主二仆" class="headerlink" title="3.4，一主二仆"></a>3.4，一主二仆</h3><p>演示问题: </p>
+<ol>
+<li>切入点问题？slave1、slave2是从头开始复制还是从切入点开始复制?比如从k4进来，那之前的123是否也可以复制</li>
+<li>从机是否可以写？set可否？</li>
+<li>主机shutdown后情况如何？从机是上位还是原地待命</li>
+<li>主机又回来了后，主机新增记录，从机还能否顺利复制？</li>
+<li>其中一台从机down后情况如何？依照原有它能跟上大部队吗？</li>
+</ol>
+<h3 id="3-5，薪火相传"><a href="#3-5，薪火相传" class="headerlink" title="3.5，薪火相传"></a>3.5，薪火相传</h3><p>上一个Slave可以是下一个slave的Master，Slave同样可以接收其他 slaves的连接和同步请求，那么该slave作为了链条中下一个的master, 可以有效减轻master的写压力</p>
+<p>中途变更转向:会清除之前的数据，重新建立拷贝最新的</p>
+<p>Slaveof 新主库IP 新主库端口</p>
+<h3 id="3-6，反客为主"><a href="#3-6，反客为主" class="headerlink" title="3.6，反客为主"></a>3.6，反客为主</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SLAVEOF no one</span><br></pre></td></tr></table></figure>
+
+<p>使当前数据库停止与其他数据库的同步，转成主数据库</p>
+<h3 id="4，复制的原理"><a href="#4，复制的原理" class="headerlink" title="4，复制的原理"></a>4，复制的原理</h3><p>Slave启动成功连接到master后会发送一个sync命令</p>
+<p>Master接到命令启动后台的存盘进程，同时收集所有接收到的用于修改数据集命令，在后台进程执行完毕之后，master将传送整个数据文件到slave,以完成一次完全同步</p>
+<ol>
+<li>全量复制：而slave服务在接收到数据库文件数据后，将其存盘并加载到内存中。</li>
+<li>增量复制：Master继续将新的所有收集到的修改命令依次传给slave,完成同步</li>
+</ol>
+<p>但是只要是重新连接master,一次完全同步（全量复制)将被自动执行</p>
+<h2 id="Demo1"><a href="#Demo1" class="headerlink" title="Demo1"></a>Demo1</h2><p>创建1个master，4个slave，2个slave通过配置命令创建，2个slave通过conf文件创建</p>
+<p>master: 6379</p>
+<p>slave-1: 6380，<code>SLAVEOF &lt;masterip&gt; &lt;masterport&gt;</code>配置命令</p>
+<p>slave-2: 6381，<code>SLAVEOF &lt;masterip&gt; &lt;masterport&gt;</code>配置命令</p>
+<p>slave-3: 6382，<code>replicaof &lt;masterip&gt; &lt;masterport&gt;</code>配置项</p>
+<p>slave-4: 6383，<code>replicaof &lt;masterip&gt; &lt;masterport&gt;</code>配置项</p>
+<p>master: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_redis_6379]# /usr/local/redis-6.0.9/bin/redis-server my_redis_conf_6379.conf</span><br><span class="line">[root@localhost my_redis_6379]# /usr/local/redis-6.0.9/bin/redis-cli</span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">role:master</span><br><span class="line">connected_slaves:2</span><br><span class="line">slave0:ip=127.0.0.1,port=6382,state=online,offset=392,lag=0</span><br><span class="line">slave1:ip=127.0.0.1,port=6380,state=online,offset=392,lag=0</span><br><span class="line">master_replid:aa532b76f66520a97f249f82ec316d5b4fb4a93c</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:392</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:1</span><br><span class="line">repl_backlog_histlen:392</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
+
+<p>slave-1: 通过<code>SLAVEOF &lt;masterip&gt; &lt;masterport&gt;</code>配置命令创建</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_redis_6380]# /usr/local/redis-6.0.9/bin/redis-server my_redis_conf_6380.conf</span><br><span class="line"></span><br><span class="line">[root@localhost my_redis_6380]# /usr/local/redis-6.0.9/bin/redis-cli -h 127.0.0.1 -p 6380</span><br><span class="line"></span><br><span class="line">127.0.0.1:6380&gt;</span><br><span class="line">127.0.0.1:6380&gt; INFO replication</span><br><span class="line"># Replication</span><br><span class="line">role:master</span><br><span class="line">connected_slaves:0</span><br><span class="line">master_replid:eca3c70215c1e8d02464d7168a00d1da1068b26e</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:0</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:0</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:0</span><br><span class="line">repl_backlog_histlen:0</span><br><span class="line"></span><br><span class="line">127.0.0.1:6380&gt; SLAVEOF 127.0.0.1 6379</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6380&gt; INFO replication</span><br><span class="line"># Replication</span><br><span class="line">role:slave</span><br><span class="line">master_host:127.0.0.1</span><br><span class="line">master_port:6379</span><br><span class="line">master_link_status:up</span><br><span class="line">master_last_io_seconds_ago:1</span><br><span class="line">master_sync_in_progress:0</span><br><span class="line">slave_repl_offset:378</span><br><span class="line">slave_priority:100</span><br><span class="line">slave_read_only:1</span><br><span class="line">connected_slaves:0</span><br><span class="line">master_replid:aa532b76f66520a97f249f82ec316d5b4fb4a93c</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:378</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:379</span><br><span class="line">repl_backlog_histlen:0</span><br><span class="line">127.0.0.1:6380&gt;</span><br></pre></td></tr></table></figure>
+
+<p>slave-3: 通过修改redis.conf配置文件中的<code>replicaof &lt;masterip&gt; &lt;masterport&gt;</code>配置项创建</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">################################# REPLICATION #################################</span><br><span class="line"></span><br><span class="line"># Master-Replica replication. Use replicaof to make a Redis instance a copy of</span><br><span class="line"># another Redis server. A few things to understand ASAP about Redis replication.</span><br><span class="line">#</span><br><span class="line">#   +------------------+      +---------------+</span><br><span class="line">#   |      Master      | ---&gt; |    Replica    |</span><br><span class="line">#   | (receive writes) |      |  (exact copy) |</span><br><span class="line">#   +------------------+      +---------------+</span><br><span class="line">#</span><br><span class="line"># 1) Redis replication is asynchronous, but you can configure a master to</span><br><span class="line">#    stop accepting writes if it appears to be not connected with at least</span><br><span class="line">#    a given number of replicas.</span><br><span class="line"># 2) Redis replicas are able to perform a partial resynchronization with the</span><br><span class="line">#    master if the replication link is lost for a relatively small amount of</span><br><span class="line">#    time. You may want to configure the replication backlog size (see the next</span><br><span class="line">#    sections of this file) with a sensible value depending on your needs.</span><br><span class="line"># 3) Replication is automatic and does not need user intervention. After a</span><br><span class="line">#    network partition replicas automatically try to reconnect to masters</span><br><span class="line">#    and resynchronize with them.</span><br><span class="line">#</span><br><span class="line"># replicaof &lt;masterip&gt; &lt;masterport&gt;</span><br><span class="line">replicaof 127.0.0.1 6379</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_redis_6382]# /usr/local/redis-6.0.9/bin/redis-cli -p 6382</span><br><span class="line">127.0.0.1:6382&gt;</span><br><span class="line">127.0.0.1:6382&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">role:slave</span><br><span class="line">master_host:127.0.0.1</span><br><span class="line">master_port:6379</span><br><span class="line">master_link_status:up</span><br><span class="line">master_last_io_seconds_ago:8</span><br><span class="line">master_sync_in_progress:0</span><br><span class="line">slave_repl_offset:1274</span><br><span class="line">slave_priority:100</span><br><span class="line">slave_read_only:1</span><br><span class="line">connected_slaves:0</span><br><span class="line">master_replid:aa532b76f66520a97f249f82ec316d5b4fb4a93c</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:1274</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:1</span><br><span class="line">repl_backlog_histlen:1274</span><br><span class="line">127.0.0.1:6382&gt;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>切入点问题？slave1、slave2是从头开始复制还是从切入点开始复制?比如从k4进来，那之前的123是否也可以复制</li>
+</ol>
+<p>master:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; set k1 v1</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+
+<p>slave-2: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_redis_6381]# /usr/local/redis-6.0.9/bin/redis-server my_redis_conf_6381.conf</span><br><span class="line"></span><br><span class="line">[root@localhost my_redis_6381]# /usr/local/redis-6.0.9/bin/redis-cli -p 6381</span><br><span class="line"></span><br><span class="line">127.0.0.1:6381&gt;</span><br><span class="line">127.0.0.1:6381&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">role:master</span><br><span class="line">connected_slaves:0</span><br><span class="line">master_replid:3f400816a7cb785b4bcf782f58af51e5ff9dd599</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:0</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:0</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:0</span><br><span class="line">repl_backlog_histlen:0</span><br><span class="line">127.0.0.1:6381&gt;</span><br><span class="line">127.0.0.1:6381&gt; SLAVEOF 127.0.0.1 6379</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6381&gt;</span><br><span class="line">127.0.0.1:6381&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">role:slave</span><br><span class="line">master_host:127.0.0.1</span><br><span class="line">master_port:6379</span><br><span class="line">master_link_status:up</span><br><span class="line">master_last_io_seconds_ago:2</span><br><span class="line">master_sync_in_progress:0</span><br><span class="line">slave_repl_offset:1806</span><br><span class="line">slave_priority:100</span><br><span class="line">slave_read_only:1</span><br><span class="line">connected_slaves:0</span><br><span class="line">master_replid:aa532b76f66520a97f249f82ec316d5b4fb4a93c</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:1806</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:1807</span><br><span class="line">repl_backlog_histlen:0</span><br><span class="line">127.0.0.1:6381&gt;</span><br><span class="line">127.0.0.1:6381&gt; get k1</span><br><span class="line">&quot;v1&quot;</span><br><span class="line">127.0.0.1:6381&gt;</span><br></pre></td></tr></table></figure>
+
+<p>master:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">role:master</span><br><span class="line">connected_slaves:3</span><br><span class="line">slave0:ip=127.0.0.1,port=6382,state=online,offset=2390,lag=1</span><br><span class="line">slave1:ip=127.0.0.1,port=6380,state=online,offset=2390,lag=0</span><br><span class="line">slave2:ip=127.0.0.1,port=6381,state=online,offset=2390,lag=0</span><br><span class="line">master_replid:aa532b76f66520a97f249f82ec316d5b4fb4a93c</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:2390</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:1</span><br><span class="line">repl_backlog_histlen:2390</span><br><span class="line">127.0.0.1:6379&gt; set k2 v2</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+
+<p>slave-2:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6381&gt; get k2</span><br><span class="line">&quot;v2&quot;</span><br></pre></td></tr></table></figure>
+
+<p>从机会从头开始复制，获取master的全部数据。</p>
+<ol start="2">
+<li>从机是否可以写？set可否？</li>
+</ol>
+<p>master: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; get k2</span><br><span class="line">&quot;v2&quot;</span><br></pre></td></tr></table></figure>
+
+<p>master可读可写</p>
+<p>slave-2:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6381&gt; set k3 v3</span><br><span class="line">(error) READONLY You can&#x27;t write against a read only replica.</span><br></pre></td></tr></table></figure>
+
+<p>从机不可写，只能读</p>
+<ol start="3">
+<li>主机shutdown后情况如何？从机是上位还是原地待命</li>
+</ol>
+<p>master:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SHUTDOWN</span><br><span class="line">not connected&gt; quit</span><br></pre></td></tr></table></figure>
+
+<p>slave-1, slave-2, slave-3: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6380/6381/6382&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">role:slave</span><br><span class="line">master_host:127.0.0.1</span><br><span class="line">master_port:6379</span><br><span class="line">master_link_status:down</span><br><span class="line">master_last_io_seconds_ago:-1</span><br><span class="line">master_sync_in_progress:0</span><br><span class="line">slave_repl_offset:2656</span><br><span class="line">master_link_down_since_seconds:93</span><br><span class="line">slave_priority:100</span><br><span class="line">slave_read_only:1</span><br><span class="line">connected_slaves:0</span><br><span class="line">master_replid:aa532b76f66520a97f249f82ec316d5b4fb4a93c</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:2656</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:1</span><br><span class="line">repl_backlog_histlen:2656</span><br><span class="line">127.0.0.1:6380/6381/6382&gt; set k3 v3</span><br><span class="line">(error) READONLY You can&#x27;t write against a read only replica.</span><br><span class="line">127.0.0.1:6380/6381/6382&gt; get k1</span><br><span class="line">&quot;v1&quot;</span><br></pre></td></tr></table></figure>
+
+<p>主机shutdown后，从机状态保持不变，不会自动选举出新的master，也依旧不能写入数据，但是可以读数据。</p>
+<ol start="4">
+<li>主机又回来了后，主机新增记录，从机还能否顺利复制？</li>
+</ol>
+<p>(1) master直接恢复：一切都恢复到之前的样子<br>master: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_redis_6379]# /usr/local/redis-6.0.9/bin/redis-server my_redis_conf_6379.conf</span><br><span class="line">[root@localhost my_redis_6379]# /usr/local/redis-6.0.9/bin/redis-cli</span><br><span class="line">127.0.0.1:6379&gt; keys *</span><br><span class="line">1) &quot;k1&quot;</span><br><span class="line">2) &quot;k2&quot;</span><br><span class="line">127.0.0.1:6379&gt; set k3 v3</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">role:master</span><br><span class="line">connected_slaves:3</span><br><span class="line">slave0:ip=127.0.0.1,port=6380,state=online,offset=108,lag=1</span><br><span class="line">slave1:ip=127.0.0.1,port=6382,state=online,offset=108,lag=1</span><br><span class="line">slave2:ip=127.0.0.1,port=6381,state=online,offset=108,lag=1</span><br><span class="line">master_replid:24b1b1610140212ba044a316b76f53d67d515009</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:108</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:1</span><br><span class="line">repl_backlog_histlen:108</span><br></pre></td></tr></table></figure>
+
+<p>slave-1, slave-2, slave-3: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6380/6381/6382&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">role:slave</span><br><span class="line">master_host:127.0.0.1</span><br><span class="line">master_port:6379</span><br><span class="line">master_link_status:up</span><br><span class="line">master_last_io_seconds_ago:2</span><br><span class="line">master_sync_in_progress:0</span><br><span class="line">slave_repl_offset:234</span><br><span class="line">slave_priority:100</span><br><span class="line">slave_read_only:1</span><br><span class="line">connected_slaves:0</span><br><span class="line">master_replid:24b1b1610140212ba044a316b76f53d67d515009</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:234</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:1</span><br><span class="line">repl_backlog_histlen:234</span><br><span class="line">127.0.0.1:6380/6381/6382&gt; get k3</span><br><span class="line">&quot;v3&quot;</span><br></pre></td></tr></table></figure>
+
+<p>(2) slave 变成master之后，原master</p>
+<p>master:6379 shutdown之后，slave-2:6381 使用<code>SLAVEOF no one</code>命令手动变成新的master后，其他slave需要手动连接到新master slave-2:6381上</p>
+<p>slave-2:6381</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6381&gt; SLAVEOF no one</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6381&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">role:master</span><br><span class="line">connected_slaves:0</span><br><span class="line">master_replid:1c971da5e052faebcbf05721d5c0d59e6a14f94a</span><br><span class="line">master_replid2:24b1b1610140212ba044a316b76f53d67d515009</span><br><span class="line">master_repl_offset:486</span><br><span class="line">second_repl_offset:487</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:1</span><br><span class="line">repl_backlog_histlen:486</span><br></pre></td></tr></table></figure>
+
+<p>slave-1, slave-3:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6380/6382&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">role:slave</span><br><span class="line">master_host:127.0.0.1</span><br><span class="line">master_port:6379</span><br><span class="line">master_link_status:down</span><br><span class="line">master_last_io_seconds_ago:-1</span><br><span class="line">master_sync_in_progress:0</span><br><span class="line">slave_repl_offset:486</span><br><span class="line">master_link_down_since_seconds:526</span><br><span class="line">slave_priority:100</span><br><span class="line">slave_read_only:1</span><br><span class="line">connected_slaves:0</span><br><span class="line">master_replid:24b1b1610140212ba044a316b76f53d67d515009</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:486</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:1</span><br><span class="line">repl_backlog_histlen:486</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>其中一台从机down后情况如何？依照原有它能跟上大部队吗？</li>
+</ol>
+<p>master: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">role:master</span><br><span class="line">connected_slaves:3</span><br><span class="line">slave0:ip=127.0.0.1,port=6382,state=online,offset=0,lag=1</span><br><span class="line">slave1:ip=127.0.0.1,port=6380,state=online,offset=0,lag=1</span><br><span class="line">slave2:ip=127.0.0.1,port=6381,state=online,offset=0,lag=0</span><br><span class="line">master_replid:cb94b9c2350916f815229ef83734adbb6824648d</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:0</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:1</span><br><span class="line">repl_backlog_histlen:0</span><br></pre></td></tr></table></figure>
+
+<p>slave-3:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6382&gt; SHUTDOWN</span><br><span class="line">not connected&gt; quit</span><br></pre></td></tr></table></figure>
+
+<p>master: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">role:master</span><br><span class="line">connected_slaves:2</span><br><span class="line">slave0:ip=127.0.0.1,port=6380,state=online,offset=42,lag=0</span><br><span class="line">slave1:ip=127.0.0.1,port=6381,state=online,offset=42,lag=1</span><br><span class="line">master_replid:cb94b9c2350916f815229ef83734adbb6824648d</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:42</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:1</span><br><span class="line">repl_backlog_histlen:42</span><br><span class="line">127.0.0.1:6379&gt; keys *</span><br><span class="line">1) &quot;k2&quot;</span><br><span class="line">2) &quot;k3&quot;</span><br><span class="line">3) &quot;k1&quot;</span><br><span class="line">127.0.0.1:6379&gt; MSET k4 v4 k5 v5</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt;</span><br><span class="line">127.0.0.1:6379&gt; keys *</span><br><span class="line">1) &quot;k2&quot;</span><br><span class="line">2) &quot;k4&quot;</span><br><span class="line">3) &quot;k3&quot;</span><br><span class="line">4) &quot;k1&quot;</span><br><span class="line">5) &quot;k5&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
+
+<p>slave-3: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_redis_6382]# /usr/local/redis-6.0.9/bin/redis-server my_redis_conf_6382.conf</span><br><span class="line">[root@localhost my_redis_6382]# /usr/local/redis-6.0.9/bin/redis-cli -p 6382</span><br><span class="line">127.0.0.1:6382&gt;</span><br><span class="line">127.0.0.1:6382&gt; keys *</span><br><span class="line">1) &quot;k4&quot;</span><br><span class="line">2) &quot;k2&quot;</span><br><span class="line">3) &quot;k3&quot;</span><br><span class="line">4) &quot;k5&quot;</span><br><span class="line">5) &quot;k1&quot;</span><br><span class="line">127.0.0.1:6382&gt; get k5</span><br><span class="line">&quot;v5&quot;</span><br><span class="line">127.0.0.1:6382&gt;</span><br></pre></td></tr></table></figure>
+
+<p>其中一台从机down后，重新连接到master之后，能重新获取全部数据。</p>
+<ol start="6">
+<li>slave指向其他slave</li>
+</ol>
+<p>新建slave-4: 6383指向slave-3:6382</p>
+<p>slave-4: 6383</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">################################# REPLICATION #################################</span><br><span class="line"></span><br><span class="line"># Master-Replica replication. Use replicaof to make a Redis instance a copy of</span><br><span class="line"># another Redis server. A few things to understand ASAP about Redis replication.</span><br><span class="line">#</span><br><span class="line">#   +------------------+      +---------------+</span><br><span class="line">#   |      Master      | ---&gt; |    Replica    |</span><br><span class="line">#   | (receive writes) |      |  (exact copy) |</span><br><span class="line">#   +------------------+      +---------------+</span><br><span class="line">#</span><br><span class="line"># 1) Redis replication is asynchronous, but you can configure a master to</span><br><span class="line">#    stop accepting writes if it appears to be not connected with at least</span><br><span class="line">#    a given number of replicas.</span><br><span class="line"># 2) Redis replicas are able to perform a partial resynchronization with the</span><br><span class="line">#    master if the replication link is lost for a relatively small amount of</span><br><span class="line">#    time. You may want to configure the replication backlog size (see the next</span><br><span class="line">#    sections of this file) with a sensible value depending on your needs.</span><br><span class="line"># 3) Replication is automatic and does not need user intervention. After a</span><br><span class="line">#    network partition replicas automatically try to reconnect to masters</span><br><span class="line">#    and resynchronize with them.</span><br><span class="line">#</span><br><span class="line"># replicaof &lt;masterip&gt; &lt;masterport&gt;</span><br><span class="line">replicaof 127.0.0.1 6382</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_redis_6383]# /usr/local/redis-6.0.9/bin/redis-server my_redis_conf_6383.conf</span><br><span class="line">[root@localhost my_redis_6383]# /usr/local/redis-6.0.9/bin/redis-cli -p 6383</span><br><span class="line">127.0.0.1:6383&gt;</span><br><span class="line">127.0.0.1:6383&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">role:slave</span><br><span class="line">master_host:127.0.0.1</span><br><span class="line">master_port:6382</span><br><span class="line">master_link_status:up</span><br><span class="line">master_last_io_seconds_ago:2</span><br><span class="line">master_sync_in_progress:0</span><br><span class="line">slave_repl_offset:853</span><br><span class="line">slave_priority:100</span><br><span class="line">slave_read_only:1</span><br><span class="line">connected_slaves:0</span><br><span class="line">master_replid:cb94b9c2350916f815229ef83734adbb6824648d</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:853</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:840</span><br><span class="line">repl_backlog_histlen:14</span><br><span class="line">127.0.0.1:6383&gt;</span><br><span class="line">127.0.0.1:6383&gt; keys *</span><br><span class="line">1) &quot;k3&quot;</span><br><span class="line">2) &quot;k1&quot;</span><br><span class="line">3) &quot;k5&quot;</span><br><span class="line">4) &quot;k2&quot;</span><br><span class="line">5) &quot;k4&quot;</span><br><span class="line">127.0.0.1:6383&gt;</span><br></pre></td></tr></table></figure>
+
+<p>slave-3: 6382</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6382&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">role:slave</span><br><span class="line">master_host:127.0.0.1</span><br><span class="line">master_port:6379</span><br><span class="line">master_link_status:up</span><br><span class="line">master_last_io_seconds_ago:2</span><br><span class="line">master_sync_in_progress:0</span><br><span class="line">slave_repl_offset:867</span><br><span class="line">slave_priority:100</span><br><span class="line">slave_read_only:1</span><br><span class="line">connected_slaves:1</span><br><span class="line">slave0:ip=127.0.0.1,port=6383,state=online,offset=867,lag=0</span><br><span class="line">master_replid:cb94b9c2350916f815229ef83734adbb6824648d</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:867</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:29</span><br><span class="line">repl_backlog_histlen:839</span><br><span class="line">127.0.0.1:6382&gt;</span><br><span class="line">127.0.0.1:6382&gt; keys *</span><br><span class="line">1) &quot;k4&quot;</span><br><span class="line">2) &quot;k2&quot;</span><br><span class="line">3) &quot;k3&quot;</span><br><span class="line">4) &quot;k5&quot;</span><br><span class="line">5) &quot;k1&quot;</span><br><span class="line">127.0.0.1:6382&gt;</span><br><span class="line">127.0.0.1:6382&gt; set k6 v6</span><br><span class="line">(error) READONLY You can&#x27;t write against a read only replica.</span><br><span class="line">127.0.0.1:6382&gt;</span><br></pre></td></tr></table></figure>
+<p>被指向为master的slave仍然不能写入数据</p>
+<p>master:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">role:master</span><br><span class="line">connected_slaves:3</span><br><span class="line">slave0:ip=127.0.0.1,port=6380,state=online,offset=1091,lag=0</span><br><span class="line">slave1:ip=127.0.0.1,port=6381,state=online,offset=1091,lag=0</span><br><span class="line">slave2:ip=127.0.0.1,port=6382,state=online,offset=1091,lag=1</span><br><span class="line">master_replid:cb94b9c2350916f815229ef83734adbb6824648d</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:1091</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:1</span><br><span class="line">repl_backlog_histlen:1091</span><br><span class="line">127.0.0.1:6379&gt; set k6 v6</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+
+<p>slave-4:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6383&gt; get k6</span><br><span class="line">&quot;v6&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5，哨兵模式"><a href="#5，哨兵模式" class="headerlink" title="5，哨兵模式"></a>5，哨兵模式</h2><h3 id="5-1，什么是哨兵模式"><a href="#5-1，什么是哨兵模式" class="headerlink" title="5.1，什么是哨兵模式"></a>5.1，什么是哨兵模式</h3><p>反客为主的自动版，能够后台监控主机是否故障，如果故障了根据投票数自动将从库转换为主库</p>
+<h3 id="5-2，怎么玩-使用步骤"><a href="#5-2，怎么玩-使用步骤" class="headerlink" title="5.2，怎么玩(使用步骤)"></a>5.2，怎么玩(使用步骤)</h3><p>结构:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">master: 6379</span><br><span class="line"></span><br><span class="line">slave-1: 6380</span><br><span class="line">slave-2: 6381</span><br><span class="line">slave-3: 6382</span><br><span class="line"></span><br><span class="line">slave-4: 6383 --&gt; slave3: 6382</span><br></pre></td></tr></table></figure>
+
+<p>(1) 自定义的<code>my_redis_sentinel</code>目录下新建<code>sentinel.conf</code>文件，名字绝不能错</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_redis_sentinel]# touch sentinel.conf</span><br><span class="line">[root@localhost my_redis_sentinel]# vim sentinel.conf</span><br></pre></td></tr></table></figure>
+
+<p>(2) 配置哨兵配置文件<code>sentinel.conf</code>,填写内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sentinel monitor 被监控主机名字(自己起名字) 127.0.0.1 6379 1</span><br></pre></td></tr></table></figure>
+<p>如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sentinel monitor host6379 127.0.0.1 6379 1</span><br></pre></td></tr></table></figure>
+
+<p>上面最后一个数字1，表示主机挂掉后salve投票看让谁接替成为主机，得票数多少后成为主机</p>
+<p>(3) 启动哨兵</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]# ll</span><br><span class="line">total 36272</span><br><span class="line">-rw-r--r--. 1 root root       0 Dec  5 22:08 my_redis_log.log</span><br><span class="line">-rwxr-xr-x. 1 root root 4796896 Nov 29 11:49 redis-benchmark</span><br><span class="line">-rwxr-xr-x. 1 root root 9094264 Nov 29 11:49 redis-check-aof</span><br><span class="line">-rwxr-xr-x. 1 root root 9094264 Nov 29 11:49 redis-check-rdb</span><br><span class="line">-rwxr-xr-x. 1 root root 5049408 Nov 29 11:49 redis-cli</span><br><span class="line">lrwxrwxrwx. 1 root root      12 Nov 29 11:49 redis-sentinel -&gt; redis-server</span><br><span class="line">-rwxr-xr-x. 1 root root 9094264 Nov 29 11:49 redis-server</span><br></pre></td></tr></table></figure>
+
+<p>使用redis bin目录下的<code>redis-sentinel</code>文件启动哨兵。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_redis_sentinel]# /usr/local/redis-6.0.9/bin/redis-sentinel sentinel.conf</span><br><span class="line">3620:X 07 Dec 2020 21:25:52.708 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo</span><br><span class="line">3620:X 07 Dec 2020 21:25:52.708 # Redis version=6.0.9, bits=64, commit=00000000, modified=0, pid=3620, just started</span><br><span class="line">3620:X 07 Dec 2020 21:25:52.708 # Configuration loaded</span><br><span class="line">3620:X 07 Dec 2020 21:25:52.709 * Increased maximum number of open files to 10032 (it was originally set to 1024).</span><br><span class="line">                _._</span><br><span class="line">           _.-``__ &#x27;&#x27;-._</span><br><span class="line">      _.-``    `.  `_.  &#x27;&#x27;-._           Redis 6.0.9 (00000000/0) 64 bit</span><br><span class="line">  .-`` .-```.  ```\/    _.,_ &#x27;&#x27;-._</span><br><span class="line"> (    &#x27;      ,       .-`  | `,    )     Running in sentinel mode</span><br><span class="line"> |`-._`-...-` __...-.``-._|&#x27;` _.-&#x27;|     Port: 26379</span><br><span class="line"> |    `-._   `._    /     _.-&#x27;    |     PID: 3620</span><br><span class="line">  `-._    `-._  `-./  _.-&#x27;    _.-&#x27;</span><br><span class="line"> |`-._`-._    `-.__.-&#x27;    _.-&#x27;_.-&#x27;|</span><br><span class="line"> |    `-._`-._        _.-&#x27;_.-&#x27;    |           http://redis.io</span><br><span class="line">  `-._    `-._`-.__.-&#x27;_.-&#x27;    _.-&#x27;</span><br><span class="line"> |`-._`-._    `-.__.-&#x27;    _.-&#x27;_.-&#x27;|</span><br><span class="line"> |    `-._`-._        _.-&#x27;_.-&#x27;    |</span><br><span class="line">  `-._    `-._`-.__.-&#x27;_.-&#x27;    _.-&#x27;</span><br><span class="line">      `-._    `-.__.-&#x27;    _.-&#x27;</span><br><span class="line">          `-._        _.-&#x27;</span><br><span class="line">              `-.__.-&#x27;</span><br><span class="line"></span><br><span class="line">3620:X 07 Dec 2020 21:25:52.710 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.</span><br><span class="line">3620:X 07 Dec 2020 21:25:52.712 # Sentinel ID is 050fd7336f2201e2b8161b3141a1fb5024787e64</span><br><span class="line">3620:X 07 Dec 2020 21:25:52.712 # +monitor master host6379 127.0.0.1 6379 quorum 1</span><br><span class="line">3620:X 07 Dec 2020 21:25:52.713 * +slave slave 127.0.0.1:6380 127.0.0.1 6380 @ host6379 127.0.0.1 6379</span><br><span class="line">3620:X 07 Dec 2020 21:25:52.714 * +slave slave 127.0.0.1:6381 127.0.0.1 6381 @ host6379 127.0.0.1 6379</span><br><span class="line">3620:X 07 Dec 2020 21:25:52.716 * +slave slave 127.0.0.1:6382 127.0.0.1 6382 @ host6379 127.0.0.1 6379</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>(4) 正常主从演示，原有的master挂了，投票新选，重新主从继续开工，info replication查查看</p>
+<p><code>/usr/local/redis-6.0.9/bin/redis-sentinel sentinel.conf</code>输出日志：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">3620:X 07 Dec 2020 21:30:23.524 # +sdown master host6379 127.0.0.1 6379</span><br><span class="line">3620:X 07 Dec 2020 21:30:23.524 # +odown master host6379 127.0.0.1 6379 #quorum 1/1</span><br><span class="line">3620:X 07 Dec 2020 21:30:23.524 # +new-epoch 1</span><br><span class="line">3620:X 07 Dec 2020 21:30:23.524 # +try-failover master host6379 127.0.0.1 6379</span><br><span class="line">3620:X 07 Dec 2020 21:30:23.530 # +vote-for-leader 050fd7336f2201e2b8161b3141a1fb5024787e64 1</span><br><span class="line">3620:X 07 Dec 2020 21:30:23.530 # +elected-leader master host6379 127.0.0.1 6379</span><br><span class="line">3620:X 07 Dec 2020 21:30:23.530 # +failover-state-select-slave master host6379 127.0.0.1 6379</span><br><span class="line">3620:X 07 Dec 2020 21:30:23.597 # +selected-slave slave 127.0.0.1:6382 127.0.0.1 6382 @ host6379 127.0.0.1 6379</span><br><span class="line">3620:X 07 Dec 2020 21:30:23.597 * +failover-state-send-slaveof-noone slave 127.0.0.1:6382 127.0.0.1 6382 @ host6379 127.0.0.1 6379</span><br><span class="line">3620:X 07 Dec 2020 21:30:23.652 * +failover-state-wait-promotion slave 127.0.0.1:6382 127.0.0.1 6382 @ host6379 127.0.0.1 6379</span><br><span class="line">3620:X 07 Dec 2020 21:30:24.315 # +promoted-slave slave 127.0.0.1:6382 127.0.0.1 6382 @ host6379 127.0.0.1 6379</span><br><span class="line">3620:X 07 Dec 2020 21:30:24.315 # +failover-state-reconf-slaves master host6379 127.0.0.1 6379</span><br><span class="line">3620:X 07 Dec 2020 21:30:24.377 * +slave-reconf-sent slave 127.0.0.1:6380 127.0.0.1 6380 @ host6379 127.0.0.1 6379</span><br><span class="line">3620:X 07 Dec 2020 21:30:25.328 * +slave-reconf-inprog slave 127.0.0.1:6380 127.0.0.1 6380 @ host6379 127.0.0.1 6379</span><br><span class="line">3620:X 07 Dec 2020 21:30:25.328 * +slave-reconf-done slave 127.0.0.1:6380 127.0.0.1 6380 @ host6379 127.0.0.1 6379</span><br><span class="line">3620:X 07 Dec 2020 21:30:25.381 * +slave-reconf-sent slave 127.0.0.1:6381 127.0.0.1 6381 @ host6379 127.0.0.1 6379</span><br><span class="line">3620:X 07 Dec 2020 21:30:26.399 * +slave-reconf-inprog slave 127.0.0.1:6381 127.0.0.1 6381 @ host6379 127.0.0.1 6379</span><br><span class="line">3620:X 07 Dec 2020 21:30:26.399 * +slave-reconf-done slave 127.0.0.1:6381 127.0.0.1 6381 @ host6379 127.0.0.1 6379</span><br><span class="line">3620:X 07 Dec 2020 21:30:26.457 # +failover-end master host6379 127.0.0.1 6379</span><br><span class="line">3620:X 07 Dec 2020 21:30:26.457 # +switch-master host6379 127.0.0.1 6379 127.0.0.1 6382</span><br><span class="line">3620:X 07 Dec 2020 21:30:26.457 * +slave slave 127.0.0.1:6380 127.0.0.1 6380 @ host6379 127.0.0.1 6382</span><br><span class="line">3620:X 07 Dec 2020 21:30:26.457 * +slave slave 127.0.0.1:6381 127.0.0.1 6381 @ host6379 127.0.0.1 6382</span><br><span class="line">3620:X 07 Dec 2020 21:30:26.457 * +slave slave 127.0.0.1:6379 127.0.0.1 6379 @ host6379 127.0.0.1 6382</span><br><span class="line">3620:X 07 Dec 2020 21:30:26.686 * +slave slave 127.0.0.1:6383 127.0.0.1 6383 @ host6379 127.0.0.1 6382</span><br><span class="line">3620:X 07 Dec 2020 21:30:56.517 # +sdown slave 127.0.0.1:6379 127.0.0.1 6379 @ host6379 127.0.0.1 6382</span><br></pre></td></tr></table></figure>
+
+<p>slave-3: 6382，被选为新的master</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]# /usr/local/redis-6.0.9/bin/redis-cli -p 6382</span><br><span class="line">127.0.0.1:6382&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">role:master</span><br><span class="line">connected_slaves:3</span><br><span class="line">slave0:ip=127.0.0.1,port=6383,state=online,offset=49086,lag=1</span><br><span class="line">slave1:ip=127.0.0.1,port=6380,state=online,offset=49086,lag=1</span><br><span class="line">slave2:ip=127.0.0.1,port=6381,state=online,offset=48953,lag=1</span><br><span class="line">master_replid:85aba463c276379cc0294f8c5bd4620815899d4e</span><br><span class="line">master_replid2:cb94b9c2350916f815229ef83734adbb6824648d</span><br><span class="line">master_repl_offset:49086</span><br><span class="line">second_repl_offset:18789</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:29</span><br><span class="line">repl_backlog_histlen:49058</span><br></pre></td></tr></table></figure>
+
+<p>slave-1, slave-2, slave-4: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6380/6381/6383&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">role:slave</span><br><span class="line">master_host:127.0.0.1</span><br><span class="line">master_port:6382</span><br><span class="line">master_link_status:up</span><br><span class="line">master_last_io_seconds_ago:1</span><br><span class="line">master_sync_in_progress:0</span><br><span class="line">slave_repl_offset:58459</span><br><span class="line">slave_priority:100</span><br><span class="line">slave_read_only:1</span><br><span class="line">connected_slaves:0</span><br><span class="line">master_replid:85aba463c276379cc0294f8c5bd4620815899d4e</span><br><span class="line">master_replid2:cb94b9c2350916f815229ef83734adbb6824648d</span><br><span class="line">master_repl_offset:58459</span><br><span class="line">second_repl_offset:18789</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:840</span><br><span class="line">repl_backlog_histlen:57620</span><br><span class="line">127.0.0.1:6383&gt; keys *</span><br><span class="line">1) &quot;k3&quot;</span><br><span class="line">2) &quot;k1&quot;</span><br><span class="line">3) &quot;k6&quot;</span><br><span class="line">4) &quot;k5&quot;</span><br><span class="line">5) &quot;k2&quot;</span><br><span class="line">6) &quot;k4&quot;</span><br><span class="line">127.0.0.1:6383&gt;</span><br></pre></td></tr></table></figure>
+
+<p>问题：如果之前的master重启回来，会不会双master冲突？</p>
+<p>原master: 6379</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_redis_6379]# /usr/local/redis-6.0.9/bin/redis-server my_redis_conf_6379.conf</span><br><span class="line">[root@localhost my_redis_6379]# /usr/local/redis-6.0.9/bin/redis-cli</span><br><span class="line">127.0.0.1:6379&gt;</span><br><span class="line">127.0.0.1:6379&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">role:slave</span><br><span class="line">master_host:127.0.0.1</span><br><span class="line">master_port:6382</span><br><span class="line">master_link_status:up</span><br><span class="line">master_last_io_seconds_ago:1</span><br><span class="line">master_sync_in_progress:0</span><br><span class="line">slave_repl_offset:70305</span><br><span class="line">slave_priority:100</span><br><span class="line">slave_read_only:1</span><br><span class="line">connected_slaves:0</span><br><span class="line">master_replid:85aba463c276379cc0294f8c5bd4620815899d4e</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:70305</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:69324</span><br><span class="line">repl_backlog_histlen:982</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>新master: 6382</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6382&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">role:master</span><br><span class="line">connected_slaves:4</span><br><span class="line">slave0:ip=127.0.0.1,port=6383,state=online,offset=76962,lag=0</span><br><span class="line">slave1:ip=127.0.0.1,port=6380,state=online,offset=76815,lag=0</span><br><span class="line">slave2:ip=127.0.0.1,port=6381,state=online,offset=76815,lag=0</span><br><span class="line">slave3:ip=127.0.0.1,port=6379,state=online,offset=76815,lag=0</span><br><span class="line">master_replid:85aba463c276379cc0294f8c5bd4620815899d4e</span><br><span class="line">master_replid2:cb94b9c2350916f815229ef83734adbb6824648d</span><br><span class="line">master_repl_offset:76962</span><br><span class="line">second_repl_offset:18789</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:29</span><br><span class="line">repl_backlog_histlen:76934</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>之前的master恢复后，会自动变为新master的slave。</p>
+<h3 id="5-3，一组sentinel能同时监控多个Master"><a href="#5-3，一组sentinel能同时监控多个Master" class="headerlink" title="5.3，一组sentinel能同时监控多个Master"></a>5.3，一组sentinel能同时监控多个Master</h3><p>在哨兵配置文件<code>sentinel.conf</code>中多添加几行配置即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sentinel monitor &lt;hostname1&gt; &lt;host_ip_1&gt; &lt;host_port_1&gt; 1</span><br><span class="line">sentinel monitor &lt;hostname2&gt; &lt;host_ip_2&gt; &lt;host_port_2&gt; 1</span><br><span class="line">sentinel monitor &lt;hostname3&gt; &lt;host_ip_3&gt; &lt;host_port_3&gt; 1</span><br></pre></td></tr></table></figure>
+
+<h2 id="6，复制的缺点"><a href="#6，复制的缺点" class="headerlink" title="6，复制的缺点"></a>6，复制的缺点</h2><p>由于所有的写操作都是先在Master上操作，然后同步更新到Slave上，所以从Master同步到Slave机器有一定的延迟，当系统很繁忙的时候，延迟问题会更加严重，Slave机器数量的增加也会使这个问题更加严重。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Database/" rel="tag"># Database</a>
+              <a href="/tags/Redis/" rel="tag"># Redis</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/17/Redis/019_redis/" rel="prev" title="19.docker部署redis">
+                  <i class="fa fa-chevron-left"></i> 19.docker部署redis
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/01/17/Redis/017_redis/" rel="next" title="17.Redis客户端使用">
+                  17.Redis客户端使用 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeweimian21</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

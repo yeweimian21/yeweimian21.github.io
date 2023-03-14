@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yeweimian21.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="&amp;nbsp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="12.配置文件redis.conf">
+<meta property="og:url" content="https://yeweimian21.github.io/2019/01/17/Redis/012_redis/index.html">
+<meta property="og:site_name" content="A peaceful place">
+<meta property="og:description" content="&amp;nbsp;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-01-17T09:06:16.000Z">
+<meta property="article:modified_time" content="2023-02-09T01:15:52.314Z">
+<meta property="article:author" content="yeweimian21">
+<meta property="article:tag" content="Database">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yeweimian21.github.io/2019/01/17/Redis/012_redis/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2019/01/17/Redis/012_redis/","path":"2019/01/17/Redis/012_redis/","title":"12.配置文件redis.conf"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>12.配置文件redis.conf | A peaceful place</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A peaceful place</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">inner peace</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6redis-conf"><span class="nav-number">1.</span> <span class="nav-text">1. 配置文件redis.conf</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Units%E5%8D%95%E4%BD%8D"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Units单位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-INCLUDES%E5%8C%85%E5%90%AB"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 INCLUDES包含</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-NETWORK%E9%80%9A%E7%94%A8"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 NETWORK通用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-GENERAL%E9%80%9A%E7%94%A8"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 GENERAL通用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-SNAPSHOTTING%E5%BF%AB%E7%85%A7"><span class="nav-number">1.5.</span> <span class="nav-text">5. SNAPSHOTTING快照</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-REPLICATION%E5%A4%8D%E5%88%B6"><span class="nav-number">1.6.</span> <span class="nav-text">6. REPLICATION复制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-SECURITY%E5%AE%89%E5%85%A8"><span class="nav-number">1.7.</span> <span class="nav-text">7. SECURITY安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-LIMITS%E9%99%90%E5%88%B6"><span class="nav-number">1.8.</span> <span class="nav-text">8. LIMITS限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-APPEND-ONLY-MODE-%E8%BF%BD%E5%8A%A0"><span class="nav-number">1.9.</span> <span class="nav-text">9. APPEND ONLY MODE 追加</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-redis-conf%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">2. redis.conf常见配置介绍</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeweimian21</p>
+  <div class="site-description" itemprop="description">A novice</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">213</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://yeweimian21.github.io/2019/01/17/Redis/012_redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeweimian21">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A peaceful place">
+      <meta itemprop="description" content="A novice">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="12.配置文件redis.conf | A peaceful place">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          12.配置文件redis.conf
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-17 17:06:16" itemprop="dateCreated datePublished" datetime="2019-01-17T17:06:16+08:00">2019-01-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-02-09 09:15:52" itemprop="dateModified" datetime="2023-02-09T09:15:52+08:00">2023-02-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>&nbsp;</p>
+<span id="more"></span>
+
+<h1 id="1-配置文件redis-conf"><a href="#1-配置文件redis-conf" class="headerlink" title="1. 配置文件redis.conf"></a>1. 配置文件redis.conf</h1><p>Redis的配置文件<code>redis.conf</code>位于<code>/usr/local/src/redis-6.0.9</code>目录下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost redis-6.0.9]# pwd</span><br><span class="line">/usr/local/src/redis-6.0.9</span><br><span class="line">[root@localhost redis-6.0.9]# ls -l</span><br><span class="line">total 292</span><br><span class="line">-rw-r--r--.  1 root root 108806 Nov 29 11:38 00-RELEASENOTES</span><br><span class="line">-rw-r--r--.  1 root root     51 Nov 29 11:38 BUGS</span><br><span class="line">-rw-r--r--.  1 root root   2499 Nov 29 11:38 CONTRIBUTING</span><br><span class="line">-rw-r--r--.  1 root root   1487 Nov 29 11:38 COPYING</span><br><span class="line">drwxr-xr-x.  6 root root    192 Nov 29 11:38 deps</span><br><span class="line">-rw-r--r--.  1 root root     11 Nov 29 11:38 INSTALL</span><br><span class="line">-rw-r--r--.  1 root root    151 Nov 29 11:38 Makefile</span><br><span class="line">-rw-r--r--.  1 root root   6888 Nov 29 11:38 MANIFESTO</span><br><span class="line">-rw-r--r--.  1 root root  21099 Nov 29 11:38 README.md</span><br><span class="line">-rw-r--r--.  1 root root  84841 Nov 29 11:38 redis.conf</span><br><span class="line">-rwxr-xr-x.  1 root root    275 Nov 29 11:38 runtest</span><br><span class="line">-rwxr-xr-x.  1 root root    280 Nov 29 11:38 runtest-cluster</span><br><span class="line">-rwxr-xr-x.  1 root root    795 Nov 29 11:38 runtest-moduleapi</span><br><span class="line">-rwxr-xr-x.  1 root root    281 Nov 29 11:38 runtest-sentinel</span><br><span class="line">-rw-r--r--.  1 root root  10744 Nov 29 11:38 sentinel.conf</span><br><span class="line">drwxr-xr-x.  3 root root   8192 Nov 29 11:45 src</span><br><span class="line">drwxr-xr-x. 11 root root    182 Nov 29 11:38 tests</span><br><span class="line">-rw-r--r--.  1 root root   3055 Nov 29 11:38 TLS.md</span><br><span class="line">drwxr-xr-x.  9 root root   4096 Nov 29 11:38 utils</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Redis configuration file example.</span><br><span class="line">#</span><br><span class="line"># Note that in order to read the configuration file, Redis must be</span><br><span class="line"># started with the file path as first argument:</span><br><span class="line">#</span><br><span class="line"># ./redis-server /path/to/redis.conf</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-1-Units单位"><a href="#1-1-Units单位" class="headerlink" title="1.1 Units单位"></a>1.1 Units单位</h2><ul>
+<li>配置大小单位,开头定义了一些基本的度量单位，只支持bytes，不支持bit</li>
+<li>对大小写不敏感</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Note on units: when memory size is needed, it is possible to specify</span><br><span class="line"># it in the usual form of 1k 5GB 4M and so forth:</span><br><span class="line">#</span><br><span class="line"># 1k =&gt; 1000 bytes</span><br><span class="line"># 1kb =&gt; 1024 bytes</span><br><span class="line"># 1m =&gt; 1000000 bytes</span><br><span class="line"># 1mb =&gt; 1024*1024 bytes</span><br><span class="line"># 1g =&gt; 1000000000 bytes</span><br><span class="line"># 1gb =&gt; 1024*1024*1024 bytes</span><br><span class="line">#</span><br><span class="line"># units are case insensitive so 1GB 1Gb 1gB are all the same.</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-2-INCLUDES包含"><a href="#1-2-INCLUDES包含" class="headerlink" title="1.2 INCLUDES包含"></a>1.2 INCLUDES包含</h2><p>和我们的spring配置文件类似，可以包含其他配置文件，redis.conf通过include包含其他配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">################################## INCLUDES ###################################</span><br><span class="line"></span><br><span class="line"># Include one or more other config files here.  This is useful if you</span><br><span class="line"># have a standard template that goes to all Redis servers but also need</span><br><span class="line"># to customize a few per-server settings.  Include files can include</span><br><span class="line"># other files, so use this wisely.</span><br><span class="line">#</span><br><span class="line"># Note that option &quot;include&quot; won&#x27;t be rewritten by command &quot;CONFIG REWRITE&quot;</span><br><span class="line"># from admin or Redis Sentinel. Since Redis always uses the last processed</span><br><span class="line"># line as value of a configuration directive, you&#x27;d better put includes</span><br><span class="line"># at the beginning of this file to avoid overwriting config change at runtime.</span><br><span class="line">#</span><br><span class="line"># If instead you are interested in using includes to override configuration</span><br><span class="line"># options, it is better to use include as the last line.</span><br><span class="line">#</span><br><span class="line"># include /path/to/local.conf</span><br><span class="line"># include /path/to/other.conf</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-3-NETWORK通用"><a href="#1-3-NETWORK通用" class="headerlink" title="1.3 NETWORK通用"></a>1.3 NETWORK通用</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">################################## NETWORK #####################################</span><br><span class="line"></span><br><span class="line"># By default, if no &quot;bind&quot; configuration directive is specified, Redis listens</span><br><span class="line"># for connections from all available network interfaces on the host machine.</span><br><span class="line"># It is possible to listen to just one or multiple selected interfaces using</span><br><span class="line"># the &quot;bind&quot; configuration directive, followed by one or more IP addresses.</span><br><span class="line">#</span><br><span class="line"># Examples:</span><br><span class="line">#</span><br><span class="line"># bind 192.168.1.100 10.0.0.1</span><br><span class="line"># bind 127.0.0.1 ::1</span><br><span class="line">#</span><br><span class="line"># ~~~ WARNING ~~~ If the computer running Redis is directly exposed to the</span><br><span class="line"># internet, binding to all the interfaces is dangerous and will expose the</span><br><span class="line"># instance to everybody on the internet. So by default we uncomment the</span><br><span class="line"># following bind directive, that will force Redis to listen only on the</span><br><span class="line"># IPv4 loopback interface address (this means Redis will only be able to</span><br><span class="line"># accept client connections from the same host that it is running on).</span><br><span class="line">#</span><br><span class="line"># IF YOU ARE SURE YOU WANT YOUR INSTANCE TO LISTEN TO ALL THE INTERFACES</span><br><span class="line"># JUST COMMENT OUT THE FOLLOWING LINE.</span><br><span class="line"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span><br><span class="line">bind 127.0.0.1</span><br><span class="line"></span><br><span class="line"># Protected mode is a layer of security protection, in order to avoid that</span><br><span class="line"># Redis instances left open on the internet are accessed and exploited.</span><br><span class="line">#</span><br><span class="line"># When protected mode is on and if:</span><br><span class="line">#</span><br><span class="line"># 1) The server is not binding explicitly to a set of addresses using the</span><br><span class="line">#    &quot;bind&quot; directive.</span><br><span class="line"># 2) No password is configured.</span><br><span class="line">#</span><br><span class="line"># The server only accepts connections from clients connecting from the</span><br><span class="line"># IPv4 and IPv6 loopback addresses 127.0.0.1 and ::1, and from Unix domain</span><br><span class="line"># sockets.</span><br><span class="line">#</span><br><span class="line"># By default protected mode is enabled. You should disable it only if</span><br><span class="line"># you are sure you want clients from other hosts to connect to Redis</span><br><span class="line"># even if no authentication is configured, nor a specific set of interfaces</span><br><span class="line"># are explicitly listed using the &quot;bind&quot; directive.</span><br><span class="line">protected-mode yes</span><br><span class="line"></span><br><span class="line"># Accept connections on the specified port, default is 6379 (IANA #815344).</span><br><span class="line"># If port 0 is specified Redis will not listen on a TCP socket.</span><br><span class="line">port 6379</span><br><span class="line"></span><br><span class="line"># TCP listen() backlog.</span><br><span class="line">#</span><br><span class="line"># In high requests-per-second environments you need a high backlog in order</span><br><span class="line"># to avoid slow clients connection issues. Note that the Linux kernel</span><br><span class="line"># will silently truncate it to the value of /proc/sys/net/core/somaxconn so</span><br><span class="line"># make sure to raise both the value of somaxconn and tcp_max_syn_backlog</span><br><span class="line"># in order to get the desired effect.</span><br><span class="line">tcp-backlog 511</span><br><span class="line"></span><br><span class="line"># Unix socket.</span><br><span class="line">#</span><br><span class="line"># Specify the path for the Unix socket that will be used to listen for</span><br><span class="line"># incoming connections. There is no default, so Redis will not listen</span><br><span class="line"># on a unix socket when not specified.</span><br><span class="line">#</span><br><span class="line"># unixsocket /tmp/redis.sock</span><br><span class="line"># unixsocketperm 700</span><br><span class="line"></span><br><span class="line"># Close the connection after a client is idle for N seconds (0 to disable)</span><br><span class="line">timeout 0</span><br><span class="line"></span><br><span class="line"># TCP keepalive.</span><br><span class="line">#</span><br><span class="line"># If non-zero, use SO_KEEPALIVE to send TCP ACKs to clients in absence</span><br><span class="line"># of communication. This is useful for two reasons:</span><br><span class="line">#</span><br><span class="line"># 1) Detect dead peers.</span><br><span class="line"># 2) Force network equipment in the middle to consider the connection to be</span><br><span class="line">#    alive.</span><br><span class="line">#</span><br><span class="line"># On Linux, the specified value (in seconds) is the period used to send ACKs.</span><br><span class="line"># Note that to close the connection the double of the time is needed.</span><br><span class="line"># On other kernels the period depends on the kernel configuration.</span><br><span class="line">#</span><br><span class="line"># A reasonable value for this option is 300 seconds, which is the new</span><br><span class="line"># Redis default starting with Redis 3.2.1.</span><br><span class="line">tcp-keepalive 300</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>bind   </li>
+</ol>
+<p>默认情况下，redis 在 server 上所有有效的网络接口上监听客户端连接。如果只想在一个或多个网络接口上监听，那就绑定一个IP或者多个IP。多个ip用空格分隔即可。</p>
+<ol start="2">
+<li><p>port运行端口</p>
+</li>
+<li><p>Tcp-backlog</p>
+</li>
+</ol>
+<p>设置tcp的backlog，backlog其实是一个连接队列，backlog队列总和 = 未完成三次握手队列 + 已经完成三次握手队列。</p>
+<p>在高并发环境下你需要一个高backlog值来避免慢客户端连接问题。注意Linux内核会将这个值减小到/proc/sys/net/core/somaxconn的值，所以需要确认增大somaxconn和tcp_max_syn_backlog两个值来达到想要的效果。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd /proc/sys/net/core/</span><br><span class="line">[root@localhost core]# ls</span><br><span class="line">bpf_jit_enable    default_qdisc       message_cost            optmem_max             warnings           xfrm_aevent_rseqth</span><br><span class="line">bpf_jit_harden    dev_weight          netdev_budget           rmem_default           wmem_default       xfrm_larval_drop</span><br><span class="line">bpf_jit_kallsyms  dev_weight_rx_bias  netdev_max_backlog      rmem_max               wmem_max</span><br><span class="line">busy_poll         dev_weight_tx_bias  netdev_rss_key          rps_sock_flow_entries  xfrm_acq_expires</span><br><span class="line">busy_read         message_burst       netdev_tstamp_prequeue  somaxconn              xfrm_aevent_etime</span><br><span class="line">[root@localhost core]# cat somaxconn</span><br><span class="line">128</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>timeout </li>
+</ol>
+<p>当客户端闲置多少秒后关闭连接，如果设置为0表示关闭该功能。</p>
+<ol start="5">
+<li>tcp-keepalive 300</li>
+</ol>
+<p>单位是秒，表示将周期性的使用SO_KEEPALIVE检测客户端是否还处于健康状态，避免服务器一直阻塞，官方给出的建议值是300秒，建议设置成60</p>
+<h2 id="1-4-GENERAL通用"><a href="#1-4-GENERAL通用" class="headerlink" title="1.4 GENERAL通用"></a>1.4 GENERAL通用</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">################################# GENERAL #####################################</span><br><span class="line"></span><br><span class="line"># By default Redis does not run as a daemon. Use &#x27;yes&#x27; if you need it.</span><br><span class="line"># Note that Redis will write a pid file in /var/run/redis.pid when daemonized.</span><br><span class="line"># daemonize no</span><br><span class="line">daemonize yes</span><br><span class="line"></span><br><span class="line"># If you run Redis from upstart or systemd, Redis can interact with your</span><br><span class="line"># supervision tree. Options:</span><br><span class="line">#   supervised no      - no supervision interaction</span><br><span class="line">#   supervised upstart - signal upstart by putting Redis into SIGSTOP mode</span><br><span class="line">#                        requires &quot;expect stop&quot; in your upstart job config</span><br><span class="line">#   supervised systemd - signal systemd by writing READY=1 to $NOTIFY_SOCKET</span><br><span class="line">#   supervised auto    - detect upstart or systemd method based on</span><br><span class="line">#                        UPSTART_JOB or NOTIFY_SOCKET environment variables</span><br><span class="line"># Note: these supervision methods only signal &quot;process is ready.&quot;</span><br><span class="line">#       They do not enable continuous pings back to your supervisor.</span><br><span class="line">supervised no</span><br><span class="line"></span><br><span class="line"># If a pid file is specified, Redis writes it where specified at startup</span><br><span class="line"># and removes it at exit.</span><br><span class="line">#</span><br><span class="line"># When the server runs non daemonized, no pid file is created if none is</span><br><span class="line"># specified in the configuration. When the server is daemonized, the pid file</span><br><span class="line"># is used even if not specified, defaulting to &quot;/var/run/redis.pid&quot;.</span><br><span class="line">#</span><br><span class="line"># Creating a pid file is best effort: if Redis is not able to create it</span><br><span class="line"># nothing bad happens, the server will start and run normally.</span><br><span class="line">pidfile /var/run/redis_6379.pid</span><br><span class="line"></span><br><span class="line"># Specify the server verbosity level.</span><br><span class="line"># This can be one of:</span><br><span class="line"># debug (a lot of information, useful for development/testing)</span><br><span class="line"># verbose (many rarely useful info, but not a mess like the debug level)</span><br><span class="line"># notice (moderately verbose, what you want in production probably)</span><br><span class="line"># warning (only very important / critical messages are logged)</span><br><span class="line">loglevel notice</span><br><span class="line"></span><br><span class="line"># Specify the log file name. Also the empty string can be used to force</span><br><span class="line"># Redis to log on the standard output. Note that if you use standard</span><br><span class="line"># output for logging but daemonize, logs will be sent to /dev/null</span><br><span class="line">logfile &quot;&quot;</span><br><span class="line"></span><br><span class="line"># To enable logging to the system logger, just set &#x27;syslog-enabled&#x27; to yes,</span><br><span class="line"># and optionally update the other syslog parameters to suit your needs.</span><br><span class="line"># syslog-enabled no</span><br><span class="line"></span><br><span class="line"># Specify the syslog identity.</span><br><span class="line"># syslog-ident redis</span><br><span class="line"></span><br><span class="line"># Specify the syslog facility. Must be USER or between LOCAL0-LOCAL7.</span><br><span class="line"># syslog-facility local0</span><br><span class="line"></span><br><span class="line"># Set the number of databases. The default database is DB 0, you can select</span><br><span class="line"># a different one on a per-connection basis using SELECT &lt;dbid&gt; where</span><br><span class="line"># dbid is a number between 0 and &#x27;databases&#x27;-1</span><br><span class="line">databases 16</span><br><span class="line"></span><br><span class="line"># By default Redis shows an ASCII art logo only when started to log to the</span><br><span class="line"># standard output and if the standard output is a TTY. Basically this means</span><br><span class="line"># that normally a logo is displayed only in interactive sessions.</span><br><span class="line">#</span><br><span class="line"># However it is possible to force the pre-4.0 behavior and always show a</span><br><span class="line"># ASCII art logo in startup logs by setting the following option to yes.</span><br><span class="line">always-show-logo yes</span><br></pre></td></tr></table></figure>
+
+<p><code>daemonize no</code>: 是否以守护模式启动，默认为no，配置为yes时以守护模式启动，这时redis instance会将进程号pid写入默认文件/var/run/redis.pid</p>
+<p><code>supervised no</code>: 可以通过upstart和systemd管理Redis守护进程，这个参数是和具体的操作系统相关的。</p>
+<p><code>pidfile /var/run/redis_6379.pid</code>: 配置pid文件路径。当redis以守护模式启动时，如果没有配置pidfile，pidfile默认值是/var/run/redis.pid </p>
+<p><code>loglevel notice</code>: 日志级别。可选项有：debug（记录大量日志信息，适用于开发、测试阶段）；verbose（较多日志信息）；notice（适量日志信息，使用于生产环境）；warning（仅有部分重要、关键信息才会被记录）。</p>
+<p><code>logfile &quot;&quot;</code>: 日志文件的位置，当指定为空字符串时，为标准输出，如果redis已守护进程模式运行，那么日志将会输出到 /dev/null </p>
+<p><code>syslog-enabled no</code>: 是否把日志记录到系统日志。</p>
+<p><code>syslog-ident</code>: 设置系统日志的id，日志文件名前缀，如: <code>syslog-ident redis</code></p>
+<p><code>databases 16</code>: 设置数据库的数目。默认的数据库是DB 0，可以在每个连接上使用<code>select [dbid]</code>命令选择一个不同的数据库，dbid是一个介于0到(databases-1)之间的数值。</p>
+<p><code>always-show-logo yes</code>: 是否一直显示logo</p>
+<p>注: /var/run/redis_6379.pid: Redis在启动时写入这个文件，当退出时移除这个文件。当启动多个redis实例时，redis_6379.pid记录最后一个redis实例的pid</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]# ps -ef | grep redis</span><br><span class="line">root       2181      1  0 23:14 ?        00:00:00 ./redis-server 127.0.0.1:6379</span><br><span class="line">root       2196      1  0 23:17 ?        00:00:00 ./redis-server 127.0.0.1:6380</span><br><span class="line">root       2215      1  1 23:18 ?        00:00:00 ./redis-server 127.0.0.1:6381</span><br><span class="line">root       2226      1  6 23:19 ?        00:00:00 ./redis-server 127.0.0.1:6378</span><br><span class="line">root       2232   1801  0 23:19 pts/0    00:00:00 grep --color=auto redis</span><br><span class="line">[root@localhost run]# ls -l</span><br><span class="line">total 36</span><br><span class="line">-rw-r--r--.  1 root root    4 Dec  1 21:26 auditd.pid</span><br><span class="line">drwxr-xr-x.  2 root root   40 Dec  1 21:26 console</span><br><span class="line">drwxr-xr-x.  7 root root  140 Dec  1 21:26 container-storage-setup</span><br><span class="line">-rw-r--r--.  1 root root    4 Dec  1 21:26 crond.pid</span><br><span class="line">----------.  1 root root    0 Dec  1 21:26 cron.reboot</span><br><span class="line">drwx------.  2 root root   40 Dec  1 21:26 cryptsetup</span><br><span class="line">drwxr-xr-x.  2 root root   60 Dec  1 21:26 dbus</span><br><span class="line">-rw-r--r--.  1 root root    4 Dec  1 23:07 dhclient-ens33.pid</span><br><span class="line">prw-------.  1 root root    0 Dec  1 21:26 dmeventd-client</span><br><span class="line">prw-------.  1 root root    0 Dec  1 21:26 dmeventd-server</span><br><span class="line">drwx------.  6 root root  120 Dec  1 21:26 docker</span><br><span class="line">-rw-r--r--.  1 root root    4 Dec  1 21:26 docker.pid</span><br><span class="line">srw-rw----.  1 root root    0 Dec  1 21:26 docker.sock</span><br><span class="line">-rw-------.  1 root root    0 Dec  1 21:26 ebtables.lock</span><br><span class="line">drwxr-xr-x.  2 root root   40 Dec  1 21:26 faillock</span><br><span class="line">drwxr-x---.  2 root root   40 Dec  1 21:26 firewalld</span><br><span class="line">drwxr-xr-x.  4 root root  120 Dec  1 21:26 initramfs</span><br><span class="line">drwxr-xr-x.  5 root root  120 Dec  1 21:26 lock</span><br><span class="line">drwxr-xr-x.  3 root root   60 Dec  1 21:26 log</span><br><span class="line">drwx------.  3 root root  100 Dec  1 21:26 lvm</span><br><span class="line">-rw-r--r--.  1 root root    4 Dec  1 21:26 lvmetad.pid</span><br><span class="line">drwxr-xr-x.  2 root root   40 Dec  1 21:26 mount</span><br><span class="line">drwxrwxr-x.  2 root root   40 Dec  1 21:26 netreport</span><br><span class="line">drwxr-xr-x.  3 root root  120 Dec  1 21:26 NetworkManager</span><br><span class="line">drwxr-xr-x.  2 root root   40 Dec  1 21:26 plymouth</span><br><span class="line">-rw-r--r--.  1 root root    5 Dec  1 23:19 redis_6379.pid</span><br><span class="line">drwxr-xr-x.  2 root root   80 Dec  1 21:26 rhsm</span><br><span class="line">drwxr-xr-x.  2 root root   40 Dec  1 21:26 sepermit</span><br><span class="line">drwxr-xr-x.  2 root root   40 Dec  1 21:26 setrans</span><br><span class="line">-rw-r--r--.  1 root root    5 Dec  1 21:26 sshd.pid</span><br><span class="line">drwx--x--x.  3 root root   60 Dec  1 21:26 sudo</span><br><span class="line">-rw-------.  1 root root    4 Dec  1 21:26 syslogd.pid</span><br><span class="line">drwxr-xr-x. 18 root root  440 Dec  1 21:26 systemd</span><br><span class="line">drwxr-xr-x.  2 root root   60 Dec  1 21:26 tmpfiles.d</span><br><span class="line">drwxr-xr-x.  2 root root   60 Dec  1 21:26 tuned</span><br><span class="line">drwxr-xr-x.  7 root root  160 Dec  1 21:26 udev</span><br><span class="line">drwxr-xr-x.  3 root root   60 Dec  1 21:31 user</span><br><span class="line">-rw-rw-r--.  1 root utmp 1920 Dec  1 23:11 utmp</span><br><span class="line">drwxr-xr-x.  2 root root   60 Dec  1 21:26 vmware</span><br><span class="line">-rw-------.  1 root root    0 Dec  1 21:26 xtables.lock</span><br><span class="line">[root@localhost run]# cat redis_6379.pid</span><br><span class="line">2226</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-SNAPSHOTTING快照"><a href="#5-SNAPSHOTTING快照" class="headerlink" title="5. SNAPSHOTTING快照"></a>5. SNAPSHOTTING快照</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">################################ SNAPSHOTTING  ################################</span><br><span class="line">#</span><br><span class="line"># Save the DB on disk:</span><br><span class="line">#</span><br><span class="line">#   save &lt;seconds&gt; &lt;changes&gt;</span><br><span class="line">#</span><br><span class="line">#   Will save the DB if both the given number of seconds and the given</span><br><span class="line">#   number of write operations against the DB occurred.</span><br><span class="line">#</span><br><span class="line">#   In the example below the behavior will be to save:</span><br><span class="line">#   after 900 sec (15 min) if at least 1 key changed</span><br><span class="line">#   after 300 sec (5 min) if at least 10 keys changed</span><br><span class="line">#   after 60 sec if at least 10000 keys changed</span><br><span class="line">#</span><br><span class="line">#   Note: you can disable saving completely by commenting out all &quot;save&quot; lines.</span><br><span class="line">#</span><br><span class="line">#   It is also possible to remove all the previously configured save</span><br><span class="line">#   points by adding a save directive with a single empty string argument</span><br><span class="line">#   like in the following example:</span><br><span class="line">#</span><br><span class="line">#   save &quot;&quot;</span><br><span class="line"></span><br><span class="line">save 900 1</span><br><span class="line">save 300 10</span><br><span class="line">save 60 10000</span><br><span class="line"></span><br><span class="line"># By default Redis will stop accepting writes if RDB snapshots are enabled</span><br><span class="line"># (at least one save point) and the latest background save failed.</span><br><span class="line"># This will make the user aware (in a hard way) that data is not persisting</span><br><span class="line"># on disk properly, otherwise chances are that no one will notice and some</span><br><span class="line"># disaster will happen.</span><br><span class="line">#</span><br><span class="line"># If the background saving process will start working again Redis will</span><br><span class="line"># automatically allow writes again.</span><br><span class="line">#</span><br><span class="line"># However if you have setup your proper monitoring of the Redis server</span><br><span class="line"># and persistence, you may want to disable this feature so that Redis will</span><br><span class="line"># continue to work as usual even if there are problems with disk,</span><br><span class="line"># permissions, and so forth.</span><br><span class="line">stop-writes-on-bgsave-error yes</span><br><span class="line"></span><br><span class="line"># Compress string objects using LZF when dump .rdb databases?</span><br><span class="line"># By default compression is enabled as it&#x27;s almost always a win.</span><br><span class="line"># If you want to save some CPU in the saving child set it to &#x27;no&#x27; but</span><br><span class="line"># the dataset will likely be bigger if you have compressible values or keys.</span><br><span class="line">rdbcompression yes</span><br><span class="line"></span><br><span class="line"># Since version 5 of RDB a CRC64 checksum is placed at the end of the file.</span><br><span class="line"># This makes the format more resistant to corruption but there is a performance</span><br><span class="line"># hit to pay (around 10%) when saving and loading RDB files, so you can disable it</span><br><span class="line"># for maximum performances.</span><br><span class="line">#</span><br><span class="line"># RDB files created with checksum disabled have a checksum of zero that will</span><br><span class="line"># tell the loading code to skip the check.</span><br><span class="line">rdbchecksum yes</span><br><span class="line"></span><br><span class="line"># The filename where to dump the DB</span><br><span class="line">dbfilename dump.rdb</span><br><span class="line"></span><br><span class="line"># Remove RDB files used by replication in instances without persistence</span><br><span class="line"># enabled. By default this option is disabled, however there are environments</span><br><span class="line"># where for regulations or other security concerns, RDB files persisted on</span><br><span class="line"># disk by masters in order to feed replicas, or stored on disk by replicas</span><br><span class="line"># in order to load them for the initial synchronization, should be deleted</span><br><span class="line"># ASAP. Note that this option ONLY WORKS in instances that have both AOF</span><br><span class="line"># and RDB persistence disabled, otherwise is completely ignored.</span><br><span class="line">#</span><br><span class="line"># An alternative (and sometimes better) way to obtain the same effect is</span><br><span class="line"># to use diskless replication on both master and replicas instances. However</span><br><span class="line"># in the case of replicas, diskless is not always an option.</span><br><span class="line">rdb-del-sync-files no</span><br><span class="line"></span><br><span class="line"># The working directory.</span><br><span class="line">#</span><br><span class="line"># The DB will be written inside this directory, with the filename specified</span><br><span class="line"># above using the &#x27;dbfilename&#x27; configuration directive.</span><br><span class="line">#</span><br><span class="line"># The Append Only File will also be created inside this directory.</span><br><span class="line">#</span><br><span class="line"># Note that you must specify a directory here, not a file name.</span><br><span class="line">dir ./</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><code>save</code>: 保存数据到磁盘。格式是：<code>save [seconds] [changes]</code>，含义是在seconds秒之后至少有changes个keys发生改变则保存一次。<br>例如: </p>
+<ul>
+<li><code>save 900 1</code>: 900秒有一条数据改变就保存</li>
+<li><code>save 300 10</code>: 300秒有10条数据改变就保存</li>
+<li><code>save 60 10000</code>: 600秒有10000条数据改变就保存</li>
+</ul>
+<p><code>stop-writes-on-bgsave-error yes</code>: 默认情况下，如果 redis 最后一次的后台保存失败，redis 将停止接受写操作，这样以一种强硬的方式让用户知道数据不能正确的持久化到磁盘， 否则就会没人注意到灾难的发生。 如果后台保存进程重新启动工作了，redis 也将自动的允许写操作。然而你要是安装了靠谱的监控，你可能不希望 redis 这样做，那你就改成 no 好了。</p>
+<p><code>rdbcompression yes</code>: 是否在dump.rdb数据库的时候压缩字符串，默认设置为yes。如果你想节约一些cpu资源的话，可以把它设置为no，这样的话数据集就可能会比较大。</p>
+<p><code>rdbchecksum yes</code>: 是否CRC64校验rdb文件，会有一定的性能损失（大概10%）</p>
+<p><code>dbfilename dump.rdb</code>: 设置rdb文件的名字。</p>
+<p><code>dir ./</code>: 数据文件保存路径为当前的路径，即redis的bin所在的路径，/usr/local/redis-6.0.9/bin</p>
+<h2 id="6-REPLICATION复制"><a href="#6-REPLICATION复制" class="headerlink" title="6. REPLICATION复制"></a>6. REPLICATION复制</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">################################# REPLICATION #################################</span><br><span class="line"></span><br><span class="line"># Master-Replica replication. Use replicaof to make a Redis instance a copy of</span><br><span class="line"># another Redis server. A few things to understand ASAP about Redis replication.</span><br><span class="line">#</span><br><span class="line">#   +------------------+      +---------------+</span><br><span class="line">#   |      Master      | ---&gt; |    Replica    |</span><br><span class="line">#   | (receive writes) |      |  (exact copy) |</span><br><span class="line">#   +------------------+      +---------------+</span><br><span class="line">#</span><br><span class="line"># 1) Redis replication is asynchronous, but you can configure a master to</span><br><span class="line">#    stop accepting writes if it appears to be not connected with at least</span><br><span class="line">#    a given number of replicas.</span><br><span class="line"># 2) Redis replicas are able to perform a partial resynchronization with the</span><br><span class="line">#    master if the replication link is lost for a relatively small amount of</span><br><span class="line">#    time. You may want to configure the replication backlog size (see the next</span><br><span class="line">#    sections of this file) with a sensible value depending on your needs.</span><br><span class="line"># 3) Replication is automatic and does not need user intervention. After a</span><br><span class="line">#    network partition replicas automatically try to reconnect to masters</span><br><span class="line">#    and resynchronize with them.</span><br><span class="line">#</span><br><span class="line"># replicaof &lt;masterip&gt; &lt;masterport&gt;</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-SECURITY安全"><a href="#7-SECURITY安全" class="headerlink" title="7. SECURITY安全"></a>7. SECURITY安全</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">################################## SECURITY ###################################</span><br><span class="line"></span><br><span class="line"># Warning: since Redis is pretty fast, an outside user can try up to</span><br><span class="line"># 1 million passwords per second against a modern box. This means that you</span><br><span class="line"># should use very strong passwords, otherwise they will be very easy to break.</span><br><span class="line"># Note that because the password is really a shared secret between the client</span><br><span class="line"># and the server, and should not be memorized by any human, the password</span><br><span class="line"># can be easily a long string from /dev/urandom or whatever, so by using a</span><br><span class="line"># long and unguessable password no brute force attack will be possible.</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"># IMPORTANT NOTE: starting with Redis 6 &quot;requirepass&quot; is just a compatibility</span><br><span class="line"># layer on top of the new ACL system. The option effect will be just setting</span><br><span class="line"># the password for the default user. Clients will still authenticate using</span><br><span class="line"># AUTH &lt;password&gt; as usually, or more explicitly with AUTH default &lt;password&gt;</span><br><span class="line"># if they follow the new protocol: both will work.</span><br><span class="line">#</span><br><span class="line"># requirepass foobared</span><br><span class="line">requirepass 123456</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>主要用于访问密码和查看，设置和取消</p>
+<p>可以使用<code>config get requirepass</code>查看密码，<code>config set requirepass [password]</code>设置密码，<code>auth [password]</code>输入密码</p>
+<p>redis.conf:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># IMPORTANT NOTE: starting with Redis 6 &quot;requirepass&quot; is just a compatibility</span><br><span class="line"># layer on top of the new ACL system. The option effect will be just setting</span><br><span class="line"># the password for the default user. Clients will still authenticate using</span><br><span class="line"># AUTH &lt;password&gt; as usually, or more explicitly with AUTH default &lt;password&gt;</span><br><span class="line"># if they follow the new protocol: both will work.</span><br><span class="line">#</span><br><span class="line"># requirepass foobared</span><br><span class="line">requirepass 123456</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]# ./redis-cli</span><br><span class="line">127.0.0.1:6379&gt; ping</span><br><span class="line">(error) NOAUTH Authentication required.</span><br><span class="line">127.0.0.1:6379&gt; auth 123456</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; config get requirepass</span><br><span class="line">1) &quot;requirepass&quot;</span><br><span class="line">2) &quot;123456&quot;</span><br><span class="line">127.0.0.1:6379&gt; config set requirepass abc</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; config get requirepass</span><br><span class="line">1) &quot;requirepass&quot;</span><br><span class="line">2) &quot;abc&quot;</span><br><span class="line">127.0.0.1:6379&gt; ping</span><br><span class="line">PONG</span><br><span class="line">127.0.0.1:6379&gt; quit</span><br><span class="line">[root@localhost bin]# ./redis-cli</span><br><span class="line">127.0.0.1:6379&gt; ping</span><br><span class="line">(error) NOAUTH Authentication required.</span><br><span class="line">127.0.0.1:6379&gt; auth 123456</span><br><span class="line">(error) WRONGPASS invalid username-password pair</span><br><span class="line">127.0.0.1:6379&gt; auth abc</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; ping</span><br><span class="line">PONG</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-LIMITS限制"><a href="#8-LIMITS限制" class="headerlink" title="8. LIMITS限制"></a>8. LIMITS限制</h2><p>8.1 maxclients 10000 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">################################### CLIENTS ####################################</span><br><span class="line"></span><br><span class="line"># Set the max number of connected clients at the same time. By default</span><br><span class="line"># this limit is set to 10000 clients, however if the Redis server is not</span><br><span class="line"># able to configure the process file limit to allow for the specified limit</span><br><span class="line"># the max number of allowed clients is set to the current file limit</span><br><span class="line"># minus 32 (as Redis reserves a few file descriptors for internal uses).</span><br><span class="line">#</span><br><span class="line"># Once the limit is reached Redis will close all the new connections sending</span><br><span class="line"># an error &#x27;max number of clients reached&#x27;.</span><br><span class="line">#</span><br><span class="line"># IMPORTANT: When Redis Cluster is used, the max number of connections is also</span><br><span class="line"># shared with the cluster bus: every node in the cluster will use two</span><br><span class="line"># connections, one incoming and another outgoing. It is important to size the</span><br><span class="line"># limit accordingly in case of very large clusters.</span><br><span class="line">#</span><br><span class="line"># maxclients 10000</span><br></pre></td></tr></table></figure>
+
+<p>设置redis同时可以与多少个客户端进行连接。默认情况下为10000个客户端。当你无法设置进程文件句柄限制时，redis会设置为当前的文件句柄限制值减去32，因为redis会为自身内部处理逻辑留一些句柄出来。如果达到了此限制，redis则会拒绝新的连接请求，并且向这些连接请求方发出“max number of clients reached”以作回应。</p>
+<p>8.2 maxmemory</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">############################## MEMORY MANAGEMENT ################################</span><br><span class="line"></span><br><span class="line"># Set a memory usage limit to the specified amount of bytes.</span><br><span class="line"># When the memory limit is reached Redis will try to remove keys</span><br><span class="line"># according to the eviction policy selected (see maxmemory-policy).</span><br><span class="line">#</span><br><span class="line"># If Redis can&#x27;t remove keys according to the policy, or if the policy is</span><br><span class="line"># set to &#x27;noeviction&#x27;, Redis will start to reply with errors to commands</span><br><span class="line"># that would use more memory, like SET, LPUSH, and so on, and will continue</span><br><span class="line"># to reply to read-only commands like GET.</span><br><span class="line">#</span><br><span class="line"># This option is usually useful when using Redis as an LRU or LFU cache, or to</span><br><span class="line"># set a hard memory limit for an instance (using the &#x27;noeviction&#x27; policy).</span><br><span class="line">#</span><br><span class="line"># WARNING: If you have replicas attached to an instance with maxmemory on,</span><br><span class="line"># the size of the output buffers needed to feed the replicas are subtracted</span><br><span class="line"># from the used memory count, so that network problems / resyncs will</span><br><span class="line"># not trigger a loop where keys are evicted, and in turn the output</span><br><span class="line"># buffer of replicas is full with DELs of keys evicted triggering the deletion</span><br><span class="line"># of more keys, and so forth until the database is completely emptied.</span><br><span class="line">#</span><br><span class="line"># In short... if you have replicas attached it is suggested that you set a lower</span><br><span class="line"># limit for maxmemory so that there is some free RAM on the system for replica</span><br><span class="line"># output buffers (but this is not needed if the policy is &#x27;noeviction&#x27;).</span><br><span class="line">#</span><br><span class="line"># maxmemory &lt;bytes&gt;</span><br></pre></td></tr></table></figure>
+
+<p>设置redis可以使用的内存量。一旦到达内存使用上限，redis将会试图移除内部数据，移除规则可以通过maxmemory-policy来指定。如果redis无法根据移除规则来移除内存中的数据，或者设置了“不允许移除”，那么redis则会针对那些需要申请内存的指令返回错误信息，比如SET、LPUSH等。但是对于无内存申请的指令，仍然会正常响应，比如GET等。如果你的redis是主redis（说明你的redis有从redis），那么在设置内存使用上限时，需要在系统中留出一些内存空间给同步队列缓存，只有在你设置的是“不移除”的情况下，才不用考虑这个因素</p>
+<p>8.3 maxmemory-policy</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"># MAXMEMORY POLICY: how Redis will select what to remove when maxmemory</span><br><span class="line"># is reached. You can select one from the following behaviors:</span><br><span class="line">#</span><br><span class="line"># volatile-lru -&gt; Evict using approximated LRU, only keys with an expire set.</span><br><span class="line"># allkeys-lru -&gt; Evict any key using approximated LRU.</span><br><span class="line"># volatile-lfu -&gt; Evict using approximated LFU, only keys with an expire set.</span><br><span class="line"># allkeys-lfu -&gt; Evict any key using approximated LFU.</span><br><span class="line"># volatile-random -&gt; Remove a random key having an expire set.</span><br><span class="line"># allkeys-random -&gt; Remove a random key, any key.</span><br><span class="line"># volatile-ttl -&gt; Remove the key with the nearest expire time (minor TTL)</span><br><span class="line"># noeviction -&gt; Don&#x27;t evict anything, just return an error on write operations.</span><br><span class="line">#</span><br><span class="line"># LRU means Least Recently Used</span><br><span class="line"># LFU means Least Frequently Used</span><br><span class="line">#</span><br><span class="line"># Both LRU, LFU and volatile-ttl are implemented using approximated</span><br><span class="line"># randomized algorithms.</span><br><span class="line">#</span><br><span class="line"># Note: with any of the above policies, Redis will return an error on write</span><br><span class="line">#       operations, when there are no suitable keys for eviction.</span><br><span class="line">#</span><br><span class="line">#       At the date of writing these commands are: set setnx setex append</span><br><span class="line">#       incr decr rpush lpush rpushx lpushx linsert lset rpoplpush sadd</span><br><span class="line">#       sinter sinterstore sunion sunionstore sdiff sdiffstore zadd zincrby</span><br><span class="line">#       zunionstore zinterstore hset hsetnx hmset hincrby incrby decrby</span><br><span class="line">#       getset mset msetnx exec sort</span><br><span class="line">#</span><br><span class="line"># The default is:</span><br><span class="line">#</span><br><span class="line"># maxmemory-policy noeviction</span><br></pre></td></tr></table></figure>
+
+<p>（1）volatile-lru：使用LRU算法移除key，只对设置了过期时间的键</p>
+<p>（2）allkeys-lru：使用LRU算法移除key</p>
+<p>（3）volatile-random：在过期集合中移除随机的key，只对设置了过期时间的键</p>
+<p>（4）allkeys-random：移除随机的key</p>
+<p>（5）volatile-ttl：移除那些TTL值最小的key，即那些最近要过期的key</p>
+<p>（6）noeviction：不进行移除。针对写操作，只是返回错误信息</p>
+<p>8.4 maxmemory-samples</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># LRU, LFU and minimal TTL algorithms are not precise algorithms but approximated</span><br><span class="line"># algorithms (in order to save memory), so you can tune it for speed or</span><br><span class="line"># accuracy. By default Redis will check five keys and pick the one that was</span><br><span class="line"># used least recently, you can change the sample size using the following</span><br><span class="line"># configuration directive.</span><br><span class="line">#</span><br><span class="line"># The default of 5 produces good enough results. 10 Approximates very closely</span><br><span class="line"># true LRU but costs more CPU. 3 is faster but not very accurate.</span><br><span class="line">#</span><br><span class="line"># maxmemory-samples 5</span><br></pre></td></tr></table></figure>
+
+<p>设置样本数量，LRU算法和最小TTL算法都并非是精确的算法，而是估算值，所以你可以设置样本的大小，redis默认会检查这么多个key并选择其中LRU的那个</p>
+<h2 id="9-APPEND-ONLY-MODE-追加"><a href="#9-APPEND-ONLY-MODE-追加" class="headerlink" title="9. APPEND ONLY MODE 追加"></a>9. APPEND ONLY MODE 追加</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line">############################## APPEND ONLY MODE ###############################</span><br><span class="line"></span><br><span class="line"># By default Redis asynchronously dumps the dataset on disk. This mode is</span><br><span class="line"># good enough in many applications, but an issue with the Redis process or</span><br><span class="line"># a power outage may result into a few minutes of writes lost (depending on</span><br><span class="line"># the configured save points).</span><br><span class="line">#</span><br><span class="line"># The Append Only File is an alternative persistence mode that provides</span><br><span class="line"># much better durability. For instance using the default data fsync policy</span><br><span class="line"># (see later in the config file) Redis can lose just one second of writes in a</span><br><span class="line"># dramatic event like a server power outage, or a single write if something</span><br><span class="line"># wrong with the Redis process itself happens, but the operating system is</span><br><span class="line"># still running correctly.</span><br><span class="line">#</span><br><span class="line"># AOF and RDB persistence can be enabled at the same time without problems.</span><br><span class="line"># If the AOF is enabled on startup Redis will load the AOF, that is the file</span><br><span class="line"># with the better durability guarantees.</span><br><span class="line">#</span><br><span class="line"># Please check http://redis.io/topics/persistence for more information.</span><br><span class="line"></span><br><span class="line">appendonly no</span><br><span class="line"></span><br><span class="line"># The name of the append only file (default: &quot;appendonly.aof&quot;)</span><br><span class="line"></span><br><span class="line">appendfilename &quot;appendonly.aof&quot;</span><br><span class="line"></span><br><span class="line"># The fsync() call tells the Operating System to actually write data on disk</span><br><span class="line"># instead of waiting for more data in the output buffer. Some OS will really flush</span><br><span class="line"># data on disk, some other OS will just try to do it ASAP.</span><br><span class="line">#</span><br><span class="line"># Redis supports three different modes:</span><br><span class="line">#</span><br><span class="line"># no: don&#x27;t fsync, just let the OS flush the data when it wants. Faster.</span><br><span class="line"># always: fsync after every write to the append only log. Slow, Safest.</span><br><span class="line"># everysec: fsync only one time every second. Compromise.</span><br><span class="line">#</span><br><span class="line"># The default is &quot;everysec&quot;, as that&#x27;s usually the right compromise between</span><br><span class="line"># speed and data safety. It&#x27;s up to you to understand if you can relax this to</span><br><span class="line"># &quot;no&quot; that will let the operating system flush the output buffer when</span><br><span class="line"># it wants, for better performances (but if you can live with the idea of</span><br><span class="line"># some data loss consider the default persistence mode that&#x27;s snapshotting),</span><br><span class="line"># or on the contrary, use &quot;always&quot; that&#x27;s very slow but a bit safer than</span><br><span class="line"># everysec.</span><br><span class="line">#</span><br><span class="line"># More details please check the following article:</span><br><span class="line"># http://antirez.com/post/redis-persistence-demystified.html</span><br><span class="line">#</span><br><span class="line"># If unsure, use &quot;everysec&quot;.</span><br><span class="line"></span><br><span class="line"># appendfsync always</span><br><span class="line">appendfsync everysec</span><br><span class="line"># appendfsync no</span><br><span class="line"></span><br><span class="line"># When the AOF fsync policy is set to always or everysec, and a background</span><br><span class="line"># saving process (a background save or AOF log background rewriting) is</span><br><span class="line"># performing a lot of I/O against the disk, in some Linux configurations</span><br><span class="line"># Redis may block too long on the fsync() call. Note that there is no fix for</span><br><span class="line"># this currently, as even performing fsync in a different thread will block</span><br><span class="line"># our synchronous write(2) call.</span><br><span class="line">#</span><br><span class="line"># In order to mitigate this problem it&#x27;s possible to use the following option</span><br><span class="line"># that will prevent fsync() from being called in the main process while a</span><br><span class="line"># BGSAVE or BGREWRITEAOF is in progress.</span><br><span class="line">#</span><br><span class="line"># This means that while another child is saving, the durability of Redis is</span><br><span class="line"># the same as &quot;appendfsync none&quot;. In practical terms, this means that it is</span><br><span class="line"># possible to lose up to 30 seconds of log in the worst scenario (with the</span><br><span class="line"># default Linux settings).</span><br><span class="line">#</span><br><span class="line"># If you have latency problems turn this to &quot;yes&quot;. Otherwise leave it as</span><br><span class="line"># &quot;no&quot; that is the safest pick from the point of view of durability.</span><br><span class="line"></span><br><span class="line">no-appendfsync-on-rewrite no</span><br><span class="line"></span><br><span class="line"># Automatic rewrite of the append only file.</span><br><span class="line"># Redis is able to automatically rewrite the log file implicitly calling</span><br><span class="line"># BGREWRITEAOF when the AOF log size grows by the specified percentage.</span><br><span class="line">#</span><br><span class="line"># This is how it works: Redis remembers the size of the AOF file after the</span><br><span class="line"># latest rewrite (if no rewrite has happened since the restart, the size of</span><br><span class="line"># the AOF at startup is used).</span><br><span class="line">#</span><br><span class="line"># This base size is compared to the current size. If the current size is</span><br><span class="line"># bigger than the specified percentage, the rewrite is triggered. Also</span><br><span class="line"># you need to specify a minimal size for the AOF file to be rewritten, this</span><br><span class="line"># is useful to avoid rewriting the AOF file even if the percentage increase</span><br><span class="line"># is reached but it is still pretty small.</span><br><span class="line">#</span><br><span class="line"># Specify a percentage of zero in order to disable the automatic AOF</span><br><span class="line"># rewrite feature.</span><br><span class="line"></span><br><span class="line">auto-aof-rewrite-percentage 100</span><br><span class="line">auto-aof-rewrite-min-size 64mb</span><br><span class="line"></span><br><span class="line"># An AOF file may be found to be truncated at the end during the Redis</span><br><span class="line"># startup process, when the AOF data gets loaded back into memory.</span><br><span class="line"># This may happen when the system where Redis is running</span><br><span class="line"># crashes, especially when an ext4 filesystem is mounted without the</span><br><span class="line"># data=ordered option (however this can&#x27;t happen when Redis itself</span><br><span class="line"># crashes or aborts but the operating system still works correctly).</span><br><span class="line">#</span><br><span class="line"># Redis can either exit with an error when this happens, or load as much</span><br><span class="line"># data as possible (the default now) and start if the AOF file is found</span><br><span class="line"># to be truncated at the end. The following option controls this behavior.</span><br><span class="line">#</span><br><span class="line"># If aof-load-truncated is set to yes, a truncated AOF file is loaded and</span><br><span class="line"># the Redis server starts emitting a log to inform the user of the event.</span><br><span class="line"># Otherwise if the option is set to no, the server aborts with an error</span><br><span class="line"># and refuses to start. When the option is set to no, the user requires</span><br><span class="line"># to fix the AOF file using the &quot;redis-check-aof&quot; utility before to restart</span><br><span class="line"># the server.</span><br><span class="line">#</span><br><span class="line"># Note that if the AOF file will be found to be corrupted in the middle</span><br><span class="line"># the server will still exit with an error. This option only applies when</span><br><span class="line"># Redis will try to read more data from the AOF file but not enough bytes</span><br><span class="line"># will be found.</span><br><span class="line">aof-load-truncated yes</span><br><span class="line"></span><br><span class="line"># When rewriting the AOF file, Redis is able to use an RDB preamble in the</span><br><span class="line"># AOF file for faster rewrites and recoveries. When this option is turned</span><br><span class="line"># on the rewritten AOF file is composed of two different stanzas:</span><br><span class="line">#</span><br><span class="line">#   [RDB file][AOF tail]</span><br><span class="line">#</span><br><span class="line"># When loading, Redis recognizes that the AOF file starts with the &quot;REDIS&quot;</span><br><span class="line"># string and loads the prefixed RDB file, then continues loading the AOF</span><br><span class="line"># tail.</span><br><span class="line">aof-use-rdb-preamble yes</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-redis-conf常见配置介绍"><a href="#2-redis-conf常见配置介绍" class="headerlink" title="2. redis.conf常见配置介绍"></a>2. redis.conf常见配置介绍</h1><p>redis.conf 配置项说明如下：</p>
+<ol>
+<li><code>daemonize no</code></li>
+</ol>
+<p>Redis默认不是以守护进程的方式运行，可以通过该配置项修改，使用yes启用守护进程</p>
+<ol start="2">
+<li><code>pidfile /var/run/redis.pid</code></li>
+</ol>
+<p>当Redis以守护进程方式运行时，Redis默认会把pid写入/var/run/redis.pid文件，可以通过pidfile指定</p>
+<ol start="3">
+<li><code>port 6379</code></li>
+</ol>
+<p>指定Redis监听端口，默认端口为6379，作者在自己的一篇博文中解释了为什么选用6379作为默认端口，因为6379在手机按键上MERZ对应的号码，而MERZ取自意大利歌女Alessia Merz的名字</p>
+<ol start="4">
+<li><code>bind 127.0.0.1 0.0.0.0</code></li>
+</ol>
+<p>绑定的主机地址</p>
+<ol start="5">
+<li><code>timeout 300</code></li>
+</ol>
+<p>当客户端闲置多长时间后关闭连接，如果指定为0，表示关闭该功能</p>
+<ol start="6">
+<li><code>loglevel verbose</code></li>
+</ol>
+<p>指定日志记录级别，Redis总共支持四个级别：debug、verbose、notice、warning，默认为verbose</p>
+<ol start="7">
+<li><code>logfile stdout</code></li>
+</ol>
+<p>日志记录方式，默认为标准输出，如果配置Redis为守护进程方式运行，而这里又配置为日志记录方式为标准输出，则日志将会发送给/dev/null</p>
+<ol start="8">
+<li><code>databases 16</code></li>
+</ol>
+<p>设置数据库的数量，默认数据库为0，可以使用SELECT [dbid]命令在连接上指定数据库id</p>
+<ol start="9">
+<li><code>save [seconds] [changes]</code></li>
+</ol>
+<p>指定在多长时间内，有多少次更新操作，就将数据同步到数据文件，可以多个条件配合</p>
+<p>Redis默认配置文件中提供了三个条件：</p>
+<p><code>save 900 1</code>: 900秒（15分钟）内有1个更改</p>
+<p><code>save 300 10</code>: 300秒（5分钟）内有10个更改</p>
+<p><code>save 60 10000</code>: 60秒内有10000个更改</p>
+<ol start="10">
+<li><code>rdbcompression yes</code></li>
+</ol>
+<p>指定存储至本地数据库时是否压缩数据，默认为yes，Redis采用LZF压缩，如果为了节省CPU时间，可以关闭该选项，但会导致数据库文件变的巨大</p>
+<ol start="11">
+<li><code>dbfilename dump.rdb</code></li>
+</ol>
+<p>指定本地数据库文件名，默认值为dump.rdb</p>
+<ol start="12">
+<li><code>dir ./</code></li>
+</ol>
+<p>指定本地数据库存放目录(<code>/redis的安装目录/bin</code>)</p>
+<ol start="13">
+<li><code>slaveof &lt;masterip&gt; &lt;masterport&gt;</code></li>
+</ol>
+<p>设置当本机为slav服务时，设置master服务的IP地址及端口，在Redis启动时，它会自动从master进行数据同步</p>
+<ol start="14">
+<li><code>masterauth &lt;master-password&gt;</code></li>
+</ol>
+<p>当master服务设置了密码保护时，slav服务连接master的密码</p>
+<ol start="15">
+<li><code>requirepass foobared</code></li>
+</ol>
+<p>设置Redis连接密码，如果配置了连接密码，客户端在连接Redis时需要通过AUTH [password]命令提供密码，默认关闭</p>
+<ol start="16">
+<li><code>maxclients 128</code></li>
+</ol>
+<p>设置同一时间最大客户端连接数，默认无限制，Redis可以同时打开的客户端连接数为Redis进程可以打开的最大文件描述符数，如果设置 maxclients 0，表示不作限制。当客户端连接数到达限制时，Redis会关闭新的连接并向客户端返回max number of clients reached错误信息</p>
+<ol start="17">
+<li><code>maxmemory &lt;bytes&gt;</code></li>
+</ol>
+<p>指定Redis最大内存限制，Redis在启动时会把数据加载到内存中，达到最大内存后，Redis会先尝试清除已到期或即将到期的Key，当此方法处理后，仍然到达最大内存设置，将无法再进行写入操作，但仍然可以进行读取操作。Redis新的vm机制，会把Key存放内存，Value会存放在swap区</p>
+<ol start="18">
+<li><code>appendonly no</code></li>
+</ol>
+<p>指定是否在每次更新操作后进行日志记录，Redis在默认情况下是异步的把数据写入磁盘，如果不开启，可能会在断电时导致一段时间内的数据丢失。因为 redis本身同步数据文件是按上面save条件来同步的，所以有的数据会在一段时间内只存在于内存中。默认为no</p>
+<ol start="19">
+<li><code>appendfilename appendonly.aof</code></li>
+</ol>
+<p>指定更新日志文件名，默认为appendonly.aof<br>   <br>20. <code>appendfsync everysec</code></p>
+<p>指定更新日志条件，共有3个可选值： </p>
+<p>no：表示等操作系统进行数据缓存同步到磁盘（快） </p>
+<p>always：表示每次更新操作后手动调用fsync()将数据写到磁盘（慢，安全） </p>
+<p>everysec：表示每秒同步一次（折衷，默认值）</p>
+<ol start="21">
+<li><code>vm-enabled no</code></li>
+</ol>
+<p>指定是否启用虚拟内存机制，默认值为no，简单的介绍一下，VM机制将数据分页存放，由Redis将访问量较少的页即冷数据swap到磁盘上，访问多的页面由磁盘自动换出到内存中（在后面的文章我会仔细分析Redis的VM机制）</p>
+<ol start="22">
+<li><code>vm-swap-file /tmp/redis.swap</code></li>
+</ol>
+<p>虚拟内存文件路径，默认值为/tmp/redis.swap，不可多个Redis实例共享</p>
+<ol start="23">
+<li><code>vm-max-memory 0</code></li>
+</ol>
+<p>将所有大于vm-max-memory的数据存入虚拟内存,无论vm-max-memory设置多小,所有索引数据都是内存存储的(Redis的索引数据 就是keys),也就是说,当vm-max-memory设置为0的时候,其实是所有value都存在于磁盘。默认值为0</p>
+<ol start="24">
+<li><code>vm-page-size 32</code></li>
+</ol>
+<p>Redis swap文件分成了很多的page，一个对象可以保存在多个page上面，但一个page上不能被多个对象共享，vm-page-size是要根据存储的 数据大小来设定的，作者建议如果存储很多小对象，page大小最好设置为32或者64bytes；如果存储很大大对象，则可以使用更大的page，如果不 确定，就使用默认值</p>
+<ol start="25">
+<li><code>vm-pages 134217728</code></li>
+</ol>
+<p>设置swap文件中的page数量，由于页表（一种表示页面空闲或使用的bitmap）是在放在内存中的，，在磁盘上每8个pages将消耗1byte的内存。</p>
+<ol start="26">
+<li><code>vm-max-threads 4</code></li>
+</ol>
+<p>设置访问swap文件的线程数,最好不要超过机器的核数,如果设置为0,那么所有对swap文件的操作都是串行的，可能会造成比较长时间的延迟。默认值为4</p>
+<ol start="27">
+<li><code>glueoutputbuf yes</code></li>
+</ol>
+<p>设置在向客户端应答时，是否把较小的包合并为一个包发送，默认为开启</p>
+<ol start="28">
+<li><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hash-max-zipmap-entries 64</span><br><span class="line">hash-max-zipmap-value 512</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>指定在超过一定的数量或者最大的元素超过某一临界值时，采用一种特殊的哈希算法</p>
+<ol start="29">
+<li><code>activerehashing yes</code></li>
+</ol>
+<p>指定是否激活重置哈希，默认为开启（后面在介绍Redis的哈希算法时具体介绍）</p>
+<ol start="30">
+<li><code>include /path/to/local.conf</code></li>
+</ol>
+<p>指定包含其它的配置文件，可以在同一主机上多个Redis实例之间使用同一份配置文件，而同时各个实例又拥有自己的特定配置文件</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Database/" rel="tag"># Database</a>
+              <a href="/tags/Redis/" rel="tag"># Redis</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/17/Redis/013_redis/" rel="prev" title="13.Redis的持久化">
+                  <i class="fa fa-chevron-left"></i> 13.Redis的持久化
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/01/17/Redis/010_redis/" rel="next" title="10.redis的数据类型">
+                  10.redis的数据类型 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeweimian21</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

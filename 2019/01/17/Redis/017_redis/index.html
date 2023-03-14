@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yeweimian21.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="&amp;nbsp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="17.Redis客户端使用">
+<meta property="og:url" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/index.html">
+<meta property="og:site_name" content="A peaceful place">
+<meta property="og:description" content="&amp;nbsp;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/redis-desktop-manager-1.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/redis-desktop-manager-2.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/redis-desktop-manager-3.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/redis-desktop-manager-4.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/redis-desktop-manager-5.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/redis-plus-1.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/redis-desktop-manager-6.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/redis-desktop-manager-7.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/redis-plus-3.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/redis-desktop-manager-8.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/redis-plus-3.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/redis-plus-5.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/redis-plus-6.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/redis-plus-7.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/redis-plus-8.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/idea-redis-simple-1.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/idea-redis-simple-2.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/idea-redis-simple-3.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/idea-redis-simple-4.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/idea-redis-simple-5.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/idea-redis-simple-6.png">
+<meta property="article:published_time" content="2019-01-17T09:06:16.000Z">
+<meta property="article:modified_time" content="2023-02-09T01:35:46.864Z">
+<meta property="article:author" content="yeweimian21">
+<meta property="article:tag" content="Database">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/redis-desktop-manager-1.png">
+
+
+<link rel="canonical" href="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2019/01/17/Redis/017_redis/","path":"2019/01/17/Redis/017_redis/","title":"17.Redis客户端使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>17.Redis客户端使用 | A peaceful place</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A peaceful place</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">inner peace</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">Redis客户端使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">1. 工具安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%BF%9E%E6%8E%A5redis"><span class="nav-number">1.2.</span> <span class="nav-text">2. 连接redis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E9%85%8D%E7%BD%AEredis-conf%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 配置redis.conf文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%85%B3%E9%97%AD%E9%98%B2%E7%81%AB%E5%A2%99"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 关闭防火墙:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E5%90%AF%E5%8A%A8redis"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 启动redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E5%B7%A5%E5%85%B7%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 工具连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.5 工具使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-%E8%BF%9E%E6%8E%A5%E9%9B%86%E7%BE%A4"><span class="nav-number">1.2.6.</span> <span class="nav-text">2.6 连接集群</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-1-%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">1.2.6.1.</span> <span class="nav-text">2.6.1 新建文件夹</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-2-%E5%87%86%E5%A4%87%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.2.6.2.</span> <span class="nav-text">2.6.2 准备服务端程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-3-%E5%87%86%E5%A4%876%E4%B8%AAredis%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.6.3.</span> <span class="nav-text">2.6.3 准备6个redis的配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-4-%E5%90%8C%E6%97%B6%E5%90%AF%E5%8A%A8%E6%89%80%E6%9C%89%E7%9A%84redis"><span class="nav-number">1.2.6.4.</span> <span class="nav-text">2.6.4 同时启动所有的redis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-5-%E5%88%9B%E5%BB%BA%E9%9B%86%E7%BE%A4%EF%BC%88%E5%88%86%E9%85%8D%E6%A7%BD%EF%BC%89"><span class="nav-number">1.2.6.5.</span> <span class="nav-text">2.6.5 创建集群（分配槽）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-5-redis-plue%E8%BF%9E%E6%8E%A5%E9%9B%86%E7%BE%A4"><span class="nav-number">1.2.6.6.</span> <span class="nav-text">2.6.5 redis plue连接集群</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-IDEA%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8redis%E6%8F%92%E4%BB%B6redis-simple"><span class="nav-number">1.3.</span> <span class="nav-text">3. IDEA安装使用redis插件redis simple</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeweimian21</p>
+  <div class="site-description" itemprop="description">A novice</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">213</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://yeweimian21.github.io/2019/01/17/Redis/017_redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeweimian21">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A peaceful place">
+      <meta itemprop="description" content="A novice">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="17.Redis客户端使用 | A peaceful place">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          17.Redis客户端使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-17 17:06:16" itemprop="dateCreated datePublished" datetime="2019-01-17T17:06:16+08:00">2019-01-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-02-09 09:35:46" itemprop="dateModified" datetime="2023-02-09T09:35:46+08:00">2023-02-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>&nbsp;</p>
+<span id="more"></span>
+
+<h1 id="Redis客户端使用"><a href="#Redis客户端使用" class="headerlink" title="Redis客户端使用"></a>Redis客户端使用</h1><h2 id="1-工具安装"><a href="#1-工具安装" class="headerlink" title="1. 工具安装"></a>1. 工具安装</h2><p>(1) 安装redis-desktop-manager</p>
+<img src="/2019/01/17/Redis/017_redis/redis-desktop-manager-1.png" class="">
+
+<img src="/2019/01/17/Redis/017_redis/redis-desktop-manager-2.png" class="">
+
+<img src="/2019/01/17/Redis/017_redis/redis-desktop-manager-3.png" class="">
+
+<img src="/2019/01/17/Redis/017_redis/redis-desktop-manager-4.png" class="">
+
+<img src="/2019/01/17/Redis/017_redis/redis-desktop-manager-5.png" class="">
+
+<p>(2) 安装redis plus</p>
+<img src="/2019/01/17/Redis/017_redis/redis-plus-1.png" class="">
+
+<h2 id="2-连接redis"><a href="#2-连接redis" class="headerlink" title="2. 连接redis"></a>2. 连接redis</h2><h3 id="2-1-配置redis-conf文件"><a href="#2-1-配置redis-conf文件" class="headerlink" title="2.1 配置redis.conf文件"></a>2.1 配置<code>redis.conf</code>文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># 设置为0.0.0.0，允许所有地址访问</span><br><span class="line">bind 0.0.0.0</span><br><span class="line"></span><br><span class="line">port 6379</span><br><span class="line"></span><br><span class="line">daemonize yes</span><br><span class="line"></span><br><span class="line">pidfile /var/run/redis_6379.pid</span><br><span class="line"></span><br><span class="line">logfile &quot;/usr/local/redis-6.0.9/my_redis_tools/redis-6379.log&quot;</span><br><span class="line"></span><br><span class="line">dbfilename dump-6379.rdb</span><br><span class="line"></span><br><span class="line">dir /usr/local/redis-6.0.9/my_redis_tools/</span><br><span class="line"></span><br><span class="line"># 设置连接密码</span><br><span class="line">requirepass foobared</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-关闭防火墙"><a href="#2-2-关闭防火墙" class="headerlink" title="2.2 关闭防火墙:"></a>2.2 关闭防火墙:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Centos6</span><br><span class="line">查看防火墙状态： </span><br><span class="line">[root@centos6 ~]# service iptables status</span><br><span class="line">iptables：未运行防火墙。</span><br><span class="line">开启防火墙：</span><br><span class="line">[root@centos6 ~]# service iptables start</span><br><span class="line">关闭防火墙：</span><br><span class="line">[root@centos6 ~]# service iptables stop</span><br><span class="line">​</span><br><span class="line">centos7</span><br><span class="line">查看防火墙状态： </span><br><span class="line">firewall-cmd --state</span><br><span class="line">关闭防火墙</span><br><span class="line">systemctl stop firewalld.service</span><br><span class="line">开启防火墙</span><br><span class="line">systemctl start firewalld.service</span><br><span class="line">禁用防火墙</span><br><span class="line">systemctl disable firewalld.service </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_redis_tools]# systemctl status firewalld</span><br><span class="line">● firewalld.service - firewalld - dynamic firewall daemon</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; enabled; vendor preset: enabled)</span><br><span class="line">   Active: active (running) since Thu 2020-12-10 22:00:12 CST; 1h 18min ago</span><br><span class="line">     Docs: man:firewalld(1)</span><br><span class="line"> Main PID: 773 (firewalld)</span><br><span class="line">   CGroup: /system.slice/firewalld.service</span><br><span class="line">           └─773 /usr/bin/python2 -Es /usr/sbin/firewalld --nofork --nopid</span><br><span class="line"></span><br><span class="line">Dec 10 22:00:23 localhost.localdomain firewalld[773]: WARNING: COMMAND_FAILED: &#x27;/usr/sbin/iptables -w10 -t nat -D PREROU...in?).</span><br><span class="line">Dec 10 22:00:23 localhost.localdomain firewalld[773]: WARNING: COMMAND_FAILED: &#x27;/usr/sbin/iptables -w10 -t nat -D OUTPUT...in?).</span><br><span class="line">Dec 10 22:00:23 localhost.localdomain firewalld[773]: WARNING: COMMAND_FAILED: &#x27;/usr/sbin/iptables -w10 -t nat -F DOCKER...name.</span><br><span class="line">Dec 10 22:00:23 localhost.localdomain firewalld[773]: WARNING: COMMAND_FAILED: &#x27;/usr/sbin/iptables -w10 -t nat -X DOCKER...name.</span><br><span class="line">Dec 10 22:00:23 localhost.localdomain firewalld[773]: WARNING: COMMAND_FAILED: &#x27;/usr/sbin/iptables -w10 -t filter -F DOC...name.</span><br><span class="line">Dec 10 22:00:23 localhost.localdomain firewalld[773]: WARNING: COMMAND_FAILED: &#x27;/usr/sbin/iptables -w10 -t filter -X DOC...name.</span><br><span class="line">Dec 10 22:00:23 localhost.localdomain firewalld[773]: WARNING: COMMAND_FAILED: &#x27;/usr/sbin/iptables -w10 -t filter -F DOC...name.</span><br><span class="line">Dec 10 22:00:23 localhost.localdomain firewalld[773]: WARNING: COMMAND_FAILED: &#x27;/usr/sbin/iptables -w10 -t filter -X DOC...name.</span><br><span class="line">Dec 10 22:00:23 localhost.localdomain firewalld[773]: WARNING: COMMAND_FAILED: &#x27;/usr/sbin/iptables -w10 -D FORWARD -i do...in?).</span><br><span class="line">Dec 10 22:00:23 localhost.localdomain firewalld[773]: WARNING: COMMAND_FAILED: &#x27;/usr/sbin/iptables -w10 -D FORWARD -i do...in?).</span><br><span class="line">Hint: Some lines were ellipsized, use -l to show in full.</span><br><span class="line">[root@localhost my_redis_tools]#</span><br><span class="line">[root@localhost my_redis_tools]#</span><br><span class="line">[root@localhost my_redis_tools]# systemctl stop firewalld</span><br><span class="line">[root@localhost my_redis_tools]#</span><br><span class="line">[root@localhost my_redis_tools]#</span><br><span class="line">[root@localhost my_redis_tools]#</span><br><span class="line">[root@localhost my_redis_tools]# systemctl status firewalld</span><br><span class="line">● firewalld.service - firewalld - dynamic firewall daemon</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; enabled; vendor preset: enabled)</span><br><span class="line">   Active: inactive (dead) since Thu 2020-12-10 23:19:19 CST; 3s ago</span><br><span class="line">     Docs: man:firewalld(1)</span><br><span class="line">  Process: 773 ExecStart=/usr/sbin/firewalld --nofork --nopid $FIREWALLD_ARGS (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 773 (code=exited, status=0/SUCCESS)</span><br><span class="line"></span><br><span class="line">Dec 10 22:00:23 localhost.localdomain firewalld[773]: WARNING: COMMAND_FAILED: &#x27;/usr/sbin/iptables -w10 -t nat -F DOCKER...name.</span><br><span class="line">Dec 10 22:00:23 localhost.localdomain firewalld[773]: WARNING: COMMAND_FAILED: &#x27;/usr/sbin/iptables -w10 -t nat -X DOCKER...name.</span><br><span class="line">Dec 10 22:00:23 localhost.localdomain firewalld[773]: WARNING: COMMAND_FAILED: &#x27;/usr/sbin/iptables -w10 -t filter -F DOC...name.</span><br><span class="line">Dec 10 22:00:23 localhost.localdomain firewalld[773]: WARNING: COMMAND_FAILED: &#x27;/usr/sbin/iptables -w10 -t filter -X DOC...name.</span><br><span class="line">Dec 10 22:00:23 localhost.localdomain firewalld[773]: WARNING: COMMAND_FAILED: &#x27;/usr/sbin/iptables -w10 -t filter -F DOC...name.</span><br><span class="line">Dec 10 22:00:23 localhost.localdomain firewalld[773]: WARNING: COMMAND_FAILED: &#x27;/usr/sbin/iptables -w10 -t filter -X DOC...name.</span><br><span class="line">Dec 10 22:00:23 localhost.localdomain firewalld[773]: WARNING: COMMAND_FAILED: &#x27;/usr/sbin/iptables -w10 -D FORWARD -i do...in?).</span><br><span class="line">Dec 10 22:00:23 localhost.localdomain firewalld[773]: WARNING: COMMAND_FAILED: &#x27;/usr/sbin/iptables -w10 -D FORWARD -i do...in?).</span><br><span class="line">Dec 10 23:19:18 localhost.localdomain systemd[1]: Stopping firewalld - dynamic firewall daemon...</span><br><span class="line">Dec 10 23:19:19 localhost.localdomain systemd[1]: Stopped firewalld - dynamic firewall daemon.</span><br><span class="line">Hint: Some lines were ellipsized, use -l to show in full.</span><br><span class="line">[root@localhost my_redis_tools]#</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_redis_tools]# firewall-cmd --state</span><br><span class="line">running</span><br><span class="line">[root@localhost my_redis_tools]# systemctl stop firewalld.service</span><br><span class="line">[root@localhost my_redis_tools]# firewall-cmd --state</span><br><span class="line">not running</span><br><span class="line">[root@localhost my_redis_tools]# </span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-启动redis"><a href="#2-3-启动redis" class="headerlink" title="2.3 启动redis"></a>2.3 启动redis</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost my_redis_tools]# /usr/local/redis-6.0.9/bin/redis-server redis.conf </span><br><span class="line">[root@localhost my_redis_tools]# </span><br><span class="line">[root@localhost my_redis_tools]# ps -ef | grep redis</span><br><span class="line">root      65611      1  0 23:17 ?        00:00:00 /usr/local/redis-6.0.9/bin/redis-server 0.0.0.0:6379</span><br><span class="line">root      65617   1749  0 23:17 pts/0    00:00:00 grep --color=auto redis</span><br><span class="line">[root@localhost my_redis_tools]# </span><br><span class="line">[root@localhost my_redis_tools]# /usr/local/redis-6.0.9/bin/redis-cli </span><br><span class="line">127.0.0.1:6379&gt; </span><br><span class="line">127.0.0.1:6379&gt; ping</span><br><span class="line">(error) NOAUTH Authentication required.</span><br><span class="line">127.0.0.1:6379&gt; auth foobared</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; ping</span><br><span class="line">PONG</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-工具连接"><a href="#2-4-工具连接" class="headerlink" title="2.4 工具连接"></a>2.4 工具连接</h3><p>(1) redis-desktop-manager</p>
+<img src="/2019/01/17/Redis/017_redis/redis-desktop-manager-6.png" class="">
+
+<img src="/2019/01/17/Redis/017_redis/redis-desktop-manager-7.png" class="">
+
+<p>(2) redis plus</p>
+<img src="/2019/01/17/Redis/017_redis/redis-plus-3.png" class="">
+
+<h3 id="2-5-工具使用"><a href="#2-5-工具使用" class="headerlink" title="2.5 工具使用"></a>2.5 工具使用</h3><p>(1) redis-desktop-manager</p>
+<p>key值使用<code>:</code>分隔，例如<code>student:name</code>,<code>student:age</code>，可以实现文件夹层级</p>
+<img src="/2019/01/17/Redis/017_redis/redis-desktop-manager-8.png" class="">
+
+<p>(2) redis plus</p>
+<p>没有实现key值文件夹层级</p>
+<img src="/2019/01/17/Redis/017_redis/redis-plus-3.png" class="">
+
+<h3 id="2-6-连接集群"><a href="#2-6-连接集群" class="headerlink" title="2.6 连接集群"></a>2.6 连接集群</h3><h4 id="2-6-1-新建文件夹"><a href="#2-6-1-新建文件夹" class="headerlink" title="2.6.1 新建文件夹"></a>2.6.1 新建文件夹</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost redis-6.0.9]# mkdir redis_cluster</span><br><span class="line">[root@localhost redis-6.0.9]# cd redis_cluster/</span><br><span class="line">[root@localhost redis_cluster]# pwd</span><br><span class="line">/usr/local/redis-6.0.9/redis_cluster</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-6-2-准备服务端程序"><a href="#2-6-2-准备服务端程序" class="headerlink" title="2.6.2 准备服务端程序"></a>2.6.2 准备服务端程序</h4><p>复制<code>redis-server</code>和<code>redis-cli</code>文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost redis_cluster]# cp /usr/local/redis-6.0.9/bin/redis-server .</span><br><span class="line">[root@localhost redis_cluster]# cp /usr/local/redis-6.0.9/bin/redis-cli .</span><br><span class="line">[root@localhost redis_cluster]# ls -lh</span><br><span class="line">total 14M</span><br><span class="line">-rwxr-xr-x. 1 root root 4.9M Dec  9 21:00 redis-cli</span><br><span class="line">-rwxr-xr-x. 1 root root 8.7M Dec  9 20:59 redis-server</span><br><span class="line">[root@localhost redis_cluster]#</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-6-3-准备6个redis的配置文件"><a href="#2-6-3-准备6个redis的配置文件" class="headerlink" title="2.6.3 准备6个redis的配置文件"></a>2.6.3 准备6个redis的配置文件</h4><p>创建文件夹，配置<code>redis.conf</code>文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost redis_cluster]# mkdir redis-1</span><br><span class="line">[root@localhost redis_cluster]# mkdir redis-2</span><br><span class="line">[root@localhost redis_cluster]# mkdir redis-3</span><br><span class="line">[root@localhost redis_cluster]# mkdir redis-4</span><br><span class="line">[root@localhost redis_cluster]# mkdir redis-5</span><br><span class="line">[root@localhost redis_cluster]# mkdir redis-6</span><br><span class="line"></span><br><span class="line">[root@localhost redis_cluster]# cp /usr/local/src/redis-6.0.9/redis.conf redis-1/redis-7001.conf</span><br><span class="line">[root@localhost redis_cluster]# cp /usr/local/src/redis-6.0.9/redis.conf redis-2/redis-7002.conf</span><br><span class="line">[root@localhost redis_cluster]# cp /usr/local/src/redis-6.0.9/redis.conf redis-3/redis-7003.conf</span><br><span class="line">[root@localhost redis_cluster]# cp /usr/local/src/redis-6.0.9/redis.conf redis-4/redis-7004.conf</span><br><span class="line">[root@localhost redis_cluster]# cp /usr/local/src/redis-6.0.9/redis.conf redis-5/redis-7005.conf</span><br><span class="line">[root@localhost redis_cluster]# cp /usr/local/src/redis-6.0.9/redis.conf redis-6/redis-7006.conf</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">bind 192.168.168.130</span><br><span class="line"></span><br><span class="line">port 7001</span><br><span class="line"># port 7002 ...</span><br><span class="line"></span><br><span class="line">pidfile /var/run/redis_7001.pid</span><br><span class="line"># pidfile /var/run/redis_7002.pid ...</span><br><span class="line"></span><br><span class="line">logfile &quot;/usr/local/redis-6.0.9/redis_cluster/redis-1/redis-7001.log&quot;</span><br><span class="line"># logfile &quot;/usr/local/redis-6.0.9/redis_cluster/redis-2/redis-7002.log&quot; ...</span><br><span class="line"></span><br><span class="line">dbfilename dump-7001.rdb</span><br><span class="line"># dbfilename dump-7002.rdb</span><br><span class="line"></span><br><span class="line">dir /usr/local/redis-6.0.9/redis_cluster/redis-1/</span><br><span class="line"># dir /usr/local/redis-6.0.9/redis_cluster/redis-2/ ...</span><br><span class="line"></span><br><span class="line">daemonize yes</span><br><span class="line"></span><br><span class="line">appendonly yes</span><br><span class="line"></span><br><span class="line">cluster-enabled yes</span><br><span class="line"></span><br><span class="line">cluster-config-file nodes-7001.conf</span><br><span class="line"># cluster-config-file nodes-7002.conf ...</span><br><span class="line"></span><br><span class="line">cluster-node-timeout 5000</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-6-4-同时启动所有的redis"><a href="#2-6-4-同时启动所有的redis" class="headerlink" title="2.6.4 同时启动所有的redis"></a>2.6.4 同时启动所有的redis</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost redis_cluster]# ./redis-server redis-1/redis-7001.conf</span><br><span class="line">[root@localhost redis_cluster]# ./redis-server redis-2/redis-7002.conf</span><br><span class="line">[root@localhost redis_cluster]# ./redis-server redis-3/redis-7003.conf</span><br><span class="line">[root@localhost redis_cluster]# ./redis-server redis-4/redis-7004.conf</span><br><span class="line">[root@localhost redis_cluster]# ./redis-server redis-5/redis-7005.conf</span><br><span class="line">[root@localhost redis_cluster]# ./redis-server redis-6/redis-7006.conf</span><br><span class="line">[root@localhost redis_cluster]#</span><br><span class="line">[root@localhost redis_cluster]# ps -ef | grep redis</span><br><span class="line">root       2429      1  0 23:00 ?        00:00:01 ./redis-server 192.168.168.130:7001 [cluster]</span><br><span class="line">root       2435      1  0 23:00 ?        00:00:02 ./redis-server 192.168.168.130:7002 [cluster]</span><br><span class="line">root       2441      1  0 23:00 ?        00:00:02 ./redis-server 192.168.168.130:7003 [cluster]</span><br><span class="line">root       2460      1  0 23:01 ?        00:00:01 ./redis-server 192.168.168.130:7004 [cluster]</span><br><span class="line">root       2466      1  0 23:01 ?        00:00:01 ./redis-server 192.168.168.130:7005 [cluster]</span><br><span class="line">root       2472      1  0 23:01 ?        00:00:02 ./redis-server 192.168.168.130:7006 [cluster]</span><br><span class="line">root       2516   1759  0 23:14 pts/0    00:00:00 grep --color=auto redis</span><br><span class="line">[root@localhost redis_cluster]#</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-6-5-创建集群（分配槽）"><a href="#2-6-5-创建集群（分配槽）" class="headerlink" title="2.6.5 创建集群（分配槽）"></a>2.6.5 创建集群（分配槽）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost redis_cluster]# ./redis-cli --cluster create 192.168.168.130:7001 192.168.168.130:7002 192.168.168.130:7003 192.168.168.130:7004 192.168.168.130:7005 192.168.168.130:7006 --cluster-replicas 1</span><br><span class="line">&gt;&gt;&gt; Performing hash slots allocation on 6 nodes...</span><br><span class="line">Master[0] -&gt; Slots 0 - 5460</span><br><span class="line">Master[1] -&gt; Slots 5461 - 10922</span><br><span class="line">Master[2] -&gt; Slots 10923 - 16383</span><br><span class="line">Adding replica 192.168.168.130:7005 to 192.168.168.130:7001</span><br><span class="line">Adding replica 192.168.168.130:7006 to 192.168.168.130:7002</span><br><span class="line">Adding replica 192.168.168.130:7004 to 192.168.168.130:7003</span><br><span class="line">&gt;&gt;&gt; Trying to optimize slaves allocation for anti-affinity</span><br><span class="line">[WARNING] Some slaves are in the same host as their master</span><br><span class="line">M: 99abc1f93ec1832530f32c2040149f10fd6341b4 192.168.168.130:7001</span><br><span class="line">   slots:[0-5460] (5461 slots) master</span><br><span class="line">M: 9ba7a3caa97ae0accfc21d38a88c2f986f46e06a 192.168.168.130:7002</span><br><span class="line">   slots:[5461-10922] (5462 slots) master</span><br><span class="line">M: feedb1e4cde43310045d00de50c77c067686e1e3 192.168.168.130:7003</span><br><span class="line">   slots:[10923-16383] (5461 slots) master</span><br><span class="line">S: 923c9615d2dd90cdf07f5043acf2892ec8fbd46f 192.168.168.130:7004</span><br><span class="line">   replicates feedb1e4cde43310045d00de50c77c067686e1e3</span><br><span class="line">S: 0e2148ede5c79e4c9a275d16aa67860a3eabec59 192.168.168.130:7005</span><br><span class="line">   replicates 99abc1f93ec1832530f32c2040149f10fd6341b4</span><br><span class="line">S: 8651ce57669506d66cdb747226dd0d0dbb524d60 192.168.168.130:7006</span><br><span class="line">   replicates 9ba7a3caa97ae0accfc21d38a88c2f986f46e06a</span><br><span class="line">Can I set the above configuration? (type &#x27;yes&#x27; to accept): yes</span><br><span class="line">&gt;&gt;&gt; Nodes configuration updated</span><br><span class="line">&gt;&gt;&gt; Assign a different config epoch to each node</span><br><span class="line">&gt;&gt;&gt; Sending CLUSTER MEET messages to join the cluster</span><br><span class="line">Waiting for the cluster to join</span><br><span class="line">.</span><br><span class="line">&gt;&gt;&gt; Performing Cluster Check (using node 192.168.168.130:7001)</span><br><span class="line">M: 99abc1f93ec1832530f32c2040149f10fd6341b4 192.168.168.130:7001</span><br><span class="line">   slots:[0-5460] (5461 slots) master</span><br><span class="line">   1 additional replica(s)</span><br><span class="line">M: feedb1e4cde43310045d00de50c77c067686e1e3 192.168.168.130:7003</span><br><span class="line">   slots:[10923-16383] (5461 slots) master</span><br><span class="line">   1 additional replica(s)</span><br><span class="line">S: 8651ce57669506d66cdb747226dd0d0dbb524d60 192.168.168.130:7006</span><br><span class="line">   slots: (0 slots) slave</span><br><span class="line">   replicates 9ba7a3caa97ae0accfc21d38a88c2f986f46e06a</span><br><span class="line">S: 0e2148ede5c79e4c9a275d16aa67860a3eabec59 192.168.168.130:7005</span><br><span class="line">   slots: (0 slots) slave</span><br><span class="line">   replicates 99abc1f93ec1832530f32c2040149f10fd6341b4</span><br><span class="line">M: 9ba7a3caa97ae0accfc21d38a88c2f986f46e06a 192.168.168.130:7002</span><br><span class="line">   slots:[5461-10922] (5462 slots) master</span><br><span class="line">   1 additional replica(s)</span><br><span class="line">S: 923c9615d2dd90cdf07f5043acf2892ec8fbd46f 192.168.168.130:7004</span><br><span class="line">   slots: (0 slots) slave</span><br><span class="line">   replicates feedb1e4cde43310045d00de50c77c067686e1e3</span><br><span class="line">[OK] All nodes agree about slots configuration.</span><br><span class="line">&gt;&gt;&gt; Check for open slots...</span><br><span class="line">&gt;&gt;&gt; Check slots coverage...</span><br><span class="line">[OK] All 16384 slots covered.</span><br><span class="line">[root@localhost redis_cluster]#</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost redis_cluster]# ./redis-cli -c -h 192.168.168.130 -p 7001</span><br><span class="line">192.168.168.130:7001&gt; ping</span><br><span class="line">PONG</span><br><span class="line">192.168.168.130:7001&gt; get k1</span><br><span class="line">-&gt; Redirected to slot [12706] located at 192.168.168.130:7003</span><br><span class="line">(nil)</span><br><span class="line">192.168.168.130:7003&gt; set number 100</span><br><span class="line">-&gt; Redirected to slot [7743] located at 192.168.168.130:7002</span><br><span class="line">OK</span><br><span class="line">192.168.168.130:7002&gt; quit</span><br><span class="line">[root@localhost redis_cluster]#</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-6-5-redis-plue连接集群"><a href="#2-6-5-redis-plue连接集群" class="headerlink" title="2.6.5 redis plue连接集群"></a>2.6.5 redis plue连接集群</h4><p>redis-desktop-manager连接集群有bug，因此使用redis plus连接集群</p>
+<img src="/2019/01/17/Redis/017_redis/redis-plus-5.png" class="">
+
+<img src="/2019/01/17/Redis/017_redis/redis-plus-6.png" class="">
+
+<img src="/2019/01/17/Redis/017_redis/redis-plus-7.png" class="">
+
+<img src="/2019/01/17/Redis/017_redis/redis-plus-8.png" class="">
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost redis_cluster]# ./redis-cli -c -h 192.168.168.130 -p 7001</span><br><span class="line">192.168.168.130:7001&gt; get student:name</span><br><span class="line">&quot;Tom&quot;</span><br><span class="line">192.168.168.130:7001&gt; get number</span><br><span class="line">-&gt; Redirected to slot [7743] located at 192.168.168.130:7002</span><br><span class="line">&quot;100&quot;</span><br><span class="line">192.168.168.130:7002&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-IDEA安装使用redis插件redis-simple"><a href="#3-IDEA安装使用redis插件redis-simple" class="headerlink" title="3. IDEA安装使用redis插件redis simple"></a>3. IDEA安装使用redis插件redis simple</h2><img src="/2019/01/17/Redis/017_redis/idea-redis-simple-1.png" class="">
+
+<img src="/2019/01/17/Redis/017_redis/idea-redis-simple-2.png" class="">
+
+<img src="/2019/01/17/Redis/017_redis/idea-redis-simple-3.png" class="">
+
+<img src="/2019/01/17/Redis/017_redis/idea-redis-simple-4.png" class="">
+
+<img src="/2019/01/17/Redis/017_redis/idea-redis-simple-5.png" class="">
+
+<img src="/2019/01/17/Redis/017_redis/idea-redis-simple-6.png" class="">
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Database/" rel="tag"># Database</a>
+              <a href="/tags/Redis/" rel="tag"># Redis</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/17/Redis/015_redis/" rel="prev" title="15.Redis的复制(Master/Slave)">
+                  <i class="fa fa-chevron-left"></i> 15.Redis的复制(Master/Slave)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/01/17/Redis/016_redis/" rel="next" title="16.高可用高并发集群配置">
+                  16.高可用高并发集群配置 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeweimian21</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
