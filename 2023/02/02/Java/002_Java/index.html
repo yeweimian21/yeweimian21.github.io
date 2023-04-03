@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yeweimian21.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="&amp;nbsp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2.Java 比较器">
+<meta property="og:url" content="https://yeweimian21.github.io/2023/02/02/Java/002_Java/index.html">
+<meta property="og:site_name" content="A peaceful place">
+<meta property="og:description" content="&amp;nbsp;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-02-02T00:00:02.000Z">
+<meta property="article:modified_time" content="2023-03-19T03:03:41.802Z">
+<meta property="article:author" content="yeweimian21">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="IO">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yeweimian21.github.io/2023/02/02/Java/002_Java/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2023/02/02/Java/002_Java/","path":"2023/02/02/Java/002_Java/","title":"2.Java 比较器"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>2.Java 比较器 | A peaceful place</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A peaceful place</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">inner peace</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%AF%94%E8%BE%83%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">1.比较器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%94%A8%E6%AF%94%E8%BE%83%E5%99%A8%E5%AE%9E%E7%8E%B0%E5%AF%B9%E9%9B%86%E5%90%88%E7%9A%84%E6%8E%92%E5%BA%8F"><span class="nav-number">2.</span> <span class="nav-text">2.用比较器实现对集合的排序</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeweimian21</p>
+  <div class="site-description" itemprop="description">A novice</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">232</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://yeweimian21.github.io/2023/02/02/Java/002_Java/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeweimian21">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A peaceful place">
+      <meta itemprop="description" content="A novice">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="2.Java 比较器 | A peaceful place">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2.Java 比较器
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-02-02 08:00:02" itemprop="dateCreated datePublished" datetime="2023-02-02T08:00:02+08:00">2023-02-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-03-19 11:03:41" itemprop="dateModified" datetime="2023-03-19T11:03:41+08:00">2023-03-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>&nbsp;</p>
+<span id="more"></span>
+
+<h3 id="1-比较器"><a href="#1-比较器" class="headerlink" title="1.比较器"></a>1.比较器</h3><p>定义一个比较器，需要实现 Comparator 接口的 compare() 方法，compare() 方法的返回值类型为 int</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Comparator&lt;T&gt; nameComparator = <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;T&gt;() &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(T o1, T o2)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>(1) 升序排序: </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(o1 &gt; o2) &#123;</span><br><span class="line">    <span class="keyword">return</span> &gt;<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(o1 == o2) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(o1 &lt; o2) &#123;</span><br><span class="line">    <span class="keyword">return</span> &lt;<span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>(2) 降序排序: </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(o1 &gt; o2) &#123;</span><br><span class="line">    <span class="keyword">return</span> &lt;<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(o1 == o2) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(o1 &lt; o2) &#123;</span><br><span class="line">    <span class="keyword">return</span> &gt;<span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-用比较器实现对集合的排序"><a href="#2-用比较器实现对集合的排序" class="headerlink" title="2.用比较器实现对集合的排序"></a>2.用比较器实现对集合的排序</h3><p>(1) 定义 Student 类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Student</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> score;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Student</span><span class="params">()</span> &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Student</span><span class="params">(<span class="type">int</span> id, String name, <span class="type">int</span> age, <span class="type">int</span> score)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">        <span class="built_in">this</span>.score = score;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getId</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setId</span><span class="params">(<span class="type">int</span> id)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getAge</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setAge</span><span class="params">(<span class="type">int</span> age)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getScore</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> score;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setScore</span><span class="params">(<span class="type">int</span> score)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.score = score;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Student&#123;id=&quot;</span> + id + <span class="string">&quot;, name=&#x27;&quot;</span> + name + <span class="string">&quot;&#x27;, age=&quot;</span> + age + <span class="string">&quot;, score=&quot;</span> + score + <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>(2) 对 <code>ArrayList&lt;Student&gt;</code> 集合进行排序</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Student</span> <span class="variable">student1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="number">1</span>, <span class="string">&quot;d1&quot;</span>, <span class="number">11</span>, <span class="number">200</span>);</span><br><span class="line"><span class="type">Student</span> <span class="variable">student2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="number">2</span>, <span class="string">&quot;a2&quot;</span>, <span class="number">12</span>, <span class="number">300</span>);</span><br><span class="line"><span class="type">Student</span> <span class="variable">student3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="number">3</span>, <span class="string">&quot;f3&quot;</span>, <span class="number">13</span>, <span class="number">15</span>);</span><br><span class="line"><span class="type">Student</span> <span class="variable">student4</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="number">4</span>, <span class="string">&quot;f4&quot;</span>, <span class="number">14</span>, <span class="number">10</span>);</span><br><span class="line"><span class="type">Student</span> <span class="variable">student5</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="number">5</span>, <span class="string">&quot;b5&quot;</span>, <span class="number">15</span>, <span class="number">50</span>);</span><br><span class="line"><span class="type">Student</span> <span class="variable">student6</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="number">6</span>, <span class="string">&quot;c6&quot;</span>, <span class="number">16</span>, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">ArrayList&lt;Student&gt; studentList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Student&gt;();</span><br><span class="line"></span><br><span class="line">studentList.add(student1);</span><br><span class="line">studentList.add(student2);</span><br><span class="line">studentList.add(student3);</span><br><span class="line">studentList.add(student4);</span><br><span class="line">studentList.add(student5);</span><br><span class="line">studentList.add(student6);</span><br><span class="line"></span><br><span class="line"><span class="comment">// define a name comparator</span></span><br><span class="line">Comparator&lt;Student&gt; nameComparator = <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;Student&gt;() &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(Student s1, Student s2)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">name1</span> <span class="operator">=</span> s1.getName();</span><br><span class="line">        <span class="type">String</span> <span class="variable">name2</span> <span class="operator">=</span> s2.getName();</span><br><span class="line">        <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> name1.compareTo(name2);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1.按姓名排序(升序)</span></span><br><span class="line">Collections.sort(studentList, nameComparator);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (Student student: studentList) &#123;</span><br><span class="line">    System.out.println(student);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Student&#123;id=2, name=&#x27;a2&#x27;, age=12, score=300&#125;</span></span><br><span class="line"><span class="comment">// Student&#123;id=5, name=&#x27;b5&#x27;, age=15, score=50&#125;</span></span><br><span class="line"><span class="comment">// Student&#123;id=6, name=&#x27;c6&#x27;, age=16, score=100&#125;</span></span><br><span class="line"><span class="comment">// Student&#123;id=1, name=&#x27;d1&#x27;, age=11, score=200&#125;</span></span><br><span class="line"><span class="comment">// Student&#123;id=3, name=&#x27;f3&#x27;, age=13, score=15&#125;</span></span><br><span class="line"><span class="comment">// Student&#123;id=4, name=&#x27;f4&#x27;, age=14, score=10&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.按分数排序(升序)</span></span><br><span class="line">Collections.sort(studentList, <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;Student&gt;() &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(Student s1, Student s2)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">score1</span> <span class="operator">=</span> s1.getScore();</span><br><span class="line">        <span class="type">int</span> <span class="variable">score2</span> <span class="operator">=</span> s2.getScore();</span><br><span class="line">        <span class="keyword">return</span> score1 - score2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (Student student: studentList) &#123;</span><br><span class="line">    System.out.println(student);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Student&#123;id=4, name=&#x27;f4&#x27;, age=14, score=10&#125;</span></span><br><span class="line"><span class="comment">// Student&#123;id=3, name=&#x27;f3&#x27;, age=13, score=15&#125;</span></span><br><span class="line"><span class="comment">// Student&#123;id=5, name=&#x27;b5&#x27;, age=15, score=50&#125;</span></span><br><span class="line"><span class="comment">// Student&#123;id=6, name=&#x27;c6&#x27;, age=16, score=100&#125;</span></span><br><span class="line"><span class="comment">// Student&#123;id=1, name=&#x27;d1&#x27;, age=11, score=200&#125;</span></span><br><span class="line"><span class="comment">// Student&#123;id=2, name=&#x27;a2&#x27;, age=12, score=300&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3.按年龄排序(降序)</span></span><br><span class="line">Collections.sort(studentList, <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;Student&gt;() &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(Student s1, Student s2)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">age1</span> <span class="operator">=</span> s1.getAge();</span><br><span class="line">        <span class="type">int</span> <span class="variable">age2</span> <span class="operator">=</span> s2.getAge();</span><br><span class="line">        <span class="keyword">return</span> age2 - age1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (Student student: studentList) &#123;</span><br><span class="line">    System.out.println(student);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Student&#123;id=6, name=&#x27;c6&#x27;, age=16, score=100&#125;</span></span><br><span class="line"><span class="comment">// Student&#123;id=5, name=&#x27;b5&#x27;, age=15, score=50&#125;</span></span><br><span class="line"><span class="comment">// Student&#123;id=4, name=&#x27;f4&#x27;, age=14, score=10&#125;</span></span><br><span class="line"><span class="comment">// Student&#123;id=3, name=&#x27;f3&#x27;, age=13, score=15&#125;</span></span><br><span class="line"><span class="comment">// Student&#123;id=2, name=&#x27;a2&#x27;, age=12, score=300&#125;</span></span><br><span class="line"><span class="comment">// Student&#123;id=1, name=&#x27;d1&#x27;, age=11, score=200&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/IO/" rel="tag"># IO</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/02/02/Java/001_Java/" rel="prev" title="1.Java 文件流">
+                  <i class="fa fa-chevron-left"></i> 1.Java 文件流
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/03/15/Vue.js/001_vue.js/" rel="next" title="1.Vue">
+                  1.Vue <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeweimian21</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

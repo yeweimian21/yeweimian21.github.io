@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yeweimian21.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="&amp;nbsp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="10.MongoDB 副本集的创建和操作">
+<meta property="og:url" content="https://yeweimian21.github.io/2023/03/17/MongoDB/010_MongoDB/index.html">
+<meta property="og:site_name" content="A peaceful place">
+<meta property="og:description" content="&amp;nbsp;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-03-17T00:00:10.000Z">
+<meta property="article:modified_time" content="2023-03-24T08:25:55.913Z">
+<meta property="article:author" content="yeweimian21">
+<meta property="article:tag" content="Database">
+<meta property="article:tag" content="MongoDB">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yeweimian21.github.io/2023/03/17/MongoDB/010_MongoDB/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2023/03/17/MongoDB/010_MongoDB/","path":"2023/03/17/MongoDB/010_MongoDB/","title":"10.MongoDB 副本集的创建和操作"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>10.MongoDB 副本集的创建和操作 | A peaceful place</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A peaceful place</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">inner peace</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%89%AF%E6%9C%AC%E9%9B%86-Replica-Sets"><span class="nav-number">1.</span> <span class="nav-text">1.副本集-Replica Sets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%89%AF%E6%9C%AC%E9%9B%86%E7%9A%84%E4%B8%89%E4%B8%AA%E8%A7%92%E8%89%B2"><span class="nav-number">2.</span> <span class="nav-text">2.副本集的三个角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%89%AF%E6%9C%AC%E9%9B%86%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-number">3.</span> <span class="nav-text">3.副本集的创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%89%AF%E6%9C%AC%E9%9B%86%E7%9A%84%E6%95%B0%E6%8D%AE%E8%AF%BB%E5%86%99%E6%93%8D%E4%BD%9C"><span class="nav-number">4.</span> <span class="nav-text">4.副本集的数据读写操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E4%B8%BB%E8%8A%82%E7%82%B9%E7%9A%84%E9%80%89%E4%B8%BE%E5%8E%9F%E5%88%99"><span class="nav-number">5.</span> <span class="nav-text">5.主节点的选举原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E6%95%85%E9%9A%9C%E6%B5%8B%E8%AF%95"><span class="nav-number">6.</span> <span class="nav-text">6.故障测试</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeweimian21</p>
+  <div class="site-description" itemprop="description">A novice</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">232</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://yeweimian21.github.io/2023/03/17/MongoDB/010_MongoDB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeweimian21">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A peaceful place">
+      <meta itemprop="description" content="A novice">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="10.MongoDB 副本集的创建和操作 | A peaceful place">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          10.MongoDB 副本集的创建和操作
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-03-17 08:00:10" itemprop="dateCreated datePublished" datetime="2023-03-17T08:00:10+08:00">2023-03-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-03-24 16:25:55" itemprop="dateModified" datetime="2023-03-24T16:25:55+08:00">2023-03-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/MongoDB/" itemprop="url" rel="index"><span itemprop="name">MongoDB</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>&nbsp;</p>
+<span id="more"></span>
+
+<h3 id="1-副本集-Replica-Sets"><a href="#1-副本集-Replica-Sets" class="headerlink" title="1.副本集-Replica Sets"></a>1.副本集-Replica Sets</h3><p>MongoDB中的副本集（Replica Set）是一组维护相同数据集的mongod服务。 副本集可提供冗余和高可用性，是所有生产部署的基础。</p>
+<p>也可以说，副本集类似于有自动故障恢复功能的主从集群。通俗的讲就是用多台机器进行同一数据的异步同步，从而使多台机器拥有同一数据的多个副本，并且当主库当掉时在不需要用户干预的情况下自动切换其他备份服务器做主库。而且还可以利用副本服务器做只读服务器，实现读写分离，提高负载。</p>
+<p>(1) 冗余和数据可用性</p>
+<p>副本提供冗余并提高数据可用性。 通过在不同数据库服务器上提供多个数据副本，副本可提供一定级别的容错功能，以防止丢失单个数据库服务器。</p>
+<p>在某些情况下，副本可以提供增加的读取性能，因为客户端可以将读取操作发送到不同的服务上， 在不同数据中心维护数据副本可以增加分布式应用程序的数据位置和可用性。还可以为专用目的维护其他副本，例如灾难恢复，报告或备份。</p>
+<p>(2) MongoDB中的复制</p>
+<p>副本集是一组维护相同数据集的mongod实例。 副本集包含多个数据承载节点和可选的一个仲裁节点。在承载数据的节点中，一个且仅一个成员被视为主节点，而其他节点被视为次要（从）节点。</p>
+<p>主节点接收所有写操作。 副本集只能有一个主节点能够写入; 虽然在某些情况下，另一个mongod实例可能暂时认为自己也是主要的。主要记录其操作日志中的数据集的所有<br>更改，即oplog</p>
+<p>辅助(副本)节点复制主节点的oplog并将操作应用于其数据集，以使辅助节点的数据集反映主节点的数据集。 如果主节点不在，则将举行选举选出新的主节点。</p>
+<p>(3) 主从复制和副本集区别</p>
+<p>主从集群和副本集最大的区别就是副本集没有固定的“主节点”；整个集群会选出一个“主节点”，当其shutdown后，又在剩下的从节点中选中其他节点为“主节点”，副本集总有一个活跃点(主、primary)和一个或多个备份节点(从、secondary)。</p>
+<h3 id="2-副本集的三个角色"><a href="#2-副本集的三个角色" class="headerlink" title="2.副本集的三个角色"></a>2.副本集的三个角色</h3><p>副本集有两种类型和三种角色</p>
+<p>两种类型：</p>
+<ul>
+<li>主节点（Primary）类型：数据操作的主要连接点，可读写。</li>
+<li>次要（辅助、从）节点（Secondaries）类型：数据冗余备份节点，可以读或选举</li>
+</ul>
+<p>三种角色：</p>
+<ul>
+<li>主要成员（Primary）：主要接收所有写操作。就是主节点。</li>
+<li>副本成员（Replicate）：从主节点通过复制操作以维护相同的数据集，即备份数据，不可写操作，但可以读操作（但需要配置）。是默认的一种从节点类型。</li>
+<li>仲裁者（Arbiter）：不保留任何数据的副本，只具有投票选举作用。当然也可以将仲裁服务器维护为副本集的一部分，即副本成员同时也可以是仲裁者。也是一种从节点类型</li>
+</ul>
+<p>关于仲裁者的额外说明：</p>
+<p>您可以将额外的mongod实例添加到副本集作为仲裁者。 仲裁者不维护数据集。 仲裁者的目的是通过响应其他副本集成员的心跳和选举请求来维护副本集中的仲裁。 因为它们不存储数据集，所以仲裁器可以是提供副本集仲裁功能的好方法，其资源成本比具有数据集的全功能副本集成员更便宜</p>
+<p>如果副本集具有偶数个成员，请添加仲裁者以获得主要选举中的“大多数”投票。 仲裁者不需要专用硬件</p>
+<p>仲裁者将永远是仲裁者，而主节点可能会退出并成为从节点，而从节点可能成为选举期间的主节点</p>
+<p>如果你的副本+主节点的个数是偶数，建议加一个仲裁者，形成奇数，容易满足大多数的投票</p>
+<p>如果你的副本+主节点的个数是奇数，可以不加仲裁者</p>
+<h3 id="3-副本集的创建"><a href="#3-副本集的创建" class="headerlink" title="3.副本集的创建"></a>3.副本集的创建</h3><p>仲裁节点和数据节点不能运行在同一台主机上</p>
+<p>搭建一个副本集：具有1个主节点，1个从节点，1个仲裁节点</p>
+<p>(1) 创建主节点</p>
+<p>新建存放数据和日志的目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /mongodb/replica_sets/myrs_27017/log</span><br><span class="line">mkdir -p /mongodb/replica_sets/myrs_27017/data/db</span><br></pre></td></tr></table></figure>
+
+<p>新建配置文件 mongod.conf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /mongodb/replica_sets/myrs_27017/mongod.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">systemLog:</span><br><span class="line">    #MongoDB发送所有日志输出的目标指定为文件</span><br><span class="line">    destination: file</span><br><span class="line">    #mongod或mongos应向其发送所有诊断日志记录信息的日志文件的路径</span><br><span class="line">    path: &quot;/mongodb/replica_sets/myrs_27017/log/mongod.log&quot;</span><br><span class="line">    #当mongos或mongod实例重新启动时，mongos或mongod会将新条目附加到现有日志文件的末尾。</span><br><span class="line">    logAppend: true</span><br><span class="line">storage:</span><br><span class="line">    #mongod实例存储其数据的目录。storage.dbPath设置仅适用于mongod。</span><br><span class="line">    dbPath: &quot;/mongodb/replica_sets/myrs_27017/data/db&quot;</span><br><span class="line">    journal:</span><br><span class="line">        #启用或禁用持久性日志以确保数据文件保持有效和可恢复。</span><br><span class="line">        enabled: true</span><br><span class="line">processManagement:</span><br><span class="line">    #启用在后台运行mongos或mongod进程的守护进程模式。</span><br><span class="line">    fork: true</span><br><span class="line">    #指定用于保存mongos或mongod进程的进程ID的文件位置，其中mongos或mongod将写入其PID</span><br><span class="line">    pidFilePath: &quot;/mongodb/replica_sets/myrs_27017/log/mongod.pid&quot;</span><br><span class="line">net:</span><br><span class="line">    #服务实例绑定所有IP，有副作用，副本集初始化的时候，节点名字会自动设置为本地域名，而不是ip</span><br><span class="line">    #bindIpAll: true</span><br><span class="line">    #服务实例绑定的IP</span><br><span class="line">    bindIp: localhost,192.168.76.128</span><br><span class="line">    #bindIp</span><br><span class="line">    #绑定的端口</span><br><span class="line">    port: 27017</span><br><span class="line">replication:</span><br><span class="line">    #副本集的名称</span><br><span class="line">    replSetName: myrs</span><br></pre></td></tr></table></figure>
+
+<p>启动节点服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mongod -f /mongodb/replica_sets/myrs_27017/mongod.conf</span><br></pre></td></tr></table></figure>
+
+<p>(2) 创建副本节点</p>
+<p>新建存放数据和日志的目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /mongodb/replica_sets/myrs_27018/log</span><br><span class="line">mkdir -p /mongodb/replica_sets/myrs_27018/data/db</span><br></pre></td></tr></table></figure>
+
+<p>新建配置文件 mongod.conf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /mongodb/replica_sets/myrs_27018/mongod.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">systemLog:</span><br><span class="line">    #MongoDB发送所有日志输出的目标指定为文件</span><br><span class="line">    destination: file</span><br><span class="line">    #mongod或mongos应向其发送所有诊断日志记录信息的日志文件的路径</span><br><span class="line">    path: &quot;/mongodb/replica_sets/myrs_27018/log/mongod.log&quot;</span><br><span class="line">    #当mongos或mongod实例重新启动时，mongos或mongod会将新条目附加到现有日志文件的末尾。</span><br><span class="line">    logAppend: true</span><br><span class="line">storage:</span><br><span class="line">    #mongod实例存储其数据的目录。storage.dbPath设置仅适用于mongod。</span><br><span class="line">    dbPath: &quot;/mongodb/replica_sets/myrs_27018/data/db&quot;</span><br><span class="line">    journal:</span><br><span class="line">        #启用或禁用持久性日志以确保数据文件保持有效和可恢复。</span><br><span class="line">        enabled: true</span><br><span class="line">processManagement:</span><br><span class="line">    #启用在后台运行mongos或mongod进程的守护进程模式。</span><br><span class="line">    fork: true</span><br><span class="line">    #指定用于保存mongos或mongod进程的进程ID的文件位置，其中mongos或mongod将写入其PID</span><br><span class="line">    pidFilePath: &quot;/mongodb/replica_sets/myrs_27018/log/mongod.pid&quot;</span><br><span class="line">net:</span><br><span class="line">    #服务实例绑定所有IP，有副作用，副本集初始化的时候，节点名字会自动设置为本地域名，而不是ip</span><br><span class="line">    #bindIpAll: true</span><br><span class="line">    #服务实例绑定的IP</span><br><span class="line">    bindIp: localhost,192.168.76.128</span><br><span class="line">    #bindIp</span><br><span class="line">    #绑定的端口</span><br><span class="line">    port: 27018</span><br><span class="line">replication:</span><br><span class="line">    #副本集的名称</span><br><span class="line">    replSetName: myrs</span><br></pre></td></tr></table></figure>
+
+<p>启动节点服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mongod -f /mongodb/replica_sets/myrs_27018/mongod.conf</span><br></pre></td></tr></table></figure>
+
+<p>(3) 创建仲裁节点</p>
+<p>新建存放数据和日志的目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /mongodb/replica_sets/myrs_27019/log</span><br><span class="line">mkdir -p /mongodb/replica_sets/myrs_27019/data/db</span><br></pre></td></tr></table></figure>
+
+<p>新建配置文件 mongod.conf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /mongodb/replica_sets/myrs_27019/mongod.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">systemLog:</span><br><span class="line">    #MongoDB发送所有日志输出的目标指定为文件</span><br><span class="line">    destination: file</span><br><span class="line">    #mongod或mongos应向其发送所有诊断日志记录信息的日志文件的路径</span><br><span class="line">    path: &quot;/mongodb/replica_sets/myrs_27019/log/mongod.log&quot;</span><br><span class="line">    #当mongos或mongod实例重新启动时，mongos或mongod会将新条目附加到现有日志文件的末尾。</span><br><span class="line">    logAppend: true</span><br><span class="line">storage:</span><br><span class="line">    #mongod实例存储其数据的目录。storage.dbPath设置仅适用于mongod。</span><br><span class="line">    dbPath: &quot;/mongodb/replica_sets/myrs_27019/data/db&quot;</span><br><span class="line">    journal:</span><br><span class="line">        #启用或禁用持久性日志以确保数据文件保持有效和可恢复。</span><br><span class="line">        enabled: true</span><br><span class="line">processManagement:</span><br><span class="line">    #启用在后台运行mongos或mongod进程的守护进程模式。</span><br><span class="line">    fork: true</span><br><span class="line">    #指定用于保存mongos或mongod进程的进程ID的文件位置，其中mongos或mongod将写入其PID</span><br><span class="line">    pidFilePath: &quot;/mongodb/replica_sets/myrs_27019/log/mongod.pid&quot;</span><br><span class="line">net:</span><br><span class="line">    #服务实例绑定所有IP，有副作用，副本集初始化的时候，节点名字会自动设置为本地域名，而不是ip</span><br><span class="line">    #bindIpAll: true</span><br><span class="line">    #服务实例绑定的IP</span><br><span class="line">    bindIp: localhost,192.168.76.132</span><br><span class="line">    #bindIp</span><br><span class="line">    #绑定的端口</span><br><span class="line">    port: 27019</span><br><span class="line">replication:</span><br><span class="line">    #副本集的名称</span><br><span class="line">    replSetName: myrs</span><br></pre></td></tr></table></figure>
+
+<p>启动节点服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mongod -f /mongodb/replica_sets/myrs_27019/mongod.conf</span><br></pre></td></tr></table></figure>
+
+<p>(4) 初始化配置副本集和主节点</p>
+<p>连接主节点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mongo --host=192.168.76.128 --port=27017</span><br></pre></td></tr></table></figure>
+
+<p>执行 <code>rs.initiate()</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt; rs.initiate()</span><br><span class="line">&#123;</span><br><span class="line">        &quot;info2&quot; : &quot;no configuration specified. Using a default configuration for the set&quot;,</span><br><span class="line">        &quot;me&quot; : &quot;192.168.76.128:27017&quot;,</span><br><span class="line">        &quot;ok&quot; : 1,</span><br><span class="line">        &quot;operationTime&quot; : Timestamp(1679578804, 1),</span><br><span class="line">        &quot;$clusterTime&quot; : &#123;</span><br><span class="line">                &quot;clusterTime&quot; : Timestamp(1679578804, 1),</span><br><span class="line">                &quot;signature&quot; : &#123;</span><br><span class="line">                        &quot;hash&quot; : BinData(0,&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAA=&quot;),</span><br><span class="line">                        &quot;keyId&quot; : NumberLong(0)</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line">myrs:SECONDARY&gt;</span><br><span class="line">myrs:PRIMARY&gt;</span><br></pre></td></tr></table></figure>
+
+<p>提示：</p>
+<ol>
+<li><code>&quot;ok&quot;</code> 的值为1，说明创建成功。</li>
+<li>命令行提示符发生变化，变成了一个从节点角色，此时默认不能读写。稍等片刻，回车，变成主节点。</li>
+</ol>
+<p>(5) 查看副本集的配置内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rs.conf()</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rs.config()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">myrs:PRIMARY&gt; rs.conf()</span><br><span class="line">&#123;</span><br><span class="line">        &quot;_id&quot; : &quot;myrs&quot;,</span><br><span class="line">        &quot;version&quot; : 1,</span><br><span class="line">        &quot;protocolVersion&quot; : NumberLong(1),</span><br><span class="line">        &quot;writeConcernMajorityJournalDefault&quot; : true,</span><br><span class="line">        &quot;members&quot; : [</span><br><span class="line">                &#123;</span><br><span class="line">                        &quot;_id&quot; : 0,</span><br><span class="line">                        &quot;host&quot; : &quot;192.168.76.128:27017&quot;,</span><br><span class="line">                        &quot;arbiterOnly&quot; : false,</span><br><span class="line">                        &quot;buildIndexes&quot; : true,</span><br><span class="line">                        &quot;hidden&quot; : false,</span><br><span class="line">                        &quot;priority&quot; : 1,</span><br><span class="line">                        &quot;tags&quot; : &#123;</span><br><span class="line"></span><br><span class="line">                        &#125;,</span><br><span class="line">                        &quot;slaveDelay&quot; : NumberLong(0),</span><br><span class="line">                        &quot;votes&quot; : 1</span><br><span class="line">                &#125;</span><br><span class="line">        ],</span><br><span class="line">        &quot;settings&quot; : &#123;</span><br><span class="line">                &quot;chainingAllowed&quot; : true,</span><br><span class="line">                &quot;heartbeatIntervalMillis&quot; : 2000,</span><br><span class="line">                &quot;heartbeatTimeoutSecs&quot; : 10,</span><br><span class="line">                &quot;electionTimeoutMillis&quot; : 10000,</span><br><span class="line">                &quot;catchUpTimeoutMillis&quot; : -1,</span><br><span class="line">                &quot;catchUpTakeoverDelayMillis&quot; : 30000,</span><br><span class="line">                &quot;getLastErrorModes&quot; : &#123;</span><br><span class="line"></span><br><span class="line">                &#125;,</span><br><span class="line">                &quot;getLastErrorDefaults&quot; : &#123;</span><br><span class="line">                        &quot;w&quot; : 1,</span><br><span class="line">                        &quot;wtimeout&quot; : 0</span><br><span class="line">                &#125;,</span><br><span class="line">                &quot;replicaSetId&quot; : ObjectId(&quot;641c56b4e9c70f2cb79cc559&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ol>
+<li>“_id” : “myrs” ：副本集的配置数据存储的主键值，默认就是副本集的名字</li>
+<li>“members” ：副本集成员数组，此时只有一个： “host” : “192.168.76.128:27017” ，该成员不是仲裁节点： “arbiterOnly” : false ，优先级（权重值）： “priority” : 1,</li>
+<li>“settings” ：副本集的参数配置</li>
+</ol>
+<p>提示：副本集配置的查看命令，本质是查询的是 system.replset 的表中的数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">myrs:PRIMARY&gt; use local</span><br><span class="line">switched to db local</span><br><span class="line">myrs:PRIMARY&gt; show collections</span><br><span class="line">oplog.rs</span><br><span class="line">replset.election</span><br><span class="line">replset.minvalid</span><br><span class="line">replset.oplogTruncateAfterPoint</span><br><span class="line">startup_log</span><br><span class="line">system.replset</span><br><span class="line">system.rollback.id</span><br><span class="line">myrs:PRIMARY&gt; db.system.replset.find()</span><br><span class="line">&#123; &quot;_id&quot; : &quot;myrs&quot;, &quot;version&quot; : 1, &quot;protocolVersion&quot; : NumberLong(1), &quot;writeConcernMajorityJournalDefault&quot; : true, &quot;members&quot; : [ &#123; &quot;_id&quot; : 0, &quot;host&quot; : &quot;192.168.76.128:27017&quot;, &quot;arbiterOnly&quot; : false, &quot;buildIndexes&quot; : true, &quot;hidden&quot; : false, &quot;priority&quot; : 1, &quot;tags&quot; : &#123;  &#125;, &quot;slaveDelay&quot; : NumberLong(0), &quot;votes&quot; : 1 &#125; ], &quot;settings&quot; : &#123; &quot;chainingAllowed&quot; : true, &quot;heartbeatIntervalMillis&quot; : 2000, &quot;heartbeatTimeoutSecs&quot; : 10, &quot;electionTimeoutMillis&quot; : 10000, &quot;catchUpTimeoutMillis&quot; : -1, &quot;catchUpTakeoverDelayMillis&quot; : 30000, &quot;getLastErrorModes&quot; : &#123;  &#125;, &quot;getLastErrorDefaults&quot; : &#123; &quot;w&quot; : 1, &quot;wtimeout&quot; : 0 &#125;, &quot;replicaSetId&quot; : ObjectId(&quot;641c56b4e9c70f2cb79cc559&quot;) &#125; &#125;</span><br><span class="line">myrs:PRIMARY&gt;</span><br></pre></td></tr></table></figure>
+
+<p>(6) 查看副本集状态</p>
+<p>检查副本集状态</p>
+<p>返回包含状态信息的文档。此输出使用从副本集的其他成员发送的心跳包中获得的数据反映副本集的当前状态。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">myrs:PRIMARY&gt; rs.status()</span><br><span class="line">&#123;</span><br><span class="line">        &quot;set&quot; : &quot;myrs&quot;,</span><br><span class="line">        &quot;date&quot; : ISODate(&quot;2023-03-23T13:51:19.189Z&quot;),</span><br><span class="line">        &quot;myState&quot; : 1,</span><br><span class="line">        &quot;term&quot; : NumberLong(1),</span><br><span class="line">        &quot;syncingTo&quot; : &quot;&quot;,</span><br><span class="line">        &quot;syncSourceHost&quot; : &quot;&quot;,</span><br><span class="line">        &quot;syncSourceId&quot; : -1,</span><br><span class="line">        &quot;heartbeatIntervalMillis&quot; : NumberLong(2000),</span><br><span class="line">        &quot;optimes&quot; : &#123;</span><br><span class="line">                &quot;lastCommittedOpTime&quot; : &#123;</span><br><span class="line">                        &quot;ts&quot; : Timestamp(1679579476, 1),</span><br><span class="line">                        &quot;t&quot; : NumberLong(1)</span><br><span class="line">                &#125;,</span><br><span class="line">                &quot;readConcernMajorityOpTime&quot; : &#123;</span><br><span class="line">                        &quot;ts&quot; : Timestamp(1679579476, 1),</span><br><span class="line">                        &quot;t&quot; : NumberLong(1)</span><br><span class="line">                &#125;,</span><br><span class="line">                &quot;appliedOpTime&quot; : &#123;</span><br><span class="line">                        &quot;ts&quot; : Timestamp(1679579476, 1),</span><br><span class="line">                        &quot;t&quot; : NumberLong(1)</span><br><span class="line">                &#125;,</span><br><span class="line">                &quot;durableOpTime&quot; : &#123;</span><br><span class="line">                        &quot;ts&quot; : Timestamp(1679579476, 1),</span><br><span class="line">                        &quot;t&quot; : NumberLong(1)</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;lastStableCheckpointTimestamp&quot; : Timestamp(1679579456, 1),</span><br><span class="line">        &quot;members&quot; : [</span><br><span class="line">                &#123;</span><br><span class="line">                        &quot;_id&quot; : 0,</span><br><span class="line">                        &quot;name&quot; : &quot;192.168.76.128:27017&quot;,</span><br><span class="line">                        &quot;health&quot; : 1,</span><br><span class="line">                        &quot;state&quot; : 1,</span><br><span class="line">                        &quot;stateStr&quot; : &quot;PRIMARY&quot;,</span><br><span class="line">                        &quot;uptime&quot; : 1826,</span><br><span class="line">                        &quot;optime&quot; : &#123;</span><br><span class="line">                                &quot;ts&quot; : Timestamp(1679579476, 1),</span><br><span class="line">                                &quot;t&quot; : NumberLong(1)</span><br><span class="line">                        &#125;,</span><br><span class="line">                        &quot;optimeDate&quot; : ISODate(&quot;2023-03-23T13:51:16Z&quot;),</span><br><span class="line">                        &quot;syncingTo&quot; : &quot;&quot;,</span><br><span class="line">                        &quot;syncSourceHost&quot; : &quot;&quot;,</span><br><span class="line">                        &quot;syncSourceId&quot; : -1,</span><br><span class="line">                        &quot;infoMessage&quot; : &quot;&quot;,</span><br><span class="line">                        &quot;electionTime&quot; : Timestamp(1679578804, 2),</span><br><span class="line">                        &quot;electionDate&quot; : ISODate(&quot;2023-03-23T13:40:04Z&quot;),</span><br><span class="line">                        &quot;configVersion&quot; : 1,</span><br><span class="line">                        &quot;self&quot; : true,</span><br><span class="line">                        &quot;lastHeartbeatMessage&quot; : &quot;&quot;</span><br><span class="line">                &#125;</span><br><span class="line">        ],</span><br><span class="line">        &quot;ok&quot; : 1,</span><br><span class="line">        &quot;operationTime&quot; : Timestamp(1679579476, 1),</span><br><span class="line">        &quot;$clusterTime&quot; : &#123;</span><br><span class="line">                &quot;clusterTime&quot; : Timestamp(1679579476, 1),</span><br><span class="line">                &quot;signature&quot; : &#123;</span><br><span class="line">                        &quot;hash&quot; : BinData(0,&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAA=&quot;),</span><br><span class="line">                        &quot;keyId&quot; : NumberLong(0)</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>说明：<br>1） “set” : “myrs” ：副本集的名字<br>2） “myState” : 1：说明状态正常<br>3） “members” ：副本集成员数组，此时只有一个： “name” : “192.168.76.128:27017” ，该成员的角色是 “stateStr” : “PRIMARY”, 该节点是健康的： “health” : 1 。</p>
+<p>(7) 添加副本从节点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">myrs:PRIMARY&gt; rs.add(&quot;192.168.76.128:27018&quot;)</span><br><span class="line">&#123;</span><br><span class="line">        &quot;ok&quot; : 1,</span><br><span class="line">        &quot;operationTime&quot; : Timestamp(1679579807, 1),</span><br><span class="line">        &quot;$clusterTime&quot; : &#123;</span><br><span class="line">                &quot;clusterTime&quot; : Timestamp(1679579807, 1),</span><br><span class="line">                &quot;signature&quot; : &#123;</span><br><span class="line">                        &quot;hash&quot; : BinData(0,&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAA=&quot;),</span><br><span class="line">                        &quot;keyId&quot; : NumberLong(0)</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查看副本集状态: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myrs:PRIMARY&gt; rs.status()</span><br></pre></td></tr></table></figure>
+
+<p><code>&quot;name&quot; : &quot;192.168.76.128:27018&quot;</code> 是第二个节点的名字，其角色是 <code>&quot;stateStr&quot; :&quot;SECONDARY&quot;</code></p>
+<p>(8) 添加仲裁从节点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">myrs:PRIMARY&gt; rs.addArb(&quot;192.168.76.132:27019&quot;)</span><br><span class="line">&#123;</span><br><span class="line">        &quot;ok&quot; : 1,</span><br><span class="line">        &quot;operationTime&quot; : Timestamp(1679579928, 1),</span><br><span class="line">        &quot;$clusterTime&quot; : &#123;</span><br><span class="line">                &quot;clusterTime&quot; : Timestamp(1679579928, 1),</span><br><span class="line">                &quot;signature&quot; : &#123;</span><br><span class="line">                        &quot;hash&quot; : BinData(0,&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAA=&quot;),</span><br><span class="line">                        &quot;keyId&quot; : NumberLong(0)</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查看副本集状态: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myrs:PRIMARY&gt; rs.status()</span><br></pre></td></tr></table></figure>
+
+<p>“name” : “192.168.76.132:27019” 是第三个节点的名字，其角色是 “stateStr” : “ARBITER”</p>
+<h3 id="4-副本集的数据读写操作"><a href="#4-副本集的数据读写操作" class="headerlink" title="4.副本集的数据读写操作"></a>4.副本集的数据读写操作</h3><p>(1) 在主节点27017，写入和读取数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mongo --host=192.168.76.128 --port=27017</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">myrs:PRIMARY&gt; show databases</span><br><span class="line">admin   0.000GB</span><br><span class="line">config  0.000GB</span><br><span class="line">local   0.000GB</span><br><span class="line">myrs:PRIMARY&gt; use articledb</span><br><span class="line">switched to db articledb</span><br><span class="line">myrs:PRIMARY&gt; db</span><br><span class="line">articledb</span><br><span class="line">myrs:PRIMARY&gt; db.comment.insert(&#123;&quot;articleid&quot;:&quot;100000&quot;,&quot;content&quot;:&quot;今天天气真好，阳光明媚&quot;,&quot;userid&quot;:&quot;1001&quot;,&quot;nickname&quot;:&quot;Rose&quot;,&quot;createdatetime&quot;:new Date()&#125;)</span><br><span class="line">WriteResult(&#123; &quot;nInserted&quot; : 1 &#125;)</span><br><span class="line">myrs:PRIMARY&gt; db.comment.find()</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;641cc67ab8fd97e6b05dd3bd&quot;), &quot;articleid&quot; : &quot;100000&quot;, &quot;content&quot; : &quot;今天天气真好，阳光明媚&quot;, &quot;userid&quot; : &quot;1001&quot;, &quot;nickname&quot; : &quot;Rose&quot;, &quot;createdatetime&quot; : ISODate(&quot;2023-03-23T21:36:58.736Z&quot;) &#125;</span><br></pre></td></tr></table></figure>
+
+<p>(2) 登录从节点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mongo --host=192.168.76.128 --port=27018</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">myrs:SECONDARY&gt; show databases</span><br><span class="line">2023-03-24T05:37:43.201+0800 E QUERY    [js] Error: listDatabases failed:&#123;</span><br><span class="line">        &quot;operationTime&quot; : Timestamp(1679607458, 1),</span><br><span class="line">        &quot;ok&quot; : 0,</span><br><span class="line">        &quot;errmsg&quot; : &quot;not master and slaveOk=false&quot;,</span><br><span class="line">        &quot;code&quot; : 13435,</span><br><span class="line">        &quot;codeName&quot; : &quot;NotMasterNoSlaveOk&quot;,</span><br><span class="line">        &quot;$clusterTime&quot; : &#123;</span><br><span class="line">                &quot;clusterTime&quot; : Timestamp(1679607458, 1),</span><br><span class="line">                &quot;signature&quot; : &#123;</span><br><span class="line">                        &quot;hash&quot; : BinData(0,&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAA=&quot;),</span><br><span class="line">                        &quot;keyId&quot; : NumberLong(0)</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125; :</span><br><span class="line">_getErrorWithCode@src/mongo/shell/utils.js:25:13</span><br><span class="line">Mongo.prototype.getDBs@src/mongo/shell/mongo.js:139:1</span><br><span class="line">shellHelper.show@src/mongo/shell/utils.js:882:13</span><br><span class="line">shellHelper@src/mongo/shell/utils.js:766:15</span><br><span class="line">@(shellhelp2):1:1</span><br></pre></td></tr></table></figure>
+
+<p>发现从节点不能读取集合的数据。当前从节点只是一个备份，不是 slave 节点，无法读取数据，写当然更不行。因为默认情况下，从节点是没有读写权限的，可以增加读的权限，但需要进行设置。</p>
+<p>(3) 将从节点设置为 slave 节点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rs.slaveOk()</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rs.slaveOk(true)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">myrs:SECONDARY&gt; rs.slaveOk()</span><br><span class="line">myrs:SECONDARY&gt;</span><br><span class="line">myrs:SECONDARY&gt; show dbs</span><br><span class="line">admin      0.000GB</span><br><span class="line">articledb  0.000GB</span><br><span class="line">config     0.000GB</span><br><span class="line">local      0.000GB</span><br><span class="line">myrs:SECONDARY&gt; use articledb</span><br><span class="line">switched to db articledb</span><br><span class="line">myrs:SECONDARY&gt; db</span><br><span class="line">articledb</span><br><span class="line">myrs:SECONDARY&gt; show collections</span><br><span class="line">comment</span><br><span class="line">myrs:SECONDARY&gt; db.comment.find()</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;641cc67ab8fd97e6b05dd3bd&quot;), &quot;articleid&quot; : &quot;100000&quot;, &quot;content&quot; : &quot;今天天气真好，阳光明媚&quot;, &quot;userid&quot; : &quot;1001&quot;, &quot;nickname&quot; : &quot;Rose&quot;, &quot;createdatetime&quot; : ISODate(&quot;2023-03-23T21:36:58.736Z&quot;) &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">myrs:SECONDARY&gt; db.comment.insert(&#123;&quot;_id&quot;:&quot;1&quot;,&quot;articleid&quot;:&quot;100001&quot;,&quot;content&quot;:&quot;abc&quot;,&quot;userid&quot;:&quot;1002&quot;,&quot;nickname&quot;:&quot;n&quot;,&quot;createdatetime&quot;:new Date(&quot;2019-08-05T22:08:15.522Z&quot;),&quot;likenum&quot;:NumberInt(1000),&quot;state&quot;:&quot;1&quot;&#125;)</span><br><span class="line">WriteCommandError(&#123;</span><br><span class="line">        &quot;operationTime&quot; : Timestamp(1679611178, 1),</span><br><span class="line">        &quot;ok&quot; : 0,</span><br><span class="line">        &quot;errmsg&quot; : &quot;not master&quot;,</span><br><span class="line">        &quot;code&quot; : 10107,</span><br><span class="line">        &quot;codeName&quot; : &quot;NotMaster&quot;,</span><br><span class="line">        &quot;$clusterTime&quot; : &#123;</span><br><span class="line">                &quot;clusterTime&quot; : Timestamp(1679611178, 1),</span><br><span class="line">                &quot;signature&quot; : &#123;</span><br><span class="line">                        &quot;hash&quot; : BinData(0,&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAA=&quot;),</span><br><span class="line">                        &quot;keyId&quot; : NumberLong(0)</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>slave 节点可以读取数据，但是不能写入数据</p>
+<p>实现了读写分离，让主节点插入数据，让从节点来读取数据</p>
+<p>(4) 取消 slave 节点的读权限</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">myrs:SECONDARY&gt; rs.slaveOk(false)</span><br><span class="line">myrs:SECONDARY&gt; db.comment.find()</span><br><span class="line">Error: error: &#123;</span><br><span class="line">        &quot;operationTime&quot; : Timestamp(1679611318, 1),</span><br><span class="line">        &quot;ok&quot; : 0,</span><br><span class="line">        &quot;errmsg&quot; : &quot;not master and slaveOk=false&quot;,</span><br><span class="line">        &quot;code&quot; : 13435,</span><br><span class="line">        &quot;codeName&quot; : &quot;NotMasterNoSlaveOk&quot;,</span><br><span class="line">        &quot;$clusterTime&quot; : &#123;</span><br><span class="line">                &quot;clusterTime&quot; : Timestamp(1679611318, 1),</span><br><span class="line">                &quot;signature&quot; : &#123;</span><br><span class="line">                        &quot;hash&quot; : BinData(0,&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAA=&quot;),</span><br><span class="line">                        &quot;keyId&quot; : NumberLong(0)</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>(5) 仲裁者节点，不存放任何业务数据的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mongo --host=192.168.76.132 --port=27019</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">myrs:ARBITER&gt; show dbs</span><br><span class="line">2023-03-24T23:30:45.841+0800 E QUERY    [js] Error: listDatabases failed:&#123;</span><br><span class="line">        &quot;ok&quot; : 0,</span><br><span class="line">        &quot;errmsg&quot; : &quot;not master and slaveOk=false&quot;,</span><br><span class="line">        &quot;code&quot; : 13435,</span><br><span class="line">        &quot;codeName&quot; : &quot;NotMasterNoSlaveOk&quot;</span><br><span class="line">&#125; :</span><br><span class="line">_getErrorWithCode@src/mongo/shell/utils.js:25:13</span><br><span class="line">Mongo.prototype.getDBs@src/mongo/shell/mongo.js:139:1</span><br><span class="line">shellHelper.show@src/mongo/shell/utils.js:882:13</span><br><span class="line">shellHelper@src/mongo/shell/utils.js:766:15</span><br><span class="line">@(shellhelp2):1:1</span><br><span class="line">myrs:ARBITER&gt; rs.slaveOk(true)</span><br><span class="line">myrs:ARBITER&gt; show dbs</span><br><span class="line">local  0.000GB</span><br><span class="line">myrs:ARBITER&gt; use local</span><br><span class="line">switched to db local</span><br><span class="line">myrs:ARBITER&gt; show collections</span><br><span class="line">replset.election</span><br><span class="line">replset.minvalid</span><br><span class="line">replset.oplogTruncateAfterPoint</span><br><span class="line">startup_log</span><br><span class="line">system.replset</span><br><span class="line">system.rollback.id</span><br></pre></td></tr></table></figure>
+
+<p>仲裁者节点只存放副本集配置等数据</p>
+<h3 id="5-主节点的选举原则"><a href="#5-主节点的选举原则" class="headerlink" title="5.主节点的选举原则"></a>5.主节点的选举原则</h3><p>MongoDB在副本集中，会自动进行主节点的选举，主节点选举的触发条件：</p>
+<ol>
+<li>主节点故障</li>
+<li>主节点网络不可达（默认心跳信息为10秒）</li>
+<li>人工干预（rs.stepDown(600)）</li>
+</ol>
+<p>一旦触发选举，就要根据一定规则来选主节点</p>
+<p>选举规则是根据票数来决定谁获胜：</p>
+<ul>
+<li><p>票数最高，且获得了“大多数”成员的投票支持的节点获胜。“大多数”的定义为：假设复制集内投票成员数量为N，则大多数为 N/2 + 1。例如：3个投票成员，则大多数的值是2。当复制集内存活成员数量不足大多数时，整个复制集将无法选举出Primary，复制集将无法提供写服务，处于只读状态。</p>
+</li>
+<li><p>若票数相同，且都获得了“大多数”成员的投票支持的，数据新的节点获胜。数据的新旧是通过操作日志oplog来对比的</p>
+</li>
+</ul>
+<p>在获得票数的时候，优先级（priority）参数影响重大</p>
+<p>可以通过设置优先级（priority）来设置额外票数。优先级即权重，取值为0-1000，相当于可额外增加0-1000的票数，优先级的值越大，就越可能获得多数成员的投票（votes）数。指定较高的值可使成员更有资格成为主要成员，更低的值可使成员更不符合条件</p>
+<p>默认情况下，优先级的值是1</p>
+<p>(1) 查看节点的优先级配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">myrs:PRIMARY&gt; rs.conf()</span><br><span class="line">&#123;</span><br><span class="line">        &quot;_id&quot; : &quot;myrs&quot;,</span><br><span class="line">        &quot;version&quot; : 3,</span><br><span class="line">        &quot;protocolVersion&quot; : NumberLong(1),</span><br><span class="line">        &quot;writeConcernMajorityJournalDefault&quot; : true,</span><br><span class="line">        &quot;members&quot; : [</span><br><span class="line">                &#123;</span><br><span class="line">                        &quot;_id&quot; : 0,</span><br><span class="line">                        &quot;host&quot; : &quot;192.168.76.128:27017&quot;,</span><br><span class="line">                        &quot;arbiterOnly&quot; : false,</span><br><span class="line">                        &quot;buildIndexes&quot; : true,</span><br><span class="line">                        &quot;hidden&quot; : false,</span><br><span class="line">                        &quot;priority&quot; : 1,</span><br><span class="line">                        &quot;tags&quot; : &#123;</span><br><span class="line"></span><br><span class="line">                        &#125;,</span><br><span class="line">                        &quot;slaveDelay&quot; : NumberLong(0),</span><br><span class="line">                        &quot;votes&quot; : 1</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                        &quot;_id&quot; : 1,</span><br><span class="line">                        &quot;host&quot; : &quot;192.168.76.128:27018&quot;,</span><br><span class="line">                        &quot;arbiterOnly&quot; : false,</span><br><span class="line">                        &quot;buildIndexes&quot; : true,</span><br><span class="line">                        &quot;hidden&quot; : false,</span><br><span class="line">                        &quot;priority&quot; : 1,</span><br><span class="line">                        &quot;tags&quot; : &#123;</span><br><span class="line"></span><br><span class="line">                        &#125;,</span><br><span class="line">                        &quot;slaveDelay&quot; : NumberLong(0),</span><br><span class="line">                        &quot;votes&quot; : 1</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                        &quot;_id&quot; : 2,</span><br><span class="line">                        &quot;host&quot; : &quot;192.168.76.132:27019&quot;,</span><br><span class="line">                        &quot;arbiterOnly&quot; : true,</span><br><span class="line">                        &quot;buildIndexes&quot; : true,</span><br><span class="line">                        &quot;hidden&quot; : false,</span><br><span class="line">                        &quot;priority&quot; : 0,</span><br><span class="line">                        &quot;tags&quot; : &#123;</span><br><span class="line"></span><br><span class="line">                        &#125;,</span><br><span class="line">                        &quot;slaveDelay&quot; : NumberLong(0),</span><br><span class="line">                        &quot;votes&quot; : 1</span><br><span class="line">                &#125;</span><br><span class="line">        ],</span><br><span class="line">        &quot;settings&quot; : &#123;</span><br><span class="line">                &quot;chainingAllowed&quot; : true,</span><br><span class="line">                &quot;heartbeatIntervalMillis&quot; : 2000,</span><br><span class="line">                &quot;heartbeatTimeoutSecs&quot; : 10,</span><br><span class="line">                &quot;electionTimeoutMillis&quot; : 10000,</span><br><span class="line">                &quot;catchUpTimeoutMillis&quot; : -1,</span><br><span class="line">                &quot;catchUpTakeoverDelayMillis&quot; : 30000,</span><br><span class="line">                &quot;getLastErrorModes&quot; : &#123;</span><br><span class="line"></span><br><span class="line">                &#125;,</span><br><span class="line">                &quot;getLastErrorDefaults&quot; : &#123;</span><br><span class="line">                        &quot;w&quot; : 1,</span><br><span class="line">                        &quot;wtimeout&quot; : 0</span><br><span class="line">                &#125;,</span><br><span class="line">                &quot;replicaSetId&quot; : ObjectId(&quot;641c56b4e9c70f2cb79cc559&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看出，主节点和副本节点的优先级各为1，即，默认可以认为都已经有了一票。但仲裁节点，优先级是0，仲裁节点的优先级必须是0，不能是别的值。即不具备选举权，但具有投票权</p>
+<p>(2) 修改节点的优先级</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">myrs:PRIMARY&gt; cfg = rs.conf()</span><br><span class="line">myrs:PRIMARY&gt; cfg.members[0].priority=20</span><br><span class="line">20</span><br><span class="line">myrs:PRIMARY&gt; rs.reconfig(cfg)</span><br><span class="line">&#123;</span><br><span class="line">        &quot;ok&quot; : 1,</span><br><span class="line">        &quot;operationTime&quot; : Timestamp(1679665821, 1),</span><br><span class="line">        &quot;$clusterTime&quot; : &#123;</span><br><span class="line">                &quot;clusterTime&quot; : Timestamp(1679665821, 1),</span><br><span class="line">                &quot;signature&quot; : &#123;</span><br><span class="line">                        &quot;hash&quot; : BinData(0,&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAA=&quot;),</span><br><span class="line">                        &quot;keyId&quot; : NumberLong(0)</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>稍等片刻会重新开始选举</p>
+<h3 id="6-故障测试"><a href="#6-故障测试" class="headerlink" title="6.故障测试"></a>6.故障测试</h3><p>(1) 从节点故障测试</p>
+<p>从节点失效不会影响主节点，主节点可以正常读取和写入数据</p>
+<p>当从节点重启之后，会自动从主节点同步数据</p>
+<p>(2) 主节点故障测试</p>
+<p>关闭主节点后，从节点和仲裁节点对主节点的心跳失败，当失败超过10秒，此时因为没有主节点了，会自动发起投票。</p>
+<p>而从节点只有一个，因此，候选人只有一个</p>
+<p>开始投票，仲裁节点向从节点投了一票，从节点本身自带一票，因此共两票，超过了“大多数”</p>
+<p>仲裁节点没有选举权，从节点不向其投票，其票数是0.</p>
+<p>最终结果，原从节点成为新主节点。具备读写功能，可以正常读写数据</p>
+<p>再启动原主节点，原主节点变为从节点，自动从新主节点同步数据，新主节点保持不变</p>
+<p>(3) 仲裁节点和主节点故障</p>
+<p>关闭仲裁节点和主节点后，从节点保持是从节点，整个副本集为只读状态，无法写入数据</p>
+<p>因为在选举中，从节点只有本身的1票，没有达到大多数选票</p>
+<p>如果要触发选择，再加入一个节点即可</p>
+<p>若加入原仲裁节点，则从节点成为新的主节点</p>
+<p>若加入原主节点，则数据较新的节点成为主节点</p>
+<p>(4) 仲裁节点和从节点故障</p>
+<p>关闭仲裁节点和从节点后，主节点降级为从节点，整个副本集变为只读状态</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Database/" rel="tag"># Database</a>
+              <a href="/tags/MongoDB/" rel="tag"># MongoDB</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/03/17/MongoDB/009_MongoDB/" rel="prev" title="9.MongoDB Demo">
+                  <i class="fa fa-chevron-left"></i> 9.MongoDB Demo
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/03/17/MongoDB/011_MongoDB/" rel="next" title="11.Compass 连接副本集">
+                  11.Compass 连接副本集 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeweimian21</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yeweimian21.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="&amp;nbsp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3.MongoDB 安装部署">
+<meta property="og:url" content="https://yeweimian21.github.io/2023/03/17/MongoDB/003_MongoDB/index.html">
+<meta property="og:site_name" content="A peaceful place">
+<meta property="og:description" content="&amp;nbsp;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://yeweimian21.github.io/2023/03/17/MongoDB/003_MongoDB/p1.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2023/03/17/MongoDB/003_MongoDB/p2.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2023/03/17/MongoDB/003_MongoDB/p3.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2023/03/17/MongoDB/003_MongoDB/p4.png">
+<meta property="article:published_time" content="2023-03-17T00:00:03.000Z">
+<meta property="article:modified_time" content="2023-03-20T14:19:18.930Z">
+<meta property="article:author" content="yeweimian21">
+<meta property="article:tag" content="Database">
+<meta property="article:tag" content="MongoDB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yeweimian21.github.io/2023/03/17/MongoDB/003_MongoDB/p1.png">
+
+
+<link rel="canonical" href="https://yeweimian21.github.io/2023/03/17/MongoDB/003_MongoDB/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2023/03/17/MongoDB/003_MongoDB/","path":"2023/03/17/MongoDB/003_MongoDB/","title":"3.MongoDB 安装部署"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>3.MongoDB 安装部署 | A peaceful place</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A peaceful place</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">inner peace</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Windows-%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2"><span class="nav-number">1.</span> <span class="nav-text">1.Windows 安装部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%BF%9E%E6%8E%A5-MongoDB"><span class="nav-number">2.</span> <span class="nav-text">2.连接 MongoDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Linux-%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E5%AE%89%E8%A3%85%E5%90%AF%E5%8A%A8%E5%92%8C%E8%BF%9E%E6%8E%A5"><span class="nav-number">3.</span> <span class="nav-text">3.Linux 系统中的安装启动和连接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeweimian21</p>
+  <div class="site-description" itemprop="description">A novice</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">232</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://yeweimian21.github.io/2023/03/17/MongoDB/003_MongoDB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeweimian21">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A peaceful place">
+      <meta itemprop="description" content="A novice">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="3.MongoDB 安装部署 | A peaceful place">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          3.MongoDB 安装部署
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-03-17 08:00:03" itemprop="dateCreated datePublished" datetime="2023-03-17T08:00:03+08:00">2023-03-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-03-20 22:19:18" itemprop="dateModified" datetime="2023-03-20T22:19:18+08:00">2023-03-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/MongoDB/" itemprop="url" rel="index"><span itemprop="name">MongoDB</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>&nbsp;</p>
+<span id="more"></span>
+
+<h3 id="1-Windows-安装部署"><a href="#1-Windows-安装部署" class="headerlink" title="1.Windows 安装部署"></a>1.Windows 安装部署</h3><p>(1) 从官网下载安装包</p>
+<p>下载 zip 包，为免安装版</p>
+<p>版本的选择：</p>
+<p>MongoDB的版本命名规范如：x.y.z</p>
+<ul>
+<li>y 为奇数时表示当前版本为开发版，如：1.5.2、4.1.13</li>
+<li>y 为偶数时表示当前版本为稳定版，如：1.6.3、4.0.10</li>
+<li>z 是修正版本号</li>
+</ul>
+<p>版本详情说明可以参考官网说明: </p>
+<p><code>https://www.mongodb.com/docs/manual/release-notes/#release-version-numbers</code></p>
+<p>(2) 解压安装包</p>
+<p>完成解压后，在解压目录中，手动建立一个目录用于存放数据文件，如 data/db</p>
+<p>(3) 启动 MongoDB 服务</p>
+<p>方式1：命令行参数方式启动服务</p>
+<p>在 bin 目录中打开命令行提示符，输入如下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod --dbpath=..\data\db</span><br></pre></td></tr></table></figure>
+
+<p>我们在启动信息中可以看到，mongoDB的默认端口是27017，如果我们想改变默认的启动端口，可以通过–port来指定端口。</p>
+<p>为了方便我们每次启动，可以将安装目录的bin目录设置到环境变量的path中， bin 目录下是一些常用命令，比如 mongod 启动服务命令，mongo 客户端连接服务命令。</p>
+<p>方式2：配置文件方式启动服务</p>
+<p>在解压目录中新建 config 文件夹，该文件夹中新建配置文件 mongod.conf，内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">storage:</span><br><span class="line">    #The directory where the mongod instance stores its data.Default Value is &quot;\data\db&quot; on Windows.</span><br><span class="line">    dbPath: E:\MongoDB\mongodb-win32-x86_64-2008plus-ssl-4.0.12\data\db</span><br></pre></td></tr></table></figure>
+
+<p>详细配置项内容可以参考官方文档：</p>
+<p><code>https://www.mongodb.com/docs/manual/reference/configuration-options/</code></p>
+<p>启动方式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod -f ../config/mongod.conf</span><br></pre></td></tr></table></figure>
+<p>或 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod --config ../config/mongod.conf</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-连接-MongoDB"><a href="#2-连接-MongoDB" class="headerlink" title="2.连接 MongoDB"></a>2.连接 MongoDB</h3><p>(1) 命令行方式</p>
+<p>在 MongoDB 的安装目录下的 bin 目录，执行以下命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongo</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongo --host=127.0.0.1 --port=27017</span><br></pre></td></tr></table></figure>
+
+<p>执行命令进行验证:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; show dbs;</span><br><span class="line">admin   0.000GB</span><br><span class="line">config  0.000GB</span><br><span class="line">local   0.000GB</span><br></pre></td></tr></table></figure>
+
+<p>查看已经有的数据库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; show databases</span><br><span class="line">admin   0.000GB</span><br><span class="line">config  0.000GB</span><br><span class="line">local   0.000GB</span><br></pre></td></tr></table></figure>
+
+<p>退出mongodb</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; exit</span><br></pre></td></tr></table></figure>
+
+<p>更多参数可以通过帮助查看：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]# ./mongo --help</span><br><span class="line">MongoDB shell version v4.0.10</span><br><span class="line">usage: ./mongo [options] [db address] [file names (ending in .js)]</span><br><span class="line">db address can be:</span><br><span class="line">  foo                   foo database on local machine</span><br><span class="line">  192.168.0.5/foo       foo database on 192.168.0.5 machine</span><br><span class="line">  192.168.0.5:9999/foo  foo database on 192.168.0.5 machine on port 9999</span><br><span class="line">Options:</span><br><span class="line">  --shell                             run the shell after executing files</span><br><span class="line">  --nodb                              don&#x27;t connect to mongod on startup - no</span><br><span class="line">                                      &#x27;db address&#x27; arg expected</span><br><span class="line">  --norc                              will not run the &quot;.mongorc.js&quot; file on</span><br><span class="line">                                      start up</span><br><span class="line">  --quiet                             be less chatty</span><br><span class="line">  --port arg                          port to connect to</span><br><span class="line">  --host arg                          server to connect to</span><br><span class="line">  --eval arg                          evaluate javascript</span><br><span class="line">  -h [ --help ]                       show this usage information</span><br><span class="line">  --version                           show version information</span><br><span class="line">  --verbose                           increase verbosity</span><br><span class="line">  --ipv6                              enable IPv6 support (disabled by default)</span><br><span class="line">  --disableJavaScriptJIT              disable the Javascript Just In Time</span><br><span class="line">                                      compiler</span><br><span class="line">  --enableJavaScriptJIT               enable the Javascript Just In Time</span><br><span class="line">                                      compiler</span><br><span class="line">  --disableJavaScriptProtection       allow automatic JavaScript function</span><br><span class="line">                                      marshalling</span><br><span class="line">  --retryWrites                       automatically retry write operations upon</span><br><span class="line">                                      transient network errors</span><br><span class="line">  --disableImplicitSessions           do not automatically create and use</span><br><span class="line">                                      implicit sessions</span><br><span class="line">  --jsHeapLimitMB arg                 set the js scope&#x27;s heap size limit</span><br><span class="line"></span><br><span class="line">Authentication Options:</span><br><span class="line">  -u [ --username ] arg               username for authentication</span><br><span class="line">  -p [ --password ] arg               password for authentication</span><br><span class="line">  --authenticationDatabase arg        user source (defaults to dbname)</span><br><span class="line">  --authenticationMechanism arg       authentication mechanism</span><br><span class="line">  --gssapiServiceName arg (=mongodb)  Service name to use when authenticating</span><br><span class="line">                                      using GSSAPI/Kerberos</span><br><span class="line">  --gssapiHostName arg                Remote host name to use for purpose of</span><br><span class="line">                                      GSSAPI/Kerberos authentication</span><br><span class="line"></span><br><span class="line">file names: a list of files to run. files have to end in .js and will exit after unless --shell is specified</span><br></pre></td></tr></table></figure>
+
+<p>(2) Compass-图形化界面客户端</p>
+<p>从 MongoDB 官网下载MongoDB Compass，下载 zip 压缩包，解压到本地，执行 <code>MongoDBCompassCommunity.exe</code> 文件</p>
+<img src="/2023/03/17/MongoDB/003_MongoDB/p1.png" class="">
+
+<p>输入 主机地址 和 端口 等相关信息，点击连接</p>
+<img src="/2023/03/17/MongoDB/003_MongoDB/p2.png" class="">
+
+<h3 id="3-Linux-系统中的安装启动和连接"><a href="#3-Linux-系统中的安装启动和连接" class="headerlink" title="3.Linux 系统中的安装启动和连接"></a>3.Linux 系统中的安装启动和连接</h3><p>(1) 从官网下载 zip 压缩包 mongod-linux-x86_64-4.0.10.tgz</p>
+<p>(2) 上传压缩包并解压</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf mongodb-linux-x86_64-4.0.10.tgz</span><br></pre></td></tr></table></figure>
+
+<p>(3) 新建存储 数据 和 日志 的目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 数据存储目录</span><br><span class="line">mkdir -p /mongodb/single/data/db</span><br><span class="line"># 日志存储目录</span><br><span class="line">mkdir -p /mongodb/single/log</span><br></pre></td></tr></table></figure>
+
+<p>(4) 新建配置文件 mongod.conf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">systemLog:</span><br><span class="line">    # MongoDB发送所有日志输出的目标指定为文件</span><br><span class="line">    # #The path of the log file to which mongod or mongos should send all diagnostic logging information</span><br><span class="line">    destination: file</span><br><span class="line">    # mongod或mongos应向其发送所有诊断日志记录信息的日志文件的路径</span><br><span class="line">    path: &quot;/mongodb/single/log/mongod.log&quot;</span><br><span class="line">    # 当mongos或mongod实例重新启动时，mongos或mongod会将新条目附加到现有日志文件的末尾。</span><br><span class="line">    logAppend: true</span><br><span class="line">storage:</span><br><span class="line">    # mongod实例存储其数据的目录。storage.dbPath设置仅适用于mongod。</span><br><span class="line">    ##The directory where the mongod instance stores its data.Default Value is &quot;/data/db&quot;.</span><br><span class="line">    dbPath: &quot;/mongodb/single/data/db&quot;</span><br><span class="line">    journal:</span><br><span class="line">        # 启用或禁用持久性日志以确保数据文件保持有效和可恢复。</span><br><span class="line">        enabled: true</span><br><span class="line">processManagement:</span><br><span class="line">    # 启用在后台运行mongos或mongod进程的守护进程模式。</span><br><span class="line">    fork: true</span><br><span class="line">net:</span><br><span class="line">    # 服务实例绑定的IP，默认是localhost</span><br><span class="line">    bindIp: localhost, 192.168.76.128</span><br><span class="line">    # bindIp</span><br><span class="line">    # 绑定的端口，默认是27017</span><br><span class="line">    port: 27017</span><br></pre></td></tr></table></figure>
+
+<p>(5) 启动 MongoDB 服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost mongodb]# /usr/local/mongodb/mongodb-linux-x86_64-4.0.10/bin/mongod -f /mongodb/single/mongod.conf</span><br><span class="line">about to fork child process, waiting until server is ready for connections.</span><br><span class="line">forked process: 4586</span><br><span class="line">child process started successfully, parent exiting</span><br></pre></td></tr></table></figure>
+
+<p>查看进程验证服务是否启动了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost mongodb]# ps -ef | grep mongod</span><br><span class="line">root       4586      1  1 01:47 ?        00:00:01 /usr/local/mongodb/mongodb-linux-x86_64-4.0.10/bin/mongod -f /mongodb/single/mongod.conf</span><br></pre></td></tr></table></figure>
+
+<p>(6) 连接 Linux MongoDB</p>
+<p>1.mongo命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongo --host=192.168.76.128 --port=27017</span><br></pre></td></tr></table></figure>
+
+<p>2.compass工具</p>
+<img src="/2023/03/17/MongoDB/003_MongoDB/p3.png" class="">
+
+<img src="/2023/03/17/MongoDB/003_MongoDB/p4.png" class="">
+
+<p>(7) 停止 MongoDB 服务</p>
+<p>1.通过系统的 kill命令 直接杀死进程</p>
+<p>快速，简单，但是数据可能会出错</p>
+<p>杀完要检查一下，避免有的没有杀掉</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep mongod</span><br><span class="line">kill -2 [pid]</span><br><span class="line">ps -ef | grep mongod</span><br></pre></td></tr></table></figure>
+
+<p>2.通过 mongo 客户端中的 shutdownServer 命令来关闭服务</p>
+<p>操作稍繁琐，但是数据不容易出错</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]# /usr/local/mongodb/mongodb-linux-x86_64-4.0.10/bin/mongo</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt; use admin</span><br><span class="line">switched to db admin</span><br><span class="line">&gt; db.shutdownServer()</span><br><span class="line">server should be down...</span><br><span class="line">2023-03-21T02:02:28.990+0800 I NETWORK  [js] trying reconnect to 127.0.0.1:27017 failed</span><br><span class="line">2023-03-21T02:02:28.991+0800 I NETWORK  [js] reconnect 127.0.0.1:27017 failed failed</span><br><span class="line">&gt; exit</span><br><span class="line">bye</span><br><span class="line">2023-03-21T02:02:40.720+0800 I NETWORK  [js] trying reconnect to 127.0.0.1:27017 failed</span><br><span class="line">2023-03-21T02:02:40.720+0800 I NETWORK  [js] reconnect 127.0.0.1:27017 failed failed</span><br><span class="line">2023-03-21T02:02:40.720+0800 I QUERY    [js] Failed to end session &#123; id: UUID(&quot;bd52ffb3-1a4c-40ab-a32a-7002d1ca0280&quot;) &#125; due to SocketException: socket exception [CONNECT_ERROR] server [couldn&#x27;t connect to server 127.0.0.1:27017, connection attempt failed: SocketException: Error connecting to 127.0.0.1:27017 :: caused by :: Connection refused]</span><br><span class="line">[root@localhost bin]# ps -ef | grep mongod</span><br><span class="line">root       6264   1909  0 02:02 pts/0    00:00:00 grep --color=auto mongod</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Database/" rel="tag"># Database</a>
+              <a href="/tags/MongoDB/" rel="tag"># MongoDB</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/03/17/MongoDB/002_MongoDB/" rel="prev" title="2.MongoDB 数据类型">
+                  <i class="fa fa-chevron-left"></i> 2.MongoDB 数据类型
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/03/17/MongoDB/004_MongoDB/" rel="next" title="4.MongoDB 数据库操作">
+                  4.MongoDB 数据库操作 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeweimian21</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yeweimian21.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="&amp;nbsp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="13.MongoDB 分片集群-Sharded Cluster">
+<meta property="og:url" content="https://yeweimian21.github.io/2023/03/17/MongoDB/013_MongoDB/index.html">
+<meta property="og:site_name" content="A peaceful place">
+<meta property="og:description" content="&amp;nbsp;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://yeweimian21.github.io/2023/03/17/MongoDB/013_MongoDB/p1.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2023/03/17/MongoDB/013_MongoDB/p2.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2023/03/17/MongoDB/013_MongoDB/p3.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2023/03/17/MongoDB/013_MongoDB/p4.png">
+<meta property="og:image" content="https://yeweimian21.github.io/2023/03/17/MongoDB/013_MongoDB/p5.png">
+<meta property="article:published_time" content="2023-03-17T00:00:13.000Z">
+<meta property="article:modified_time" content="2023-03-25T13:28:18.655Z">
+<meta property="article:author" content="yeweimian21">
+<meta property="article:tag" content="Database">
+<meta property="article:tag" content="MongoDB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yeweimian21.github.io/2023/03/17/MongoDB/013_MongoDB/p1.png">
+
+
+<link rel="canonical" href="https://yeweimian21.github.io/2023/03/17/MongoDB/013_MongoDB/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2023/03/17/MongoDB/013_MongoDB/","path":"2023/03/17/MongoDB/013_MongoDB/","title":"13.MongoDB 分片集群-Sharded Cluster"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>13.MongoDB 分片集群-Sharded Cluster | A peaceful place</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A peaceful place</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">inner peace</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%88%86%E7%89%87%E9%9B%86%E7%BE%A4-Sharded-Cluster"><span class="nav-number">1.</span> <span class="nav-text">1.分片集群-Sharded Cluster</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%88%86%E7%89%87%E9%9B%86%E7%BE%A4%E5%8C%85%E5%90%AB%E7%9A%84%E7%BB%84%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">2.分片集群包含的组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%88%86%E7%89%87%E9%9B%86%E7%BE%A4%E6%9E%B6%E6%9E%84%E7%9B%AE%E6%A0%87"><span class="nav-number">3.</span> <span class="nav-text">3.分片集群架构目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%88%86%E7%89%87%EF%BC%88%E5%AD%98%E5%82%A8%EF%BC%89%E8%8A%82%E7%82%B9%E5%89%AF%E6%9C%AC%E9%9B%86%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-number">4.</span> <span class="nav-text">4.分片（存储）节点副本集的创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E9%85%8D%E7%BD%AE%E8%8A%82%E7%82%B9%E5%89%AF%E6%9C%AC%E9%9B%86%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-number">5.</span> <span class="nav-text">5.配置节点副本集的创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E8%B7%AF%E7%94%B1%E8%8A%82%E7%82%B9%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-number">6.</span> <span class="nav-text">6.路由节点的创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E5%9C%A8%E8%B7%AF%E7%94%B1%E8%8A%82%E7%82%B9%E4%B8%8A%E8%BF%9B%E8%A1%8C%E5%88%86%E7%89%87%E9%85%8D%E7%BD%AE%E6%93%8D%E4%BD%9C"><span class="nav-number">7.</span> <span class="nav-text">7.在路由节点上进行分片配置操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E5%90%91%E5%88%86%E7%89%87%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE%E8%BF%9B%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="nav-number">8.</span> <span class="nav-text">8.向分片插入数据进行测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-%E5%86%8D%E5%A2%9E%E5%8A%A0%E4%B8%80%E4%B8%AA%E8%B7%AF%E7%94%B1%E8%8A%82%E7%82%B9"><span class="nav-number">9.</span> <span class="nav-text">9.再增加一个路由节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-Compass-%E8%BF%9E%E6%8E%A5%E5%88%86%E7%89%87%E9%9B%86%E7%BE%A4"><span class="nav-number">10.</span> <span class="nav-text">10.Compass 连接分片集群</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-SpringDataMongDB-%E8%BF%9E%E6%8E%A5%E5%88%86%E7%89%87%E9%9B%86%E7%BE%A4"><span class="nav-number">11.</span> <span class="nav-text">11.SpringDataMongDB 连接分片集群</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeweimian21</p>
+  <div class="site-description" itemprop="description">A novice</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">232</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://yeweimian21.github.io/2023/03/17/MongoDB/013_MongoDB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeweimian21">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A peaceful place">
+      <meta itemprop="description" content="A novice">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="13.MongoDB 分片集群-Sharded Cluster | A peaceful place">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          13.MongoDB 分片集群-Sharded Cluster
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-03-17 08:00:13" itemprop="dateCreated datePublished" datetime="2023-03-17T08:00:13+08:00">2023-03-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-03-25 21:28:18" itemprop="dateModified" datetime="2023-03-25T21:28:18+08:00">2023-03-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/MongoDB/" itemprop="url" rel="index"><span itemprop="name">MongoDB</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>&nbsp;</p>
+<span id="more"></span>
+
+<h3 id="1-分片集群-Sharded-Cluster"><a href="#1-分片集群-Sharded-Cluster" class="headerlink" title="1.分片集群-Sharded Cluster"></a>1.分片集群-Sharded Cluster</h3><p>分片（sharding）是一种跨多台机器分布数据的方法， MongoDB使用分片来支持具有非常大的数据集和高吞吐量操作的部署</p>
+<p>MongoDB支持通过分片进行水平扩展</p>
+<h3 id="2-分片集群包含的组件"><a href="#2-分片集群包含的组件" class="headerlink" title="2.分片集群包含的组件"></a>2.分片集群包含的组件</h3><p>MongoDB分片群集包含以下组件：</p>
+<ol>
+<li>分片（存储）：每个分片包含分片数据的子集。 每个分片都可以部署为副本集。</li>
+<li>mongos（路由）：mongos充当查询路由器，在客户端应用程序和分片集群之间提供接口。</li>
+<li>config servers（”调度”的配置）：配置服务器存储群集的元数据和配置设置。 从MongoDB 3.4开始，必须将配置服务器部署为副本集（CSRS）。</li>
+</ol>
+<img src="/2023/03/17/MongoDB/013_MongoDB/p1.png" class="">
+
+<h3 id="3-分片集群架构目标"><a href="#3-分片集群架构目标" class="headerlink" title="3.分片集群架构目标"></a>3.分片集群架构目标</h3><p>两个分片节点副本集（3+3）+一个配置节点副本集（3）+两个路由节点（2），共11个服务节点。</p>
+<p>(1) 两个分片节点副本集</p>
+<p>Shard_1:</p>
+<ul>
+<li>PrimaryMongod1: 192.168.76.128: 27018</li>
+<li>SecondaryMongod1: 192.168.76.128: 27118</li>
+<li>ArbiterMongod1: 192.168.76.132: 27218</li>
+</ul>
+<p>Shard_2:</p>
+<ul>
+<li>PrimaryMongod1: 192.168.76.128: 27318</li>
+<li>SecondaryMongod1: 192.168.76.128: 27418</li>
+<li>ArbiterMongod1: 192.168.76.132: 27518</li>
+</ul>
+<p>(2) 一个配置节点副本集</p>
+<p>Config Server:</p>
+<ul>
+<li>PrimaryComfig: 192.168.76.128: 27019</li>
+<li>SecondaryConfig: 192.168.76.128: 27119</li>
+<li>SecondaryConfig: 192.168.76.128: 27219</li>
+</ul>
+<p>(3) 两个路由节点</p>
+<ul>
+<li>(Router1)mongos1: 192.168.76.128: 27017</li>
+<li>(Router2)mongos2: 192.168.76.128: 27117</li>
+</ul>
+<h3 id="4-分片（存储）节点副本集的创建"><a href="#4-分片（存储）节点副本集的创建" class="headerlink" title="4.分片（存储）节点副本集的创建"></a>4.分片（存储）节点副本集的创建</h3><p>(1) 准备存放数据和日志的目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /mongodb/sharded_cluster/myshardrs01_27018/log</span><br><span class="line">mkdir -p /mongodb/sharded_cluster/myshardrs01_27018/data/db</span><br><span class="line">mkdir -p /mongodb/sharded_cluster/myshardrs01_27118/log</span><br><span class="line">mkdir -p /mongodb/sharded_cluster/myshardrs01_27118/data/db</span><br><span class="line">mkdir -p /mongodb/sharded_cluster/myshardrs01_27218/log</span><br><span class="line">mkdir -p /mongodb/sharded_cluster/myshardrs01_27218/data/db</span><br></pre></td></tr></table></figure>
+
+<p>(2) 新建配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /mongodb/sharded_cluster/myshardrs01_27218/mongod.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">systemLog:</span><br><span class="line">    #MongoDB发送所有日志输出的目标指定为文件</span><br><span class="line">    destination: file</span><br><span class="line">    #mongod或mongos应向其发送所有诊断日志记录信息的日志文件的路径</span><br><span class="line">    path: &quot;/mongodb/sharded_cluster/myshardrs01_27218/log/mongod.log&quot;</span><br><span class="line">    #当mongos或mongod实例重新启动时，mongos或mongod会将新条目附加到现有日志文件的末尾。</span><br><span class="line">    logAppend: true</span><br><span class="line">storage:</span><br><span class="line">    #mongod实例存储其数据的目录。storage.dbPath设置仅适用于mongod。</span><br><span class="line">    dbPath: &quot;/mongodb/sharded_cluster/myshardrs01_27218/data/db&quot;</span><br><span class="line">    journal:</span><br><span class="line">        #启用或禁用持久性日志以确保数据文件保持有效和可恢复。</span><br><span class="line">        enabled: true</span><br><span class="line">processManagement:</span><br><span class="line">    #启用在后台运行mongos或mongod进程的守护进程模式。</span><br><span class="line">    fork: true</span><br><span class="line">    #指定用于保存mongos或mongod进程的进程ID的文件位置，其中mongos或mongod将写入其PID</span><br><span class="line">    pidFilePath: &quot;/mongodb/sharded_cluster/myshardrs01_27218/log/mongod.pid&quot;</span><br><span class="line">net:</span><br><span class="line">    #服务实例绑定的IP</span><br><span class="line">    bindIp: localhost,192.168.76.132</span><br><span class="line">    #绑定的端口</span><br><span class="line">    port: 27218</span><br><span class="line">replication:</span><br><span class="line">    replSetName: myshardrs01</span><br><span class="line">sharding:</span><br><span class="line">    clusterRole: shardsvr</span><br></pre></td></tr></table></figure>
+
+<p>修改 ip 和 路径等配置</p>
+<p>sharding.clusterRole 设置<br>|Value|Description|<br>|-|-|<br>|configsvr|Start this instance as a config server. The instance starts on port 27019 by default.|<br>|shardsvr|Start this instance as a shard. The instance starts on port 27018 by default.|</p>
+<p>(3) 依次启动三个mongod服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./mongod -f /mongodb/sharded_cluster/myshardrs01_27018/mongod.conf</span><br><span class="line">./mongod -f /mongodb/sharded_cluster/myshardrs01_27118/mongod.conf</span><br><span class="line">./mongod -f /mongodb/sharded_cluster/myshardrs01_27218/mongod.conf</span><br></pre></td></tr></table></figure>
+
+<p>(4) 初始化副本集和创建主节点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mongo --host=192.168.76.128 --port=27018</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&gt; rs.initiate()</span><br><span class="line">&#123;</span><br><span class="line">        &quot;info2&quot; : &quot;no configuration specified. Using a default configuration for the set&quot;,</span><br><span class="line">        &quot;me&quot; : &quot;192.168.76.128:27018&quot;,</span><br><span class="line">        &quot;ok&quot; : 1,</span><br><span class="line">        &quot;operationTime&quot; : Timestamp(1679698502, 1),</span><br><span class="line">        &quot;$clusterTime&quot; : &#123;</span><br><span class="line">                &quot;clusterTime&quot; : Timestamp(1679698502, 1),</span><br><span class="line">                &quot;signature&quot; : &#123;</span><br><span class="line">                        &quot;hash&quot; : BinData(0,&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAA=&quot;),</span><br><span class="line">                        &quot;keyId&quot; : NumberLong(0)</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line">myshardrs01:SECONDARY&gt;</span><br><span class="line">myshardrs01:PRIMARY&gt;</span><br><span class="line">myshardrs01:PRIMARY&gt;</span><br></pre></td></tr></table></figure>
+
+<p>(5) 添加副本节点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">myshardrs01:PRIMARY&gt; rs.add(&quot;192.168.76.128:27118&quot;)</span><br><span class="line">&#123;</span><br><span class="line">        &quot;ok&quot; : 1,</span><br><span class="line">        &quot;operationTime&quot; : Timestamp(1679698547, 1),</span><br><span class="line">        &quot;$clusterTime&quot; : &#123;</span><br><span class="line">                &quot;clusterTime&quot; : Timestamp(1679698547, 1),</span><br><span class="line">                &quot;signature&quot; : &#123;</span><br><span class="line">                        &quot;hash&quot; : BinData(0,&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAA=&quot;),</span><br><span class="line">                        &quot;keyId&quot; : NumberLong(0)</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>(6) 添加仲裁节点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">myshardrs01:PRIMARY&gt; rs.addArb(&quot;192.168.76.132:27218&quot;)</span><br><span class="line">&#123;</span><br><span class="line">        &quot;ok&quot; : 1,</span><br><span class="line">        &quot;operationTime&quot; : Timestamp(1679698567, 1),</span><br><span class="line">        &quot;$clusterTime&quot; : &#123;</span><br><span class="line">                &quot;clusterTime&quot; : Timestamp(1679698567, 1),</span><br><span class="line">                &quot;signature&quot; : &#123;</span><br><span class="line">                        &quot;hash&quot; : BinData(0,&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAA=&quot;),</span><br><span class="line">                        &quot;keyId&quot; : NumberLong(0)</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-配置节点副本集的创建"><a href="#5-配置节点副本集的创建" class="headerlink" title="5.配置节点副本集的创建"></a>5.配置节点副本集的创建</h3><p>(1) 新建存放数据和日志的目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /mongodb/sharded_cluster/myconfigrs_27019/log</span><br><span class="line">mkdir -p /mongodb/sharded_cluster/myconfigrs_27019/data/db</span><br><span class="line">mkdir -p /mongodb/sharded_cluster/myconfigrs_27119/log</span><br><span class="line">mkdir -p /mongodb/sharded_cluster/myconfigrs_27119/data/db</span><br><span class="line">mkdir -p /mongodb/sharded_cluster/myconfigrs_27219/log</span><br><span class="line">mkdir -p /mongodb/sharded_cluster/myconfigrs_27219/data/db</span><br></pre></td></tr></table></figure>
+
+<p>(2) 新建配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /mongodb/sharded_cluster/myconfigrs_27219/mongod.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">systemLog:</span><br><span class="line">    #MongoDB发送所有日志输出的目标指定为文件</span><br><span class="line">    destination: file</span><br><span class="line">    #mongod或mongos应向其发送所有诊断日志记录信息的日志文件的路径</span><br><span class="line">    path: &quot;/mongodb/sharded_cluster/myconfigrs_27219/log/mongod.log&quot;</span><br><span class="line">    #当mongos或mongod实例重新启动时，mongos或mongod会将新条目附加到现有日志文件的末尾。</span><br><span class="line">    logAppend: true</span><br><span class="line">storage:</span><br><span class="line">    #mongod实例存储其数据的目录。storage.dbPath设置仅适用于mongod。</span><br><span class="line">    dbPath: &quot;/mongodb/sharded_cluster/myconfigrs_27219/data/db&quot;</span><br><span class="line">    journal:</span><br><span class="line">        #启用或禁用持久性日志以确保数据文件保持有效和可恢复。</span><br><span class="line">        enabled: true</span><br><span class="line">processManagement:</span><br><span class="line">    #启用在后台运行mongos或mongod进程的守护进程模式。</span><br><span class="line">    fork: true</span><br><span class="line">    #指定用于保存mongos或mongod进程的进程ID的文件位置，其中mongos或mongod将写入其PID</span><br><span class="line">    pidFilePath: &quot;/mongodb/sharded_cluster/myconfigrs_27219/log/mongod.pid&quot;</span><br><span class="line">net:</span><br><span class="line">    #服务实例绑定所有IP</span><br><span class="line">    #bindIpAll: true</span><br><span class="line">    #服务实例绑定的IP</span><br><span class="line">    bindIp: localhost,192.168.0.2</span><br><span class="line">    #绑定的端口</span><br><span class="line">    port: 27219</span><br><span class="line">replication:</span><br><span class="line">    replSetName: myconfigrs</span><br><span class="line">sharding:</span><br><span class="line">    clusterRole: configsvr</span><br></pre></td></tr></table></figure>
+
+<p>修改 ip 和 路径等配置</p>
+<p>(3) 依次启动三个mongod服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./mongod -f /mongodb/sharded_cluster/myconfigrs_27019/mongod.conf</span><br><span class="line">./mongod -f /mongodb/sharded_cluster/myconfigrs_27119/mongod.conf</span><br><span class="line">./mongod -f /mongodb/sharded_cluster/myconfigrs_27219/mongod.conf</span><br></pre></td></tr></table></figure>
+
+<p>(4) 初始化副本集和创建主节点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mongo --host=192.168.76.128 --port=27019</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&gt; rs.initiate()</span><br><span class="line">&#123;</span><br><span class="line">        &quot;info2&quot; : &quot;no configuration specified. Using a default configuration for the set&quot;,</span><br><span class="line">        &quot;me&quot; : &quot;192.168.76.128:27019&quot;,</span><br><span class="line">        &quot;ok&quot; : 1,</span><br><span class="line">        &quot;operationTime&quot; : Timestamp(1679744224, 1),</span><br><span class="line">        &quot;$gleStats&quot; : &#123;</span><br><span class="line">                &quot;lastOpTime&quot; : Timestamp(1679744224, 1),</span><br><span class="line">                &quot;electionId&quot; : ObjectId(&quot;000000000000000000000000&quot;)</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;lastCommittedOpTime&quot; : Timestamp(0, 0),</span><br><span class="line">        &quot;$clusterTime&quot; : &#123;</span><br><span class="line">                &quot;clusterTime&quot; : Timestamp(1679744224, 1),</span><br><span class="line">                &quot;signature&quot; : &#123;</span><br><span class="line">                        &quot;hash&quot; : BinData(0,&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAA=&quot;),</span><br><span class="line">                        &quot;keyId&quot; : NumberLong(0)</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line">myconfigrs:SECONDARY&gt;</span><br><span class="line">myconfigrs:PRIMARY&gt;</span><br></pre></td></tr></table></figure>
+
+<p>(5) 添加副本节点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">myconfigrs:PRIMARY&gt; rs.add(&quot;192.168.76.128:27119&quot;)</span><br><span class="line">myconfigrs:PRIMARY&gt; rs.add(&quot;192.168.76.128:27219&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>(6) 查看副本集状态</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myconfigrs:PRIMARY&gt; rs.status()</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-路由节点的创建"><a href="#6-路由节点的创建" class="headerlink" title="6.路由节点的创建"></a>6.路由节点的创建</h3><p>(1) 新建存放日志的目录(路由节点不存放数据)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /mongodb/sharded_cluster/mymongos_27017/log</span><br></pre></td></tr></table></figure>
+
+<p>(2) 新建配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /mongodb/sharded_cluster/mymongos_27017/mongos.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">systemLog:</span><br><span class="line">    #MongoDB发送所有日志输出的目标指定为文件</span><br><span class="line">    destination: file</span><br><span class="line">    #mongod或mongos应向其发送所有诊断日志记录信息的日志文件的路径</span><br><span class="line">    path: &quot;/mongodb/sharded_cluster/mymongos_27017/log/mongod.log&quot;</span><br><span class="line">    #当mongos或mongod实例重新启动时，mongos或mongod会将新条目附加到现有日志文件的末尾。</span><br><span class="line">    logAppend: true</span><br><span class="line">processManagement:</span><br><span class="line">    #启用在后台运行mongos或mongod进程的守护进程模式。</span><br><span class="line">    fork: true</span><br><span class="line">    #指定用于保存mongos或mongod进程的进程ID的文件位置，其中mongos或mongod将写入其PID</span><br><span class="line">    pidFilePath: &quot;/mongodb/sharded_cluster/mymongos_27017/log/mongod.pid&quot;</span><br><span class="line">net:</span><br><span class="line">    #服务实例绑定所有IP，有副作用，副本集初始化的时候，节点名字会自动设置为本地域名，而不是ip</span><br><span class="line">    #bindIpAll: true</span><br><span class="line">    #服务实例绑定的IP</span><br><span class="line">    bindIp: localhost,192.168.76.128</span><br><span class="line">    #bindIp</span><br><span class="line">    #绑定的端口</span><br><span class="line">    port: 27017</span><br><span class="line">sharding:</span><br><span class="line">    #指定配置节点副本集</span><br><span class="line">    configDB: myconfigrs/192.168.76.128:27019,192.168.76.128:27119,192.168.76.128:27219</span><br></pre></td></tr></table></figure>
+
+<p>(3) 启动 mongos 服务</p>
+<p>使用 mongos 启动</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mongos -f /mongodb/sharded_cluster/mymongos_27017/mongos.conf</span><br></pre></td></tr></table></figure>
+
+<p>(4) 登录 mongos</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mongo --host=192.168.76.128 --port=27017</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">mongos&gt; show dbs</span><br><span class="line">admin   0.000GB</span><br><span class="line">config  0.000GB</span><br><span class="line">mongos&gt; db.aa.insert(&#123;aa:&quot;aa&quot;&#125;)</span><br><span class="line">WriteCommandError(&#123;</span><br><span class="line">        &quot;ok&quot; : 0,</span><br><span class="line">        &quot;errmsg&quot; : &quot;unable to initialize targeter for write op for collection test.aa :: caused by :: Database test not found :: caused by :: No shards found&quot;,</span><br><span class="line">        &quot;code&quot; : 70,</span><br><span class="line">        &quot;codeName&quot; : &quot;ShardNotFound&quot;,</span><br><span class="line">        &quot;operationTime&quot; : Timestamp(1679752659, 2),</span><br><span class="line">        &quot;$clusterTime&quot; : &#123;</span><br><span class="line">                &quot;clusterTime&quot; : Timestamp(1679752659, 2),</span><br><span class="line">                &quot;signature&quot; : &#123;</span><br><span class="line">                        &quot;hash&quot; : BinData(0,&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAA=&quot;),</span><br><span class="line">                        &quot;keyId&quot; : NumberLong(0)</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>此时路由节点无法写入数据</p>
+<p>原因: 通过路由节点操作，现在只是连接了配置节点，还没有连接分片数据节点，因此无法写入业务数据</p>
+<h3 id="7-在路由节点上进行分片配置操作"><a href="#7-在路由节点上进行分片配置操作" class="headerlink" title="7.在路由节点上进行分片配置操作"></a>7.在路由节点上进行分片配置操作</h3><p>(1) 添加分片</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh.addShard()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">mongos&gt; sh.addShard(&quot;myshardrs01/192.168.76.128:27018,192.168.76.128:27118,192.168.76.132:27218&quot;)</span><br><span class="line">&#123;</span><br><span class="line">        &quot;shardAdded&quot; : &quot;myshardrs01&quot;,</span><br><span class="line">        &quot;ok&quot; : 1,</span><br><span class="line">        &quot;operationTime&quot; : Timestamp(1679764093, 4),</span><br><span class="line">        &quot;$clusterTime&quot; : &#123;</span><br><span class="line">                &quot;clusterTime&quot; : Timestamp(1679764093, 4),</span><br><span class="line">                &quot;signature&quot; : &#123;</span><br><span class="line">                        &quot;hash&quot; : BinData(0,&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAA=&quot;),</span><br><span class="line">                        &quot;keyId&quot; : NumberLong(0)</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line">mongos&gt; sh.addShard(&quot;myshardrs02/192.168.76.128:27318,192.168.76.128:27418,192.168.76.132:27518&quot;)</span><br><span class="line">&#123;</span><br><span class="line">        &quot;shardAdded&quot; : &quot;myshardrs02&quot;,</span><br><span class="line">        &quot;ok&quot; : 1,</span><br><span class="line">        &quot;operationTime&quot; : Timestamp(1679764186, 4),</span><br><span class="line">        &quot;$clusterTime&quot; : &#123;</span><br><span class="line">                &quot;clusterTime&quot; : Timestamp(1679764186, 4),</span><br><span class="line">                &quot;signature&quot; : &#123;</span><br><span class="line">                        &quot;hash&quot; : BinData(0,&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAA=&quot;),</span><br><span class="line">                        &quot;keyId&quot; : NumberLong(0)</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查看分片状态</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh.status()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">mongos&gt; sh.status()</span><br><span class="line">--- Sharding Status ---</span><br><span class="line">  sharding version: &#123;</span><br><span class="line">        &quot;_id&quot; : 1,</span><br><span class="line">        &quot;minCompatibleVersion&quot; : 5,</span><br><span class="line">        &quot;currentVersion&quot; : 6,</span><br><span class="line">        &quot;clusterId&quot; : ObjectId(&quot;641edce2d3a527c9d6048484&quot;)</span><br><span class="line">  &#125;</span><br><span class="line">  shards:</span><br><span class="line">        &#123;  &quot;_id&quot; : &quot;myshardrs01&quot;,  &quot;host&quot; : &quot;myshardrs01/192.168.76.128:27018,192.168.76.128:27118&quot;,  &quot;state&quot; : 1 &#125;</span><br><span class="line">        &#123;  &quot;_id&quot; : &quot;myshardrs02&quot;,  &quot;host&quot; : &quot;myshardrs02/192.168.76.128:27318,192.168.76.128:27418&quot;,  &quot;state&quot; : 1 &#125;</span><br><span class="line">  active mongoses:</span><br><span class="line">        &quot;4.0.10&quot; : 1</span><br><span class="line">  autosplit:</span><br><span class="line">        Currently enabled: yes</span><br><span class="line">  balancer:</span><br><span class="line">        Currently enabled:  yes</span><br><span class="line">        Currently running:  no</span><br><span class="line">        Failed balancer rounds in last 5 attempts:  0</span><br><span class="line">        Migration Results for the last 24 hours:</span><br><span class="line">                No recent migrations</span><br><span class="line">  databases:</span><br><span class="line">        &#123;  &quot;_id&quot; : &quot;config&quot;,  &quot;primary&quot; : &quot;config&quot;,  &quot;partitioned&quot; : true &#125;</span><br><span class="line">                config.system.sessions</span><br><span class="line">                        shard key: &#123; &quot;_id&quot; : 1 &#125;</span><br><span class="line">                        unique: false</span><br><span class="line">                        balancing: true</span><br><span class="line">                        chunks:</span><br><span class="line">                                myshardrs01     1</span><br><span class="line">                        &#123; &quot;_id&quot; : &#123; &quot;$minKey&quot; : 1 &#125; &#125; --&gt;&gt; &#123; &quot;_id&quot; : &#123; &quot;$maxKey&quot; : 1 &#125; &#125; on : myshardrs01 Timestamp(1, 0)</span><br></pre></td></tr></table></figure>
+
+<p>(2) 开启分片功能</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh.enableSharding([database_name])</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mongos&gt; sh.enableSharding(&quot;articledb&quot;)</span><br><span class="line">&#123;</span><br><span class="line">        &quot;ok&quot; : 1,</span><br><span class="line">        &quot;operationTime&quot; : Timestamp(1679764586, 5),</span><br><span class="line">        &quot;$clusterTime&quot; : &#123;</span><br><span class="line">                &quot;clusterTime&quot; : Timestamp(1679764586, 5),</span><br><span class="line">                &quot;signature&quot; : &#123;</span><br><span class="line">                        &quot;hash&quot; : BinData(0,&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAA=&quot;),</span><br><span class="line">                        &quot;keyId&quot; : NumberLong(0)</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>(3) 集合分片</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh.shardCollection([namespace(&lt;database&gt;.&lt;collection&gt;)], [key])</span><br></pre></td></tr></table></figure>
+
+<p>分片规则: </p>
+<ol>
+<li>哈希策略</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mongos&gt; sh.shardCollection(&quot;articledb.comment&quot;, &#123;&quot;nickname&quot;: &quot;hashed&quot;&#125;)</span><br><span class="line">&#123;</span><br><span class="line">        &quot;collectionsharded&quot; : &quot;articledb.comment&quot;,</span><br><span class="line">        &quot;collectionUUID&quot; : UUID(&quot;092d3f5f-2a7a-4cb7-adc0-e37e67c66b3d&quot;),</span><br><span class="line">        &quot;ok&quot; : 1,</span><br><span class="line">        &quot;operationTime&quot; : Timestamp(1679764858, 17),</span><br><span class="line">        &quot;$clusterTime&quot; : &#123;</span><br><span class="line">                &quot;clusterTime&quot; : Timestamp(1679764858, 17),</span><br><span class="line">                &quot;signature&quot; : &#123;</span><br><span class="line">                        &quot;hash&quot; : BinData(0,&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAA=&quot;),</span><br><span class="line">                        &quot;keyId&quot; : NumberLong(0)</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>范围策略</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mongos&gt; sh.shardCollection(&quot;articledb.author&quot;, &#123;&quot;age&quot;: 1&#125;)</span><br><span class="line">&#123;</span><br><span class="line">        &quot;collectionsharded&quot; : &quot;articledb.author&quot;,</span><br><span class="line">        &quot;collectionUUID&quot; : UUID(&quot;e9bf16e0-07d2-4df1-9d68-c02475d88feb&quot;),</span><br><span class="line">        &quot;ok&quot; : 1,</span><br><span class="line">        &quot;operationTime&quot; : Timestamp(1679769560, 13),</span><br><span class="line">        &quot;$clusterTime&quot; : &#123;</span><br><span class="line">                &quot;clusterTime&quot; : Timestamp(1679769560, 13),</span><br><span class="line">                &quot;signature&quot; : &#123;</span><br><span class="line">                        &quot;hash&quot; : BinData(0,&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAA=&quot;),</span><br><span class="line">                        &quot;keyId&quot; : NumberLong(0)</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查看分片状态</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">mongos&gt; sh.status()</span><br><span class="line">--- Sharding Status ---</span><br><span class="line">  sharding version: &#123;</span><br><span class="line">        &quot;_id&quot; : 1,</span><br><span class="line">        &quot;minCompatibleVersion&quot; : 5,</span><br><span class="line">        &quot;currentVersion&quot; : 6,</span><br><span class="line">        &quot;clusterId&quot; : ObjectId(&quot;641edce2d3a527c9d6048484&quot;)</span><br><span class="line">  &#125;</span><br><span class="line">  shards:</span><br><span class="line">        &#123;  &quot;_id&quot; : &quot;myshardrs01&quot;,  &quot;host&quot; : &quot;myshardrs01/192.168.76.128:27018,192.168.76.128:27118&quot;,  &quot;state&quot; : 1 &#125;</span><br><span class="line">        &#123;  &quot;_id&quot; : &quot;myshardrs02&quot;,  &quot;host&quot; : &quot;myshardrs02/192.168.76.128:27318,192.168.76.128:27418&quot;,  &quot;state&quot; : 1 &#125;</span><br><span class="line">  active mongoses:</span><br><span class="line">        &quot;4.0.10&quot; : 1</span><br><span class="line">  autosplit:</span><br><span class="line">        Currently enabled: yes</span><br><span class="line">  balancer:</span><br><span class="line">        Currently enabled:  yes</span><br><span class="line">        Currently running:  no</span><br><span class="line">        Failed balancer rounds in last 5 attempts:  0</span><br><span class="line">        Migration Results for the last 24 hours:</span><br><span class="line">                No recent migrations</span><br><span class="line">  databases:</span><br><span class="line">        &#123;  &quot;_id&quot; : &quot;articledb&quot;,  &quot;primary&quot; : &quot;myshardrs02&quot;,  &quot;partitioned&quot; : true,  &quot;version&quot; : &#123;  &quot;uuid&quot; : UUID(&quot;8934badb-2e9c-4e20-931b-016dd8e6f5ce&quot;),  &quot;lastMod&quot; : 1 &#125; &#125;</span><br><span class="line">                articledb.author</span><br><span class="line">                        shard key: &#123; &quot;age&quot; : 1 &#125;</span><br><span class="line">                        unique: false</span><br><span class="line">                        balancing: true</span><br><span class="line">                        chunks:</span><br><span class="line">                                myshardrs02     1</span><br><span class="line">                        &#123; &quot;age&quot; : &#123; &quot;$minKey&quot; : 1 &#125; &#125; --&gt;&gt; &#123; &quot;age&quot; : &#123; &quot;$maxKey&quot; : 1 &#125; &#125; on : myshardrs02 Timestamp(1, 0)</span><br><span class="line">                articledb.comment</span><br><span class="line">                        shard key: &#123; &quot;nickname&quot; : &quot;hashed&quot; &#125;</span><br><span class="line">                        unique: false</span><br><span class="line">                        balancing: true</span><br><span class="line">                        chunks:</span><br><span class="line">                                myshardrs01     2</span><br><span class="line">                                myshardrs02     2</span><br><span class="line">                        &#123; &quot;nickname&quot; : &#123; &quot;$minKey&quot; : 1 &#125; &#125; --&gt;&gt; &#123; &quot;nickname&quot; : NumberLong(&quot;-4611686018427387902&quot;) &#125; on : myshardrs01 Timestamp(1, 0)</span><br><span class="line">                        &#123; &quot;nickname&quot; : NumberLong(&quot;-4611686018427387902&quot;) &#125; --&gt;&gt; &#123; &quot;nickname&quot; : NumberLong(0) &#125; on : myshardrs01 Timestamp(1, 1)</span><br><span class="line">                        &#123; &quot;nickname&quot; : NumberLong(0) &#125; --&gt;&gt; &#123; &quot;nickname&quot; : NumberLong(&quot;4611686018427387902&quot;) &#125; on : myshardrs02 Timestamp(1, 2)</span><br><span class="line">                        &#123; &quot;nickname&quot; : NumberLong(&quot;4611686018427387902&quot;) &#125; --&gt;&gt; &#123; &quot;nickname&quot; : &#123; &quot;$maxKey&quot; : 1 &#125; &#125; on : myshardrs02 Timestamp(1, 3)</span><br><span class="line">        &#123;  &quot;_id&quot; : &quot;config&quot;,  &quot;primary&quot; : &quot;config&quot;,  &quot;partitioned&quot; : true &#125;</span><br><span class="line">                config.system.sessions</span><br><span class="line">                        shard key: &#123; &quot;_id&quot; : 1 &#125;</span><br><span class="line">                        unique: false</span><br><span class="line">                        balancing: true</span><br><span class="line">                        chunks:</span><br><span class="line">                                myshardrs01     1</span><br><span class="line">                        &#123; &quot;_id&quot; : &#123; &quot;$minKey&quot; : 1 &#125; &#125; --&gt;&gt; &#123; &quot;_id&quot; : &#123; &quot;$maxKey&quot; : 1 &#125; &#125; on : myshardrs01 Timestamp(1, 0)</span><br></pre></td></tr></table></figure>
+
+<p>显示集群的详细信息: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongos&gt; db.printShardingStatus()</span><br></pre></td></tr></table></figure>
+
+<p>查看均衡器是否工作（需要重新均衡时系统才会自动启动）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mongos&gt; sh.isBalancerRunning()</span><br><span class="line">false</span><br></pre></td></tr></table></figure>
+
+<p>查看当前Balancer状态: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mongos&gt; sh.getBalancerState()</span><br><span class="line">true</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-向分片插入数据进行测试"><a href="#8-向分片插入数据进行测试" class="headerlink" title="8.向分片插入数据进行测试"></a>8.向分片插入数据进行测试</h3><p>登录路由节点进行数据插入</p>
+<p>(1) 哈希策略</p>
+<p>路由节点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mongos&gt; use articledb</span><br><span class="line">switched to db articledb</span><br><span class="line">mongos&gt; db</span><br><span class="line">articledb</span><br><span class="line">mongos&gt; for(var i=1;i&lt;=1000;i++) &#123;db.comment.insert(&#123;_id:i+&quot;&quot;,nickname:&quot;AbcD&quot;+i&#125;)&#125;</span><br><span class="line">WriteResult(&#123; &quot;nInserted&quot; : 1 &#125;)</span><br><span class="line">mongos&gt; db.comment.count()</span><br><span class="line">1000</span><br></pre></td></tr></table></figure>
+
+<p>分片副本集1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">myshardrs01:PRIMARY&gt; use articledb</span><br><span class="line">switched to db articledb</span><br><span class="line">myshardrs01:PRIMARY&gt; db.comment.count()</span><br><span class="line">505</span><br></pre></td></tr></table></figure>
+
+<p>查看当前集合的情况</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myshardrs01:PRIMARY&gt; db.comment.stats()</span><br></pre></td></tr></table></figure>
+
+<p>分片副本集2</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">myshardrs02:PRIMARY&gt; use articledb</span><br><span class="line">switched to db articledb</span><br><span class="line">myshardrs02:PRIMARY&gt; db.comment.count()</span><br><span class="line">495</span><br></pre></td></tr></table></figure>
+
+<p>查看当前集合的情况</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myshardrs02:PRIMARY&gt; db.comment.stats()</span><br></pre></td></tr></table></figure>
+
+<p>查看本库内所有集合的分片信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mongos&gt; sh.status()</span><br><span class="line">                articledb.comment</span><br><span class="line">                        shard key: &#123; &quot;nickname&quot; : &quot;hashed&quot; &#125;</span><br><span class="line">                        unique: false</span><br><span class="line">                        balancing: true</span><br><span class="line">                        chunks:</span><br><span class="line">                                myshardrs01     2</span><br><span class="line">                                myshardrs02     2</span><br><span class="line">                        &#123; &quot;nickname&quot; : &#123; &quot;$minKey&quot; : 1 &#125; &#125; --&gt;&gt; &#123; &quot;nickname&quot; : NumberLong(&quot;-4611686018427387902&quot;) &#125; on : myshardrs01 Timestamp(1, 0)</span><br><span class="line">                        &#123; &quot;nickname&quot; : NumberLong(&quot;-4611686018427387902&quot;) &#125; --&gt;&gt; &#123; &quot;nickname&quot; : NumberLong(0) &#125; on : myshardrs01 Timestamp(1, 1)</span><br><span class="line">                        &#123; &quot;nickname&quot; : NumberLong(0) &#125; --&gt;&gt; &#123; &quot;nickname&quot; : NumberLong(&quot;4611686018427387902&quot;) &#125; on : myshardrs02 Timestamp(1, 2)</span><br><span class="line">                        &#123; &quot;nickname&quot; : NumberLong(&quot;4611686018427387902&quot;) &#125; --&gt;&gt; &#123; &quot;nickname&quot; : &#123; &quot;$maxKey&quot; : 1 &#125; &#125; on : myshardrs02 Timestamp(1, 3)</span><br></pre></td></tr></table></figure>
+
+<p>(2) 范围策略</p>
+<p>路由节点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mongos&gt; use articledb</span><br><span class="line">switched to db articledb</span><br><span class="line">mongos&gt; for(var i=1;i&lt;=20000;i++) &#123;db.author.save(&#123;&quot;name&quot;: &quot;aaaaaabbbbbbbccccccddddd&quot;+i,&quot;age&quot;:NumberInt(i%120)&#125;)&#125;</span><br><span class="line">mongos&gt; db.author.count()</span><br><span class="line">20000</span><br></pre></td></tr></table></figure>
+
+<p>查看副本集状况</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mongos&gt; sh.status()</span><br><span class="line">                articledb.author</span><br><span class="line">                        shard key: &#123; &quot;age&quot; : 1 &#125;</span><br><span class="line">                        unique: false</span><br><span class="line">                        balancing: true</span><br><span class="line">                        chunks:</span><br><span class="line">                                myshardrs01     4</span><br><span class="line">                                myshardrs02     5</span><br><span class="line">                        &#123; &quot;age&quot; : &#123; &quot;$minKey&quot; : 1 &#125; &#125; --&gt;&gt; &#123; &quot;age&quot; : 0 &#125; on : myshardrs01 Timestamp(2, 0)</span><br><span class="line">                        &#123; &quot;age&quot; : 0 &#125; --&gt;&gt; &#123; &quot;age&quot; : 20 &#125; on : myshardrs01 Timestamp(3, 0)</span><br><span class="line">                        &#123; &quot;age&quot; : 20 &#125; --&gt;&gt; &#123; &quot;age&quot; : 41 &#125; on : myshardrs01 Timestamp(4, 0)</span><br><span class="line">                        &#123; &quot;age&quot; : 41 &#125; --&gt;&gt; &#123; &quot;age&quot; : 46 &#125; on : myshardrs01 Timestamp(5, 0)</span><br><span class="line">                        &#123; &quot;age&quot; : 46 &#125; --&gt;&gt; &#123; &quot;age&quot; : 67 &#125; on : myshardrs02 Timestamp(5, 1)</span><br><span class="line">                        &#123; &quot;age&quot; : 67 &#125; --&gt;&gt; &#123; &quot;age&quot; : 88 &#125; on : myshardrs02 Timestamp(2, 3)</span><br><span class="line">                        &#123; &quot;age&quot; : 88 &#125; --&gt;&gt; &#123; &quot;age&quot; : 92 &#125; on : myshardrs02 Timestamp(2, 4)</span><br><span class="line">                        &#123; &quot;age&quot; : 92 &#125; --&gt;&gt; &#123; &quot;age&quot; : 111 &#125; on : myshardrs02 Timestamp(3, 1)</span><br><span class="line">                        &#123; &quot;age&quot; : 111 &#125; --&gt;&gt; &#123; &quot;age&quot; : &#123; &quot;$maxKey&quot; : 1 &#125; &#125; on : myshardrs02 Timestamp(4, 1)</span><br></pre></td></tr></table></figure>
+
+<p>分片副本集1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">myshardrs01:PRIMARY&gt; use articledb</span><br><span class="line">switched to db articledb</span><br><span class="line">myshardrs01:PRIMARY&gt; db.author.count()</span><br><span class="line">7681</span><br><span class="line">myshardrs01:PRIMARY&gt; db.author.find()</span><br></pre></td></tr></table></figure>
+
+<p>分片副本集2</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">myshardrs02:PRIMARY&gt; use articledb</span><br><span class="line">switched to db articledb</span><br><span class="line">myshardrs02:PRIMARY&gt; db.author.count()</span><br><span class="line">12319</span><br><span class="line">myshardrs02:PRIMARY&gt; db.author.find()</span><br></pre></td></tr></table></figure>
+
+<p>提示：</p>
+<p>如果查看状态发现没有分片，则可能是由于以下原因造成了：</p>
+<p>1）系统繁忙，正在分片中。<br>2）数据块（chunk）没有填满，默认的数据块尺寸（chunksize）是64M，填满后才会考虑向其他片的数据块填充数据，因此，为了测试，可以将其改小，这里改为1M，操作如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mongos&gt; use config</span><br><span class="line">mongos&gt; db.settings.save( &#123; _id:&quot;chunksize&quot;, value: 1 &#125; )</span><br><span class="line">WriteResult(&#123; &quot;nMatched&quot; : 0, &quot;nUpserted&quot; : 1, &quot;nModified&quot; : 0, &quot;_id&quot; : &quot;chunksize&quot; &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>测试完再修改回来：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mongos&gt; db.settings.save( &#123; _id:&quot;chunksize&quot;, value: 64 &#125; )</span><br><span class="line">WriteResult(&#123; &quot;nMatched&quot; : 1, &quot;nUpserted&quot; : 0, &quot;nModified&quot; : 1 &#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-再增加一个路由节点"><a href="#9-再增加一个路由节点" class="headerlink" title="9.再增加一个路由节点"></a>9.再增加一个路由节点</h3><p>(1) 新建存放日志的目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /mongodb/sharded_cluster/mymongos_27117/log</span><br></pre></td></tr></table></figure>
+
+<p>(2) 新建配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /mongodb/sharded_cluster/mymongos_27117/mongos.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">systemLog:</span><br><span class="line">    #MongoDB发送所有日志输出的目标指定为文件</span><br><span class="line">    destination: file</span><br><span class="line">    #mongod或mongos应向其发送所有诊断日志记录信息的日志文件的路径</span><br><span class="line">    path: &quot;/mongodb/sharded_cluster/mymongos_27117/log/mongod.log&quot;</span><br><span class="line">    #当mongos或mongod实例重新启动时，mongos或mongod会将新条目附加到现有日志文件的末尾。</span><br><span class="line">    logAppend: true</span><br><span class="line">processManagement:</span><br><span class="line">    #启用在后台运行mongos或mongod进程的守护进程模式。</span><br><span class="line">    fork: true</span><br><span class="line">    #指定用于保存mongos或mongod进程的进程ID的文件位置，其中mongos或mongod将写入其PID</span><br><span class="line">    pidFilePath: &quot;/mongodb/sharded_cluster/mymongos_27117/log/mongod.pid&quot;</span><br><span class="line">net:</span><br><span class="line">    #服务实例绑定所有IP，有副作用，副本集初始化的时候，节点名字会自动设置为本地域名，而不是ip</span><br><span class="line">    #bindIpAll: true</span><br><span class="line">    #服务实例绑定的IP</span><br><span class="line">    bindIp: localhost,192.168.76.128</span><br><span class="line">    #bindIp</span><br><span class="line">    #绑定的端口</span><br><span class="line">    port: 27117</span><br><span class="line">sharding:</span><br><span class="line">    configDB: myconfigrs/192.168.76.128:27019,192.168.76.128:27119,192.168.76.128:27219</span><br></pre></td></tr></table></figure>
+
+<p>(3) 启动路由节点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mongos -f /mongodb/sharded_cluster/mymongos_27117/mongos.conf</span><br></pre></td></tr></table></figure>
+
+<p>第二个路由无需配置分片信息，因为分片配置都保存到了配置服务器中了</p>
+<h3 id="10-Compass-连接分片集群"><a href="#10-Compass-连接分片集群" class="headerlink" title="10.Compass 连接分片集群"></a>10.Compass 连接分片集群</h3><img src="/2023/03/17/MongoDB/013_MongoDB/p2.png" class="">
+
+<img src="/2023/03/17/MongoDB/013_MongoDB/p3.png" class="">
+
+<img src="/2023/03/17/MongoDB/013_MongoDB/p4.png" class="">
+
+<img src="/2023/03/17/MongoDB/013_MongoDB/p5.png" class="">
+
+<h3 id="11-SpringDataMongDB-连接分片集群"><a href="#11-SpringDataMongDB-连接分片集群" class="headerlink" title="11.SpringDataMongDB 连接分片集群"></a>11.SpringDataMongDB 连接分片集群</h3><p>(1) application.yml</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">data:</span></span><br><span class="line">    <span class="attr">mongodb:</span></span><br><span class="line">      <span class="comment"># 连接路由节点</span></span><br><span class="line">      <span class="attr">uri:</span> <span class="string">mongodb://192.168.76.128:27017,192.168.76.128:27117/articledb</span></span><br></pre></td></tr></table></figure>
+
+<p>(2) 测试类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.learn.article.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.learn.article.ArticleApplication;</span><br><span class="line"><span class="keyword">import</span> com.learn.article.po.Comment;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> org.junit.runner.RunWith;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.domain.Page;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.context.junit4.SpringRunner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.time.LocalDateTime;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">// SpringBoot的Junit集成测试</span></span><br><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="comment">// SpringBoot的测试环境初始化，参数：启动类</span></span><br><span class="line"><span class="meta">@SpringBootTest(classes = ArticleApplication.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CommentServiceTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> CommentService commentService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testFindCommentById</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">Comment</span> <span class="variable">comment</span> <span class="operator">=</span> commentService.findCommentById(<span class="string">&quot;1&quot;</span>);</span><br><span class="line">        System.out.println(comment);</span><br><span class="line">        <span class="comment">// 2023-03-25 21:21:20.513  INFO 14852 --- [           main] org.mongodb.driver.connection            : Opened connection [connectionId&#123;localValue:4&#125;] to 192.168.76.128:27117</span></span><br><span class="line">        <span class="comment">// Comment&#123;id=&#x27;1&#x27;, content=&#x27;null&#x27;, publishtime=null, userid=&#x27;null&#x27;, nickname=&#x27;AbcD1&#x27;, createdatetime=null, likenum=null, replynum=null, state=&#x27;null&#x27;, parentid=&#x27;null&#x27;, articleid=&#x27;null&#x27;&#125;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Database/" rel="tag"># Database</a>
+              <a href="/tags/MongoDB/" rel="tag"># MongoDB</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/03/17/MongoDB/012_MongoDB/" rel="prev" title="12.SpringDataMongoDB 连接副本集">
+                  <i class="fa fa-chevron-left"></i> 12.SpringDataMongoDB 连接副本集
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/03/17/MongoDB/014_MongoDB/" rel="next" title="14.MongoDB 安全认证">
+                  14.MongoDB 安全认证 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeweimian21</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
