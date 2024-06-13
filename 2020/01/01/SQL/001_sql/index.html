@@ -21,13 +21,13 @@
 
     <meta name="description" content="&amp;nbsp;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="1.创建视图">
+<meta property="og:title" content="View">
 <meta property="og:url" content="https://yeweimian21.github.io/2020/01/01/SQL/001_sql/index.html">
 <meta property="og:site_name" content="A peaceful place">
 <meta property="og:description" content="&amp;nbsp;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-01-01T00:00:01.000Z">
-<meta property="article:modified_time" content="2023-03-06T06:55:02.315Z">
+<meta property="article:modified_time" content="2024-06-12T10:32:35.700Z">
 <meta property="article:author" content="yeweimian21">
 <meta property="article:tag" content="Database">
 <meta property="article:tag" content="SQL">
@@ -38,10 +38,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2020/01/01/SQL/001_sql/","path":"2020/01/01/SQL/001_sql/","title":"1.创建视图"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2020/01/01/SQL/001_sql/","path":"2020/01/01/SQL/001_sql/","title":"View"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>1.创建视图 | A peaceful place</title>
+<title>View | A peaceful place</title>
   
 
 
@@ -114,7 +114,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%88%9B%E5%BB%BA%E8%A7%86%E5%9B%BE"><span class="nav-number">1.</span> <span class="nav-text">1.创建视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%A7%86%E5%9B%BE%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">2.视图的作用</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Usage-of-View"><span class="nav-number">1.</span> <span class="nav-text">1.Usage of View</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Advantages-of-View"><span class="nav-number">2.</span> <span class="nav-text">2.Advantages of View</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -178,12 +178,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="1.创建视图 | A peaceful place">
+      <meta itemprop="name" content="View | A peaceful place">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          1.创建视图
+          View
         </h1>
 
         <div class="post-meta-container">
@@ -201,7 +201,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-03-06 14:55:02" itemprop="dateModified" datetime="2023-03-06T14:55:02+08:00">2023-03-06</time>
+      <time title="Modified: 2024-06-12 18:32:35" itemprop="dateModified" datetime="2024-06-12T18:32:35+08:00">2024-06-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -226,19 +226,19 @@
         <p>&nbsp;</p>
 <span id="more"></span>
 
-<h3 id="1-创建视图"><a href="#1-创建视图" class="headerlink" title="1.创建视图"></a>1.创建视图</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">view</span> [view_name]</span><br><span class="line"><span class="keyword">as</span> [select_query]</span><br></pre></td></tr></table></figure>
+<h3 id="1-Usage-of-View"><a href="#1-Usage-of-View" class="headerlink" title="1.Usage of View"></a>1.Usage of View</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">view</span> [view_name]</span><br><span class="line"><span class="keyword">as</span> [select_query]</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- select 查询语句</span></span><br><span class="line"><span class="keyword">select</span> u.username, r.rolename <span class="keyword">from</span> staff u</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> role_staff g</span><br><span class="line"><span class="keyword">on</span> u.userid <span class="operator">=</span> g.userid</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> role r</span><br><span class="line"><span class="keyword">on</span> g.roleid <span class="operator">=</span> r.roleid;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 创建该 select 查询的视图</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">view</span> staff_role_view</span><br><span class="line"><span class="keyword">as</span> (<span class="keyword">select</span> u.username, r.rolename <span class="keyword">from</span> staff u</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> role_staff g</span><br><span class="line"><span class="keyword">on</span> u.userid <span class="operator">=</span> g.userid</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> role r</span><br><span class="line"><span class="keyword">on</span> g.roleid <span class="operator">=</span> r.roleid)</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- select query statement</span></span><br><span class="line"><span class="keyword">select</span> u.username, r.rolename <span class="keyword">from</span> staff u</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> role_staff g</span><br><span class="line"><span class="keyword">on</span> u.userid <span class="operator">=</span> g.userid</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> role r</span><br><span class="line"><span class="keyword">on</span> g.roleid <span class="operator">=</span> r.roleid;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Create a view for this select query statement</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">view</span> staff_role_view</span><br><span class="line"><span class="keyword">as</span> (<span class="keyword">select</span> u.username, r.rolename <span class="keyword">from</span> staff u</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> role_staff g</span><br><span class="line"><span class="keyword">on</span> u.userid <span class="operator">=</span> g.userid</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> role r</span><br><span class="line"><span class="keyword">on</span> g.roleid <span class="operator">=</span> r.roleid)</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
 
-<p>查询视图</p>
+<p>Query View</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> staff_role_view;</span><br></pre></td></tr></table></figure>
 
-<p>查看视图结构信息</p>
+<p>Show information of the view</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DESC</span> staff_role_view;</span><br><span class="line"></span><br><span class="line"><span class="keyword">DESCRIBE</span> staff_role_view;</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-视图的作用"><a href="#2-视图的作用" class="headerlink" title="2.视图的作用"></a>2.视图的作用</h3><p>(1) 使用视图，简化数据查询操作，提高效率：使用视图的用户完全不需要关心视图内部对应的逻辑（各种关联、筛选条件），这样一个频繁使用的、复杂的 SQL 就不需要反复写多次。</p>
-<p>(2) 使用视图，基表的数据就有了安全性：使用视图的用户只能访问他们被允许查询的结果集。可以对不同的用户，设定不同的视图。例如：某用户只能获取user表的 name 和 age 数据，不能获取 gender 数据，则可以创建对应的视图。</p>
-<p>(3) 使用视图，可以保证数据独立：一旦视图的结构确定了，可以屏蔽表结构变化对用户的影响，源表增加列对视图没有影响；源表修改列名，则可以通过修改视图来解决，不会造成对访问者的影响。</p>
+<h3 id="2-Advantages-of-View"><a href="#2-Advantages-of-View" class="headerlink" title="2.Advantages of View"></a>2.Advantages of View</h3><p>(1) Simplify data query operations and improve efficiency: View users don’t need to care about the corresponding logic within the view (association relationships, filter conditions), so a complex and frequently used SQL doesn’t need to be written repeatedly.</p>
+<p>(2) Make the data in the base table safe: View users can only access the result set which they are allowed to query. Different views can be set for different users. For example, we can create a view to implement that a user can only obtain the name and age data of the staff table but not the gender data.</p>
+<p>(3) Achieve data independence: Once the structure of the view is determined, the impact of changes in the talbe structure on users can be shielded. Adding columns to the source table has no impact on the view. If the source table changes its column name, it can be solved by modifying the view without affecting the view users.</p>
 
     </div>
 
@@ -261,8 +261,8 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2020/01/01/SQL/002_sql/" rel="next" title="2.case when then 语句">
-                  2.case when then 语句 <i class="fa fa-chevron-right"></i>
+                <a href="/2020/01/01/SQL/002_sql/" rel="next" title="Case statement">
+                  Case statement <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

@@ -21,13 +21,13 @@
 
     <meta name="description" content="&amp;nbsp;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="1.between 语句">
+<meta property="og:title" content="between statement">
 <meta property="og:url" content="https://yeweimian21.github.io/2020/01/01/SQL/003_sql/index.html">
 <meta property="og:site_name" content="A peaceful place">
 <meta property="og:description" content="&amp;nbsp;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-01-01T00:00:03.000Z">
-<meta property="article:modified_time" content="2023-03-06T07:35:04.824Z">
+<meta property="article:modified_time" content="2024-06-13T02:59:15.678Z">
 <meta property="article:author" content="yeweimian21">
 <meta property="article:tag" content="Database">
 <meta property="article:tag" content="SQL">
@@ -38,10 +38,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2020/01/01/SQL/003_sql/","path":"2020/01/01/SQL/003_sql/","title":"1.between 语句"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2020/01/01/SQL/003_sql/","path":"2020/01/01/SQL/003_sql/","title":"between statement"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>1.between 语句 | A peaceful place</title>
+<title>between statement | A peaceful place</title>
   
 
 
@@ -114,7 +114,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-between-%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.</span> <span class="nav-text">1. between 语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-not-between-%E8%AF%AD%E5%8F%A5"><span class="nav-number">2.</span> <span class="nav-text">2. not between 语句</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-between-statement"><span class="nav-number">1.</span> <span class="nav-text">1. between statement</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-not-between-statement"><span class="nav-number">2.</span> <span class="nav-text">2. not between statement</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -178,12 +178,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="1.between 语句 | A peaceful place">
+      <meta itemprop="name" content="between statement | A peaceful place">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          1.between 语句
+          between statement
         </h1>
 
         <div class="post-meta-container">
@@ -201,7 +201,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-03-06 15:35:04" itemprop="dateModified" datetime="2023-03-06T15:35:04+08:00">2023-03-06</time>
+      <time title="Modified: 2024-06-13 10:59:15" itemprop="dateModified" datetime="2024-06-13T10:59:15+08:00">2024-06-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -226,10 +226,10 @@
         <p>&nbsp;</p>
 <span id="more"></span>
 
-<h3 id="1-between-语句"><a href="#1-between-语句" class="headerlink" title="1. between 语句"></a>1. between 语句</h3><p><code>between A and B</code>: 包含两端的端点的值，<code>[A, B]</code>，<code>A &lt;= value &lt;= B</code></p>
+<h3 id="1-between-statement"><a href="#1-between-statement" class="headerlink" title="1. between statement"></a>1. <code>between</code> statement</h3><p><code>between A and B</code>: Includes the value of both endpoints, <code>[A, B]</code>, <code>A &lt;= value &lt;= B</code></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> t_user</span><br><span class="line"><span class="keyword">where</span> age <span class="keyword">between</span> <span class="number">10</span> <span class="keyword">and</span> <span class="number">20</span>;</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-not-between-语句"><a href="#2-not-between-语句" class="headerlink" title="2. not between 语句"></a>2. not between 语句</h3><p><code>not between A and B</code>: <code>between A and B</code>的取反，不包含两端的端点的值，<code>(_, A) and (B, _)</code>，<code>value &lt; A and B &lt; value</code></p>
+<h3 id="2-not-between-statement"><a href="#2-not-between-statement" class="headerlink" title="2. not between statement"></a>2. <code>not between</code> statement</h3><p><code>not between A and B</code>: The opposite of <code>between A and B</code>, it does not include the values of the two endpoints, <code>(_, A) and (B, _)</code>, <code>value &lt; A and B &lt; value</code></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> t_user</span><br><span class="line"><span class="keyword">where</span> age <span class="keyword">not</span> <span class="keyword">between</span> <span class="number">10</span> <span class="keyword">and</span> <span class="number">20</span>;</span><br></pre></td></tr></table></figure>
 
 
@@ -249,8 +249,8 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020/01/01/SQL/002_sql/" rel="prev" title="2.case when then 语句">
-                  <i class="fa fa-chevron-left"></i> 2.case when then 语句
+                <a href="/2020/01/01/SQL/002_sql/" rel="prev" title="Case statement">
+                  <i class="fa fa-chevron-left"></i> Case statement
                 </a>
             </div>
             <div class="post-nav-item">
