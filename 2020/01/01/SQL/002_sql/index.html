@@ -27,7 +27,7 @@
 <meta property="og:description" content="&amp;nbsp;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-01-01T00:00:02.000Z">
-<meta property="article:modified_time" content="2024-06-13T02:51:41.346Z">
+<meta property="article:modified_time" content="2024-06-13T03:51:33.908Z">
 <meta property="article:author" content="yeweimian21">
 <meta property="article:tag" content="Database">
 <meta property="article:tag" content="SQL">
@@ -127,7 +127,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">237</span>
+          <span class="site-state-item-count">238</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -201,7 +201,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-06-13 10:51:41" itemprop="dateModified" datetime="2024-06-13T10:51:41+08:00">2024-06-13</time>
+      <time title="Modified: 2024-06-13 11:51:33" itemprop="dateModified" datetime="2024-06-13T11:51:33+08:00">2024-06-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -226,14 +226,14 @@
         <p>&nbsp;</p>
 <span id="more"></span>
 
-<p>There are two types <code>Case</code> statement: </p>
-<h3 id="1-Case-statement-1"><a href="#1-Case-statement-1" class="headerlink" title="1.Case statement 1"></a>1.<code>Case</code> statement 1</h3><p>syntax: </p>
+<p>There are two types Case statement: </p>
+<h3 id="1-Case-statement-1"><a href="#1-Case-statement-1" class="headerlink" title="1.Case statement 1"></a>1.Case statement 1</h3><p>syntax: </p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CASE</span> [field]</span><br><span class="line">    <span class="keyword">WHEN</span> [value_1] <span class="keyword">THEN</span> [value_a]</span><br><span class="line">    <span class="keyword">WHEN</span> [value_2] <span class="keyword">THEN</span> [value_b]</span><br><span class="line">    <span class="keyword">WHEN</span> [value_3] <span class="keyword">THEN</span> [value_c]</span><br><span class="line">    <span class="keyword">ELSE</span> [value_default]</span><br><span class="line"><span class="keyword">END</span></span><br></pre></td></tr></table></figure>
 
 <p>example: </p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> commodity_name,</span><br><span class="line">    (</span><br><span class="line">        <span class="keyword">CASE</span> standard_code</span><br><span class="line">            <span class="keyword">WHEN</span> <span class="string">&#x27;code1&#x27;</span> <span class="keyword">THEN</span> <span class="string">&#x27;standard 1&#x27;</span></span><br><span class="line">            <span class="keyword">WHEN</span> <span class="string">&#x27;code2&#x27;</span> <span class="keyword">THEN</span> <span class="string">&#x27;standard 2&#x27;</span></span><br><span class="line">            <span class="keyword">WHEN</span> <span class="string">&#x27;code3&#x27;</span> <span class="keyword">THEN</span> <span class="string">&#x27;standard 3&#x27;</span></span><br><span class="line">            <span class="keyword">ELSE</span> <span class="string">&#x27;other&#x27;</span></span><br><span class="line">        <span class="keyword">END</span></span><br><span class="line">    ) <span class="keyword">as</span> standard_name</span><br><span class="line"><span class="keyword">from</span> commodity;</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-Case-statement-2"><a href="#2-Case-statement-2" class="headerlink" title="2.Case statement 2"></a>2.<code>Case</code> statement 2</h3><p>syntax: </p>
+<h3 id="2-Case-statement-2"><a href="#2-Case-statement-2" class="headerlink" title="2.Case statement 2"></a>2.Case statement 2</h3><p>syntax: </p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CASE</span></span><br><span class="line">    <span class="keyword">WHEN</span> [condition_1] <span class="keyword">THEN</span> [value_1]</span><br><span class="line">    <span class="keyword">WHEN</span> [condition_2] <span class="keyword">THEN</span> [value_2]</span><br><span class="line">    <span class="keyword">WHEN</span> [condition_3] <span class="keyword">THEN</span> [value_3]</span><br><span class="line">    <span class="keyword">ELSE</span> [value_default]</span><br><span class="line"><span class="keyword">END</span></span><br></pre></td></tr></table></figure>
 
 <p>example 1: </p>
