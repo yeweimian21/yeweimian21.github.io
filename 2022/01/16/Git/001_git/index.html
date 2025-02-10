@@ -21,13 +21,13 @@
 
     <meta name="description" content="&amp;nbsp;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="1.Git常用命令">
+<meta property="og:title" content="Git command">
 <meta property="og:url" content="https://yeweimian21.github.io/2022/01/16/Git/001_git/index.html">
 <meta property="og:site_name" content="A peaceful place">
 <meta property="og:description" content="&amp;nbsp;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-01-16T00:01:01.000Z">
-<meta property="article:modified_time" content="2023-03-28T08:43:32.324Z">
+<meta property="article:modified_time" content="2024-06-28T01:29:43.621Z">
 <meta property="article:author" content="yeweimian21">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary">
@@ -37,10 +37,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2022/01/16/Git/001_git/","path":"2022/01/16/Git/001_git/","title":"1.Git常用命令"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://yeweimian21.github.io/2022/01/16/Git/001_git/","path":"2022/01/16/Git/001_git/","title":"Git command"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>1.Git常用命令 | A peaceful place</title>
+<title>Git command | A peaceful place</title>
   
 
 
@@ -113,7 +113,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">1.Git常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BB%A3%E7%A0%81%E5%9B%9E%E9%80%80"><span class="nav-number">2.</span> <span class="nav-text">2.代码回退</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Git%E5%88%86%E6%94%AF"><span class="nav-number">3.</span> <span class="nav-text">3.Git分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Git-%E5%9B%A2%E9%98%9F%E5%8D%8F%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="nav-number">4.</span> <span class="nav-text">4.Git 团队协作机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E6%93%8D%E4%BD%9C"><span class="nav-number">5.</span> <span class="nav-text">5.远程仓库操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E6%8B%89%E5%8E%BB%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E7%9A%84%E5%88%86%E6%94%AF%E5%88%B0%E6%9C%AC%E5%9C%B0"><span class="nav-number">6.</span> <span class="nav-text">6.拉去远程仓库的分支到本地</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Git-common-command"><span class="nav-number">1.</span> <span class="nav-text">1.Git common command</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Code-rollback"><span class="nav-number">2.</span> <span class="nav-text">2.Code rollback</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Git-branch"><span class="nav-number">3.</span> <span class="nav-text">3.Git branch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Git-%E5%9B%A2%E9%98%9F%E5%8D%8F%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="nav-number">4.</span> <span class="nav-text">4.Git 团队协作机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E6%93%8D%E4%BD%9C"><span class="nav-number">5.</span> <span class="nav-text">5.远程仓库操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E6%8B%89%E5%8E%BB%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E7%9A%84%E5%88%86%E6%94%AF%E5%88%B0%E6%9C%AC%E5%9C%B0"><span class="nav-number">6.</span> <span class="nav-text">6.拉去远程仓库的分支到本地</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -126,18 +126,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-count">239</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -177,12 +177,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="1.Git常用命令 | A peaceful place">
+      <meta itemprop="name" content="Git command | A peaceful place">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          1.Git常用命令
+          Git command
         </h1>
 
         <div class="post-meta-container">
@@ -200,7 +200,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-03-28 16:43:32" itemprop="dateModified" datetime="2023-03-28T16:43:32+08:00">2023-03-28</time>
+      <time title="Modified: 2024-06-28 09:29:43" itemprop="dateModified" datetime="2024-06-28T09:29:43+08:00">2024-06-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -225,24 +225,24 @@
         <p>&nbsp;</p>
 <span id="more"></span>
 
-<h3 id="1-Git常用命令"><a href="#1-Git常用命令" class="headerlink" title="1.Git常用命令"></a>1.Git常用命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 设置用户姓名</span><br><span class="line">git config --global user.name [username]</span><br><span class="line"></span><br><span class="line">// 设置用户邮箱</span><br><span class="line">git config --global user.email [email]</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 查看用户姓名</span><br><span class="line">git config --global user.name</span><br><span class="line"></span><br><span class="line">// 查看用户邮箱</span><br><span class="line">git config --global user.email</span><br></pre></td></tr></table></figure>
+<h3 id="1-Git-common-command"><a href="#1-Git-common-command" class="headerlink" title="1.Git common command"></a>1.Git common command</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// set username</span><br><span class="line">git config --global user.name [username]</span><br><span class="line"></span><br><span class="line">// set email</span><br><span class="line">git config --global user.email [email]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// show username</span><br><span class="line">git config --global user.name</span><br><span class="line"></span><br><span class="line">// show email</span><br><span class="line">git config --global user.email</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 初始化本地库</span><br><span class="line">git init</span><br><span class="line"></span><br><span class="line">// 查看本地库状态</span><br><span class="line">git status</span><br><span class="line"></span><br><span class="line">// 添加到暂存区</span><br><span class="line">git add 文件名 </span><br><span class="line"></span><br><span class="line">// 提交到本地库</span><br><span class="line">git commit -m &quot;message&quot; 文件名</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// init local repository</span><br><span class="line">git init</span><br><span class="line"></span><br><span class="line">// show local repository status</span><br><span class="line">git status</span><br><span class="line"></span><br><span class="line">// add file</span><br><span class="line">git add [file] </span><br><span class="line"></span><br><span class="line">// commit to local repository</span><br><span class="line">git commit -m &quot;message&quot; [file]</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 查看历史记录</span><br><span class="line">git reflog</span><br><span class="line"></span><br><span class="line">// 查看版本详细信息</span><br><span class="line">git log</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// show log</span><br><span class="line">git reflog</span><br><span class="line"></span><br><span class="line">// show log in detail</span><br><span class="line">git log</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-代码回退"><a href="#2-代码回退" class="headerlink" title="2.代码回退"></a>2.代码回退</h3><p>(1) 已经 git add 到暂存区的文件，想回退到工作区</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git restore --staged [file]</span><br></pre></td></tr></table></figure>
-
-<p>(2) 还没有 git add 到暂存区，向放弃之前的工作区的本地修改</p>
+<h3 id="2-Code-rollback"><a href="#2-Code-rollback" class="headerlink" title="2.Code rollback"></a>2.Code rollback</h3><p>(1) The file hasn’t <code>git add</code>, discard the modify.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git restore [file]</span><br></pre></td></tr></table></figure>
 
-<p>(3) 已经 git commit了，想回到以前的版本</p>
-<p>Git 切换版本， 底层其实是移动 HEAD 指针</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard [版本号]</span><br></pre></td></tr></table></figure>
+<p>(2) The file has already <code>git add</code>, but not <code>git commit</code>, cancel the <code>git add</code>.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git restore --staged [file]</span><br></pre></td></tr></table></figure>
 
-<h3 id="3-Git分支"><a href="#3-Git分支" class="headerlink" title="3.Git分支"></a>3.Git分支</h3><p>在版本控制过程中，同时推进多个任务，为每个任务，我们就可以创建每个任务的单独分支。使用分支意味着程序员可以把自己的工作从开发主线上分离开来， 开发自己分支的时候，不会影响主线分支的运行。对于初学者而言，分支可以简单理解为副本，一个分支就是一个单独的副本。（分支底层其实也是指针的引用）</p>
+<p>(3) The file has already <code>git commit</code>, restore to the before version.</p>
+<p>Git shift code version, move <code>HEAD</code> pointer.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard [commit version]</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-Git-branch"><a href="#3-Git-branch" class="headerlink" title="3.Git branch"></a>3.Git branch</h3><p>在推进多个开发任务时，我们可以为每个任务创建单独的分支，各个分支之间不会相互影响。</p>
 <p>使用分支的优点：</p>
 <ul>
 <li><p>同时并行推进多个功能开发，提高开发效率。</p>
@@ -312,7 +312,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
